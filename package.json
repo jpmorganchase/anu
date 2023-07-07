@@ -1,0 +1,49 @@
+{
+  "name": "anu",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/anu.umd.cjs",
+  "module": "./dist/anu.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/anu.js",
+      "require": "./dist/anu.umd.cjs"
+    }
+  },
+  "scripts": {
+    "compile": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && vite build",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
+    "docs": "cd docs && npm run docs:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/d3": "^7.4.0",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.16.16",
+    "prettier": "^2.7.1",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.23.28",
+    "typedoc-plugin-markdown": "^3.13.6",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.5",
+    "vite-plugin-dts": "^2.3.0"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^6.2.0",
+    "d3": "^6.7.0",
+    "lodash-es": "^4.17.21",
+    "ol": "^7.3.0"
+  }
+}

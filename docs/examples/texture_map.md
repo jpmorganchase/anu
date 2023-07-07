@@ -1,0 +1,31 @@
+---
+aside: false
+---
+
+
+# Texture Map
+
+
+<div style="width: 100%;">
+    <iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        src="/index.html/?example=textureMap">
+    </iframe>
+</div>
+
+
+<style>
+    iframe {
+        width: 100%;
+        height: 50vh;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+::: code-group
+<<< @/../anu-examples/examples/geographic/texture_Map.js 
+
+<<< @/../anu-examples/data/airports.csv
+:::

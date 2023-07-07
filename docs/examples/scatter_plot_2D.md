@@ -1,0 +1,31 @@
+---
+aside: false
+---
+
+
+# 2D Scatter Plot 
+
+
+<div style="width: 100%;">
+    <iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        src="/index.html/?example=scatterplot2D">
+    </iframe>
+</div>
+
+
+<style>
+    iframe {
+        width: 100%;
+        height: 50vh;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+::: code-group
+<<< @/../anu-examples/examples/ScatterPlots/Scatterplot2D.js 
+
+<<< @/../anu-examples/data/iris.json
+:::

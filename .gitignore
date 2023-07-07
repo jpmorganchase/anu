@@ -1,0 +1,8 @@
+/node_modules
+/lib
+/dist
+/docs/node_modules
+/anu-example/node_modules
+/anu-examples/anu-examples.code-workspace
+/docs/docs.code-workspace
+anu.code-workspace
