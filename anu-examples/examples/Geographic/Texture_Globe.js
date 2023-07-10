@@ -19,15 +19,18 @@ export function textureGlobe(babylonEngine){
   //Use D3 to read in our csv data
   csv("../data/airports.csv", (d) => d).then((data) => {
 
-    let globe = anu.createTextureGlobe('test', {resolution: new Vector2(5000,2500), diameter:10}, scene)
+    let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10}, scene)
  
-    console.log(globe.coordToVec([-83.045753, 42.331429]))
-                                                                  //[-18.7792678, 46.8344597]
-     anu.bind('sphere', scene).position(globe.coordToVec([-87.65005, 41.85003]))//.scaling(new Vector3(0.1,0.1,0.1));
-     anu.bind('sphere', scene).position(globe.coordToVec([0,0]))//.scaling(new Vector3(0.1,0.1,0.1));
-     anu.bind('sphere', scene).position(globe.coordToVec([-0.118092, 51.509865]))
-    });
+    let rootSphere = anu.create('sphere', 'sphere', scene, {diameter: 0.2})
+    rootSphere.isVisible = false;
+    rootSphere.registerInstancedBuffer("color", 4);
+    rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
+                                                                
+    let spheres =  anu.selectName('globe', scene).bindInstance(rootSphere, data)
+    .setInstancedBuffer("color", new Color4(0,0,0,1))
+    .scaling(new Vector3(0.1,0.1,0.1))
+    .position((d) => globe.lonLatToVector3([d.longitude, d.latitude]))
 
-
+  });
   return scene;
 }
