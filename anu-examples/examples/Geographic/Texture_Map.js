@@ -14,10 +14,6 @@ export function textureMap(babylonEngine){
   camera.attachControl(true)
   camera.position = new Vector3(0, 100, -20)
 
-  let globe = anu.createTextureGlobe('tst2', {}, scene)
-
-  globe.mesh.scaling = new Vector3(50,50,50)
-
   //Use D3 to read in our csv data
   csv("../data/airports.csv", (d) => d).then((data) => {
     //Our data has over 3000 points so we will use mesh instancing for better performance

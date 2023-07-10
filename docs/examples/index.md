@@ -34,6 +34,8 @@ layout: page
 <div class="cards">
 
 <card title="Texture Map" example="textureMap" link="/examples/texture_map"></card>
+
+<card title="Texture Globe" example="textureGlobe" link="/examples/texture_globe"></card>
   
 </div>
 </div>
