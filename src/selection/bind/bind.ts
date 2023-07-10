@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Node, ActionManager, Tags, Mesh, InstancedMesh } from '@babylonjs/core';
 import { Selection } from '../index';
 import { create } from '../../create';
@@ -12,13 +15,12 @@ import { create } from '../../create';
  * @returns An instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind(this: Selection, shape: string,  options: object = {}, data: Array<object> = [{}]): Selection {
+export function bind(this: Selection, shape: string, options: object = {}, data: Array<object> = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
-      var mesh = create(shape, shape,this.scene, options, element);
-      if(mesh instanceof Mesh)
-        mesh.actionManager = new ActionManager(this.scene);
+      var mesh = create(shape, shape, this.scene, options, element);
+      if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(this.scene);
       Tags.EnableFor(mesh);
       mesh.parent = node;
       mesh.metadata = { ...mesh.metadata, data: element };
@@ -44,8 +46,7 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
       var instance = mesh.createInstance(mesh.name + '_' + i);
-      if(mesh instanceof InstancedMesh)
-        mesh.actionManager = new ActionManager(this.scene);
+      if (mesh instanceof InstancedMesh) mesh.actionManager = new ActionManager(this.scene);
       Tags.EnableFor(instance);
       instance.parent = node;
       instance.metadata = { ...mesh.metadata, data: element };

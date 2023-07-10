@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Node } from '@babylonjs/core';
 import { Selection } from '../index';
-import hasIn  from 'lodash-es/hasIn';
+import hasIn from 'lodash-es/hasIn';
 import set from 'lodash-es/set';
-
 
 /**
  * Sets the Name on all nodes in the selection.
@@ -11,8 +13,8 @@ import set from 'lodash-es/set';
  * @returns The modified selection
  */
 export function name(this: Selection, name: string | ((d: any, n: Node, i: number) => string)) {
-    this.prop('name', name)
-    return this;
+  this.prop('name', name);
+  return this;
 }
 
 /**
@@ -22,8 +24,8 @@ export function name(this: Selection, name: string | ((d: any, n: Node, i: numbe
  * @returns The modified selection
  */
 export function id(this: Selection, id: string | ((d: any, n: Node, i: number) => string)) {
-    this.prop('id', id)
-    return this;
+  this.prop('id', id);
+  return this;
 }
 
 /**
@@ -34,10 +36,16 @@ export function id(this: Selection, id: string | ((d: any, n: Node, i: number) =
  * @returns The modified selection
  */
 export function metadata(this: Selection, key: string, value: {} | ((d: any, n: Node, i: number) => {})) {
-    this.selected.forEach((node, i) => {
-    hasIn(node, 'metadata')  
-    ? set(node, 'metadata', value instanceof Function ? {...node.metadata, key: value(node.metadata.data, node, i)} : {...node.metadata, key: value})
-    : console.error('metadata not a property of ' + node)
-    });
-    return this;
-  }
+  this.selected.forEach((node, i) => {
+    hasIn(node, 'metadata')
+      ? set(
+          node,
+          'metadata',
+          value instanceof Function
+            ? { ...node.metadata, key: value(node.metadata.data, node, i) }
+            : { ...node.metadata, key: value },
+        )
+      : console.error('metadata not a property of ' + node);
+  });
+  return this;
+}

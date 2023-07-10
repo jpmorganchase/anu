@@ -1,41 +1,15 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { TransformNode } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { Selection } from '../../selection';
 import { shapeAlt } from './shape';
-import { labelAlt} from './label';
+import { labelAlt } from './label';
 import { backgroundAlt } from './background';
 import { tickAlt } from './ticks';
 import { select } from '../../select';
 import { size } from 'lodash-es';
-
-
-
-// export class Axis {
-//   selection: Selection;
-//   name: string;
-//   axis: 'x' | 'y' | 'z';
-//   scale: any;
-//   scene: Scene;
-//   cot: Selection;
-//   selections: { String: Selection } | {};
-//   boundingBox: any;
-
-//   constructor(selection: Selection, name: string, axis: 'x' | 'y' | 'z', scale: any) {
-//     this.selection = selection;
-//     this.name = name;
-//     this.axis = axis;
-//     this.scale = scale;
-//     this.scene = this.selection.scene;
-//     this.cot = new Selection([this.selection.selected[0].parent!], this.scene);
-//     this.selections = {};
-//     this.boundingBox = this.selection.boundingBox();
-//   }
-
-//   public shape = shape;
-//   public label = label;
-//   public background = background;
-//   public ticks = ticks;
-// }
 
 interface AxisOptions {
   cot?: Selection;
@@ -58,20 +32,18 @@ export class Axis {
   // majorTick: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
   // minorTick: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
 
-  constructor(name: string, scene: Scene, options: AxisOptions = {}){
+  constructor(name: string, scene: Scene, options: AxisOptions = {}) {
     this.name = name;
     //this.selection = selection;
     this.options = options;
     this.scene = scene;
     this.CoT = this.setCoT();
     this.scales = this.setScales();
-
-   
   }
 
   private setCoT(): Selection {
     let CoT;
-    if (this.options.cot === undefined){
+    if (this.options.cot === undefined) {
       new TransformNode(this.name + 'CoT', this.scene);
       CoT = select('#' + this.name + 'CoT', this.scene);
     } else {
@@ -81,34 +53,33 @@ export class Axis {
   }
 
   private setScales() {
-
-    let scaleX: any; 
-    let rangeX = [0,0];
+    let scaleX: any;
+    let rangeX = [0, 0];
     let domainX: any;
 
-    let scaleY: any; 
-    let rangeY = [0,0];
+    let scaleY: any;
+    let rangeY = [0, 0];
     let domainY: any;
 
-    let scaleZ: any; 
-    let rangeZ = [0,0];
+    let scaleZ: any;
+    let rangeZ = [0, 0];
     let domainZ: any;
 
-    if (this.options.x != undefined){
+    if (this.options.x != undefined) {
       scaleX = this.options.x;
       domainX = scaleX.domain();
       let range = scaleX.range();
       rangeX = [range[0], range.slice(-1)[0]];
     }
-  
-    if (this.options.y != undefined){
+
+    if (this.options.y != undefined) {
       scaleY = this.options.y;
       domainY = scaleY.domain();
       let range = scaleY.range();
       rangeY = [range[0], range.slice(-1)[0]];
     }
-  
-    if (this.options.z != undefined){
+
+    if (this.options.z != undefined) {
       scaleZ = this.options.z;
       domainZ = scaleZ.domain();
       let range = scaleZ.range();
@@ -119,7 +90,12 @@ export class Axis {
 
     let size = Math.abs(sizes.slice(-1)[0] - sizes[0]);
 
-    return {'size': size, x: {'scale': scaleX, 'range': rangeX, 'domain': domainX}, y: {'scale': scaleY, 'range': rangeY, 'domain': domainY}, z: {'scale': scaleZ, 'range': rangeZ, 'domain': domainZ}}
+    return {
+      size: size,
+      x: { scale: scaleX, range: rangeX, domain: domainX },
+      y: { scale: scaleY, range: rangeY, domain: domainY },
+      z: { scale: scaleZ, range: rangeZ, domain: domainZ },
+    };
   }
 
   public shape = shapeAlt;
@@ -127,5 +103,3 @@ export class Axis {
   public ticks = labelAlt;
   public grid = tickAlt;
 }
-
-

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Material, Color3, BaseTexture, Node } from '@babylonjs/core';
 import { Selection } from '../index';
 

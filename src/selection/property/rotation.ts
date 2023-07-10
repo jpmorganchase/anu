@@ -1,4 +1,7 @@
-import { Vector3, Node} from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Vector3, Node } from '@babylonjs/core';
 import { Selection } from '../index';
 
 /**
@@ -8,7 +11,7 @@ import { Selection } from '../index';
  * @returns The modified selection
  */
 export function rotation(this: Selection, value: Vector3 | ((d: any, n: Node, i: number) => Vector3)) {
- this.prop('rotation', value)
+  this.prop('rotation', value);
   return this;
 }
 
@@ -19,7 +22,7 @@ export function rotation(this: Selection, value: Vector3 | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function rotationX(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('rotation.x', value)
+  this.prop('rotation.x', value);
   return this;
 }
 
@@ -30,7 +33,7 @@ export function rotationX(this: Selection, value: number | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function rotationY(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('rotation.y', value)
+  this.prop('rotation.y', value);
   return this;
 }
 
@@ -41,6 +44,6 @@ export function rotationY(this: Selection, value: number | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function rotationZ(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('rotation.z', value)
+  this.prop('rotation.z', value);
   return this;
 }

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Mesh, StandardMaterial, DynamicTexture } from '@babylonjs/core';
 import { Selection } from '../index';
 import { fromPairs } from 'lodash-es';

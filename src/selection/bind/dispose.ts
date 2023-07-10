@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Selection } from '../index';
 
 export function dispose(this: Selection, filter?: (d: any, i: number) => Boolean) {

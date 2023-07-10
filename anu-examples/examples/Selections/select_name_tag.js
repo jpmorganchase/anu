@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import * as anu from "anu" //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 import { Scene, HemisphericLight, ArcRotateCamera, Vector3, MeshBuilder, StandardMaterial, Color3} from "@babylonjs/core";
 

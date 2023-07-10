@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Node, ActionManager, Tags, Mesh, Scene } from '@babylonjs/core';
 import { Selection } from './index';
 import { create } from './create';
-
 
 /**
  * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
@@ -14,16 +16,15 @@ import { create } from './create';
  * @returns An instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind(shape: string, scene: Scene,  options: object = {}, data: Array<object> = [{}]): Selection {
-    let meshes: Node[] = [];
-    data.forEach((element, i) => {
-        var mesh = create(shape, shape, scene, options, element);
-        if(mesh instanceof Mesh)
-            mesh.actionManager = new ActionManager(scene);
-        Tags.EnableFor(mesh);
-        mesh.metadata = { ...mesh.metadata, data: element };
-        meshes.push(mesh);
-    });
-   
-    return new Selection(meshes, scene);
+export function bind(shape: string, scene: Scene, options: object = {}, data: Array<object> = [{}]): Selection {
+  let meshes: Node[] = [];
+  data.forEach((element, i) => {
+    var mesh = create(shape, shape, scene, options, element);
+    if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(scene);
+    Tags.EnableFor(mesh);
+    mesh.metadata = { ...mesh.metadata, data: element };
+    meshes.push(mesh);
+  });
+
+  return new Selection(meshes, scene);
 }

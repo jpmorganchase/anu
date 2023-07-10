@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Node, Mesh, TransformNode, InstancedMesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag } from './utility/select';
@@ -25,11 +28,9 @@ import { attr, props, prop } from './property/attr';
 import { run } from './utility/run';
 import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
-import { axisBasic } from '../prefabs/Axis/OLD/axisBasic';
-import { createPipeAxis } from '../prefabs/Axis/OLD/AxisNew';
 import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
-import { name, id, metadata} from './property/metadata';
+import { name, id, metadata } from './property/metadata';
 
 /*
     The core class of anujs. All functions should return 
@@ -87,10 +88,8 @@ export class Selection {
   public scaleDT = scaleDT;
   public scaleToDT = scaleDT;
   public drawTextDT = drawTextDT;
-  public axis = axisBasic;
   public boundingBox = boundingBox;
   public filter = filter;
-  public pipeAxis = createPipeAxis;
   public props = props;
   public prop = prop;
   public name = name;

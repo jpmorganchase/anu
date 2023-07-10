@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as d3 from 'd3';  //D3 for scales
 import * as anu from 'anu' //Anu for Scene-Graph Manipulation

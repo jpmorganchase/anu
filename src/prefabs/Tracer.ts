@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Mesh, TransformNode, Color3 } from '@babylonjs/core';
 import { Selection } from '../selection';
 import { create } from '../create';

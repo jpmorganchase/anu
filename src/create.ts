@@ -1,4 +1,7 @@
-import {Mesh, MeshBuilder, TransformNode, Scene} from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Mesh, MeshBuilder, TransformNode, Scene } from '@babylonjs/core';
 import { text2d } from './prefabs/text2d';
 
 interface StringByFunc {
@@ -9,7 +12,7 @@ interface StringByAny {
   [key: string]: any;
 }
 
-function createCOT(name: string, options: object, scene: Scene){
+function createCOT(name: string, options: object, scene: Scene) {
   return new TransformNode(name, scene);
 }
 
@@ -54,7 +57,13 @@ const meshList: StringByFunc = {
  * @param scene The scene to create the mesh in.
  * @returns A mesh object created with the passed parameters.
  */
-export function create(shape: string, name: string,  scene: Scene, options: object = {}, data: object = {}): Mesh | TransformNode {
+export function create(
+  shape: string,
+  name: string,
+  scene: Scene,
+  options: object = {},
+  data: object = {},
+): Mesh | TransformNode {
   let executedOptions: StringByAny = {};
 
   for (let [key, value] of Object.entries(options)) {
@@ -63,7 +72,7 @@ export function create(shape: string, name: string,  scene: Scene, options: obje
 
   let builder: Function = meshList[shape];
 
-  let mesh =  builder(name, executedOptions, scene);
+  let mesh = builder(name, executedOptions, scene);
 
   return mesh;
 }

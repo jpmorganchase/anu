@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import {extent, csv, timeYear, timeParse, timeFormat, scaleTime, scaleLinear, scaleSequential, interpolateBlues} from "d3";
 import * as anu from "anu";
 import {Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";

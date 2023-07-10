@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { TransformNode } from '@babylonjs/core/Meshes';
 import { Selection } from '../index';
 import loGet from 'lodash-es/get';

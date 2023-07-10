@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
 //Import all of babylonjs, you most likely want to import individual methods as needed

@@ -1,93 +1,25 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Vector3, StandardMaterial, Color3, Mesh, Tools } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
 
-// export function background(this: Axis) {
-//   let boundingBox = this.boundingBox;
-//   const domain = this.scale.domain();
-//   let range = this.scale.range();
-//   range = [range[0], range[1]];
 
-//   let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-//   let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-//   let planeWidth: number = 0;
-//   let planeHeight: number = 0;
-
-//   let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-//   try {
-//     ticks = this.scale.ticks();
-//   } catch {
-//     ticks = domain;
-//   }
-
-//   switch (this.axis) {
-//     case 'x': {
-//       planePosition = new Vector3(0, 0, Math.max(range[1], boundingBox.maximum.z));
-//       planeRotation = new Vector3(0, 0, 0);
-//       planeWidth = Math.abs(Math.min(range[0], boundingBox.minimum.x) - Math.max(range[1], boundingBox.maximum.x));
-//       planeHeight = Math.abs(Math.min(range[0], boundingBox.minimum.z) - Math.max(range[1], boundingBox.maximum.z));
-
-//       break;
-//     }
-//     case 'y': {
-//       planePosition = (d) => new Vector3(Math.min(range[0], boundingBox.minimum.x), 0, 0);
-//       planeRotation = (d) => new Vector3(0, Tools.ToRadians(90), 0);
-//       planeWidth = Math.abs(Math.min(range[0], boundingBox.minimum.z) - Math.max(range[1], boundingBox.maximum.z));
-//       planeHeight = Math.abs(Math.min(range[0], boundingBox.minimum.y) - Math.max(range[1], boundingBox.maximum.y));
-
-//       break;
-//     }
-//     case 'z': {
-//       planePosition = (d) => new Vector3(0, Math.min(range[0], boundingBox.minimum.y), 0);
-//       planeRotation = (d) => new Vector3(Tools.ToRadians(90), 0, 0);
-//       planeWidth = Math.abs(Math.min(range[0], boundingBox.minimum.x) - Math.max(range[1], boundingBox.maximum.x));
-//       planeHeight = Math.abs(Math.min(range[0], boundingBox.minimum.y) - Math.max(range[1], boundingBox.maximum.y));
-
-//       break;
-//     }
-//     default: {
-//       break;
-//     }
-//   }
-
-//   let material = new StandardMaterial(this.name + '_background_material', this.scene);
-//   material.diffuseColor = Color3.White();
-//   material.alpha = 0.2;
-
-//   let backgroundMesh = this.cot
-//     .bind('plane', { height: planeHeight, width: planeWidth, sideOrientation: Mesh.DOUBLESIDE }, [{}])
-//     .attr('name', this.name + '_background')
-//     .position(planePosition)
-//     .rotation(planeRotation)
-//     .material(material);
-
-//   //this.selections['background'] = backgroundMesh;
-
-//   return this;
-// }
-
-export function backgroundAlt(
-  this: Axis, 
-  options: {} = {}, 
-  properties: {} = {}
-){
-  
-  
-  let scaleX = this.scales.x.scale; 
+export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {}) {
+  let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
   let domainX = this.scales.x.domain;
 
-  let scaleY = this.scales.y.scale; 
+  let scaleY = this.scales.y.scale;
   let rangeY = this.scales.y.range;
   let domainY = this.scales.y.domain;
 
-  let scaleZ = this.scales.z.scale; 
+  let scaleZ = this.scales.z.scale;
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
 
-
-  if (this.options.x != undefined && this.options.y != undefined){
-  
+  if (this.options.x != undefined && this.options.y != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -97,22 +29,19 @@ export function backgroundAlt(
     planeHeight = Math.abs(rangeY[0] - rangeY[1]);
     planePosition = new Vector3(0, (rangeY[0] + rangeY[1]) / 2, rangeZ[1]);
     planeRotation = new Vector3(0, 0, 0);
-   
 
     let default_options = { height: planeHeight, width: planeWidth, sideOrientation: Mesh.DOUBLESIDE };
 
     let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshX = this.CoT
-    .bind('plane', assign({}, default_options, options))
-    .attr('name', this.name + '_backgroundX')
-    .position(planePosition)
-    .material(new StandardMaterial(this.name + '_backgroundX_material', this.scene))
-    .props(assign({}, default_properties, properties));
+    let backgroundMeshX = this.CoT.bind('plane', assign({}, default_options, options))
+      .attr('name', this.name + '_backgroundX')
+      .position(planePosition)
+      .material(new StandardMaterial(this.name + '_backgroundX_material', this.scene))
+      .props(assign({}, default_properties, properties));
   }
-  
-  if (this.options.y != undefined && this.options.z != undefined){
-  
+
+  if (this.options.y != undefined && this.options.z != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -122,23 +51,20 @@ export function backgroundAlt(
     planeHeight = Math.abs(rangeY[0] - rangeY[1]);
     planePosition = new Vector3(rangeX[0], (rangeY[0] + rangeY[1]) / 2, (rangeZ[0] + rangeZ[1]) / 2);
     planeRotation = new Vector3(0, 1.5708, 0);
-    
 
     let default_options = { height: planeHeight, width: planeWidth, sideOrientation: Mesh.DOUBLESIDE };
 
     let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshY = this.CoT
-    .bind('plane', assign({}, default_options, options))
-    .attr('name', this.name + '_backgroundY')
-    .position(planePosition)
-    .rotation(planeRotation)
-    .material(new StandardMaterial(this.name + '_backgroundY_material', this.scene))
-    .props(assign({}, default_properties, properties));
+    let backgroundMeshY = this.CoT.bind('plane', assign({}, default_options, options))
+      .attr('name', this.name + '_backgroundY')
+      .position(planePosition)
+      .rotation(planeRotation)
+      .material(new StandardMaterial(this.name + '_backgroundY_material', this.scene))
+      .props(assign({}, default_properties, properties));
   }
 
-  if (this.options.z != undefined && this.options.x != undefined){
-  
+  if (this.options.z != undefined && this.options.x != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -151,15 +77,14 @@ export function backgroundAlt(
 
     let default_options = { height: planeHeight, width: planeWidth, sideOrientation: Mesh.DOUBLESIDE };
 
-    let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2};
+    let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshZ = this.CoT
-    .bind('plane', assign({}, default_options, options))
-    .attr('name', this.name + '_backgroundZ')
-    .position(planePosition)
-    .rotation(planeRotation)
-    .material(new StandardMaterial(this.name + '_backgroundZ_material', this.scene))
-    .props(assign({}, default_properties, properties));
+    let backgroundMeshZ = this.CoT.bind('plane', assign({}, default_options, options))
+      .attr('name', this.name + '_backgroundZ')
+      .position(planePosition)
+      .rotation(planeRotation)
+      .material(new StandardMaterial(this.name + '_backgroundZ_material', this.scene))
+      .props(assign({}, default_properties, properties));
   }
 
   return this;

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import cars from '../../data/cars.json' assert {type: 'json'};
 import { HemisphericLight, 
          Vector3,

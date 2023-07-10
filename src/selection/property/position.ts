@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Vector3, Node } from '@babylonjs/core';
 import { Selection } from '../index';
 
@@ -8,7 +11,7 @@ import { Selection } from '../index';
  * @returns The modified selection
  */
 export function position(this: Selection, value: Vector3 | ((d: any, n: Node, i: number) => Vector3)) {
-  this.prop('position', value)
+  this.prop('position', value);
   return this;
 }
 
@@ -19,7 +22,7 @@ export function position(this: Selection, value: Vector3 | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function positionX(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('position.x', value)
+  this.prop('position.x', value);
   return this;
 }
 
@@ -30,7 +33,7 @@ export function positionX(this: Selection, value: number | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function positionY(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('position.y', value)
+  this.prop('position.y', value);
   return this;
 }
 
@@ -41,6 +44,6 @@ export function positionY(this: Selection, value: number | ((d: any, n: Node, i:
  * @returns The modified selection
  */
 export function positionZ(this: Selection, value: number | ((d: any, n: Node, i: number) => number)) {
-  this.prop('position.z', value)
+  this.prop('position.z', value);
   return this;
 }
