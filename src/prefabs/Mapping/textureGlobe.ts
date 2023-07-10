@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { scaleLinear } from 'd3';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
 import { OSM, TileDebug } from 'ol/source';
-import { useGeographic } from 'ol/proj';
 import {
   MeshBuilder,
   Color3,
@@ -15,15 +13,13 @@ import {
   DynamicTexture,
   Scene,
   Mesh,
-  KeyboardEventTypes,
   Vector2,
   Vector3,
-  AxesViewer,
+  Space,
+  Axis
 } from '@babylonjs/core';
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
-import TileSource from 'ol/source/Tile';
-import { scale } from 'ol/size';
 
 export class textureGlobe {
   name: string;
@@ -38,7 +34,7 @@ export class textureGlobe {
   mesh: Mesh;
   context: Context;
   diameter: number;
-  coordToVec: Function;
+  lonLatToVector3: Function;
 
   constructor(name: string, scene: Scene, layers: TileLayer<OSM>[], view: View, resolution: Vector2, diameter: number) {
     this.name = name;
@@ -53,7 +49,7 @@ export class textureGlobe {
     this.texture = this.createTexture();
     this.context = this.texture.getContext();
     this.mesh = this.createMesh();
-    this.coordToVec = this.createScales;
+    this.lonLatToVector3 = this.createScales;
   }
 
   createContainer() {
@@ -79,9 +75,7 @@ export class textureGlobe {
 
   createTexture() {
     let scene = this.scene;
-    let mesh = this.mesh;
     let target = this.target;
-    let container = this.container;
     let textureGround = new DynamicTexture(
       'mapTexture',
       { width: this.resolution.x, height: this.resolution.y },
@@ -99,13 +93,11 @@ export class textureGlobe {
 
   createMesh() {
     let globe = MeshBuilder.CreateSphere(this.name, { diameter: this.diameter }, this.scene);
-    globe.rotation.x = Math.PI;
-    //globe.rotation.y = Math.PI / 2;
-    const axes = new AxesViewer(this.scene, this.diameter + 1);
-    axes.xAxis.parent = globe;
-    axes.yAxis.parent = globe;
-    axes.zAxis.parent = globe;
+    globe.rotate(Axis.X, Math.PI, Space.WORLD);
+    globe.rotate(Axis.Y, Math.PI, Space.WORLD);
     let materialGlobe = new StandardMaterial(this.name + '_material', this.scene);
+
+    globe.bakeCurrentTransformIntoVertices()
 
     materialGlobe.diffuseTexture = this.texture;
     materialGlobe.specularColor = new Color3(0, 0, 0);
@@ -115,68 +107,16 @@ export class textureGlobe {
   }
 
   createScales(c: Coordinate) {
-    //useGeographic();
+    let lon = (c[0]) * Math.PI / 180; 
+    let lat = (c[1]) * Math.PI / 180; 
 
-    let lon = ((180 - c[0]) * Math.PI) / 180; //+ 0.40907504363002;
-    let lat = ((c[1] - 90) * Math.PI) / 180; //+ 0.40907504363002;
-
-    let r = this.diameter / 2;
+    let r = (this.diameter / 2);
 
     let x = r * Math.cos(lat) * Math.cos(lon);
     let y = r * Math.cos(lat) * Math.sin(lon);
     let z = r * Math.sin(lat);
 
-    return new Vector3(x, y, z);
-  }
-
-  keyboardControls() {
-    this.scene.onKeyboardObservable.add((kbInfo) => {
-      switch (kbInfo.type) {
-        case KeyboardEventTypes.KEYDOWN:
-          switch (kbInfo.event.key) {
-            case 'a':
-            case 'A':
-              this.map
-                .getView()
-                .setCenter([this.map.getView().getCenter()![0] - 1, this.map.getView().getCenter()![1]]);
-              break;
-            case 'd':
-            case 'D':
-              this.map
-                .getView()
-                .setCenter([this.map.getView().getCenter()![0] + 1, this.map.getView().getCenter()![1]]);
-              break;
-            case 'w':
-            case 'W':
-              this.map
-                .getView()
-                .setCenter([this.map.getView().getCenter()![0], this.map.getView().getCenter()![1] + 1]);
-              break;
-            case 's':
-            case 'S':
-              this.map
-                .getView()
-                .setCenter([this.map.getView().getCenter()![0], this.map.getView().getCenter()![1] - 1]);
-              break;
-            case '=':
-            case '+':
-              this.map.getView().animate({
-                zoom: this.map.getView().getZoom()! + 1,
-                duration: 250,
-              });
-              break;
-            case '-':
-            case '_':
-              this.map.getView().animate({
-                zoom: this.map.getView().getZoom()! - 1,
-                duration: 250,
-              });
-              break;
-          }
-          break;
-      }
-    });
-    return this;
+    return new Vector3(x, z, y);
   }
 }
 
@@ -191,10 +131,7 @@ export function createTextureGlobe(
   scene: Scene,
 ) {
   const layers: TileLayer<any>[] = options.layers || [
-    new TileLayer({ source: new OSM(), extent: [-180, -90, 180, 90] }),
-    new TileLayer({
-      source: new TileDebug(),
-    }),
+    new TileLayer({ source: new OSM(), extent: [-180, -90, 180, 90] })
   ];
   const view: View =
     options.view ||
@@ -202,8 +139,7 @@ export function createTextureGlobe(
       projection: 'EPSG:4326',
       extent: [-180, -90, 180, 90],
       center: [0, 0],
-      zoom: 0,
-      resolution: 40000,
+      zoom: 0
     });
 
   const resolution: Vector2 = options.resolution || new Vector2(1000, 500);
