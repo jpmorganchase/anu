@@ -7,7 +7,6 @@
 ### Classes
 
 - [Axis](classes/Axis.md)
-- [Chart2D](classes/Chart2D.md)
 - [Selection](classes/Selection.md)
 - [Tracer](classes/Tracer.md)
 
@@ -15,9 +14,8 @@
 
 - [bind](modules.md#bind)
 - [create](modules.md#create)
-- [createBar2D](modules.md#createbar2d)
-- [createMap2D](modules.md#createmap2d)
-- [createScatter2D](modules.md#createscatter2d)
+- [createTextureGlobe](modules.md#createtextureglobe)
+- [createTextureMap](modules.md#createtexturemap)
 - [select](modules.md#select)
 - [selectData](modules.md#selectdata)
 - [selectId](modules.md#selectid)
@@ -31,7 +29,7 @@
 
 ▸ **bind**(`shape`, `scene`, `options?`, `data?`): [`Selection`](classes/Selection.md)
 
-Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
+Take a shape type, a scene, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
 The data index of the mesh is also attached to the mesh node object under the metadate property.
 
 #### Parameters
@@ -52,13 +50,13 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-bind.ts:17
+[bind.ts:19](https://github.com/jpmorganchase/anu/blob/4ed179d/src/bind.ts#L19)
 
 ___
 
 ### create
 
-▸ **create**(`shape`, `name`, `scene`, `options?`, `data?`): `Mesh` \| `TransformNode`
+▸ **create**(`shape`, `name`, `scene`, `options?`, `data?`): `Mesh`
 
 Helper function to build meshes of a specified type with options optionally set with functions and data.
 
@@ -74,61 +72,57 @@ Helper function to build meshes of a specified type with options optionally set 
 
 #### Returns
 
-`Mesh` \| `TransformNode`
+`Mesh`
 
 A mesh object created with the passed parameters.
 
 #### Defined in
 
-create.ts:57
+[create.ts:60](https://github.com/jpmorganchase/anu/blob/4ed179d/src/create.ts#L60)
 
 ___
 
-### createBar2D
+### createTextureGlobe
 
-▸ **createBar2D**(`name`, `scene`, `data`, `x`, `y`, `options?`): `Bar2D`
+▸ **createTextureGlobe**(`name`, `options`, `scene`): `textureGlobe`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `name` | `string` |
-| `scene` | `Scene` |
-| `data` | [] |
-| `x` | `string` |
-| `y` | `string` |
 | `options` | `Object` |
-| `options.backgroundAlpha?` | `number` |
-| `options.backgroundColor?` | `Color3` |
-| `options.elementAlpha?` | `number` |
-| `options.elementColor?` | `Color3` \| { `key`: `string` ; `scale`: `Function`  } |
-| `options.height?` | `number` |
-| `options.padding?` | `Object` |
-| `options.padding.bottom?` | `number` |
-| `options.padding.left?` | `number` |
-| `options.padding.right?` | `number` |
-| `options.padding.top?` | `number` |
-| `options.width?` | `number` |
+| `options.diameter` | `number` |
+| `options.layers?` | `TileLayer`<`any`\>[] |
+| `options.resolution?` | `Vector2` |
+| `options.view?` | `View` |
+| `scene` | `Scene` |
 
 #### Returns
 
-`Bar2D`
+`textureGlobe`
 
 #### Defined in
 
-prefabs/Chart2D/Bar2D.ts:80
+[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Mapping/textureGlobe.ts#L123)
 
 ___
 
-### createMap2D
+### createTextureMap
 
-▸ **createMap2D**(`name`, `scene`): `Map2D`
+▸ **createTextureMap**(`name`, `options`, `scene`): `Map2D`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `name` | `string` |
+| `options` | `Object` |
+| `options.layers?` | `TileLayer`<`any`\>[] |
+| `options.mapHeight?` | `number` |
+| `options.mapWidth?` | `number` |
+| `options.meshSize?` | `number` |
+| `options.view?` | `View` |
 | `scene` | `Scene` |
 
 #### Returns
@@ -137,43 +131,7 @@ ___
 
 #### Defined in
 
-prefabs/Mapping/Map2D.ts:168
-
-___
-
-### createScatter2D
-
-▸ **createScatter2D**(`name`, `scene`, `data`, `x`, `y`, `options?`): `Scatter2D`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `scene` | `Scene` |
-| `data` | [] |
-| `x` | `string` |
-| `y` | `string` |
-| `options` | `Object` |
-| `options.backgroundAlpha?` | `number` |
-| `options.backgroundColor?` | `Color3` |
-| `options.elementAlpha?` | `number` |
-| `options.elementColor?` | `Color3` \| { `key`: `string` ; `scale`: `Function`  } |
-| `options.height?` | `number` |
-| `options.padding?` | `Object` |
-| `options.padding.bottom?` | `number` |
-| `options.padding.left?` | `number` |
-| `options.padding.right?` | `number` |
-| `options.padding.top?` | `number` |
-| `options.width?` | `number` |
-
-#### Returns
-
-`Scatter2D`
-
-#### Defined in
-
-prefabs/Chart2D/Scatter2D.ts:68
+[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Mapping/textureMap.ts#L191)
 
 ___
 
@@ -181,7 +139,7 @@ ___
 
 ▸ **select**(`name`, `scene`): [`Selection`](classes/Selection.md)
 
-Select all nodes from the scene graph matching the indicator and return it as a
+Select all nodes from the scene graph matching the indicator and return them as a
 instance of Selection.
 
 #### Parameters
@@ -200,7 +158,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-select.ts:14
+[select.ts:17](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L17)
 
 ___
 
@@ -208,21 +166,27 @@ ___
 
 ▸ **selectData**(`key`, `value`, `scene`): [`Selection`](classes/Selection.md)
 
+Select all nodes from the scene graph with binded data matching the given key value pairs and return them as a
+instance of Selection.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `key` | `string` \| `string`[] |
-| `value` | `string` \| `number` \| `string`[] \| `number`[] |
-| `scene` | `Scene` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` \| `string`[] | the key or list of keys of the nodes to be selected. |
+| `value` | `string` \| `number` \| `string`[] \| `number`[] | the value or list of values corresponding to the respective key(s) passed. |
+| `scene` | `Scene` | The babylon scene the to select from. |
 
 #### Returns
 
 [`Selection`](classes/Selection.md)
 
+an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
 #### Defined in
 
-select.ts:58
+[select.ts:98](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L98)
 
 ___
 
@@ -230,20 +194,26 @@ ___
 
 ▸ **selectId**(`id`, `scene`): [`Selection`](classes/Selection.md)
 
+Select all nodes from the scene graph matching the given ID(s) and return them as a
+instance of Selection.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `id` | `string` \| `string`[] |
-| `scene` | `Scene` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` \| `string`[] | the ID or list of IDs of the nodes to be selected |
+| `scene` | `Scene` | The babylon scene the to select from. |
 
 #### Returns
 
 [`Selection`](classes/Selection.md)
 
+an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
 #### Defined in
 
-select.ts:40
+[select.ts:61](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L61)
 
 ___
 
@@ -251,20 +221,26 @@ ___
 
 ▸ **selectName**(`name`, `scene`): [`Selection`](classes/Selection.md)
 
+Select all nodes from the scene graph matching the given name(s) and return them as a
+instance of Selection.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` \| `string`[] |
-| `scene` | `Scene` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` \| `string`[] | the name or list of names of the nodes to be selected |
+| `scene` | `Scene` | The babylon scene the to select from. |
 
 #### Returns
 
 [`Selection`](classes/Selection.md)
 
+an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
 #### Defined in
 
-select.ts:32
+[select.ts:44](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L44)
 
 ___
 
@@ -272,20 +248,26 @@ ___
 
 ▸ **selectTag**(`tag`, `scene`): [`Selection`](classes/Selection.md)
 
+Select all nodes from the scene graph matching the given tag(s) and return them as a
+instance of Selection.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `tag` | `string` \| `string`[] |
-| `scene` | `Scene` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tag` | `string` \| `string`[] | the tag and tag logic or list of tags of the nodes to be selected |
+| `scene` | `Scene` | The babylon scene the to select from. |
 
 #### Returns
 
 [`Selection`](classes/Selection.md)
 
+an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
 #### Defined in
 
-select.ts:48
+[select.ts:78](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L78)
 
 ___
 
@@ -314,4 +296,4 @@ ___
 
 #### Defined in
 
-prefabs/text2d.ts:4
+[prefabs/text2d.ts:7](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/text2d.ts#L7)

@@ -34,7 +34,7 @@
 
 #### Defined in
 
-prefabs/Tracer.ts:18
+[prefabs/Tracer.ts:21](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Tracer.ts#L21)
 
 ## Properties
 
@@ -44,7 +44,7 @@ prefabs/Tracer.ts:18
 
 #### Defined in
 
-prefabs/Tracer.ts:15
+[prefabs/Tracer.ts:18](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Tracer.ts#L18)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-prefabs/Tracer.ts:16
+[prefabs/Tracer.ts:19](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Tracer.ts#L19)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-prefabs/Tracer.ts:14
+[prefabs/Tracer.ts:17](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Tracer.ts#L17)
 
 ## Methods
 
@@ -78,4 +78,4 @@ prefabs/Tracer.ts:14
 
 #### Defined in
 
-prefabs/Tracer.ts:27
+[prefabs/Tracer.ts:30](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Tracer.ts#L30)

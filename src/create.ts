@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags } from '@babylonjs/core';
 import { text2d } from './prefabs/text2d';
 
 interface StringByFunc {
@@ -63,7 +63,7 @@ export function create(
   scene: Scene,
   options: object = {},
   data: object = {},
-): Mesh | TransformNode {
+): Mesh {
   let executedOptions: StringByAny = {};
 
   for (let [key, value] of Object.entries(options)) {
@@ -71,8 +71,10 @@ export function create(
   }
 
   let builder: Function = meshList[shape];
-
   let mesh = builder(name, executedOptions, scene);
+  if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(scene);
+  Tags.EnableFor(mesh);
+  mesh.metadata = { ...mesh.metadata, data: data };
 
   return mesh;
 }

@@ -27,7 +27,7 @@ export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {})
 
     planeWidth = Math.abs(rangeX[0] - rangeX[1]);
     planeHeight = Math.abs(rangeY[0] - rangeY[1]);
-    planePosition = new Vector3(0, (rangeY[0] + rangeY[1]) / 2, rangeZ[1]);
+    planePosition = new Vector3((rangeX[0] + rangeX[1]) / 2, (rangeY[0] + rangeY[1]) / 2, rangeZ[1]);
     planeRotation = new Vector3(0, 0, 0);
 
     let default_options = { height: planeHeight, width: planeWidth, sideOrientation: Mesh.DOUBLESIDE };

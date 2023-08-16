@@ -44,8 +44,8 @@ export class Axis {
   private setCoT(): Selection {
     let CoT;
     if (this.options.cot === undefined) {
-      new TransformNode(this.name + 'CoT', this.scene);
-      CoT = select('#' + this.name + 'CoT', this.scene);
+      let node = new TransformNode(this.name + 'CoT');
+      CoT = select('#' + this.name + 'CoT', node.getScene());
     } else {
       CoT = this.options.cot.bind('cot').prop('name', this.name + 'CoT');
     }
