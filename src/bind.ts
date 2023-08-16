@@ -20,10 +20,6 @@ export function bind(shape: string, scene: Scene, options: object = {}, data: Ar
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var mesh = create(shape, shape, scene, options, element);
-    if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(scene);
-    Tags.EnableFor(mesh);
-    mesh.metadata = { ...mesh.metadata, data: element };
-    meshes.push(mesh);
   });
 
   return new Selection(meshes, scene);
