@@ -11,7 +11,7 @@ import hasIn from 'lodash-es/hasIn';
  * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
  *
  * @param accessor The name of the property to be set (e.g. "renderingGroupId", "material.alpha").
- * @param value The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", and the index "i".
+ * @param value The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", mesh "m", and the index "i".
  * @returns The modified selection
  */
 export function attr(this: Selection, accessor: string, value: any) {
@@ -30,7 +30,7 @@ export function attr(this: Selection, accessor: string, value: any) {
  * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
  *
  * @param accessor The name of the property to be set (e.g. "renderingGroupId", "material.alpha").
- * @param value The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", and the index "i".
+ * @param value The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", mesh "m", and the index "i".
  * @returns The modified selection
  */
 export function prop(this: Selection, accessor: string, value: any) {
@@ -42,6 +42,13 @@ export function prop(this: Selection, accessor: string, value: any) {
   return this;
 }
 
+/**
+ * Called from a selection this method allows you to set multiple properties or subproperties of nodes in the selection given that property exists.
+ * Use this method to improve performace when setting or changing many properties. 
+ *
+ * @param properties Object of key value pairs for the properties to be set or changed, e.g., \{\"renderingGroupId": 2, "material.alpha": 0.2\}.
+ * @returns The modified selection
+ */
 export function props(this: Selection, properties: {}) {
   this.selected.forEach((node, i) => {
     for (let accessor in properties) {

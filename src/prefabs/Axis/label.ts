@@ -8,7 +8,7 @@ import assign from 'lodash-es/assign';
 export function labelAlt(
   this: Axis,
   labels: { x: [] | undefined; y: [] | undefined; z: [] | undefined } = { x: undefined, y: undefined, z: undefined },
-  options: { x: [] | undefined; y: [] | undefined; z: [] | undefined } = { x: undefined, y: undefined, z: undefined },
+  options: { x: {} | undefined; y: {} | undefined; z: {} | undefined } = { x: undefined, y: undefined, z: undefined },
   properties: { x: {}; y: {}; z: {} } = { x: {}, y: {}, z: {} },
 ) {
   let scaleX = this.scales.x.scale;

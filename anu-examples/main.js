@@ -3,6 +3,9 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
+import "@babylonjs/core/Debug/debugLayer";
+import "@babylonjs/inspector";
+
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import { Engine, Scene, Color3 } from "@babylonjs/core";
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -19,6 +22,8 @@ import { barchart2d } from './examples/BarCharts/barchart2d';
 import { linechart2D } from './examples/LineCharts/linechart2D';
 import { textureMap } from './examples/Geographic/Texture_Map';
 import { textureGlobe } from './examples/Geographic/Texture_Globe';
+import { layout } from './examples/Layouts/layout';
+
 
 
 const queryString = window.location.search;
@@ -49,6 +54,7 @@ const scenes = {
   'linechart2D': linechart2D,
   'textureMap': textureMap,
   'textureGlobe': textureGlobe,
+  'layout': layout
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -64,3 +70,16 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
+scene.debugLayer.show();
+
+// hide/show the Inspector
+window.addEventListener("keydown", (ev) => {
+    // Shift+Ctrl+Alt+I
+    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+        if (scene.debugLayer.isVisible()) {
+            scene.debugLayer.hide();
+        } else {
+            scene.debugLayer.show();
+        }
+    }
+});

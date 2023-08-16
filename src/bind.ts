@@ -6,7 +6,7 @@ import { Selection } from './index';
 import { create } from './create';
 
 /**
- * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
+ * Take a shape type, a scene, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
  * The data index of the mesh is also attached to the mesh node object under the metadate property.
  *
  * @param shape A string of the type of the mesh geometry being created.

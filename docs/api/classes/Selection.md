@@ -15,7 +15,6 @@
 - [ambientColor](Selection.md#ambientcolor)
 - [ambientTexture](Selection.md#ambienttexture)
 - [attr](Selection.md#attr)
-- [axis](Selection.md#axis)
 - [bind](Selection.md#bind)
 - [bindInstance](Selection.md#bindinstance)
 - [boundingBox](Selection.md#boundingbox)
@@ -26,11 +25,12 @@
 - [emissiveColor](Selection.md#emissivecolor)
 - [emissiveTexture](Selection.md#emissivetexture)
 - [filter](Selection.md#filter)
-- [func](Selection.md#func)
 - [get](Selection.md#get)
 - [hasTags](Selection.md#hastags)
+- [id](Selection.md#id)
 - [material](Selection.md#material)
-- [pipeAxis](Selection.md#pipeaxis)
+- [metadata](Selection.md#metadata)
+- [name](Selection.md#name)
 - [position](Selection.md#position)
 - [positionX](Selection.md#positionx)
 - [positionY](Selection.md#positiony)
@@ -43,6 +43,7 @@
 - [rotationX](Selection.md#rotationx)
 - [rotationY](Selection.md#rotationy)
 - [rotationZ](Selection.md#rotationz)
+- [run](Selection.md#run)
 - [scaleDT](Selection.md#scaledt)
 - [scaleToDT](Selection.md#scaletodt)
 - [scaling](Selection.md#scaling)
@@ -75,7 +76,7 @@
 
 #### Defined in
 
-selection/index.ts:43
+[selection/index.ts:45](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L45)
 
 ## Properties
 
@@ -100,7 +101,7 @@ selection/index.ts:43
 
 #### Defined in
 
-selection/index.ts:73
+[selection/index.ts:75](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L75)
 
 ___
 
@@ -125,7 +126,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:70
+[selection/index.ts:72](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L72)
 
 ___
 
@@ -154,7 +155,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:78
+[selection/index.ts:80](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L80)
 
 ___
 
@@ -183,7 +184,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:85
+[selection/index.ts:87](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L87)
 
 ___
 
@@ -203,7 +204,7 @@ Called from a selection this method allows you to set any property or subpropert
 | :------ | :------ | :------ |
 | `this` | [`Selection`](Selection.md) | - |
 | `accessor` | `string` | The name of the property to be set (e.g. "renderingGroupId", "material.alpha"). |
-| `value` | `any` | The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", and the index "i". |
+| `value` | `any` | The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", mesh "m", and the index "i". |
 
 ##### Returns
 
@@ -213,34 +214,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:69
-
-___
-
-### axis
-
-• **axis**: (`this`: [`Selection`](Selection.md), `scale`: `any`, `axis`: `string`, `padding`: `number`) => [`Selection`](Selection.md) = `axisBasic`
-
-#### Type declaration
-
-▸ (`this`, `scale`, `axis`, `padding?`): [`Selection`](Selection.md)
-
-##### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `this` | [`Selection`](Selection.md) | `undefined` |
-| `scale` | `any` | `undefined` |
-| `axis` | `string` | `undefined` |
-| `padding` | `number` | `0` |
-
-##### Returns
-
-[`Selection`](Selection.md)
-
-#### Defined in
-
-selection/index.ts:89
+[selection/index.ts:71](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L71)
 
 ___
 
@@ -273,7 +247,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-selection/index.ts:52
+[selection/index.ts:54](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L54)
 
 ___
 
@@ -305,7 +279,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-selection/index.ts:54
+[selection/index.ts:56](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L56)
 
 ___
 
@@ -333,7 +307,7 @@ instance of BoundingInfo class, an object containing all bounding box values.
 
 #### Defined in
 
-selection/index.ts:90
+[selection/index.ts:91](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L91)
 
 ___
 
@@ -362,7 +336,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:75
+[selection/index.ts:77](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L77)
 
 ___
 
@@ -391,7 +365,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:82
+[selection/index.ts:84](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L84)
 
 ___
 
@@ -416,7 +390,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:81
+[selection/index.ts:83](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L83)
 
 ___
 
@@ -446,7 +420,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:88
+[selection/index.ts:90](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L90)
 
 ___
 
@@ -475,7 +449,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:77
+[selection/index.ts:79](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L79)
 
 ___
 
@@ -504,7 +478,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:84
+[selection/index.ts:86](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L86)
 
 ___
 
@@ -533,33 +507,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:91
-
-___
-
-### func
-
-• **func**: (`this`: [`Selection`](Selection.md), `method`: (`m`: `Mesh`, `i`: `number`) => `any`, `params`: `Object`) => `Object`[] = `func`
-
-#### Type declaration
-
-▸ (`this`, `method`, `params?`): `Object`[]
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Selection`](Selection.md) |
-| `method` | (`m`: `Mesh`, `i`: `number`) => `any` |
-| `params` | `Object` |
-
-##### Returns
-
-`Object`[]
-
-#### Defined in
-
-selection/index.ts:53
+[selection/index.ts:92](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L92)
 
 ___
 
@@ -584,7 +532,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:68
+[selection/index.ts:70](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L70)
 
 ___
 
@@ -609,7 +557,36 @@ ___
 
 #### Defined in
 
-selection/index.ts:72
+[selection/index.ts:74](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L74)
+
+___
+
+### id
+
+• **id**: (`this`: [`Selection`](Selection.md), `id`: `string` \| (`d`: `any`, `n`: `Node`, `i`: `number`) => `string`) => [`Selection`](Selection.md) = `id`
+
+#### Type declaration
+
+▸ (`this`, `id`): [`Selection`](Selection.md)
+
+Sets the id on all nodes in the selection.
+
+##### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | - |
+| `id` | `string` \| (`d`: `any`, `n`: `Node`, `i`: `number`) => `string` | A string or a function that returns a string |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+The modified selection
+
+#### Defined in
+
+[selection/index.ts:96](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L96)
 
 ___
 
@@ -638,38 +615,66 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:74
+[selection/index.ts:76](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L76)
 
 ___
 
-### pipeAxis
+### metadata
 
-• **pipeAxis**: (`this`: [`Selection`](Selection.md), `axis`: `string`, `scale`: `any`, `options`: { `meshAlpha?`: `number` ; `meshColor?`: `Color3` ; `padding?`: `Vector3` ; `radius?`: `number`  }) => `PipeAxis` = `createPipeAxis`
+• **metadata**: (`this`: [`Selection`](Selection.md), `key`: `string`, `value`: {} \| (`d`: `any`, `n`: `Node`, `i`: `number`) => {}) => [`Selection`](Selection.md) = `metadata`
 
 #### Type declaration
 
-▸ (`this`, `axis`, `scale`, `options?`): `PipeAxis`
+▸ (`this`, `key`, `value`): [`Selection`](Selection.md)
+
+Adds to the metadata on all nodes in the selection.
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Selection`](Selection.md) |
-| `axis` | `string` |
-| `scale` | `any` |
-| `options` | `Object` |
-| `options.meshAlpha?` | `number` |
-| `options.meshColor?` | `Color3` |
-| `options.padding?` | `Vector3` |
-| `options.radius?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | - |
+| `key` | `string` | A string to be the key for your object inside node.metadata |
+| `value` | {} \| (`d`: `any`, `n`: `Node`, `i`: `number`) => {} | An object or a function that returns an object |
 
 ##### Returns
 
-`PipeAxis`
+[`Selection`](Selection.md)
+
+The modified selection
 
 #### Defined in
 
-selection/index.ts:92
+[selection/index.ts:97](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L97)
+
+___
+
+### name
+
+• **name**: (`this`: [`Selection`](Selection.md), `name`: `string` \| (`d`: `any`, `n`: `Node`, `i`: `number`) => `string`) => [`Selection`](Selection.md) = `name`
+
+#### Type declaration
+
+▸ (`this`, `name`): [`Selection`](Selection.md)
+
+Sets the Name on all nodes in the selection.
+
+##### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | - |
+| `name` | `string` \| (`d`: `any`, `n`: `Node`, `i`: `number`) => `string` | A string or a function that returns a string |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+The modified selection
+
+#### Defined in
+
+[selection/index.ts:95](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L95)
 
 ___
 
@@ -698,7 +703,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:55
+[selection/index.ts:57](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L57)
 
 ___
 
@@ -727,7 +732,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:56
+[selection/index.ts:58](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L58)
 
 ___
 
@@ -756,7 +761,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:57
+[selection/index.ts:59](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L59)
 
 ___
 
@@ -785,7 +790,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:58
+[selection/index.ts:60](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L60)
 
 ___
 
@@ -805,7 +810,7 @@ Called from a selection this method allows you to set any property or subpropert
 | :------ | :------ | :------ |
 | `this` | [`Selection`](Selection.md) | - |
 | `accessor` | `string` | The name of the property to be set (e.g. "renderingGroupId", "material.alpha"). |
-| `value` | `any` | The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", and the index "i". |
+| `value` | `any` | The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", mesh "m", and the index "i". |
 
 ##### Returns
 
@@ -815,7 +820,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:94
+[selection/index.ts:94](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L94)
 
 ___
 
@@ -827,20 +832,25 @@ ___
 
 ▸ (`this`, `properties`): [`Selection`](Selection.md)
 
+Called from a selection this method allows you to set multiple properties or subproperties of nodes in the selection given that property exists.
+Use this method to improve performace when setting or changing many properties.
+
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Selection`](Selection.md) |
-| `properties` | `Object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | - |
+| `properties` | `Object` | Object of key value pairs for the properties to be set or changed, e.g., {\"renderingGroupId": 2, "material.alpha": 0.2}. |
 
 ##### Returns
 
 [`Selection`](Selection.md)
 
+The modified selection
+
 #### Defined in
 
-selection/index.ts:93
+[selection/index.ts:93](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L93)
 
 ___
 
@@ -866,7 +876,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:79
+[selection/index.ts:81](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L81)
 
 ___
 
@@ -891,7 +901,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:71
+[selection/index.ts:73](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L73)
 
 ___
 
@@ -920,7 +930,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:60
+[selection/index.ts:62](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L62)
 
 ___
 
@@ -949,7 +959,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:61
+[selection/index.ts:63](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L63)
 
 ___
 
@@ -978,7 +988,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:62
+[selection/index.ts:64](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L64)
 
 ___
 
@@ -1007,7 +1017,32 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:63
+[selection/index.ts:65](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L65)
+
+___
+
+### run
+
+• **run**: (`this`: [`Selection`](Selection.md), `method`: (`mesh`: `Mesh`, `d`: `any`, `i`: `number`) => `any`) => [`Selection`](Selection.md) = `run`
+
+#### Type declaration
+
+▸ (`this`, `method`): [`Selection`](Selection.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Selection`](Selection.md) |
+| `method` | (`mesh`: `Mesh`, `d`: `any`, `i`: `number`) => `any` |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+#### Defined in
+
+[selection/index.ts:55](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L55)
 
 ___
 
@@ -1032,7 +1067,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:86
+[selection/index.ts:88](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L88)
 
 ___
 
@@ -1057,7 +1092,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:87
+[selection/index.ts:89](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L89)
 
 ___
 
@@ -1086,7 +1121,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:64
+[selection/index.ts:66](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L66)
 
 ___
 
@@ -1115,7 +1150,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:65
+[selection/index.ts:67](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L67)
 
 ___
 
@@ -1144,7 +1179,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:66
+[selection/index.ts:68](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L68)
 
 ___
 
@@ -1173,7 +1208,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:67
+[selection/index.ts:69](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L69)
 
 ___
 
@@ -1183,7 +1218,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:41
+[selection/index.ts:43](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L43)
 
 ___
 
@@ -1216,7 +1251,7 @@ $\<Tags> : select by tags
 
 #### Defined in
 
-selection/index.ts:48
+[selection/index.ts:50](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L50)
 
 ___
 
@@ -1228,7 +1263,7 @@ ___
 
 ▸ (`this`, `id`): [`Selection`](Selection.md)
 
-Select nodes from the childern graph(s) of selected by id and return it as a instance of Selection.
+Select nodes from the childern graph(s) of a selection by ID or list of IDs and return them as a instance of Selection.
 
 ##### Parameters
 
@@ -1245,7 +1280,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-selection/index.ts:50
+[selection/index.ts:52](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L52)
 
 ___
 
@@ -1257,7 +1292,7 @@ ___
 
 ▸ (`this`, `name`): [`Selection`](Selection.md)
 
-Select nodes from the childern graph(s) of selected by name and return it as a instance of Selection.
+Select nodes from the childern graph(s) of a selection by name or list of names and return them as a instance of Selection.
 
 ##### Parameters
 
@@ -1274,7 +1309,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-selection/index.ts:49
+[selection/index.ts:51](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L51)
 
 ___
 
@@ -1286,7 +1321,7 @@ ___
 
 ▸ (`this`, `tag`): [`Selection`](Selection.md)
 
-Select nodes from the childern graph(s) of selected by tag and return it as a instance of Selection.
+Select nodes from the childern graph(s) of a selection by tag or list of tags and return them as a instance of Selection.
 
 ##### Parameters
 
@@ -1303,7 +1338,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-selection/index.ts:51
+[selection/index.ts:53](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L53)
 
 ___
 
@@ -1313,7 +1348,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:40
+[selection/index.ts:42](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L42)
 
 ___
 
@@ -1339,7 +1374,7 @@ ___
 
 #### Defined in
 
-selection/index.ts:80
+[selection/index.ts:82](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L82)
 
 ___
 
@@ -1368,7 +1403,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:76
+[selection/index.ts:78](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L78)
 
 ___
 
@@ -1397,7 +1432,7 @@ The modified selection
 
 #### Defined in
 
-selection/index.ts:83
+[selection/index.ts:85](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L85)
 
 ___
 
@@ -1424,4 +1459,4 @@ ___
 
 #### Defined in
 
-selection/index.ts:59
+[selection/index.ts:61](https://github.com/jpmorganchase/anu/blob/4ed179d/src/selection/index.ts#L61)
