@@ -20,6 +20,7 @@ export function bind(shape: string, scene: Scene, options: object = {}, data: Ar
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var mesh = create(shape, shape, scene, options, element);
+    meshes.push(mesh);
   });
 
   return new Selection(meshes, scene);

@@ -20,11 +20,7 @@ export function bind(this: Selection, shape: string, options: object = {}, data:
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
       var mesh = create(shape, shape, this.scene, options, element);
-      if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(this.scene);
-      Tags.EnableFor(mesh);
       mesh.parent = node;
-      mesh.metadata = { ...mesh.metadata, data: element };
-      //mesh.computeWorldMatrix(true)
       meshes.push(mesh as Mesh);
     });
   });
@@ -46,6 +42,11 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
       var instance = mesh.createInstance(mesh.name + '_' + i);
+      if (mesh instanceof InstancedMesh) mesh.actionManager = new ActionManager(this.scene);
+      Tags.EnableFor(mesh);
+      mesh.metadata = { ...mesh.metadata, data: data };
+      mesh.parent = node;
+      meshes.push(mesh as Mesh);
     });
   });
 

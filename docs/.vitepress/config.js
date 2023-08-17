@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Anujs",
-  description: "Data Drive Babylon",
+  title: "Anu",
+  description: "Immersive Visualizations with Data Drive Babylon",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -19,9 +19,9 @@ export default defineConfig({
         text: 'Introduction',
         collapsed: false,
         items: [
-          { text: 'What is Anujs', link: '/guide/' },
+          { text: 'What is Anu', link: '/guide/' },
           { text: 'Getting Started', link: '/guide/getting_started.md' },
-          { text: 'Frist Steps', link: '/guide/first_steps.md' },
+          { text: 'Creating Meshes', link: '/guide/first_steps.md' },
           { text: 'Using Selections', link: '/guide/using_selections.md' },
           { text: 'Create a Visualization'}
         ]
