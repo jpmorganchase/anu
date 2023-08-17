@@ -25,6 +25,8 @@ import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
 import { cotBind } from './examples/Selections/cot_bind';
 import { spheresBind } from './examples/Selections/spheres_bind';
+import { cotTransform } from './examples/Selections/cot_transform';
+import { boxesTransform } from './examples/Selections/boxes_transform';
 
 
 
@@ -58,7 +60,9 @@ const scenes = {
   'textureGlobe': textureGlobe,
   'layout': layout,
   'cot_bind': cotBind,
-  'spheres_bind': spheresBind
+  'spheres_bind': spheresBind,
+  'cot_transform': cotTransform,
+  'boxes_transform': boxesTransform
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

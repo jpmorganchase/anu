@@ -179,7 +179,51 @@ Inspector.Show(scene, {
 
 
 ## Manipulating Nodes with Selections
-We can update these new nodes in two ways. Either directly changing the returned selection of these nodes or by changing the parent selection of the children nodes. In Babylon, when you update the transform properties of a parent node (position, scale, rotation) it changes these properties for all children of that node.  
+We can update these new nodes in two ways. Either directly changing the returned selection of these nodes or by changing the parent selection of the children nodes. In Babylon, when you update the transform properties of a parent node (position, scale, rotation) it changes these properties for all children of that node. First, let us update the transform properties of a selection of boxes. We will use random numbers for position, scale, and rotation. This will change these transform properties for each box in the selection individually. The result is rather artistic. 
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+
+let boxes = cot.bind('box', {size: 1}, iris);
+
+//Call the transform methods exposed by Selection
+//set random transforms for all the box meshes
+//these methods will be executed for each box
+boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
+    .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()))
+    .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+```
+::: 
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="400"
+    src="/index.html/?example=boxes_transform">
+</iframe>
+
+In contrast, if we change the transform properties of the parent node instead (in our case the cot selection), the result is much less dramatic. This is because we are changing the transform of only one node, and because the boxes are children of that node they are all being transformed in the same way. This can be useful when we want to move, scale, or rotate a group of meshes at once. For example, if we create a scatter plot and all the meshes are children of a single transform node, we can change the position, scale, and rotation of the whole scatter plot by changing the properties of the root parent node, but more on that later.
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+
+let boxes = cot.bind('box', {size: 1}, iris);
+
+//Call the transform methods exposed by Selection
+//set random transforms for cot which will change the transform of all childern
+//these methods will be executed once for the one cot
+cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
+    .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()))
+    .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+```
+::: 
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="400"
+    src="/index.html/?example=cot_transform">
+</iframe>
 
 ## Nested Selections
 
