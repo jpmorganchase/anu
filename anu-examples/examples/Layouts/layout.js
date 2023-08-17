@@ -41,7 +41,12 @@ export function layout(babylonEngine){
     //get all charts with the name
     let charts = anu.selectName('cot', scene);
 
-    console.log(charts)
+   
+
+    let test = new anu.Selection([charts.selected[0]], scene);
+
+    
+    console.log(test.boundingBox())
 
     //console.log(charts.boundingBox())
 

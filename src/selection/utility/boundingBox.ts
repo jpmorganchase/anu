@@ -18,13 +18,14 @@ export function boundingBox(this: Selection): BoundingInfo {
   // }
 
   this.selected.forEach((node, i) => {
-    if (node instanceof Mesh) {
-      node.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
-      let nodeMin = node.getBoundingInfo().boundingBox.minimumWorld;
-      let nodeMax = node.getBoundingInfo().boundingBox.maximumWorld;
+    let meshes = node.getChildMeshes();
+    meshes.forEach((mesh, j) => {
+      mesh.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
+      let nodeMin = mesh.getBoundingInfo().boundingBox.minimumWorld;
+      let nodeMax = mesh.getBoundingInfo().boundingBox.maximumWorld;
       selectionMin = Vector3.Minimize(selectionMin, nodeMin);
       selectionMax = Vector3.Maximize(selectionMax, nodeMax);
-    }
+    });
   });
 
   return new BoundingInfo(selectionMin, selectionMax);

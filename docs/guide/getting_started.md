@@ -2,9 +2,6 @@
 
 Before diving in, let's go over some background, installation, and set-up to make sure you have the best experience using Anu.
 
-
-
-
 ## Background
 
 Anu does not stand alone. To use it effectively, knowledge of web technology stacks is recommended. Here is what you need to know, and what would be nice to know.

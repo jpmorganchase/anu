@@ -23,6 +23,8 @@ import { linechart2D } from './examples/LineCharts/linechart2D';
 import { textureMap } from './examples/Geographic/Texture_Map';
 import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
+import { cotBind } from './examples/Selections/cot_bind';
+import { spheresBind } from './examples/Selections/spheres_bind';
 
 
 
@@ -54,7 +56,9 @@ const scenes = {
   'linechart2D': linechart2D,
   'textureMap': textureMap,
   'textureGlobe': textureGlobe,
-  'layout': layout
+  'layout': layout,
+  'cot_bind': cotBind,
+  'spheres_bind': spheresBind
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -70,7 +74,7 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-scene.debugLayer.show();
+// scene.debugLayer.show();
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {

@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "Anujs"
-  text: "Data-Driven Babylon"
+  name: "Anu"
+  text: "Immersive Visualizations with Data-Driven Babylon"
   tagline: Create 3D and immersive data visualizations in Babylon.js with powerful data binding scene graph manipulation patterns, pre-fabs, and interactions.
   actions:
     - theme: brand
