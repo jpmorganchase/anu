@@ -43,10 +43,10 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
     data.forEach((element, i) => {
       var instance = mesh.createInstance(mesh.name + '_' + i);
       if (mesh instanceof InstancedMesh) mesh.actionManager = new ActionManager(this.scene);
-      Tags.EnableFor(mesh);
-      mesh.metadata = { ...mesh.metadata, data: data };
-      mesh.parent = node;
-      meshes.push(mesh as Mesh);
+      Tags.EnableFor(instance);
+      instance.parent = node;
+      instance.metadata = { ...mesh.metadata, data: element };
+      meshes.push(instance as InstancedMesh);
     });
   });
 
