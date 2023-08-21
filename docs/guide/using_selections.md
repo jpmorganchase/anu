@@ -227,5 +227,39 @@ cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
 
 ## Nested Selections
 
+Up to this point, we have only selected nodes from the top level of the scene graph. However, we can also call any of the selection methods from an instance of [Selection](../api/classes/Selection.md). Two things change when we do this. First, we no longer have to pass the scene as a parameter and second only the subgraph of nodes in the Selection object will be searched. For example, below we use the same scene graph as above where each sphere has one child box. We will add one more box with the same name and ID as the nested meshes "box" to the root of the scene graph. When we call a selection method like [selectName](../api/classes/Selection.html#selectName) from our "spheres" selection object, only the children boxes of the spheres will be selected and returned as a new Selection object. This can be seen as we can now manipulate our new Selection of boxes without changing the box mesh we added to the root of the scene. 
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+
+//Create a sphere for each row of data in the iris data set.
+//These spheres will be the childern of our cot node.
+let spheres = cot.bind('sphere', {diameter: 1}, iris);
+let boxes = spheres.bind('box')
+
+//Create a new box at the root level of the scene-graph
+//Move it on the x axis to -2
+let root_box = anu.bind('box', scene);
+root_box.positionX(-2)
+
+//Select the boxes who are childern of the nodes in the sphere selection
+//Move these boxes on the x axis to 2
+let boxesSelection = spheres.selectName('box')
+boxesSelection.positionX(2)
+
+Inspector.Show(scene, {
+    embedMode: true,
+    showInspector: false
+});
+```
+::: 
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="400"
+    src="/index.html/?example=select_boxes">
+</iframe>
+
 ## Retrieving Node Values
 
