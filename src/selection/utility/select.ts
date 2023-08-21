@@ -90,17 +90,20 @@ export function selectData(
   Array.isArray(key) && Array.isArray(value)
     ? key.forEach(
         (e, i) =>
-          (selected = [
+          (this.selected.forEach((element) => selected = [
             ...selected,
-            ...this.scene
-              .getNodes()
+            ...element
+              .getChildren()
               .filter((node) => node.metadata != null)
               .filter((node) => node.metadata.data[e] == value[i]),
-          ]),
+          ])),
       )
-    : (selected = this.scene
-        .getNodes()
+    : (this.selected.forEach((element) => selected = [
+      ...selected,
+      ...element
+        .getChildren()
         .filter((node) => node.metadata != null)
-        .filter((node) => node.metadata.data.key == value));
+        .filter((node) => node.metadata.data.key == value),
+    ]));
   return new Selection(selected, this.scene);
 }
