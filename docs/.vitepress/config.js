@@ -23,6 +23,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/guide/getting_started.md' },
           { text: 'Creating Meshes', link: '/guide/first_steps.md' },
           { text: 'Using Selections', link: '/guide/using_selections.md' },
+          { text: 'Manipulating Selections', link: '/guide/manipulating_selections.md' },
           { text: 'Create a Visualization'}
         ]
       }

@@ -261,5 +261,24 @@ Inspector.Show(scene, {
     src="/index.html/?example=select_boxes">
 </iframe>
 
-## Retrieving Node Values
+<!-- ## Getting Selection Values
+We can retrieve values of properties from nodes in a [Selection](../api/classes/Selection.md) object.  -->
 
+## Filtering Selections
+We can filter existing selections by values of properties from nodes in a [Selection](../api/classes/Selection.md) object with the [filter](../api/classes/Selection.html#filter) method.  
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+let spheres = cot.bind('sphere', {diameter: 1}, iris);
+
+let setosa = spheres.filter((d) => d.species == "setosa")
+
+```
+::: 
+
+
+
+## Manipulating Selection Nodes
+In the previous examples, we have already shown how we can modify the properties of nodes in our [Selection](../api/classes/Selection.html) object.
+However, this goes way beyond just changing nodes' position and color we can modify any property of nodes in a selection using Anu. In the next section, we will cover this in-depth.

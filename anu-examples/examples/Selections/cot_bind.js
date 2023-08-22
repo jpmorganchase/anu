@@ -7,6 +7,7 @@ import { Inspector } from '@babylonjs/inspector';
 import iris from '../../data/iris.json' assert {type: 'json'};
 
 //create and export a function that takes a babylon engine and returns a scene
+
 export const cotBind = function(engine){
     
   const scene = new Scene(engine)
