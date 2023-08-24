@@ -52,12 +52,26 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
 
 ## Wrapper Methods
 
-Anu provides wrapper methods for quickly modifying commonly used properties of nodes. These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon functions. We will continue to add wrapper methods as suggestions and needs arise. The current list of wrapper methods includes;
+Anu provides wrapper methods for quickly modifying commonly used properties of nodes. These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon functions. We will continue to add wrapper methods as suggestions and needs arise. Here is a list of some of the wrapper functions you will likely be using frequently. Refer to the API documentation of the [Selection](../api/classes/Selection.html) class for a full list of wrapper methods.
 
-| Wrapper Method | Babylon Property | Type
+| Wrapper Method | Babylon Property | Type 
 | ----------- | ----------- | ----------- |
 | [name()](../api/classes/Selection.html#name)     | [node.name](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#name) | string
 | [id()](../api/classes/Selection.html#id)   | [node.id](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#id) | string
+| [position()](../api/classes/Selection.html#position)   | [TransformNode.position](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | vector3
+| [positionX()](../api/classes/Selection.html#positionx)   | [TransformNode.position.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | int
+| [positionY()](../api/classes/Selection.html#positiony)   | [TransformNode.position.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | int
+| [positionZ()](../api/classes/Selection.html#positionz)   | [TransformNode.position.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | int
+| [scaling()](../api/classes/Selection.html#scaling)   | [TransformNode.scaling](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | vector3
+| [scalingX()](../api/classes/Selection.html#scalingx)   | [TransformNode.scaling.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | int
+| [scalingY()](../api/classes/Selection.html#scalingy)   | [TransformNode.scaling.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | int
+| [scalingZ()](../api/classes/Selection.html#scalingz)   | [TransformNode.scaling.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | int
+| [rotation()](../api/classes/Selection.html#rotation)   | [TransformNode.rotation](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | vector3
+| [rotationX()](../api/classes/Selection.html#rotationx)   | [TransformNode.rotation.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | int
+| [rotationY()](../api/classes/Selection.html#rotationy)   | [TransformNode.rotation.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | int
+| [rotationZ()](../api/classes/Selection.html#rotationz)   | [TransformNode.rotation.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | int
+| [material()](../api/classes/Selection.html#material)   | [Mesh.material](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial) | Material
+| [diffuseColor()](../api/classes/Selection.html#diffusecolor)   | [Mesh.StandardMaterial.diffuseColor](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial#diffuseColor) | color3
 
 ## Modifying Any Property
 
