@@ -25,9 +25,10 @@ Inspector.Show(scene, {
     height="400"
     src="/index.html/?example=mod_value">
 </iframe>However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
-1. d: the data bound to the node when it was created
-2. n: the node being modified 
-3. i: the index of the node in the selection
+
+1. d: The data bound to the node when it was created.
+2. n: The node being modified.
+3. i: The index of the node in the selection.
  
 These parameters are passed into the function in order, and while they can be named anything the convention is (d, n, i). Your function must return the same type as the property you are trying to modify or else it will have no effect. To demonstrate this we will modify the same parameters as above but with functions instead of values. 
 
@@ -115,3 +116,7 @@ spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d
     height="400"
     src="/index.html/?example=props">
 </iframe>
+
+## Putting It All Together
+
+If you have been following this guide in order, you now should know how we can use data and Anu to create, select, and manipulate nodes in the Babylon scene graph. It may not seem like it, but this is all we need to start building immersive data visualizations! In the next section, we will walk through step by step how to make a basic data visualization with Anu. 
