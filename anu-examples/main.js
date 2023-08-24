@@ -28,6 +28,10 @@ import { spheresBind } from './examples/Selections/spheres_bind';
 import { cotTransform } from './examples/Selections/cot_transform';
 import { boxesTransform } from './examples/Selections/boxes_transform';
 import { selectBoxes } from './examples/Selections/select_boxes';
+import { modValue } from './examples/Selections/mod_value';
+import { modFunction } from './examples/Selections/mod_function';
+import { prop } from './examples/Selections/prop';
+import { props } from './examples/Selections/props';
 
 
 
@@ -64,7 +68,11 @@ const scenes = {
   'spheres_bind': spheresBind,
   'cot_transform': cotTransform,
   'boxes_transform': boxesTransform,
-  'select_boxes': selectBoxes
+  'select_boxes': selectBoxes,
+  'mod_value': modValue,
+  'mod_function': modFunction,
+  'prop': prop,
+  'props': props
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

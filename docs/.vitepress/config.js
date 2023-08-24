@@ -21,11 +21,47 @@ export default defineConfig({
         items: [
           { text: 'What is Anu', link: '/guide/' },
           { text: 'Getting Started', link: '/guide/getting_started.md' },
+        ]
+      },
+      {
+        text: 'Learning Anu',
+        collapsed: false,
+        items: [
           { text: 'Creating Meshes', link: '/guide/first_steps.md' },
           { text: 'Using Selections', link: '/guide/using_selections.md' },
-          { text: 'Create a Visualization'}
+          { text: 'Manipulating Selections', link: '/guide/manipulating_selections.md' },
+          { text: 'Creating a Visualization', link: '/guide/first_visualization.md'}
         ]
-      }
+      },
+      {
+        text: 'Prefabs',
+        collapsed: true,
+        items: [
+          { text: 'WIP', link: '' }
+        ]
+      },
+      {
+        text: 'Interactions',
+        collapsed: true,
+        items: [
+          { text: 'WIP', link: '' }
+        ]
+      },
+      {
+        text: 'Advanced Topics',
+        collapsed: true,
+        items: [
+          { text: 'WIP', link: '' }
+        ]
+      },
+      {
+        text: 'Contributing',
+        collapsed: true,
+        items: [
+          { text: 'WIP', link: '' }
+        ]
+      },
+
     ],
     "/examples/": [
       {
