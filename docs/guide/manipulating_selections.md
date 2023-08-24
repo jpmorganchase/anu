@@ -34,8 +34,6 @@ These parameters are passed into the function in order, and while they can be na
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot', scene);
-
-let cot = anu.bind('cot', scene);
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
@@ -77,7 +75,43 @@ Anu provides wrapper methods for quickly modifying commonly used properties of n
 
 We are not limited to only modifying the properties with wrapper methods. We can use the [prop()](../api/classes/Selection.html#prop) method to modify any property of a node in a selection, even those deeply nested, given the property exists. Following the example above, we can further modify the properties of our spheres.
 
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+let spheres = cot.bind('sphere', {diameter: 1}, iris);
+
+spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
+        .prop('scaling.x', 0.1) // type int
+        .prop('name', (d,n,i) => "iris_sphere:" + i) // type string
+        .prop('renderOutline', true);
+```
+::: 
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="400"
+    src="/index.html/?example=prop">
+</iframe>
+
 
 ## Modifying Many Properties
 
 We may want to modify many properties of nodes in a selection at once. When we chain methods together we loop through the list of nodes and execute the method for each. Chaining several methods together will repeat this loop, potentially leading to performance impact. Instead of chaining methods, we can also use the [props()](../api/classes/Selection.html#props) method to set multiple properties with one loop. For example, here's how we would use props() to set the same methods as above.
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot', scene);
+let spheres = cot.bind('sphere', {diameter: 1}, iris);
+
+spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth),
+                'scaling.x': 0.1,
+                'name': (d,n,i) => "iris_sphere:" + i,
+                'renderOutline': true});
+```
+::: 
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="400"
+    src="/index.html/?example=props">
+</iframe>
