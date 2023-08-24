@@ -1,8 +1,8 @@
 # Manipulating Selections
-Manipulating nodes and meshes with Anu revolves around selecting nodes from the scene-graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remeber, a Selection object is a list of nodes in a selection, the current scene, and the methods of Selection. When we invoke one of these methods, the method will be repeated for each node in the selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the nodes of a Selection object to create dynamic and data-driven scenes.  
+Manipulating nodes and meshes with Anu revolves around selecting nodes from the scene graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of nodes in a selection, the current scene, and the methods of Selection. When we invoke one of these methods, the method will be repeated for each node in the selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the nodes of a Selection object to create dynamic and data-driven scenes.  
 
 ## Value or Functions
-Every method of [Selection](../api/classes/Selection.html) that modifies the proerties of a node can either be given a raw value of the same type of the property, or a function that returns a value of the same type of the property. Lets start with the simple case of passing the value directly. Again we will bind the iris data set to sphere meshes, and we will modify the following porperties, position, scalingX, and name. Each of these methods will set the value of all spheres in our selection to input value.
+Every method of [Selection](../api/classes/Selection.html) that modifies the properties of a node can either be given a raw value of the same type of the property, or a function that returns a value of the same type of the property. Let's start with the simple case of passing the value directly. Again we will bind the iris data set to sphere meshes, and we will modify the following properties, position, scalingX, and name. Each of these methods will set the value of all spheres in our selection to input value.
 
 ::: code-group
 ```js [js]
@@ -24,14 +24,12 @@ Inspector.Show(scene, {
     width="100%"
     height="400"
     src="/index.html/?example=mod_value">
-</iframe>
-
-However, its often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easliy do this by passing a annoymous function to our methods instead of a value. Anu will excute all functions with the following three parameteres:
+</iframe>However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 1. d: the data bound to the node when it was created
 2. n: the node being modified 
-3. i: the index of the node in the selection 
-
-These parameteres are passed into the function in order, and while they can be named anything the convention is (d, n, i). Your function must return the same type as the property you are trying to modify or else it will have no effect. To demonstrate this we will modify the same parameters as above but with functions instead of values. 
+3. i: the index of the node in the selection
+ 
+These parameters are passed into the function in order, and while they can be named anything the convention is (d, n, i). Your function must return the same type as the property you are trying to modify or else it will have no effect. To demonstrate this we will modify the same parameters as above but with functions instead of values. 
 
 ::: code-group
 ```js [js]
@@ -54,7 +52,7 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
 
 ## Wrapper Methods
 
-Anu provides wrapper methods for quickly modifying commonly used properties of nodes. These methods are intended to reduc the ammount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were choosen to concide with typical data visualization encoding channels and important Babylon functions. We will conitnue to add wrapper methods as suggestions and needs arrise. The current list of wrapper methods includes;
+Anu provides wrapper methods for quickly modifying commonly used properties of nodes. These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon functions. We will continue to add wrapper methods as suggestions and needs arise. The current list of wrapper methods includes;
 
 | Wrapper Method | Babylon Property | Type
 | ----------- | ----------- | ----------- |
@@ -63,9 +61,9 @@ Anu provides wrapper methods for quickly modifying commonly used properties of n
 
 ## Modifying Any Property
 
-We are not limited to only modifying the properties with wrapper methods. We can use the [prop()](../api/classes/Selection.html#prop) method to modify any property of a node in a selection, even those deeply nested, as long as the propertiey exists. Following the example above, we can futher modify the properties of our spheres.
+We are not limited to only modifying the properties with wrapper methods. We can use the [prop()](../api/classes/Selection.html#prop) method to modify any property of a node in a selection, even those deeply nested, given the property exists. Following the example above, we can further modify the properties of our spheres.
 
 
 ## Modifying Many Properties
 
-We may want to modify many properties of nodes in a selection at once. When we chain methods together we loop through the list of nodes and execute the method for each. Chaining several methods together will repeat this loop, potentially leading to performance impact. Instead of chaining methods, we can also use the [props()](../api/classes/Selection.html#props) method to set multiple properties with one loop. For example, heres how we would use props() to set the same methods as above.
+We may want to modify many properties of nodes in a selection at once. When we chain methods together we loop through the list of nodes and execute the method for each. Chaining several methods together will repeat this loop, potentially leading to performance impact. Instead of chaining methods, we can also use the [props()](../api/classes/Selection.html#props) method to set multiple properties with one loop. For example, here's how we would use props() to set the same methods as above.
