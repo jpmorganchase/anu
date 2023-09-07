@@ -33,20 +33,20 @@ export default defineConfig({
           { text: 'Creating a Visualization', link: '/guide/first_visualization.md'}
         ]
       },
-      {
-        text: 'Prefabs',
-        collapsed: true,
-        items: [
-          { text: 'WIP', link: '' }
-        ]
-      },
-      {
-        text: 'Interactions',
-        collapsed: true,
-        items: [
-          { text: 'WIP', link: '' }
-        ]
-      },
+      // {
+      //   text: 'Prefabs',
+      //   collapsed: true,
+      //   items: [
+      //     { text: 'WIP', link: '' }
+      //   ]
+      // },
+      // {
+      //   text: 'Interactions',
+      //   collapsed: true,
+      //   items: [
+      //     { text: 'WIP', link: '' }
+      //   ]
+      // },
       {
         text: 'Advanced Topics',
         collapsed: true,
