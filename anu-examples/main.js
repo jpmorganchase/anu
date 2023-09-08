@@ -32,6 +32,8 @@ import { modValue } from './examples/Selections/mod_value';
 import { modFunction } from './examples/Selections/mod_function';
 import { prop } from './examples/Selections/prop';
 import { props } from './examples/Selections/props';
+import { scatterPlot3DStep1 } from './examples/CreateAVis/step1';
+import { scatterPlot3DStep2 } from './examples/CreateAVis/step2';
 
 
 
@@ -72,7 +74,9 @@ const scenes = {
   'mod_value': modValue,
   'mod_function': modFunction,
   'prop': prop,
-  'props': props
+  'props': props,
+  'scatterPlot3DStep1': scatterPlot3DStep1,
+  'scatterPlot3DStep2': scatterPlot3DStep2
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

@@ -1,0 +1,67 @@
+# Creating a Visualization
+
+Now that we have covered the basics of creating, selecting, and manipulating nodes with Anu, we can start building our first data visualization. What better way to start than with the hello world of data vis, an iris dataset scatter plot!  
+
+## Step 1: Create a Selection and Bind Data to Meshes
+
+In the previous sections, we discussed why it was useful to nest meshes under a common parent. We will continue with this practice here as our first step is to create a selection with a single transform node (CoT) that will serve as the parent node for all of the meshes and nodes that will make up our scatter plot. 
+
+```js
+let cot = anu.bind('cot', scene);
+```
+
+Once we have our CoT selection we will use the bind method again from the Selection object to bind our iris data to sphere meshes. 
+In the example below, we are calling bind and passing the type of mesh we want to create, the starting options of these meshes, in this case, the diameter, and the data we want to bind to the spheres. 
+You can expand the node graph tree to see how a sphere was created for each row of data in our iris dataset as a child of CoT. 
+
+
+::: code-group
+```js
+let cot = anu.bind('cot', scene);
+let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
+```
+
+<<< @/../anu-examples/data/iris.json
+:::
+
+<div style="width: 100%;">
+    <iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        src="/index.html/?example=scatterPlot3DStep1">
+    </iframe>
+</div>
+
+<div class="tip custom-block" style="padding-top: 8px">
+Tip: bind() behaves differently when called standalone vs. from a selection. 
+
+::: details
+When calling bind from the "anu" namespace we need to pass the Babylon scene we are targeting, however when calling bind from a selection we do not need to pass the scene as it will be inferred from the selection object. Additionally, the bind method will always return a new selection. This is why we first saved our CoT selection into a variable before calling bind again to create our spheres. 
+:::
+
+</div>
+
+## Step 2: Moving the Spheres into Position
+
+Now that we have our spheres, each with data bound to it, we can start positioning them on the x,y,z axis. To do this we will use our spheres selection object and method chain the position wrapper methods. We will use an anonymous function knowing that and will pass the data (d), node (n), and index (i) to the code we pass. In this case, we only need the data (d) and will just return the value at our desired JSON keys. In the example below you can see how this individual positions all of our spheres based on the data bound to it.
+
+```js
+let cot = anu.bind('cot', scene);
+let spheres = cot.bind('sphere', {diameter: 0.5}, iris); 
+
+spheres.positionX((d,n,i) => d.sepalLength) // [!code focus]
+       .positionY((d,n,i) => d.sepalWidth) // [!code focus]
+       .positionZ((d,n,i) => d.petalLength); // [!code focus]
+```
+
+<div style="width: 100%;">
+    <iframe id="inlineFrameExample"
+        title="Inline Frame Example"
+        src="/index.html/?example=scatterPlot3DStep2">
+    </iframe>
+</div>
+
+However, there are some issues with this approach and indeed returning the raw data value as the node position is poor practice. For one, our spheres are overlapping, We could fix this by scaling our spheres down but this approach is limited as we can only make them so small before they are no longer visible. Furthermore, imagine our data values were much larger or very small, our spheres could end up being positioned way too far apart or close together. We don't want to conflate our data dimensions with our global and local rendering dimensions. Instead, we should interpolate the values from our data to our rendering coordinates. While Anu does not provide these methods directly, Anu was designed to work with the fantastic scale methods from D3. 
+
+
+
+
