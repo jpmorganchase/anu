@@ -21,7 +21,7 @@ import { HemisphericLight,
 import * as d3 from 'd3';
 import * as anu from 'anu';
 import * as gui from '@babylonjs/gui'
-import { assign } from 'lodash-es';
+import { assign, update } from 'lodash-es';
 
 export function layout(babylonEngine){
     const scene = new Scene(babylonEngine)
@@ -78,6 +78,7 @@ export function layout(babylonEngine){
 
     charts.selected.forEach((node, i) => {
         let m = new Mesh("cell", scene);
+        node.setParent(m);
     })
 
     let cells = anu.selectName('cell', scene);
@@ -137,7 +138,7 @@ export function layout(babylonEngine){
 	transformGroup.addCheckbox("Zalign", toAlign);
 
     var rotateGroup = new gui.SliderGroup("Config", "S");
-	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 1, displayValue);
+	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -157,11 +158,14 @@ export function layout(babylonEngine){
     var toHold = -2;
     var currentID;
 
-    cells.selected.forEach((node, i) => {
+    charts.selected.forEach((node, i) => {
         var pointerDragBehavior = new PointerDragBehavior({dragPlaneNormal: new Vector3(0, 0, 1)});
         pointerDragBehavior.useObjectOrientationForDragging = false;
         pointerDragBehavior.onDragStartObservable.add((event)=>{
-            console.log("dragStart");
+            // node.setParent(null);
+            if(node.parent != null)
+                node.parent = null;
+
             toHold = assignment[i];
             assignment[i] = -1;
             currentID = i;
@@ -170,41 +174,26 @@ export function layout(babylonEngine){
 
         })
         pointerDragBehavior.onDragObservable.add((event)=>{
-            console.log("drag");
             var newID = findClosestCell(node, cells, i);
             if(newID != currentID){
                 assignment = array_move(assignment, currentID, newID)
-                //updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, {rownum: rows, padding: 1, stretch: isstretch, zalign: iszalign});
                 currentID = newID;
                 console.log("moved");
+                updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, {rownum: rows, padding: 1, stretch: isstretch, zalign: iszalign});
             }
         })
         pointerDragBehavior.onDragEndObservable.add((event)=>{
-            console.log("dragEnd");
             for(var i = 0; i < assignment.length; i ++){
                 if(assignment[i] == -1){
                     assignment[i] = toHold;
+                    if(node.parent == null)
+                        node.setParent(cells.selected[i]);
                 }
             }
             console.log(assignment);
-            updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, {rownum: rows, padding: 1, stretch: isstretch, zalign: iszalign});
-            makeGrids(scene, charts, box, cells, {rownum: rows, padding: 1});
-
+            restoreLayout(scene, charts, cells, assignment, box, scalings, {rownum: rows, padding: 1, stretch: isstretch, zalign: iszalign});
         })
         node.addBehavior(pointerDragBehavior)
-
-        // scene.onKeyboardObservable.add((kbInfo) => {
-        //     switch (kbInfo.type) {
-        //       case KeyboardEventTypes.KEYDOWN:
-        //         array_move(assignment, 1, 3);
-        //         updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, {rownum: rows, padding: 1, stretch: isstretch, zalign: iszalign});
-        //         console.log("keydown " + assignment )
-        //         break;
-        //       case KeyboardEventTypes.KEYUP:
-        //         console.log("KEY UP: ", kbInfo.event.code);
-        //         break;
-        //     }
-        //   });
     });
 
     return scene;
@@ -256,13 +245,16 @@ function makeGrids(scene, charts, box, cells, options){
 
     colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
 
+    // cells.selected.forEach((node, i) => {
+    //     node.getChildren().forEach(child => child.parent = null);
+    // })
+
     for(var i = 0; i < charts.selected.length; i++) {
         cells.selected[i].id = i;
         cells.selected[i].setBoundingInfo(new BoundingInfo(box.getBoundingInfo().boundingBox.minimumWorld, box.getBoundingInfo().boundingBox.maximumWorld));
         animatePosition(scene, cells.selected[i], new Vector3(i % colnum * (widthX + padding), Math.floor(i / colnum) * (widthY + padding), 0));
-        // cells.selected[i].position = new Vector3(i % colnum * (widthX + padding), Math.floor(i / colnum) * (widthY + padding), 0);
+        //cells.selected[i].position = new Vector3(i % colnum * (widthX + padding), Math.floor(i / colnum) * (widthY + padding), 0);
         cells.selected[i].showBoundingBox = true;
-        //charts.selected[i].parent = cells.selected[i];
     }
 }
 
@@ -274,7 +266,7 @@ function animatePosition(scene, obj, newPos){
     animationBezierTorus.setKeys(keysBezierTorus);
     var bezierEase = new BezierCurveEase(0.73, 0, 0.31, 1);
     animationBezierTorus.setEasingFunction(bezierEase);
-    obj.animations.length = 0;
+    //obj.animations.length = 0;
     obj.animations.push(animationBezierTorus);
     scene.beginAnimation(obj, 0, 20, false);
 }
@@ -292,6 +284,23 @@ function animateScale(scene, obj, newScale){
     scene.beginAnimation(obj, 0, 10, true);
 }
 
+function restoreLayout(scene, charts, cells, assignment, box, scalings, options){
+    let stretch = options.stretch || 0
+    let zalign = options.zalign || 0
+
+    var widthX = box.getBoundingInfo().boundingBox.maximumWorld.x - box.getBoundingInfo().boundingBox.minimumWorld.x;
+    var widthY = box.getBoundingInfo().boundingBox.maximumWorld.y - box.getBoundingInfo().boundingBox.minimumWorld.y;
+    var widthZ = box.getBoundingInfo().boundingBox.maximumWorld.z - box.getBoundingInfo().boundingBox.minimumWorld.z;
+
+    for(var i = 0; i < charts.selected.length; i++) {
+        charts.selected[assignment[i]].setParent(cells.selected[i]);
+            //charts.selected[assignment[i]].position = new Vector3(0, 0, 0);
+            // animatePosition(scene, charts.selected[assignment[i]], new Vector3(0, 0, 0))
+    }
+
+    shiftMoves(scene, charts, assignment)
+}
+
 function updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, options){
 
     let stretch = options.stretch || 0
@@ -302,10 +311,9 @@ function updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, opti
     var widthZ = box.getBoundingInfo().boundingBox.maximumWorld.z - box.getBoundingInfo().boundingBox.minimumWorld.z;
 
     for(var i = 0; i < charts.selected.length; i++) {
-        if(assignment[i] != -1){
+        if(assignment[i] != -1 && charts.selected[assignment[i]].parent != null){
             charts.selected[assignment[i]].setParent(cells.selected[i]);
-            charts.selected[assignment[i]].position = new Vector3(0, 0, 0);
-            console.log(charts.selected[assignment[i]].position)
+            //charts.selected[assignment[i]].position = new Vector3(0, 0, 0);
             //animatePosition(scene, charts.selected[assignment[i]], new Vector3(0, 0, 0))
         }
     }
@@ -327,16 +335,31 @@ function updatePlaneLayOut(scene, charts, cells, assignment, box, scalings, opti
     
     if(zalign){
         charts.selected.forEach((node, i) => {
-            let test = new anu.Selection([node], scene);
-            var zSize = test.boundingBox().boundingBox.maximumWorld.z - test.boundingBox().boundingBox.minimumWorld.z;
-            //node.position.z = zSize / 2 - widthZ / 2;
-            animatePosition(scene, node, new Vector3(node.position.x, node.position.y, zSize / 2 - widthZ / 2));
+            if(node.parent != null){
+                let test = new anu.Selection([node], scene);
+                var zSize = test.boundingBox().boundingBox.maximumWorld.z - test.boundingBox().boundingBox.minimumWorld.z;
+                //node.position.z = zSize / 2 - widthZ / 2;
+                animatePosition(scene, node, new Vector3(node.position.x, node.position.y, zSize / 2 - widthZ / 2));
+            }
         })
     } else {
         charts.selected.forEach((node, i) => {
+            if(node.parent != null){
             // node.position.z = 0;
-            animatePosition(scene, node, new Vector3(node.position.x, node.position.y, 0));
+                animatePosition(scene, node, new Vector3(node.position.x, node.position.y, 0));
+            }
         })
+    }
+
+    shiftMoves(scene, charts, assignment)
+}
+
+function shiftMoves(scene, charts, assignment){
+    for(var i = 0; i < charts.selected.length; i++) {
+        if(assignment[i] != -1 && charts.selected[assignment[i]].parent != null){
+            //charts.selected[i].animations.length = 0;
+            animatePosition(scene, charts.selected[assignment[i]], new Vector3(0, 0, 0))
+        }
     }
 }
 

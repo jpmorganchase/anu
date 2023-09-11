@@ -19,14 +19,14 @@ export function select(this: Selection, name: string): Selection {
   let selected: any = [];
 
   if (indicator === '.') {
-    this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == text))));
-    return new Selection(selected, this.scene);
+      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == text))));
+      return new Selection(selected, this.scene);
   } else if (indicator === '#') {
-    this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == text))));
-    return new Selection(selected, this.scene);
+      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == text))));
+      return new Selection(selected, this.scene);
   } else if (indicator === '$') {
-    this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, text) == true))));
-    return new Selection(selected, this.scene);
+      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, text) == true))));
+      return new Selection(selected, this.scene);
   }
 
   return new Selection([], this.scene);
