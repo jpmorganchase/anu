@@ -52,19 +52,25 @@ export function layoutNew(babylonEngine){
     var iszalign = false;
     var rows = 1;
 
+    let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(1, 3)}, scene)
+        .attr("row", 2)    
+        .attr("margin", new Vector2(0, 2))
+        .stretch()
+        .zalign()
+
     var toStretch = function(isChecked){
         isstretch = isChecked;
-        let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, stretch: isstretch, zalign: iszalign, margin: new Vector2(1, 3)}, scene);
+        planelayout.stretch();
     }
 
     var toAlign = function(isChecked){
         iszalign = isChecked;
-        let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, stretch: isstretch, zalign: iszalign, margin: new Vector2(1, 3)}, scene);
+        planelayout.zalign();
     }
 
     var changeRow = function(rownum) {
         rows = rownum;
-        let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rownum, stretch: isstretch, zalign: iszalign, margin: new Vector2(1, 3)}, scene);
+        let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rownum, margin: new Vector2(1, 3)}, scene);
     }
 
     var displayValue = function(value) {

@@ -8,10 +8,9 @@ interface LayoutOptions {
     selection: Selection,
     rows?: number, 
     columns?: number,
+    radius?: number,
     margin?: Vector2,
     order?: string[],
-    zalign?: boolean,
-    stretch?: boolean,
   }
 
 export class Layout{
@@ -27,7 +26,7 @@ export class Layout{
         //this.boundingBox = options.selection.boundingBoxLocal();
     }
 
-    public animatePosition(obj: TransformNode, newPos: Vector3){
+    private animatePosition(obj: TransformNode, newPos: Vector3){
         var animationBezierTorus = new Animation("animationBezierTorus", "position", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
         var keysBezierTorus = [];
         keysBezierTorus.push({ frame: 0, value: obj.position });
@@ -40,7 +39,7 @@ export class Layout{
         this.scene.beginAnimation(obj, 0, 20, false);
     }
 
-    public animateScale(obj: TransformNode, newScale: Vector3){
+    private animateScale(obj: TransformNode, newScale: Vector3){
         var animationBezierTorus = new Animation("animationBezierTorus", "scaling", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
         var keysBezierTorus = [];
         keysBezierTorus.push({ frame: 0, value: obj.scaling });
@@ -74,19 +73,88 @@ export class Layout{
 
     public planeLayout(){
         let rownum = this.options.rows || 1
+        let padding = this.options.margin || new Vector2(0, 0)
+        let chartnum = this.options.selection.selected.length
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
+        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+        let colnum = this.options.columns || chartnum;
+
+        colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
+
+        let cells : Mesh[] = [];
+        
+        this.options.selection.selected.forEach((node, i) => {
+            if(node.parent == null){
+                let m = new Mesh("cell", this.scene);
+                m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                node.parent = m;
+                cells.push(m);
+            } else {
+                (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                cells.push((node.parent as Mesh));
+            }
+            this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + padding.x), Math.floor(i / colnum) * (widthY + padding.y), 0));
+            this.animatePosition((node as TransformNode), new Vector3(0, 0, 0))
+        })
+        return this;
+    }
+
+    public attr(s: string, val: object){
+        switch(s){
+            case "row":
+                this.options.rows = Number(val);
+                planeLayout(this.name, this.options, this.scene);
+                break;
+            case "margin":
+                let newmargin = val as Vector2;
+                this.options.margin = newmargin;
+                planeLayout(this.name, this.options, this.scene);
+                break;
+            default:
+                break;
+        }
+        return this;
+    }
+
+    public zalign(){
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
+        this.options.selection.selected.forEach((node, i) => {
+            let test = new Selection([this.options.selection.selected[i]], this.scene);
+            let zSize = test.boundingBox().boundingBox.maximumWorld.z - test.boundingBox().boundingBox.minimumWorld.z;
+            this.animatePosition((node as TransformNode), new Vector3((node as TransformNode).position.x, (node as TransformNode).position.y, zSize / 2 - widthZ / 2));
+        })
+        return this;
+    }
+
+    public stretch(){
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
+        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
+        this.options.selection.selected.forEach((node, i) => {
+            this.animateScale((node as TransformNode), new Vector3(widthX / 6, widthY / 6, widthZ / 6));
+        })
+        return this;
+    }
+
+    public cylinderLayout(){
+        let rownum = this.options.rows || 1
         let padding = this.options.margin || new Vector2(0,0)
         let chartnum = this.options.selection.selected.length
         //let boundingBox = this.options.selection.boundingBox()
         let boundingBox = this.boundingBoxLocal(this.options.selection)
-        let stretch = this.options.stretch
-        let zalign = this.options.zalign
+        let radius = this.options.radius || 5
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
-        var widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
-        let colnum = this.options.columns;
+        let colnum = this.options.columns || chartnum;
 
-        //need to heck whether row is defined
-        colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
+        colnum = chartnum % rownum == 0 ? chartnum / rownum : colnum = Math.floor(chartnum / rownum) + 1;
+
+        var angle = Math.atan(widthX / 2 / radius) * 2
+
+        var up = new Vector3(0, 1, 0);
+        var forward = new Vector3(0, 0, 1);
 
         let cells : Mesh[] = [];
         
@@ -99,34 +167,6 @@ export class Layout{
                 cells.push((node.parent as Mesh));
             }
         })
-
-        this.options.selection.position(new Vector3(0, 0, 0));
-
-        for(var i = 0; i < chartnum; i++) {
-            //cells[i].id = i;
-            cells[i].setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
-
-            this.animatePosition(cells[i], new Vector3(i % colnum * (widthX + padding.x), Math.floor(i / colnum) * (widthY + padding.y), 0));
-            
-            if(zalign){
-                let test = new Selection([this.options.selection.selected[i]], this.scene);
-                let zSize = test.boundingBox().boundingBox.maximumWorld.z - test.boundingBox().boundingBox.minimumWorld.z;
-                this.animatePosition(cells[i].getChildTransformNodes(true)[0], new Vector3(cells[i].getChildTransformNodes(true)[0].position.x, cells[i].getChildTransformNodes(true)[0].position.y, zSize / 2 - widthZ / 2));
-            } else {
-                this.animatePosition(cells[i].getChildTransformNodes(true)[0], new Vector3(cells[i].getChildTransformNodes(true)[0].position.x, cells[i].getChildTransformNodes(true)[0].position.y, 0));
-            }
-
-            if(stretch){
-                this.animateScale(cells[i].getChildTransformNodes(true)[0], new Vector3(widthX / 6, widthY / 6, widthZ / 6));
-            }
-
-            cells[i].showBoundingBox = true;
-
-        }
-        return this;
-    }
-
-    public cylinderLayout(){
 
     }
 
@@ -146,8 +186,6 @@ export function planeLayout(name: string, options: LayoutOptions, scene: Scene):
         columns: options.columns || options.selection.selected.length,
         margin: options.margin || new Vector2(0,0),
         order: options.order || [],
-        zalign: options.zalign || false,
-        stretch: options.stretch || false
     }
  
     return new Layout(name, Options, scene).planeLayout();
