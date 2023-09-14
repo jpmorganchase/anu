@@ -38,6 +38,11 @@ export function layoutNew(babylonEngine){
     let chart8 = makechart(scene, 8);
     let chart9 = make3Dchart(scene, 9);
     let chart10 = makechart(scene, 10);
+    let chart11 = make3Dchart(scene, 11);
+    let chart12 = makechart(scene, 12);
+    let chart13 = makechart(scene, 13);
+    let chart14 = make3Dchart(scene, 14);
+    let chart15 = makechart(scene, 15);
     
 
     let charts = anu.selectName('cot', scene);
@@ -50,6 +55,7 @@ export function layoutNew(babylonEngine){
 
     var isstretch = false;
     var iszalign = false;
+    var showBoundingbox = false;
     var rows = 3;
     var margin = new Vector2(0, 0);
 
@@ -73,6 +79,11 @@ export function layoutNew(babylonEngine){
     var toAlign = function(isChecked){
         iszalign = isChecked;
         layout.zalign();
+    }
+
+    var toToggleBoundingBox = function(isChecked){
+        showBoundingbox = isChecked;
+        layout.attr("showBoundingBox", showBoundingbox);
     }
 
     var changeRow = function(rownum) {
@@ -112,6 +123,7 @@ export function layoutNew(babylonEngine){
     var transformGroup = new gui.CheckboxGroup("Settings");
 	transformGroup.addCheckbox("Stretch", toStretch);
 	transformGroup.addCheckbox("Zalign", toAlign);
+    transformGroup.addCheckbox("ShowBoundingBox", toToggleBoundingBox);
 
 
     var rotateGroup = new gui.SliderGroup("Config", "S");

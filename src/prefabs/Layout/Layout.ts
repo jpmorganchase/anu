@@ -11,6 +11,7 @@ interface LayoutOptions {
     radius?: number,
     margin?: Vector2,
     order?: string[],
+    showBoundingBox?: boolean
   }
 
 export class Layout{
@@ -96,6 +97,7 @@ export class Layout{
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
         let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
         let colnum = this.options.columns || chartnum;
+        let showBox = this.options.showBoundingBox || false;
 
         colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
 
@@ -105,13 +107,13 @@ export class Layout{
             if(node.parent == null){
                 let m = new Mesh("cell", this.scene);
                 m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
-                m.showBoundingBox = true;
                 node.parent = m;
                 cells.push(m);
             } else {
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
             }
+            (node.parent as Mesh).showBoundingBox = showBox;
             this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + margin.x), Math.floor(i / colnum) * (widthY + margin.y), 0));
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0))
             this.animateRotation((node.parent as TransformNode), new Vector3(0, 0, 0))
@@ -137,6 +139,13 @@ export class Layout{
                 if(this.currentLayout == 2)
                     cylinderLayout(this.name, this.options, this.scene);
                 break;
+            case "showBoundingBox":
+                this.options.showBoundingBox = Boolean(val);
+                if(this.currentLayout == 1)
+                    planeLayout(this.name, this.options, this.scene);
+                if(this.currentLayout == 2)
+                    cylinderLayout(this.name, this.options, this.scene);
+                break;
             default:
                 break;
         }
@@ -153,6 +162,7 @@ export class Layout{
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
         let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
         let colnum = this.options.columns || chartnum;
+        let showBox = this.options.showBoundingBox || false;
 
         colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
 
@@ -166,16 +176,14 @@ export class Layout{
             if(node.parent == null){
                 let m = new Mesh("cell", this.scene);
                 m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
-                m.showBoundingBox = true
                 node.parent = m;
                 cells.push(m);
             } else {
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
             }
-        })
-        
-        this.options.selection.selected.forEach((node, i) => {
+            (node.parent as Mesh).showBoundingBox = showBox;
+
             let origin = new Mesh("vect", this.scene);
             origin.position = new Vector3(0, 0, 0);
             let rowid = Math.floor(i / colnum);
@@ -231,6 +239,7 @@ export function planeLayout(name: string, options: LayoutOptions, scene: Scene):
         columns: options.columns || options.selection.selected.length,
         margin: options.margin || new Vector2(0, 0),
         order: options.order || [],
+        showBoundingBox: options.showBoundingBox || false,
     }
  
     return new Layout(name, Options, scene).planeLayout();
@@ -246,6 +255,7 @@ export function cylinderLayout(name: string, options: LayoutOptions, scene: Scen
         radius: options.radius || 5,
         margin: options.margin || new Vector2(0, 0),
         order: options.order || [],
+        showBoundingBox: options.showBoundingBox || false,
     }
  
     return new Layout(name, Options, scene).cylinderLayout();
