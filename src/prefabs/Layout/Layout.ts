@@ -41,17 +41,6 @@ export class Layout{
     }
 
     private animateRotation(obj: TransformNode, newRot: Vector3){
-        // var animationBezierTorus = new Animation("animationBezierTorus", "rotation", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
-        // var keysBezierTorus = [];
-        // keysBezierTorus.push({ frame: 0, value: obj.rotation });
-        // keysBezierTorus.push({ frame: 20, value: newRot });
-        // animationBezierTorus.setKeys(keysBezierTorus);
-        // var bezierEase = new BezierCurveEase(0.73, 0, 0.31, 1);
-        // animationBezierTorus.setEasingFunction(bezierEase);
-        // obj.animations.length = Math.min(obj.animations.length, 2);
-        // obj.animations.push(animationBezierTorus);
-        // this.scene.beginAnimation(obj, 0, 20, false);
-
         //check if quaternion is null, if so we use eulerangle
         //helper convert Quaternion.eulerangle
         //set quaternion to null when using rotation, but not the other way
@@ -101,7 +90,7 @@ export class Layout{
     public planeLayout(){
         this.currentLayout = 1;
         let rownum = this.options.rows || 1
-        let padding = this.options.margin || new Vector2(0, 0)
+        let margin = this.options.margin || new Vector2(0, 0)
         let chartnum = this.options.selection.selected.length
         let boundingBox = this.boundingBoxLocal(this.options.selection)
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
@@ -123,7 +112,7 @@ export class Layout{
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
             }
-            this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + padding.x), Math.floor(i / colnum) * (widthY + padding.y), 0));
+            this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + margin.x), Math.floor(i / colnum) * (widthY + margin.y), 0));
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0))
             this.animateRotation((node.parent as TransformNode), new Vector3(0, 0, 0))
         })
@@ -157,7 +146,7 @@ export class Layout{
     public cylinderLayout(){
         this.currentLayout = 2;
         let rownum = this.options.rows || 1
-        let padding = this.options.margin || new Vector2(0,0)
+        let margin = this.options.margin || new Vector2(0,0)
         let chartnum = this.options.selection.selected.length
         let boundingBox = this.boundingBoxLocal(this.options.selection)
         let radius = this.options.radius || 5
@@ -191,10 +180,10 @@ export class Layout{
             origin.position = new Vector3(0, 0, 0);
             let rowid = Math.floor(i / colnum);
             let colid = i % colnum;
-            origin.rotate((node.parent as TransformNode).getDirection(up), colid * (angle + padding.x * Math.PI / 180));
+            origin.rotate((node.parent as TransformNode).getDirection(up), colid * (angle + margin.x * Math.PI / 180));
             let originforward = origin.getDirection(forward).normalize();
             let pos = originforward.multiplyByFloats(radius, radius, radius);
-            let newPos = new Vector3(pos.x,  rowid * (widthY + padding.y), pos.z)
+            let newPos = new Vector3(pos.x,  rowid * (widthY + margin.y), pos.z)
             this.animatePosition((node.parent as TransformNode), newPos);
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0));
             let newRot = origin.rotationQuaternion?.toEulerAngles() || new Vector3(0, 0, 0);

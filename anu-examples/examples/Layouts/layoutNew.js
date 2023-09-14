@@ -51,6 +51,7 @@ export function layoutNew(babylonEngine){
     var isstretch = false;
     var iszalign = false;
     var rows = 3;
+    var margin = new Vector2(0, 0);
 
     // let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(1, 3)}, scene)
     //     .attr("row", 2)    
@@ -58,9 +59,9 @@ export function layoutNew(babylonEngine){
     //     .stretch()
     //     .zalign()
 
-    let layout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
+    let layout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(0, 0), radius: 20}, scene)
         .attr("row", 2)    
-        .attr("margin", new Vector2(5, 2))
+        //.attr("margin", new Vector2(5, 2))
         // .stretch()
         // .zalign()
 
@@ -77,6 +78,16 @@ export function layoutNew(babylonEngine){
     var changeRow = function(rownum) {
         rows = rownum;
         layout.attr("row", rows);
+    }
+
+    var updateMarginX = function(val) {
+        margin.x = val;
+        layout.attr("margin", margin);
+    }
+
+    var updateMarginY = function(val) {
+        margin.y = val;
+        layout.attr("margin", margin);
     }
 
     var displayValue = function(value) {
@@ -106,11 +117,17 @@ export function layoutNew(babylonEngine){
     var rotateGroup = new gui.SliderGroup("Config", "S");
 	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
+    var marginx = new gui.SliderGroup("MarginX", "S");
+	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 0, displayValue);
+
+    var marginy = new gui.SliderGroup("MarginY", "S");
+	marginy.addSlider("marginy", updateMarginY, "unit", 0, 10, 0, displayValue);
+
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, transformGroup, layoutGroup]);
+    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, marginx, marginy, transformGroup, layoutGroup]);
     selectBox.width = 0.25;
-    selectBox.height = .5;
+    selectBox.height = .8;
     selectBox.background = "#FFFFFF";
     selectBox.horizontalAlignment = gui.Control.HORIZONTAL_ALIGNMENT_LEFT;
     selectBox.verticalAlignment = gui.Control.VERTICAL_ALIGNMENT_BOTTOM;
