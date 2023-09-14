@@ -58,7 +58,7 @@ export function layoutNew(babylonEngine){
     //     .stretch()
     //     .zalign()
 
-    let planelayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
+    let cylinderLayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
         .attr("row", 2)    
         .attr("margin", new Vector2(5, 2))
         .stretch()
@@ -66,17 +66,17 @@ export function layoutNew(babylonEngine){
 
     var toStretch = function(isChecked){
         isstretch = isChecked;
-        planelayout.stretch();
+        cylinderLayout.stretch();
     }
 
     var toAlign = function(isChecked){
         iszalign = isChecked;
-        planelayout.zalign();
+        cylinderLayout.zalign();
     }
 
     var changeRow = function(rownum) {
         rows = rownum;
-        let planelayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
+        cylinderLayout.attr("row", rows);
     }
 
     var displayValue = function(value) {
