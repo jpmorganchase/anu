@@ -58,43 +58,59 @@ export function layoutNew(babylonEngine){
     //     .stretch()
     //     .zalign()
 
-    let cylinderLayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
+    let layout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
         .attr("row", 2)    
         .attr("margin", new Vector2(5, 2))
-        .stretch()
-        .zalign()
+        // .stretch()
+        // .zalign()
 
     var toStretch = function(isChecked){
         isstretch = isChecked;
-        cylinderLayout.stretch();
+        layout.stretch();
     }
 
     var toAlign = function(isChecked){
         iszalign = isChecked;
-        cylinderLayout.zalign();
+        layout.zalign();
     }
 
     var changeRow = function(rownum) {
         rows = rownum;
-        cylinderLayout.attr("row", rows);
+        layout.attr("row", rows);
     }
 
     var displayValue = function(value) {
         return Math.floor(value);
     }
 
+    var setLayout = function(val) {   
+		switch(val) {
+            case 0: 
+                layout.planeLayout();
+            break
+            case 1: 
+                layout.cylinderLayout();
+            break
+        }
+	}
+
+    var layoutGroup = new gui.RadioGroup("Layout");
+	layoutGroup.addRadio("Plane", setLayout);
+    layoutGroup.addRadio("Cylinder", setLayout, true);
+
     var transformGroup = new gui.CheckboxGroup("Settings");
 	transformGroup.addCheckbox("Stretch", toStretch);
 	transformGroup.addCheckbox("Zalign", toAlign);
+
 
     var rotateGroup = new gui.SliderGroup("Config", "S");
 	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, transformGroup]);
+    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, transformGroup, layoutGroup]);
     selectBox.width = 0.25;
-    selectBox.height = 0.25;
+    selectBox.height = .5;
     selectBox.background = "#FFFFFF";
     selectBox.horizontalAlignment = gui.Control.HORIZONTAL_ALIGNMENT_LEFT;
     selectBox.verticalAlignment = gui.Control.VERTICAL_ALIGNMENT_BOTTOM;

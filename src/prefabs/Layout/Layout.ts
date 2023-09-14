@@ -125,6 +125,7 @@ export class Layout{
             }
             this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + padding.x), Math.floor(i / colnum) * (widthY + padding.y), 0));
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0))
+            this.animateRotation((node.parent as TransformNode), new Vector3(0, 0, 0))
         })
         
         return this;
