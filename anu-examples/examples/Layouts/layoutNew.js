@@ -59,24 +59,24 @@ export function layoutNew(babylonEngine){
     //     .zalign()
 
     let planelayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
-        // .attr("row", 2)    
-        // .attr("margin", new Vector2(0, 2))
-        // .stretch()
-        // .zalign()
+        .attr("row", 2)    
+        .attr("margin", new Vector2(5, 2))
+        .stretch()
+        .zalign()
 
     var toStretch = function(isChecked){
         isstretch = isChecked;
-        //planelayout.stretch();
+        planelayout.stretch();
     }
 
     var toAlign = function(isChecked){
         iszalign = isChecked;
-        //planelayout.zalign();
+        planelayout.zalign();
     }
 
     var changeRow = function(rownum) {
         rows = rownum;
-        //planelayout.attr("row", rownum)
+        let planelayout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(5, 0), radius: 20}, scene)
     }
 
     var displayValue = function(value) {

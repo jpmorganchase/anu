@@ -17,6 +17,7 @@ export class Layout{
     name: string;
     options: LayoutOptions;
     scene: Scene;
+    currentLayout: Number = 0;
     //boundingBox: BoundingInfo;
     
     constructor(name: string, options: LayoutOptions, scene: Scene) {
@@ -36,20 +37,33 @@ export class Layout{
         animationBezierTorus.setEasingFunction(bezierEase);
         obj.animations.length = Math.min(obj.animations.length, 2);
         obj.animations.push(animationBezierTorus);
-        this.scene.beginAnimation(obj, 0, 20, false);
+        this.scene.beginDirectAnimation(obj, [animationBezierTorus], 0, 20, false);
     }
 
-    private animateRotation(obj: TransformNode, newRot: Quaternion){
-        var animationBezierTorus = new Animation("animationBezierTorus", "rotationQuaternion", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
-        var keysBezierTorus = [];
-        keysBezierTorus.push({ frame: 0, value: obj.rotationQuaternion });
-        keysBezierTorus.push({ frame: 20, value: newRot });
-        animationBezierTorus.setKeys(keysBezierTorus);
+    private animateRotation(obj: TransformNode, newRot: Vector3){
+        // var animationBezierTorus = new Animation("animationBezierTorus", "rotation", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
+        // var keysBezierTorus = [];
+        // keysBezierTorus.push({ frame: 0, value: obj.rotation });
+        // keysBezierTorus.push({ frame: 20, value: newRot });
+        // animationBezierTorus.setKeys(keysBezierTorus);
+        // var bezierEase = new BezierCurveEase(0.73, 0, 0.31, 1);
+        // animationBezierTorus.setEasingFunction(bezierEase);
+        // obj.animations.length = Math.min(obj.animations.length, 2);
+        // obj.animations.push(animationBezierTorus);
+        // this.scene.beginAnimation(obj, 0, 20, false);
+
+        //check if quaternion is null, if so we use eulerangle
+        //helper convert Quaternion.eulerangle
+        //set quaternion to null when using rotation, but not the other way
+        let keys = [];
+        keys.push({frame:0, value: (obj as TransformNode).rotation});
+        keys.push({frame:20, value: newRot});
+        let animation = new Animation("", "rotation", 20, 
+        Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CYCLE);
+        animation.setKeys(keys);
         var bezierEase = new BezierCurveEase(0.73, 0, 0.31, 1);
-        animationBezierTorus.setEasingFunction(bezierEase);
-        obj.animations.length = Math.min(obj.animations.length, 2);
-        obj.animations.push(animationBezierTorus);
-        this.scene.beginAnimation(obj, 0, 20, false);
+        animation.setEasingFunction(bezierEase);
+        this.scene.beginDirectAnimation(obj, [animation], 0, 20, false);
     }
 
     private animateScale(obj: TransformNode, newScale: Vector3){
@@ -62,7 +76,7 @@ export class Layout{
         animationBezierTorus.setEasingFunction(bezierEase);
         obj.animations.length = Math.min(obj.animations.length, 2);        
         obj.animations.push(animationBezierTorus);
-        this.scene.beginAnimation(obj, 0, 10, true);
+        this.scene.beginDirectAnimation(obj, [animationBezierTorus], 0, 10, true);
     }
 
     private boundingBoxLocal(selection: Selection): BoundingInfo {
@@ -85,6 +99,7 @@ export class Layout{
     }
 
     public planeLayout(){
+        this.currentLayout = 1;
         let rownum = this.options.rows || 1
         let padding = this.options.margin || new Vector2(0, 0)
         let chartnum = this.options.selection.selected.length
@@ -119,12 +134,18 @@ export class Layout{
         switch(s){
             case "row":
                 this.options.rows = Number(val);
-                planeLayout(this.name, this.options, this.scene);
+                if(this.currentLayout == 1)
+                    planeLayout(this.name, this.options, this.scene);
+                if(this.currentLayout == 2)
+                    cylinderLayout(this.name, this.options, this.scene);
                 break;
             case "margin":
                 let newmargin = val as Vector2;
                 this.options.margin = newmargin;
-                planeLayout(this.name, this.options, this.scene);
+                if(this.currentLayout == 1)
+                    planeLayout(this.name, this.options, this.scene);
+                if(this.currentLayout == 2)
+                    cylinderLayout(this.name, this.options, this.scene);
                 break;
             default:
                 break;
@@ -132,33 +153,11 @@ export class Layout{
         return this;
     }
 
-    public zalign(){
-        let boundingBox = this.boundingBoxLocal(this.options.selection)
-        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
-        this.options.selection.selected.forEach((node, i) => {
-            let test = new Selection([this.options.selection.selected[i]], this.scene);
-            let zSize = test.boundingBox().boundingBox.maximumWorld.z - test.boundingBox().boundingBox.minimumWorld.z;
-            this.animatePosition((node as TransformNode), new Vector3((node as TransformNode).position.x, (node as TransformNode).position.y, zSize / 2 - widthZ / 2));
-        })
-        return this;
-    }
-
-    public stretch(){
-        let boundingBox = this.boundingBoxLocal(this.options.selection)
-        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
-        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
-        this.options.selection.selected.forEach((node, i) => {
-            this.animateScale((node as TransformNode), new Vector3(widthX / 6, widthY / 6, widthZ / 6));
-        })
-        return this;
-    }
-
     public cylinderLayout(){
+        this.currentLayout = 2;
         let rownum = this.options.rows || 1
         let padding = this.options.margin || new Vector2(0,0)
         let chartnum = this.options.selection.selected.length
-        //let boundingBox = this.options.selection.boundingBox()
         let boundingBox = this.boundingBoxLocal(this.options.selection)
         let radius = this.options.radius || 5
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
@@ -171,7 +170,6 @@ export class Layout{
 
         let forward = new Vector3(0, 0, 1);
         let up = new Vector3(0, 1, 0);
-        //let origin = new TransformNode("vect", this.scene);
         let cells : Mesh[] = [];
         
         this.options.selection.selected.forEach((node, i) => {
@@ -186,6 +184,7 @@ export class Layout{
                 cells.push((node.parent as Mesh));
             }
         })
+        
         this.options.selection.selected.forEach((node, i) => {
             let origin = new Mesh("vect", this.scene);
             origin.position = new Vector3(0, 0, 0);
@@ -197,7 +196,33 @@ export class Layout{
             let newPos = new Vector3(pos.x,  rowid * (widthY + padding.y), pos.z)
             this.animatePosition((node.parent as TransformNode), newPos);
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0));
-            (node.parent as TransformNode).rotationQuaternion = origin.rotationQuaternion
+            let newRot = origin.rotationQuaternion?.toEulerAngles() || new Vector3(0, 0, 0);
+            this.animateRotation((node.parent as TransformNode), newRot);
+            origin.dispose();
+        })
+
+        return this;
+    }
+    
+    public zalign(){
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
+        this.options.selection.selected.forEach((node, i) => {
+            let test = new Selection([this.options.selection.selected[i]], this.scene);
+            let zSize = this.boundingBoxLocal(test).boundingBox.maximumWorld.z - this.boundingBoxLocal(test).boundingBox.minimumWorld.z;
+            this.animatePosition((node as TransformNode), new Vector3((node as TransformNode).position.x, (node as TransformNode).position.y, zSize / 2 - widthZ / 2));
+        })
+        return this;
+    }
+
+    public stretch(){
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
+        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
+        this.options.selection.selected.forEach((node, i) => {
+            //TODO: Investigate why divide by 6 works
+            this.animateScale((node as TransformNode), new Vector3(widthX / 6, widthY / 6, widthZ / 6));
         })
         return this;
     }
