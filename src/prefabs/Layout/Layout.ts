@@ -2,7 +2,7 @@
 //planeLayout.Update({options})
 //planeLayout.Transform({options})
 import { Selection } from "../../selection";
-import { BoundingInfo, Scene, Vector2, Vector3, Mesh, Animation, BezierCurveEase, TransformNode } from "@babylonjs/core";
+import { BoundingInfo, Scene, Vector2, Vector3, Vector4, Mesh, Animation, BezierCurveEase, TransformNode, Quaternion } from "@babylonjs/core";
 
 interface LayoutOptions {
     selection: Selection,
@@ -39,6 +39,19 @@ export class Layout{
         this.scene.beginAnimation(obj, 0, 20, false);
     }
 
+    private animateRotation(obj: TransformNode, newRot: Quaternion){
+        var animationBezierTorus = new Animation("animationBezierTorus", "rotationQuaternion", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
+        var keysBezierTorus = [];
+        keysBezierTorus.push({ frame: 0, value: obj.rotationQuaternion });
+        keysBezierTorus.push({ frame: 20, value: newRot });
+        animationBezierTorus.setKeys(keysBezierTorus);
+        var bezierEase = new BezierCurveEase(0.73, 0, 0.31, 1);
+        animationBezierTorus.setEasingFunction(bezierEase);
+        obj.animations.length = Math.min(obj.animations.length, 2);
+        obj.animations.push(animationBezierTorus);
+        this.scene.beginAnimation(obj, 0, 20, false);
+    }
+
     private animateScale(obj: TransformNode, newScale: Vector3){
         var animationBezierTorus = new Animation("animationBezierTorus", "scaling", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CONSTANT);
         var keysBezierTorus = [];
@@ -52,7 +65,7 @@ export class Layout{
         this.scene.beginAnimation(obj, 0, 10, true);
     }
 
-    public boundingBoxLocal(selection: Selection): BoundingInfo {
+    private boundingBoxLocal(selection: Selection): BoundingInfo {
 
         let selectionMin = new Vector3(0, 0, 0);
         let selectionMax = new Vector3(0, 0, 0);
@@ -88,6 +101,7 @@ export class Layout{
             if(node.parent == null){
                 let m = new Mesh("cell", this.scene);
                 m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                m.showBoundingBox = true;
                 node.parent = m;
                 cells.push(m);
             } else {
@@ -97,6 +111,7 @@ export class Layout{
             this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + padding.x), Math.floor(i / colnum) * (widthY + padding.y), 0));
             this.animatePosition((node as TransformNode), new Vector3(0, 0, 0))
         })
+        
         return this;
     }
 
@@ -147,30 +162,45 @@ export class Layout{
         let boundingBox = this.boundingBoxLocal(this.options.selection)
         let radius = this.options.radius || 5
         let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
+        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
         let colnum = this.options.columns || chartnum;
 
-        colnum = chartnum % rownum == 0 ? chartnum / rownum : colnum = Math.floor(chartnum / rownum) + 1;
+        colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
 
-        var angle = Math.atan(widthX / 2 / radius) * 2
+        let angle = Math.atan(widthX / 2 / radius) * 2;
 
-        var up = new Vector3(0, 1, 0);
-        var forward = new Vector3(0, 0, 1);
-
+        let forward = new Vector3(0, 0, 1);
+        let up = new Vector3(0, 1, 0);
+        //let origin = new TransformNode("vect", this.scene);
         let cells : Mesh[] = [];
         
         this.options.selection.selected.forEach((node, i) => {
             if(node.parent == null){
                 let m = new Mesh("cell", this.scene);
+                m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                m.showBoundingBox = true
                 node.parent = m;
                 cells.push(m);
             } else {
+                (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
             }
         })
-
+        this.options.selection.selected.forEach((node, i) => {
+            let origin = new Mesh("vect", this.scene);
+            origin.position = new Vector3(0, 0, 0);
+            let rowid = Math.floor(i / colnum);
+            let colid = i % colnum;
+            origin.rotate((node.parent as TransformNode).getDirection(up), colid * (angle + padding.x * Math.PI / 180));
+            let originforward = origin.getDirection(forward).normalize();
+            let pos = originforward.multiplyByFloats(radius, radius, radius);
+            let newPos = new Vector3(pos.x,  rowid * (widthY + padding.y), pos.z)
+            this.animatePosition((node.parent as TransformNode), newPos);
+            this.animatePosition((node as TransformNode), new Vector3(0, 0, 0));
+            (node.parent as TransformNode).rotationQuaternion = origin.rotationQuaternion
+        })
+        return this;
     }
-
-
 
     // public planeLayout = planeLayout;
     // public cylinderLayout = cylinderLayout;
@@ -184,13 +214,27 @@ export function planeLayout(name: string, options: LayoutOptions, scene: Scene):
         selection: options.selection,
         rows: options.rows || 1,
         columns: options.columns || options.selection.selected.length,
-        margin: options.margin || new Vector2(0,0),
+        margin: options.margin || new Vector2(0, 0),
         order: options.order || [],
     }
  
     return new Layout(name, Options, scene).planeLayout();
+
 }
 
-export function cylinderLayout(){}
+export function cylinderLayout(name: string, options: LayoutOptions, scene: Scene){
+
+    const Options: LayoutOptions = {
+        selection: options.selection,
+        rows: options.rows || 1,
+        columns: options.columns || options.selection.selected.length,
+        radius: options.radius || 5,
+        margin: options.margin || new Vector2(0, 0),
+        order: options.order || [],
+    }
+ 
+    return new Layout(name, Options, scene).cylinderLayout();
+
+}
 
 export function cockpitLayout(){}

@@ -10,4 +10,4 @@ export { Tracer } from './prefabs/Tracer';
 export { Axis } from './prefabs/Axis/Axis';
 export { createTextureMap } from './prefabs/Mapping/textureMap';
 export { createTextureGlobe } from './prefabs/Mapping/textureGlobe';
-export { planeLayout } from './prefabs/Layout/Layout';
+export { planeLayout, cylinderLayout } from './prefabs/Layout/Layout';
