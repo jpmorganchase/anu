@@ -57,6 +57,7 @@ export function layoutNew(babylonEngine){
     var iszalign = false;
     var showBoundingbox = false;
     var rows = 3;
+    var curve = 20;
     var margin = new Vector2(0, 0);
 
     // let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(1, 3)}, scene)
@@ -89,6 +90,11 @@ export function layoutNew(babylonEngine){
     var changeRow = function(rownum) {
         rows = rownum;
         layout.attr("row", rows);
+    }
+
+    var changeCurve = function(radius) {
+        curve = radius;
+        layout.attr("radius", curve);
     }
 
     var updateMarginX = function(val) {
@@ -130,13 +136,13 @@ export function layoutNew(babylonEngine){
 	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
     var curvature = new gui.SliderGroup("Curvature", "S");
-	curvature.addSlider("curvature", changeRow, "units", 0, 60, 20, displayValue);
+	curvature.addSlider("curvature", changeCurve, "units", 0, 80, 20, displayValue);
 
     var marginx = new gui.SliderGroup("MarginX", "S");
 	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 0, displayValue);
 
     var marginy = new gui.SliderGroup("MarginY", "S");
-	marginy.addSlider("marginy", updateMarginY, "unit", 0, 10, 0, displayValue);
+	marginy.addSlider("marginy", updateMarginY, "unit", 0, 20, 0, displayValue);
 
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 

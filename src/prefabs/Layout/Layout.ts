@@ -146,6 +146,11 @@ export class Layout{
                 if(this.currentLayout == 2)
                     cylinderLayout(this.name, this.options, this.scene);
                 break;
+            case "radius":
+                this.options.radius = Number(val);
+                if(this.currentLayout == 2)
+                    cylinderLayout(this.name, this.options, this.scene);
+                break;
             default:
                 break;
         }
