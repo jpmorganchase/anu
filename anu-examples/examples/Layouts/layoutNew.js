@@ -129,6 +129,9 @@ export function layoutNew(babylonEngine){
     var rotateGroup = new gui.SliderGroup("Config", "S");
 	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
+    var curvature = new gui.SliderGroup("Curvature", "S");
+	curvature.addSlider("curvature", changeRow, "units", 0, 60, 20, displayValue);
+
     var marginx = new gui.SliderGroup("MarginX", "S");
 	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 0, displayValue);
 
@@ -137,9 +140,9 @@ export function layoutNew(babylonEngine){
 
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, marginx, marginy, transformGroup, layoutGroup]);
-    selectBox.width = 0.25;
-    selectBox.height = .8;
+    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, curvature, marginx, marginy, transformGroup, layoutGroup]);
+    selectBox.width = 0.2;
+    selectBox.height = .9;
     selectBox.background = "#FFFFFF";
     selectBox.horizontalAlignment = gui.Control.HORIZONTAL_ALIGNMENT_LEFT;
     selectBox.verticalAlignment = gui.Control.VERTICAL_ALIGNMENT_BOTTOM;
