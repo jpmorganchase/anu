@@ -4,9 +4,10 @@
 import { Vector3, StandardMaterial, Color3, Mesh, Tools } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
+import { selectName } from '../../select';
 
 
-export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {}) {
+export function backgroundAlt(this: Axis) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
   let domainX = this.scales.x.domain;
@@ -19,7 +20,7 @@ export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {})
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
 
-  if (this.options.x != undefined && this.options.y != undefined) {
+  if (this.options.scale?.x != undefined && this.options.scale?.y != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -34,14 +35,14 @@ export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {})
 
     let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshX = this.CoT.bind('plane', assign({}, default_options, options))
+    let backgroundMeshX = this.CoT.bind('plane', assign({}, default_options, this.options.backgroundOptions))
       .attr('name', this.name + '_backgroundX')
       .position(planePosition)
       .material(new StandardMaterial(this.name + '_backgroundX_material', this.scene))
-      .props(assign({}, default_properties, properties));
+      .props(assign({}, default_properties, this.options.backgroundProperties));
   }
 
-  if (this.options.y != undefined && this.options.z != undefined) {
+  if (this.options.scale?.y != undefined && this.options.scale?.z != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -56,15 +57,15 @@ export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {})
 
     let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshY = this.CoT.bind('plane', assign({}, default_options, options))
+    let backgroundMeshY = this.CoT.bind('plane', assign({}, default_options, this.options.backgroundOptions))
       .attr('name', this.name + '_backgroundY')
       .position(planePosition)
       .rotation(planeRotation)
       .material(new StandardMaterial(this.name + '_backgroundY_material', this.scene))
-      .props(assign({}, default_properties, properties));
+      .props(assign({}, default_properties, this.options.backgroundProperties));
   }
 
-  if (this.options.z != undefined && this.options.x != undefined) {
+  if (this.options.scale?.z != undefined && this.options.scale?.x != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeRotation: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
     let planeWidth: number = 0;
@@ -79,13 +80,13 @@ export function backgroundAlt(this: Axis, options: {} = {}, properties: {} = {})
 
     let default_properties = { 'material.diffuseColor': Color3.White, 'material.alpha': 0.2 };
 
-    let backgroundMeshZ = this.CoT.bind('plane', assign({}, default_options, options))
+    let backgroundMeshZ = this.CoT.bind('plane', assign({}, default_options, this.options.backgroundOptions))
       .attr('name', this.name + '_backgroundZ')
       .position(planePosition)
       .rotation(planeRotation)
       .material(new StandardMaterial(this.name + '_backgroundZ_material', this.scene))
-      .props(assign({}, default_properties, properties));
+      .props(assign({}, default_properties, this.options.backgroundProperties));
   }
 
-  return this;
+  return selectName([this.name + '_backgroundZ', this.name + '_backgroundY', this.name + '_backgroundX'], this.scene)
 }

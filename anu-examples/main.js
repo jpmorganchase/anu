@@ -35,6 +35,8 @@ import { prop } from './examples/Selections/prop';
 import { props } from './examples/Selections/props';
 import { scatterPlot3DStep1 } from './examples/CreateAVis/step1';
 import { scatterPlot3DStep2 } from './examples/CreateAVis/step2';
+import { axesTest } from './examples/Axes/axesTest';
+import { text } from './examples/Text/text';
 
 
 
@@ -78,7 +80,9 @@ const scenes = {
   'prop': prop,
   'props': props,
   'scatterPlot3DStep1': scatterPlot3DStep1,
-  'scatterPlot3DStep2': scatterPlot3DStep2
+  'scatterPlot3DStep2': scatterPlot3DStep2,
+  'axesTest': axesTest,
+  'text': text
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -94,7 +98,7 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-// scene.debugLayer.show();
+scene.debugLayer.show();
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {

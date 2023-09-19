@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { DynamicTexture, StandardMaterial, MeshBuilder, Mesh } from '@babylonjs/core';
+import { DynamicTexture, StandardMaterial, MeshBuilder, Mesh, AbstractMesh, TransformNode } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
+
+
 
 export function text2d(
   name: string,
@@ -14,6 +16,7 @@ export function text2d(
     fontStyle?: string;
     fontColor?: string;
     backgroundColor?: string;
+    billboardMode?: number;
   },
   scene: Scene,
 ) {
@@ -24,6 +27,7 @@ export function text2d(
   const fontStyle: string = options.fontStyle || 'Arial';
   const fontColor: string = options.fontColor || '#000000';
   const backgroundColor: string = options.backgroundColor || 'transparent';
+  const billboardMode: number = options.billboardMode || Mesh.BILLBOARDMODE_NONE;
 
   let font = fontMod + ' ' + fontSize + 'px ' + fontStyle;
 
@@ -55,7 +59,12 @@ export function text2d(
   //Create plane and set dynamic texture as material
   var plane = MeshBuilder.CreatePlane(name, { width: planeWidth, height: planeHeight }, scene);
   plane.material = mat;
-  plane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+  plane.billboardMode = billboardMode;
+
+  plane.doNotSyncBoundingInfo = true;
+  plane.freezeNormals()
+  plane.material.freeze()
+  plane.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY
 
   return plane;
 }

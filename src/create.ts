@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
 import { text2d } from './prefabs/text2d';
 
 interface StringByFunc {
@@ -14,6 +14,10 @@ interface StringByAny {
 
 function createCOT(name: string, options: object, scene: Scene) {
   return new TransformNode(name, scene);
+}
+
+function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
+  return CreateGreasedLine(name, options, {}, scene);
 }
 
 const meshList: StringByFunc = {
@@ -45,6 +49,7 @@ const meshList: StringByFunc = {
   geodesic: MeshBuilder.CreateGeodesic,
   goldberg: MeshBuilder.CreateGoldberg,
   text2d: text2d,
+  greasedLine: createGL,
 };
 
 /**

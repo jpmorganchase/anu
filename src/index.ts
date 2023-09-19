@@ -11,3 +11,7 @@ export { Axis } from './prefabs/Axis/Axis';
 export { createTextureMap } from './prefabs/Mapping/textureMap';
 export { createTextureGlobe } from './prefabs/Mapping/textureGlobe';
 export { planeLayout, cylinderLayout } from './prefabs/Layout/Layout';
+export { createAxes } from './prefabs/Axis/Axis';
+
+
+

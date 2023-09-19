@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3 } from '@babylonjs/core';
+import { Color3, Vector3 } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
 
-export function tickAlt(
+export function grid(
   this: Axis,
-  labels: { x: [] | undefined; y: [] | undefined; z: [] | undefined } = { x: undefined, y: undefined, z: undefined },
-) {
+  ) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
   let domainX = this.scales.x.domain;
@@ -23,17 +22,16 @@ export function tickAlt(
 
   let linesArray = [];
 
-  if (this.options.x != undefined) {
+  if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.x === undefined) {
+    
       try {
         ticks = scaleX.ticks();
       } catch {
         ticks = domainX;
       }
-    } else {
-      ticks = labels.x;
-    }
+   
+    
 
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
@@ -48,17 +46,15 @@ export function tickAlt(
     }
   }
 
-  if (this.options.y != undefined) {
+  if (this.options.scale?.y != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.y === undefined) {
+    
       try {
         ticks = scaleY.ticks();
       } catch {
         ticks = domainY;
       }
-    } else {
-      ticks = labels.y;
-    }
+  
 
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
@@ -73,17 +69,15 @@ export function tickAlt(
     }
   }
 
-  if (this.options.z != undefined) {
+  if (this.options.scale?.z != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.z === undefined) {
+    
       try {
         ticks = scaleZ.ticks();
       } catch {
         ticks = domainZ;
       }
-    } else {
-      ticks = labels.z;
-    }
+  
 
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
@@ -98,13 +92,15 @@ export function tickAlt(
     }
   }
 
-  let default_options = { text: (d: any) => d.text, fontSize: 60, fontColor: 'white' };
+  let default_options = { lines: linesArray};
+  
+  let default_properties = {  'name': this.name + "_grid",
+                              'alpha': 0.3,
+                              'color': Color3.White()}
 
-  let default_properties = {};
 
-  let tickMesh = this.CoT.bind('lineSystem', { lines: linesArray })
-    .attr('name', this.name + '_tick')
-    .attr('alpha', 0.3);
+  let tickMesh = this.CoT.bind('lineSystem', assign({}, default_options, this.options.gridOptions))
+    .props(assign({}, default_properties, this.options.gridProperties))
 
-  return this;
+  return tickMesh;
 }
