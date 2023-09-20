@@ -58,11 +58,14 @@ export function barchart2d(babylonEngine){
                                             return new Color3(...rgb)}) 
 
     //Create our axises using the anu axis prefab
-    new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY})
-    .shape()
-    .background()
-    .ticks()
-    .grid();
+    // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY})
+    // .shape()
+    // .background()
+    // .ticks()
+    // .grid();
+
+    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
+
    
     return scene;
 }

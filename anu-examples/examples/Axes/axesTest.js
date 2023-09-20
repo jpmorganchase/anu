@@ -64,18 +64,7 @@ export const axesTest = function(engine){
         100));
 
  
-    anu.createAxes('test', scene, {scale: {x: scaleX, y: scaleY, z: scaleZ},
-    labelTicks: {x: [1,2,3,4,5]}})
-
-    // //Using the Axis prefab from Anu, we can create our chart axis by passing in d3 scale functions for each xyz dimension. 
-    // let axis = new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})
-    //                   .shape()
-    //                   .background()
-    //                   .ticks()
-    //                   .grid();
-
-
-
+    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
     
 

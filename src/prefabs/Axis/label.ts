@@ -39,9 +39,14 @@ export function labelAlt(
 
     textPosition = (d) => new Vector3(scaleX(d.text), rangeY[0], rangeZ[0]);
 
-    let default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+    let default_options;
+    if (this.options.labelFormat?.x != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.02 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -50,7 +55,7 @@ export function labelAlt(
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelX')
+      .prop('name', this.name + '_labelX')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
   }
@@ -74,16 +79,14 @@ export function labelAlt(
 
     textPosition = (d) => new Vector3(rangeX[0], scaleY(d.text), rangeZ[0]);
 
-    let default_options = {
-      text: (d: any) => {
-        return d.text;
-      },
-      size: this.scales.size * 0.05,
-      fontSize: 60,
-      fontColor: 'white',
-    };
+    let default_options;
+    if (this.options.labelFormat?.y != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    }
 
-    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.05 };
+    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.02 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -92,7 +95,7 @@ export function labelAlt(
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelY')
+      .prop('name', this.name + '_labelY')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
   }
@@ -115,9 +118,14 @@ export function labelAlt(
 
     textPosition = (d) => new Vector3(rangeX[1], rangeY[0], scaleZ(d.text));
 
-    let default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+    let default_options;
+    if (this.options.labelFormat?.z != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+    }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.02 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -126,7 +134,7 @@ export function labelAlt(
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelZ')
+      .prop('name', this.name + '_labelZ')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
   }
