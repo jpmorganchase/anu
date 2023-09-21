@@ -5,6 +5,7 @@ import { Vector3 } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
 import { selectName } from '../../select';
+import { Selection } from '../../selection';
 
 export function labelAlt(
   this: Axis
@@ -20,6 +21,8 @@ export function labelAlt(
   let scaleZ = this.scales.z.scale;
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
+
+  let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
 
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
@@ -41,12 +44,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.x != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.02 };
+    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -58,6 +61,8 @@ export function labelAlt(
       .prop('name', this.name + '_labelX')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
+
+    selections.x = labelMesh;
   }
 
   if (this.options.scale?.y != undefined) {
@@ -81,12 +86,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.y != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     }
 
-    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.02 };
+    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.05 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -98,6 +103,9 @@ export function labelAlt(
       .prop('name', this.name + '_labelY')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
+
+      selections.y = labelMesh;
+
   }
 
   if (this.options.scale?.z != undefined) {
@@ -120,12 +128,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.z != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.2, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
     }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.02 };
+    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -137,7 +145,10 @@ export function labelAlt(
       .prop('name', this.name + '_labelZ')
       .position(textPosition)
       .props(assign({}, default_properties, this.options.labelProperties));
+
+      selections.z = labelMesh;
+
   }
 
-  return selectName([this.name + '_labelZ', this.name + '_labelY', this.name + '_labelX'], this.scene);
+  return selections;
 }

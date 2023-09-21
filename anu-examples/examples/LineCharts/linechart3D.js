@@ -75,64 +75,31 @@ export function linechart3D(babylonEngine) {
 
     ribbon.setVerticesData(VertexBuffer.ColorKind, colors);
 
-    let axis = new anu.Axis("testAxis", scene, {
-      cot: anu.select("#cot", scene),
-      x: scaleX,
-      y: scaleY,
-      z: scaleZ,
-    })
-      .shape(
-        { radius: 0.02 },
-        {
-          "material.diffuseColor": Color3.Black,
-          "material.alpha": 1,
-          "material.specularColor": Color3.Black,
-        }
-      )
-      .background()
-      .ticks(
-        {
-          x: scaleX.ticks(d3.timeYear.every(2)),
-          y: scaleY.ticks(),
-        },
-        {
-          x: {
-            text: (d) => {
-              return dateFormat(d.text);
-            },
-          },
-          y: {
-            text: (d) => {
-              if (d.text === undefined) {
-                return "0%";
-              } else {
-                return d.text + "%";
-              }
-            },
-          },
-        }
-      )
-      .grid({
-        x: scaleX.ticks(d3.timeYear.every(2)),
-        y: scaleY.ticks(),
-      });
+    anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
+                                    scale: {x: scaleX, y: scaleY, z: scaleZ},
+                                    domainMaterialOptions: { "color": Color3.Black(), width: 5},
+                                    gridTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
+                                    labelTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
+                                    labelFormat: {x: dateFormat, y: (d) => {
+                                                  if (d.text === undefined) {
+                                                    return "0%";
+                                                  } else {
+                                                    return d.text + "%";
+                                                  }}
+                                                }
+                                  });
 
-    
     let whiteLines = anu
       .select("#cot", scene)
       .bind("lineSystem", { lines: myPaths2 })
       .attr("color", new Color3(1, 1, 1))
       .prop("alpha", 0.5);
-
+  
     let  blackOutline = anu
       .select("#cot", scene)
       .bind("lines", { points: myPaths2[0]})
       .attr("color", new Color3(0, 0, 0));
-      
-  });
-
-
-  
-
+    });
+                                  
   return scene;
 }

@@ -4,8 +4,12 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from 'anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
-import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
+import { VertexBuffer, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
+// import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
+// import { createTextMesh } from "babylon-msdf-text";
+// import fnt from "../../fonts/roboto-regular.json";
+// import png from "../../fonts/roboto-regular.png";
+
 
 //import { Mesh } from 'anu';
 
@@ -28,12 +32,34 @@ export const text = function(engine){
   const randomizeThreshold = (threshold) => Math.random() * threshold * 2 - threshold
   const randmizeVector = (threshold = 50) => new Vector3(randomizeThreshold(threshold), randomizeThreshold(threshold), randomizeThreshold(threshold))
   
+  // let mesh = createTextMesh({
+  //   text: `Test`,
+  //   font: fnt,
+  //   scene,
+  //   atlas: png,
+  //   engine,
+  // });
 
-  for (let i = 0; i < 5000; i++){
-    data.push({})
+  // mesh.isVisible = false;
+ 
+  
+
+  for (let i = 0; i <  5000; i++){
+   data.push({})
+  
+    // let mesh = createTextMesh({
+    //   text: `Test`,
+    //   font: fnt,
+    //   scene,
+    //   atlas: png,
+    //   engine,
+    // });
+
+    // mesh.position = randmizeVector();
+    
   }
   
-  anu.bind('text2d', scene, {text: 'test'}, data).position(() => randmizeVector())
+    anu.bind('text2d', scene, {text: 'test'}, data).position(() => randmizeVector())
 
 
 

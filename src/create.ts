@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
-import { planeText } from './prefabs/text2d';
+import { planeText } from './prefabs/Text/text2d';
 
 interface StringByFunc {
   [key: string]: Function;

@@ -5,6 +5,7 @@ import { Vector3, StandardMaterial, Color3, Mesh, Tools } from '@babylonjs/core'
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
 import { selectName } from '../../select';
+import { Selection } from '../../selection';
 
 
 export function backgroundAlt(this: Axis) {
@@ -19,6 +20,8 @@ export function backgroundAlt(this: Axis) {
   let scaleZ = this.scales.z.scale;
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
+
+  let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
 
   if (this.options.scale?.x != undefined && this.options.scale?.y != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
@@ -40,6 +43,8 @@ export function backgroundAlt(this: Axis) {
       .position(planePosition)
       .material(new StandardMaterial(this.name + '_backgroundX_material', this.scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
+
+    selections.x = backgroundMeshX;
   }
 
   if (this.options.scale?.y != undefined && this.options.scale?.z != undefined) {
@@ -63,6 +68,8 @@ export function backgroundAlt(this: Axis) {
       .rotation(planeRotation)
       .material(new StandardMaterial(this.name + '_backgroundY_material', this.scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
+
+      selections.y = backgroundMeshY;
   }
 
   if (this.options.scale?.z != undefined && this.options.scale?.x != undefined) {
@@ -86,7 +93,11 @@ export function backgroundAlt(this: Axis) {
       .rotation(planeRotation)
       .material(new StandardMaterial(this.name + '_backgroundZ_material', this.scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
+
+      selections.z = backgroundMeshZ;
   }
 
-  return selectName([this.name + '_backgroundZ', this.name + '_backgroundY', this.name + '_backgroundX'], this.scene)
+
+
+  return selections;
 }

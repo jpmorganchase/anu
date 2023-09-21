@@ -27,6 +27,7 @@ interface AxisOptions {
   grid?: boolean;
   gridOptions?: any;
   gridProperties?: any;
+  gridTicks?: {x?: any, y?: any, z?: any};
   label?: boolean;
   labelOptions?: any;
   labelProperties?: any;
@@ -41,10 +42,10 @@ export class Axis {
   CoT: Selection;
   scales: any;
   domain: Selection;
-  background: Selection;
+  background: {x?: Selection, y?: Selection, z?: Selection};;
   grid: Selection;
-  label: Selection;
-  tick: Selection;
+  label: {x?: Selection, y?: Selection, z?: Selection};
+  //tick: Selection;
 
   // background: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
   // shape: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
@@ -60,10 +61,10 @@ export class Axis {
     this.CoT = this.setCoT();
     this.scales = this.setScales();
     this.domain = this.options.domain ? this.setDomain() : new Selection([], scene);
-    this.background = this.options.background ? this.setBackground() : new Selection([], scene); 
+    this.background = this.options.background ? this.setBackground() : {};
     this.grid = this.options.grid ? this.setGrid() : new Selection([], scene); 
-    this.label = this.options.label ? this.setLabel() : new Selection([], scene);
-    this.tick = new Selection([], scene);
+    this.label = this.options.label ? this.setLabel() : {};
+    //this.tick = new Selection([], scene);
   }
 
   private setCoT(): Selection {
@@ -151,6 +152,7 @@ export function createAxes(name: string, scene: Scene, options: AxisOptions){
     grid: options.grid || true,
     gridOptions: options.gridOptions || {},
     gridProperties: options.gridProperties || {},
+    gridTicks: options.gridTicks || {},
     label: options.label || true,
     labelOptions: options.labelOptions || {},
     labelProperties: options.labelProperties || {},

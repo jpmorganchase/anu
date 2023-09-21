@@ -55,47 +55,61 @@ export function linechart2D(babylonEngine) {
       .attr("color", new Color3(1, 1, 1))
       .prop("alpha", 1);
 
+      anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
+      scale: {x: scaleX, y: scaleY},
+      domainMaterialOptions: { "color": Color3.Black(), width: 5},
+      gridTicks: {x: scaleX.ticks(timeYear.every(2))},
+      labelTicks: {x: scaleX.ticks(timeYear.every(2))},
+      labelFormat: {x: dateFormat, y: (d) => {
+                    if (d.text === undefined) {
+                      return "0%";
+                    } else {
+                      return d.text + "%";
+                    }}
+                  }
+    });
 
-    let axis = new anu.Axis("testAxis", scene, {
-      cot: anu.select("#cot", scene),
-      x: scaleX,
-      y: scaleY
-    })
-      .shape(
-        { radius: 0.02 },
-        {
-          "material.diffuseColor": Color3.Black,
-          "material.alpha": 1,
-          "material.specularColor": Color3.Black,
-        }
-      )
-      .background()
-      .ticks(
-        {
-          x: scaleX.ticks(timeYear.every(2)),
-          y: scaleY.ticks(),
-        },
-        {
-          x: {
-            text: (d) => {
-              return dateFormat(d.text);
-            },
-          },
-          y: {
-            text: (d) => {
-              if (d.text === undefined) {
-                return "0%";
-              } else {
-                return d.text + "%";
-              }
-            },
-          },
-        }
-      )
-      .grid({
-        x: scaleX.ticks(timeYear.every(2)),
-        y: scaleY.ticks(),
-      });
+
+    // let axis = new anu.Axis("testAxis", scene, {
+    //   cot: anu.select("#cot", scene),
+    //   x: scaleX,
+    //   y: scaleY
+    // })
+    //   .shape(
+    //     { radius: 0.02 },
+    //     {
+    //       "material.diffuseColor": Color3.Black,
+    //       "material.alpha": 1,
+    //       "material.specularColor": Color3.Black,
+    //     }
+    //   )
+    //   .background()
+    //   .ticks(
+    //     {
+    //       x: scaleX.ticks(timeYear.every(2)),
+    //       y: scaleY.ticks(),
+    //     },
+    //     {
+    //       x: {
+    //         text: (d) => {
+    //           return dateFormat(d.text);
+    //         },
+    //       },
+    //       y: {
+    //         text: (d) => {
+    //           if (d.text === undefined) {
+    //             return "0%";
+    //           } else {
+    //             return d.text + "%";
+    //           }
+    //         },
+    //       },
+    //     }
+    //   )
+    //   .grid({
+    //     x: scaleX.ticks(timeYear.every(2)),
+    //     y: scaleY.ticks(),
+    //   });
 
     
 

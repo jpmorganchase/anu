@@ -25,14 +25,16 @@ export function grid(
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
     
+    if (this.options.gridTicks?.x != undefined){
+      ticks = this.options.gridTicks.x;
+    } else {
       try {
         ticks = scaleX.ticks();
       } catch {
         ticks = domainX;
       }
+    }
    
-    
-
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
     tickPosition = (d) => [
@@ -49,12 +51,15 @@ export function grid(
   if (this.options.scale?.y != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
     
+    if (this.options.gridTicks?.y != undefined){
+      ticks = this.options.gridTicks.y;
+    } else {
       try {
         ticks = scaleY.ticks();
       } catch {
         ticks = domainY;
       }
-  
+    }
 
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
@@ -72,13 +77,16 @@ export function grid(
   if (this.options.scale?.z != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
     
+    if (this.options.gridTicks?.z != undefined){
+      ticks = this.options.gridTicks.z;
+    } else {
       try {
         ticks = scaleZ.ticks();
       } catch {
         ticks = domainZ;
       }
+    }
   
-
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
     tickPosition = (d) => [
