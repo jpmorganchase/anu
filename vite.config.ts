@@ -12,6 +12,9 @@ export default defineConfig({
       // the proper extensions will be added
       fileName: 'anu',
     },
+    rollupOptions: {
+      external: ["@babylonjs/core"],
+    },
   },
   plugins: [dts()],
 })

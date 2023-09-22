@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3 } from '@babylonjs/core';
+import { Mesh, Vector3 } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
 import { selectName } from '../../select';
@@ -24,6 +24,8 @@ export function labelAlt(
 
   let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
 
+  let scaleMultiplier = 0.02;
+
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
     
@@ -44,12 +46,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.x != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = { };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -59,7 +61,9 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelX')
-      .position(textPosition)
+      .position((d,m,i) => { let extentY = (m as Mesh).getBoundingInfo().boundingBox.extendSize._y; 
+        return new Vector3(scaleX(d.text), rangeY[0] - extentY * 2 , rangeZ[0])
+      })
       .props(assign({}, default_properties, this.options.labelProperties));
 
     selections.x = labelMesh;
@@ -86,12 +90,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.y != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
 
-    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.05 };
+    let default_properties = { };
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -101,7 +105,9 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelY')
-      .position(textPosition)
+      .position((d,m,i) => { let extentX = (m as Mesh).getBoundingInfo().boundingBox.extendSize.x; 
+        return new Vector3((rangeX[0] - extentX) - (this.scales.size * scaleMultiplier), scaleY(d.text), rangeZ[0])
+      })
       .props(assign({}, default_properties, this.options.labelProperties));
 
       selections.y = labelMesh;
@@ -128,12 +134,12 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.z != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = {};
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -143,7 +149,9 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelZ')
-      .position(textPosition)
+      .position((d,m,i) => { let extentY = (m as Mesh).getBoundingInfo().boundingBox.extendSize._y; 
+                              return new Vector3(rangeX[1], (rangeY[0] - extentY), scaleZ(d.text))
+                            })
       .props(assign({}, default_properties, this.options.labelProperties));
 
       selections.z = labelMesh;

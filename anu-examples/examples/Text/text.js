@@ -6,9 +6,9 @@ import * as anu from 'anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 import { VertexBuffer, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
 // import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
-// import { createTextMesh } from "babylon-msdf-text";
-// import fnt from "../../fonts/roboto-regular.json";
-// import png from "../../fonts/roboto-regular.png";
+import { createTextMesh } from "babylon-msdf-text";
+import fnt from "../../fonts/roboto-regular.json";
+import png from "../../fonts/roboto-regular.png";
 
 
 //import { Mesh } from 'anu';
@@ -40,29 +40,29 @@ export const text = function(engine){
   //   engine,
   // });
 
-  // mesh.isVisible = false;
  
-  
+  // let instanceMesh = mesh.createInstance('test');
 
-  for (let i = 0; i <  5000; i++){
+  // instanceMesh.position = randmizeVector();
+
+  for (let i = 0; i <  1; i++){
    data.push({})
   
-    // let mesh = createTextMesh({
-    //   text: `Test`,
-    //   font: fnt,
-    //   scene,
-    //   atlas: png,
-    //   engine,
-    // });
 
-    // mesh.position = randmizeVector();
+  
     
   }
   
-    anu.bind('text2d', scene, {text: 'test'}, data).position(() => randmizeVector())
+   anu.bind('text2d', scene, {text: 'Test'}, data)//.position(() => randmizeVector())//.scaling(new Vector3(100,100,100))
 
 
-
+    // anu.createTextMesh({
+    //     text: `Test`,
+    //     font: fnt,
+    //     scene,
+    //     atlas: png,
+    //     engine,
+    //   })
     
 
     return scene;
