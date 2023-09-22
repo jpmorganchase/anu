@@ -60,11 +60,11 @@ export function linechart2D(babylonEngine) {
       domainMaterialOptions: { "color": Color3.Black(), width: 5},
       gridTicks: {x: scaleX.ticks(timeYear.every(2))},
       labelTicks: {x: scaleX.ticks(timeYear.every(2))},
-      labelFormat: {x: dateFormat, y: (d) => {
-                    if (d.text === undefined) {
+      labelFormat: {x: dateFormat, y: (text) => {
+                    if (text === undefined) {
                       return "0%";
                     } else {
-                      return d.text + "%";
+                      return text + "%";
                     }}
                   }
     });

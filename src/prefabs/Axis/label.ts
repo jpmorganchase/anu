@@ -61,8 +61,8 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelX')
-      .position((d,m,i) => { let extentY = (m as Mesh).getBoundingInfo().boundingBox.extendSize._y; 
-        return new Vector3(scaleX(d.text), rangeY[0] - extentY * 2 , rangeZ[0])
+      .position((d,m,i) => { let bounds = (m as Mesh).getBoundingInfo().boundingBox; 
+        return new Vector3(scaleX(d.text) - bounds.center.x, rangeY[0] - bounds.center.y * 2, rangeZ[0])
       })
       .props(assign({}, default_properties, this.options.labelProperties));
 
@@ -90,7 +90,7 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.y != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), size: this.scales.size * scaleMultiplier};
     } else {
       default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
@@ -105,8 +105,8 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelY')
-      .position((d,m,i) => { let extentX = (m as Mesh).getBoundingInfo().boundingBox.extendSize.x; 
-        return new Vector3((rangeX[0] - extentX) - (this.scales.size * scaleMultiplier), scaleY(d.text), rangeZ[0])
+      .position((d,m,i) => { let extentX = (m as Mesh).getBoundingInfo().boundingBox; 
+        return new Vector3(rangeX[0] - extentX.center._x * 2, scaleY(d.text) - extentX.center._y, rangeZ[0])
       })
       .props(assign({}, default_properties, this.options.labelProperties));
 
@@ -134,7 +134,7 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.z != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => this.options.labelFormat?.z(d.text), size: this.scales.size * scaleMultiplier};
     } else {
       default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
@@ -149,8 +149,8 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelZ')
-      .position((d,m,i) => { let extentY = (m as Mesh).getBoundingInfo().boundingBox.extendSize._y; 
-                              return new Vector3(rangeX[1], (rangeY[0] - extentY), scaleZ(d.text))
+      .position((d,m,i) => { let bounds = (m as Mesh).getBoundingInfo().boundingBox; 
+                              return new Vector3(rangeX[1], rangeY[0] - bounds.center.y * 2, scaleZ(d.text))
                             })
       .props(assign({}, default_properties, this.options.labelProperties));
 

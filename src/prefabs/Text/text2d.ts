@@ -94,9 +94,11 @@ class Text2D {
   plane.bakeCurrentTransformIntoVertices();
   plane.scaling = new Vector3(this.options.size,this.options.size,this.options.size);
   let size = plane.getBoundingInfo().boundingBox
-  plane.setPivotPoint(new Vector3(- (size.center.x / 1.5), -(size.center.y / 1.5), 0));
+  //console.log(plane.getAbsolutePivotPoint())
+  //plane.setPivotPoint(new Vector3(1000, (size.center.y / 2), 0));
   plane.bakeCurrentTransformIntoVertices();
-  plane.computeWorldMatrix(true);
+   
+  // plane.computeWorldMatrix(true);
   // plane.bakeCurrentTransformIntoVertices();
   // plane.computeWorldMatrix(true)
 

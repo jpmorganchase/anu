@@ -53,7 +53,7 @@ export const text = function(engine){
     
   }
   
-   anu.bind('text2d', scene, {text: 'Test'}, data)//.position(() => randmizeVector())//.scaling(new Vector3(100,100,100))
+   anu.bind('text2d', scene, {text: 'Test%'}, data)//.position(() => randmizeVector())//.scaling(new Vector3(100,100,100))
 
 
     // anu.createTextMesh({
