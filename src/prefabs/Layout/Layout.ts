@@ -19,12 +19,14 @@ export class Layout{
     options: LayoutOptions;
     scene: Scene;
     currentLayout: Number = 0;
+    root: Mesh;
     //boundingBox: BoundingInfo;
     
     constructor(name: string, options: LayoutOptions, scene: Scene) {
         this.name = name;
         this.options = options;
         this.scene = scene;
+        this.root = new Mesh(this.name, this.scene);
         //this.boundingBox = options.selection.boundingBoxLocal();
     }
 
@@ -109,9 +111,11 @@ export class Layout{
                 m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 node.parent = m;
                 cells.push(m);
+                cells[i].parent = this.root;
             } else {
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
+                cells[i].parent = this.root;
             }
             (node.parent as Mesh).showBoundingBox = showBox;
             this.animatePosition((cells[cells.length - 1]), new Vector3(i % colnum * (widthX + margin.x), Math.floor(i / colnum) * (widthY + margin.y), 0));
@@ -127,29 +131,29 @@ export class Layout{
             case "row":
                 this.options.rows = Number(val);
                 if(this.currentLayout == 1)
-                    planeLayout(this.name, this.options, this.scene);
+                    this.planeLayout();
                 if(this.currentLayout == 2)
-                    cylinderLayout(this.name, this.options, this.scene);
+                    this.cylinderLayout();
                 break;
             case "margin":
                 let newmargin = val as Vector2;
-                this.options.margin = newmargin;
+                    this.options.margin = newmargin;
                 if(this.currentLayout == 1)
-                    planeLayout(this.name, this.options, this.scene);
+                    this.planeLayout();
                 if(this.currentLayout == 2)
-                    cylinderLayout(this.name, this.options, this.scene);
+                    this.cylinderLayout();
                 break;
             case "showBoundingBox":
                 this.options.showBoundingBox = Boolean(val);
                 if(this.currentLayout == 1)
-                    planeLayout(this.name, this.options, this.scene);
+                    this.planeLayout();
                 if(this.currentLayout == 2)
-                    cylinderLayout(this.name, this.options, this.scene);
+                    this.cylinderLayout();
                 break;
             case "radius":
                 this.options.radius = Number(val);
                 if(this.currentLayout == 2)
-                    cylinderLayout(this.name, this.options, this.scene);
+                    this.cylinderLayout();
                 break;
             default:
                 break;
@@ -183,9 +187,11 @@ export class Layout{
                 m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 node.parent = m;
                 cells.push(m);
+                cells[i].parent = this.root;
             } else {
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
                 cells.push((node.parent as Mesh));
+                cells[i].parent = this.root;
             }
             (node.parent as Mesh).showBoundingBox = showBox;
 
