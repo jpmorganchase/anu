@@ -11,5 +11,8 @@ export default defineConfig({
   },
   build: {
     outDir: '../docs/public'
+  },
+  rollupOptions: {
+    external: ["@babylonjs/core"],
   }
 })

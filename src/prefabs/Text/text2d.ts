@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { DynamicTexture, StandardMaterial, MeshBuilder, Mesh, AbstractMesh, TransformNode, Scene, Vector3, Color3, Matrix } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder } from '@babylonjs/core';
 import fnt from "../../assets/roboto-regular.json";
 import png from "../../assets/roboto-regular.png";
 import { createTextMesh } from "babylon-msdf-text";
-import { tree } from 'd3';
-
-
 
 interface textOptions {
   text: string;
@@ -91,12 +88,18 @@ class Text2D {
   plane.computeWorldMatrix(true)
   let extent = 1 / plane.getBoundingInfo().boundingBox.extendSize._y ;
   plane.scaling = new Vector3(extent,extent,extent);
+  plane.computeWorldMatrix(true);
+  //let size = plane.getBoundingInfo().boundingBox
+  //plane.setPivotPoint(new Vector3(-(size.centerWorld.x), -(size.centerWorld.y), 0));
   plane.bakeCurrentTransformIntoVertices();
   plane.scaling = new Vector3(this.options.size,this.options.size,this.options.size);
-  let size = plane.getBoundingInfo().boundingBox
-  //console.log(plane.getAbsolutePivotPoint())
-  //plane.setPivotPoint(new Vector3(1000, (size.center.y / 2), 0));
+  plane.computeWorldMatrix(true);
   plane.bakeCurrentTransformIntoVertices();
+  let size = plane.getBoundingInfo().boundingBox;
+  let cot = new Mesh('cot', this.scene);
+  cot.position = new Vector3(size.center.x, size.center.y, 0);
+  plane.setParent(cot);
+
    
   // plane.computeWorldMatrix(true);
   // plane.bakeCurrentTransformIntoVertices();
@@ -109,7 +112,7 @@ class Text2D {
   // plane.material?.freeze()
   // plane.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY
   
-  return plane;
+  return cot;
   }
 
 

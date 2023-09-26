@@ -68,51 +68,6 @@ export function linechart2D(babylonEngine) {
                     }}
                   }
     });
-
-
-    // let axis = new anu.Axis("testAxis", scene, {
-    //   cot: anu.select("#cot", scene),
-    //   x: scaleX,
-    //   y: scaleY
-    // })
-    //   .shape(
-    //     { radius: 0.02 },
-    //     {
-    //       "material.diffuseColor": Color3.Black,
-    //       "material.alpha": 1,
-    //       "material.specularColor": Color3.Black,
-    //     }
-    //   )
-    //   .background()
-    //   .ticks(
-    //     {
-    //       x: scaleX.ticks(timeYear.every(2)),
-    //       y: scaleY.ticks(),
-    //     },
-    //     {
-    //       x: {
-    //         text: (d) => {
-    //           return dateFormat(d.text);
-    //         },
-    //       },
-    //       y: {
-    //         text: (d) => {
-    //           if (d.text === undefined) {
-    //             return "0%";
-    //           } else {
-    //             return d.text + "%";
-    //           }
-    //         },
-    //       },
-    //     }
-    //   )
-    //   .grid({
-    //     x: scaleX.ticks(timeYear.every(2)),
-    //     y: scaleY.ticks(),
-    //   });
-
-    
-
       
   });
 

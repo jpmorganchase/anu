@@ -21,10 +21,9 @@ export const scatterPlot3DStep2 = function(engine){
   let cot = anu.bind('cot', scene);
   let spheres = cot.bind('sphere', {diameter: 0.5}, iris);
   
-
-  spheres.positionX((d,n,i) => d.sepalLength)
-  .positionY((d,n,i) => d.sepalWidth) 
-  .positionZ((d,n,i) => d.petalLength);
+  spheres.positionX((d,n,i) => d.sepalLength) 
+  .positionY((d,n,i) => d.petalLength)
+  .positionZ((d,n,i) => d.sepalWidth); 
 
   return scene;
 }; 

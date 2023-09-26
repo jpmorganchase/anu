@@ -78,7 +78,7 @@ export function backgroundAlt(this: Axis) {
     let planeWidth: number = 0;
     let planeHeight: number = 0;
 
-    planePosition = new Vector3(0, rangeY[0], 0);
+    planePosition = new Vector3((rangeX[0] + rangeX[1]) / 2, rangeY[0], (rangeZ[0] + rangeZ[1]) / 2);
     planeRotation = new Vector3(1.5708, 0, 0);
     planeWidth = Math.abs(rangeX[0] - rangeX[1]);
     planeHeight = Math.abs(rangeZ[0] - rangeZ[1]);

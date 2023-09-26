@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, Vector3 } from '@babylonjs/core';
+import { Matrix, Mesh, Vector3 } from '@babylonjs/core';
 import { Axis } from './Axis';
 import assign from 'lodash-es/assign';
-import { selectName } from '../../select';
 import { Selection } from '../../selection';
 
 export function labelAlt(
@@ -61,8 +60,8 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelX')
-      .position((d,m,i) => { let bounds = (m as Mesh).getBoundingInfo().boundingBox; 
-        return new Vector3(scaleX(d.text) - bounds.center.x, rangeY[0] - bounds.center.y * 2, rangeZ[0])
+      .position((d,m,i) => { let bounds = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+        return new Vector3(scaleX(d.text), rangeY[0] - bounds.center.y * 1.5, rangeZ[0] - bounds.center.y * 1.5)
       })
       .props(assign({}, default_properties, this.options.labelProperties));
 
@@ -105,8 +104,8 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelY')
-      .position((d,m,i) => { let extentX = (m as Mesh).getBoundingInfo().boundingBox; 
-        return new Vector3(rangeX[0] - extentX.center._x * 2, scaleY(d.text) - extentX.center._y, rangeZ[0])
+      .position((d,m,i) => { let extentX = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+        return new Vector3(rangeX[0] - extentX.center._x - extentX.center.y * 1.5, scaleY(d.text), rangeZ[0] - extentX.center.y * 1.5)
       })
       .props(assign({}, default_properties, this.options.labelProperties));
 
@@ -139,7 +138,7 @@ export function labelAlt(
       default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
     }
 
-    let default_properties = {};
+    let default_properties = {'rotation.y': - Math.PI / 2};
 
     let labelMesh = this.CoT.bind(
       'text2d',
@@ -149,8 +148,9 @@ export function labelAlt(
       }),
     )
       .prop('name', this.name + '_labelZ')
-      .position((d,m,i) => { let bounds = (m as Mesh).getBoundingInfo().boundingBox; 
-                              return new Vector3(rangeX[1], rangeY[0] - bounds.center.y * 2, scaleZ(d.text))
+      .position((d,m,i) => { let bounds = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+                              return new Vector3(rangeX[1] + bounds.center.y * 1.5, rangeY[0] - bounds.center.y * 1.5, scaleZ(d.text))
+                              //return new Vector3(rangeX[1],rangeY[0],scaleZ(d.text))
                             })
       .props(assign({}, default_properties, this.options.labelProperties));
 
