@@ -3,13 +3,13 @@
 
 import { Vector3, Mesh, Color3, StandardMaterial, TransformNode, CreateGreasedLine, GreasedLineMeshBuilderOptions, GreasedLineMaterialBuilderOptions, GreasedLineMeshMaterialType } from '@babylonjs/core';
 import { assign } from 'lodash-es';
-import { Axis } from './Axis';
+import { Axes } from './Axis';
 import { Selection } from '../../selection';
 import { create } from '../../create';
 import { material } from '../../selection/property/material';
 
 export function domain(
-  this: Axis
+  this: Axes
 ): Selection {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;

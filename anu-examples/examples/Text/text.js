@@ -25,7 +25,7 @@ export const text = function(engine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(28,0,-30);
+  camera.position = new Vector3(25,0,-15);
 
   let data = []
   
@@ -47,23 +47,17 @@ export const text = function(engine){
 
   for (let i = 0; i <  1; i++){
    data.push({})
-  
-
-  
     
   }
   
-   anu.bind('text2d', scene, {text: '2.2'}, data)//.position(() => randmizeVector())//.scaling(new Vector3(100,100,100))
+   //anu.bind('text2d', scene, {text: 'Hello World', color: Color3.Green()}, data);
 
+    let options = {
+      text: 'Hello World',
+      color: Color3.Green()
+    }
 
-    // anu.createTextMesh({
-    //     text: `Test`,
-    //     font: fnt,
-    //     scene,
-    //     atlas: png,
-    //     engine,
-    //   })
-    
+    anu.createPlaneText('myText', options, scene).position.x = -1;
 
     return scene;
   

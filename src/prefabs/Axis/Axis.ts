@@ -35,7 +35,7 @@ interface AxisOptions {
   labelFormat?: {x? : any, y?: any, z?: any};
 }
 
-export class Axis {
+export class Axes {
   name: string;
   options: AxisOptions;
   scene: Scene;
@@ -160,7 +160,7 @@ export function createAxes(name: string, scene: Scene, options: AxisOptions){
     labelFormat: options.labelFormat || {}
   }
 
-  let axes = new Axis(name, scene, Options)
+  let axes = new Axes(name, scene, Options)
 
   return axes;
 }

@@ -15,6 +15,7 @@
 - [bind](modules.md#bind)
 - [create](modules.md#create)
 - [createAxes](modules.md#createaxes)
+- [createPlaneText](modules.md#createplanetext)
 - [createTextureGlobe](modules.md#createtextureglobe)
 - [createTextureMap](modules.md#createtexturemap)
 - [cylinderLayout](modules.md#cylinderlayout)
@@ -24,7 +25,6 @@
 - [selectId](modules.md#selectid)
 - [selectName](modules.md#selectname)
 - [selectTag](modules.md#selecttag)
-- [text2d](modules.md#text2d)
 
 ## Functions
 
@@ -53,7 +53,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[bind.ts:19](https://github.com/jpmorganchase/anu/blob/3b53efa/src/bind.ts#L19)
+[bind.ts:19](https://github.com/jpmorganchase/anu/blob/8044627/src/bind.ts#L19)
 
 ___
 
@@ -81,7 +81,7 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[create.ts:65](https://github.com/jpmorganchase/anu/blob/3b53efa/src/create.ts#L65)
+[create.ts:65](https://github.com/jpmorganchase/anu/blob/8044627/src/create.ts#L65)
 
 ___
 
@@ -103,7 +103,29 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:141](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Axis/Axis.ts#L141)
+[prefabs/Axis/Axis.ts:141](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L141)
+
+___
+
+### createPlaneText
+
+▸ **createPlaneText**(`name`, `options`, `scene`): `Mesh`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `options` | `planeTextOptions` |
+| `scene` | `Scene` |
+
+#### Returns
+
+`Mesh`
+
+#### Defined in
+
+prefabs/Text/planeText.ts:121
 
 ___
 
@@ -129,7 +151,7 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Mapping/textureGlobe.ts#L123)
+[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Mapping/textureGlobe.ts#L123)
 
 ___
 
@@ -156,7 +178,7 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Mapping/textureMap.ts#L191)
+[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Mapping/textureMap.ts#L191)
 
 ___
 
@@ -178,7 +200,7 @@ ___
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:254](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Layout/Layout.ts#L254)
+[prefabs/Layout/Layout.ts:260](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Layout/Layout.ts#L260)
 
 ___
 
@@ -200,7 +222,7 @@ ___
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:239](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Layout/Layout.ts#L239)
+[prefabs/Layout/Layout.ts:245](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Layout/Layout.ts#L245)
 
 ___
 
@@ -227,7 +249,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:17](https://github.com/jpmorganchase/anu/blob/3b53efa/src/select.ts#L17)
+[select.ts:17](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L17)
 
 ___
 
@@ -255,7 +277,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:98](https://github.com/jpmorganchase/anu/blob/3b53efa/src/select.ts#L98)
+[select.ts:98](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L98)
 
 ___
 
@@ -282,7 +304,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:61](https://github.com/jpmorganchase/anu/blob/3b53efa/src/select.ts#L61)
+[select.ts:61](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L61)
 
 ___
 
@@ -309,7 +331,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:44](https://github.com/jpmorganchase/anu/blob/3b53efa/src/select.ts#L44)
+[select.ts:44](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L44)
 
 ___
 
@@ -336,26 +358,4 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:78](https://github.com/jpmorganchase/anu/blob/3b53efa/src/select.ts#L78)
-
-___
-
-### text2d
-
-▸ **text2d**(`name`, `options`, `scene`): `Mesh`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `options` | `textOptions` |
-| `scene` | `Scene` |
-
-#### Returns
-
-`Mesh`
-
-#### Defined in
-
-[prefabs/Text/text2d.ts:115](https://github.com/jpmorganchase/anu/blob/3b53efa/src/prefabs/Text/text2d.ts#L115)
+[select.ts:78](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L78)

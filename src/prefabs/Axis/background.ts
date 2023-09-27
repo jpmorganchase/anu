@@ -2,13 +2,13 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Vector3, StandardMaterial, Color3, Mesh, Tools } from '@babylonjs/core';
-import { Axis } from './Axis';
+import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { selectName } from '../../select';
 import { Selection } from '../../selection';
 
 
-export function backgroundAlt(this: Axis) {
+export function backgroundAlt(this: Axes) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
   let domainX = this.scales.x.domain;

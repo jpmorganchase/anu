@@ -2,12 +2,12 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Matrix, Mesh, Vector3 } from '@babylonjs/core';
-import { Axis } from './Axis';
+import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { Selection } from '../../selection';
 
 export function labelAlt(
-  this: Axis
+  this: Axes
 ) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
@@ -53,7 +53,7 @@ export function labelAlt(
     let default_properties = { };
 
     let labelMesh = this.CoT.bind(
-      'text2d',
+      'planeText',
       assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };
@@ -97,7 +97,7 @@ export function labelAlt(
     let default_properties = { };
 
     let labelMesh = this.CoT.bind(
-      'text2d',
+      'planeText',
       assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };
@@ -141,7 +141,7 @@ export function labelAlt(
     let default_properties = {'rotation.y': - Math.PI / 2};
 
     let labelMesh = this.CoT.bind(
-      'text2d',
+      'planeText',
       assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };

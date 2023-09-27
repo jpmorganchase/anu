@@ -3,10 +3,10 @@
 
 import { Vector3, Mesh, Color3, StandardMaterial, TransformNode } from '@babylonjs/core';
 import { assign } from 'lodash-es';
-import { Axis } from './Axis';
+import { Axes } from './Axis';
 
 export function shapeAlt(
-  this: Axis,
+  this: Axes,
   options: {
     radius?: number;
   } = {},

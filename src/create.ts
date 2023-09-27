@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
-import { planeText } from './prefabs/Text/text2d';
+import { createPlaneText } from './prefabs/Text/planeText';
 
 interface StringByFunc {
   [key: string]: Function;
@@ -48,7 +48,7 @@ const meshList: StringByFunc = {
   icosphere: MeshBuilder.CreateIcoSphere,
   geodesic: MeshBuilder.CreateGeodesic,
   goldberg: MeshBuilder.CreateGoldberg,
-  text2d: planeText,
+  planeText: createPlaneText,
   greasedLine: createGL,
 };
 

@@ -28,10 +28,31 @@ export default defineConfig({
         text: 'Learning Anu',
         collapsed: false,
         items: [
-          { text: 'Creating Meshes', link: '/guide/first_steps.md' },
-          { text: 'Using Selections', link: '/guide/using_selections.md' },
-          { text: 'Manipulating Selections', link: '/guide/manipulating_selections.md' },
-          { text: 'Creating a Visualization', link: '/guide/first_visualization.md'}
+          { text: 'Anu Fundamentals',
+            collapsed: false,
+            items: [
+            { text: 'Creating Meshes', link: '/guide/first_steps.md' },
+            { text: 'Using Selections', link: '/guide/using_selections.md' },
+            { text: 'Manipulating Selections', link: '/guide/manipulating_selections.md' },
+            ]
+          },
+            { text: 'Creating Visualizations',
+            collapsed: false,
+            items: [
+              { text: '3D Scatter Plot', link: '/guide/first_visualization.md'}
+            ]
+          },
+          { text: 'Anu Prefabs',
+            collapsed: false,
+            items: [
+            { text: 'Plane Text', link: '/guide/prefabs/planetext.md' },
+            { text: 'Axes', link: '/guide/prefabs/axes.md' },
+            //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
+            //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
+            //{ text: 'Layout', link: '/guide/manipulating_selections.md' },
+            ]
+          },
+         
         ]
       },
       // {

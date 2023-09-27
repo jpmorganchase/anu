@@ -2,11 +2,11 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Color3, Vector3 } from '@babylonjs/core';
-import { Axis } from './Axis';
+import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 
 export function grid(
-  this: Axis,
+  this: Axes,
   ) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
