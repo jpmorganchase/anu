@@ -22,6 +22,7 @@ jobs:
           scope: '@jpmorganchase'
       - run: |
           npm
+          npm install
           npm run build
           npm publish --access public
         env:
