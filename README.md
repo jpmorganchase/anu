@@ -1,29 +1,14 @@
 # Anu
 
-Toolkit for data-driven dynamic Babylonjs scene graphs. 
+Anujs is an immersive data visualization toolkit built on the web-based 3D game engine [Babylon.js](https://www.babylonjs.com/) and [WebXR](https://immersiveweb.dev/). Anu is heavily inspired by [D3's](https://d3js.org/) data-binding DOM manipulation patterns and visualization utility. Anu works in synergy with D3 to bring these patterns to Babylon, enabling developers to dynamically manipulate the Babylon scene graph with data and augment 3D immersive visualizations with utilities, pre-fabs, and interactions. 
 
-## Quick Start
+## Install
 ```
-git clone <repo url>
-cd anu
-npm install 
-npm run build
+npm install @jpmorganchase/anu
 ```
 
-## Linking to another node project
 ```
-npm link <path to project you want to link to>
-```
-
-## Read the WIP docs
-```
-cd docs
-npm install 
-npm run docs:dev
+import * as anu from '@jpmorganchase/anu'
 ```
 
-### Everytime after you can run this command from the root folder instead
 
-```
-npm run docs
-```
