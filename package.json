@@ -1,5 +1,5 @@
 {
-  "name": "anu",
+  "name": "@jpmorganchase/anu",
   "version": "0.0.1",
   "description": "",
   "type": "module",
@@ -24,6 +24,10 @@
     "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
     "docs": "cd docs && npm run docs:dev",
     "clean": "rm -rf ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jpmorganchase/anu.git"
   },
   "keywords": [],
   "author": "",
