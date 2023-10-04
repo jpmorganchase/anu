@@ -1,0 +1,12 @@
+{
+  "name": "anu-starter",
+  "version": "1.0.0",
+  "description": "Example starter template tool",
+  "bin": {
+    "anu-starter": "./index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^7.0.3"
+  }
+}

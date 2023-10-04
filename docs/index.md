@@ -12,7 +12,7 @@ hero:
       link: /guide/
     - theme: alt
       text: API Examples
-      link: /guide/api-examples
+      link: /api/modules.md
 
 features:
   - title: Data Binding
