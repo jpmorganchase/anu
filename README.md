@@ -1,4 +1,4 @@
-# Anujs
+# Anu
 
 Toolkit for data-driven dynamic Babylonjs scene graphs. 
 
