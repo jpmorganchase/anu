@@ -66,12 +66,13 @@ export const scatterplot3D = function(engine){
  
 
     //Using the Axis prefab from Anu, we can create our chart axis by passing in d3 scale functions for each xyz dimension. 
-    let axis = new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})
-                      .shape()
-                      .background()
-                      .ticks()
-                      .grid();
+    // let axis = new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})
+    //                   .shape()
+    //                   .background()
+    //                   .ticks()
+    //                   .grid();
 
+    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
     return scene;
   

@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3 } from '@babylonjs/core';
-import { Axis } from './Axis';
+import { Matrix, Mesh, Vector3 } from '@babylonjs/core';
+import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
+import { Selection } from '../../selection';
 
 export function labelAlt(
-  this: Axis,
-  labels: { x: [] | undefined; y: [] | undefined; z: [] | undefined } = { x: undefined, y: undefined, z: undefined },
-  options: { x: {} | undefined; y: {} | undefined; z: {} | undefined } = { x: undefined, y: undefined, z: undefined },
-  properties: { x: {}; y: {}; z: {} } = { x: {}, y: {}, z: {} },
+  this: Axes
 ) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
@@ -23,108 +21,142 @@ export function labelAlt(
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
 
-  if (this.options.x != undefined) {
+  let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
+
+  let scaleMultiplier = 0.02;
+
+  if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.x === undefined) {
+    
+    if (this.options.labelTicks?.x != undefined){
+      ticks = this.options.labelTicks.x;
+    } else {
       try {
         ticks = scaleX.ticks();
       } catch {
         ticks = domainX;
       }
-    } else {
-      ticks = labels.x;
     }
+    
 
     let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
 
     textPosition = (d) => new Vector3(scaleX(d.text), rangeY[0], rangeZ[0]);
 
-    let default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+    let default_options;
+    if (this.options.labelFormat?.x != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+    }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = { };
 
     let labelMesh = this.CoT.bind(
-      'text2d',
-      assign({}, default_options, options.x),
+      'planeText',
+      assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelX')
-      .position(textPosition)
-      .props(assign({}, default_properties, properties.x));
+      .prop('name', this.name + '_labelX')
+      .position((d,m,i) => { let bounds = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+        return new Vector3(scaleX(d.text), rangeY[0] - bounds.center.y * 1.5, rangeZ[0] - bounds.center.y * 1.5)
+      })
+      .props(assign({}, default_properties, this.options.labelProperties));
+
+    selections.x = labelMesh;
   }
 
-  if (this.options.y != undefined) {
+  if (this.options.scale?.y != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.y === undefined) {
+   
+    if (this.options.labelTicks?.y != undefined){
+      ticks = this.options.labelTicks.y;
+    } else {
       try {
         ticks = scaleY.ticks();
       } catch {
         ticks = domainY;
       }
-    } else {
-      ticks = labels.y;
     }
+    
+    
 
     let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
 
     textPosition = (d) => new Vector3(rangeX[0], scaleY(d.text), rangeZ[0]);
 
-    let default_options = {
-      text: (d: any) => {
-        return d.text;
-      },
-      size: this.scales.size * 0.05,
-      fontSize: 60,
-      fontColor: 'white',
-    };
+    let default_options;
+    if (this.options.labelFormat?.y != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), size: this.scales.size * scaleMultiplier};
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+    }
 
-    let default_properties = { 'position.z': rangeZ[0] - this.scales.size * 0.05 };
+    let default_properties = { };
 
     let labelMesh = this.CoT.bind(
-      'text2d',
-      assign({}, default_options, options.y),
+      'planeText',
+      assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelY')
-      .position(textPosition)
-      .props(assign({}, default_properties, properties.y));
+      .prop('name', this.name + '_labelY')
+      .position((d,m,i) => { let extentX = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+        return new Vector3(rangeX[0] - extentX.center._x - extentX.center.y * 1.5, scaleY(d.text), rangeZ[0] - extentX.center.y * 1.5)
+      })
+      .props(assign({}, default_properties, this.options.labelProperties));
+
+      selections.y = labelMesh;
+
   }
 
-  if (this.options.z != undefined) {
+  if (this.options.scale?.z != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    if (labels.z === undefined) {
+   
+    if (this.options.labelTicks?.z != undefined){
+      ticks = this.options.labelTicks.z;
+    } else {
       try {
         ticks = scaleZ.ticks();
       } catch {
         ticks = domainZ;
       }
-    } else {
-      ticks = labels.z;
     }
+ 
 
     let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
 
     textPosition = (d) => new Vector3(rangeX[1], rangeY[0], scaleZ(d.text));
 
-    let default_options = { text: (d: any) => d.text, size: this.scales.size * 0.05, fontSize: 60, fontColor: 'white' };
+    let default_options;
+    if (this.options.labelFormat?.z != undefined){
+      default_options = { text: (d: any) => this.options.labelFormat?.z(d.text), size: this.scales.size * scaleMultiplier};
+    } else {
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+    }
 
-    let default_properties = { 'position.y': rangeY[0] - this.scales.size * 0.05 };
+    let default_properties = {'rotation.y': - Math.PI / 2};
 
     let labelMesh = this.CoT.bind(
-      'text2d',
-      assign({}, default_options, options.z),
+      'planeText',
+      assign({}, default_options, this.options.labelOptions),
       ticks.map((x: any) => {
         return { text: x };
       }),
     )
-      .attr('name', this.name + '_labelZ')
-      .position(textPosition)
-      .props(assign({}, default_properties, properties.z));
+      .prop('name', this.name + '_labelZ')
+      .position((d,m,i) => { let bounds = (m as Mesh).getChildMeshes()[0].getBoundingInfo().boundingBox; 
+                              return new Vector3(rangeX[1] + bounds.center.y * 1.5, rangeY[0] - bounds.center.y * 1.5, scaleZ(d.text))
+                              //return new Vector3(rangeX[1],rangeY[0],scaleZ(d.text))
+                            })
+      .props(assign({}, default_properties, this.options.labelProperties));
+
+      selections.z = labelMesh;
+
   }
 
-  return this;
+  return selections;
 }

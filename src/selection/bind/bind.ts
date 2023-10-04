@@ -20,7 +20,7 @@ export function bind(this: Selection, shape: string, options: object = {}, data:
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
       var mesh = create(shape, shape, this.scene, options, element);
-      mesh.parent = node;
+      mesh.setParent(node);
       meshes.push(mesh as Mesh);
     });
   });

@@ -5,6 +5,10 @@
 import './style.css'
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
+import * as BABYLON from "@babylonjs/core";
+import { createTextMesh } from "babylon-msdf-text";
+import fnt from "./fonts/roboto-regular.json";
+import png from "./fonts/roboto-regular.png";
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import { Engine, Scene, Color3 } from "@babylonjs/core";
@@ -23,6 +27,7 @@ import { linechart2D } from './examples/LineCharts/linechart2D';
 import { textureMap } from './examples/Geographic/Texture_Map';
 import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
+import { layoutNew } from './examples/Layouts/layoutNew';
 import { cotBind } from './examples/Selections/cot_bind';
 import { spheresBind } from './examples/Selections/spheres_bind';
 import { cotTransform } from './examples/Selections/cot_transform';
@@ -32,6 +37,14 @@ import { modValue } from './examples/Selections/mod_value';
 import { modFunction } from './examples/Selections/mod_function';
 import { prop } from './examples/Selections/prop';
 import { props } from './examples/Selections/props';
+import { scatterPlot3DStep1 } from './examples/CreateAVis/step1';
+import { scatterPlot3DStep2 } from './examples/CreateAVis/step2';
+import { scatterPlot3DStep3 } from './examples/CreateAVis/step3';
+import { axesTest } from './examples/Axes/axesTest';
+import { text } from './examples/Text/text';
+import { scatterPlot3DStep4 } from './examples/CreateAVis/step4';
+import { scatterPlot3DStep5 } from './examples/CreateAVis/step5';
+import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
 
 
 
@@ -64,6 +77,7 @@ const scenes = {
   'textureMap': textureMap,
   'textureGlobe': textureGlobe,
   'layout': layout,
+  'layoutNew': layoutNew,
   'cot_bind': cotBind,
   'spheres_bind': spheresBind,
   'cot_transform': cotTransform,
@@ -72,11 +86,21 @@ const scenes = {
   'mod_value': modValue,
   'mod_function': modFunction,
   'prop': prop,
-  'props': props
+  'props': props,
+  'scatterPlot3DStep1': scatterPlot3DStep1,
+  'scatterPlot3DStep2': scatterPlot3DStep2,
+  'scatterPlot3DStep3': scatterPlot3DStep3,
+  'scatterPlot3DStep4': scatterPlot3DStep4,
+  'scatterPlot3DStep5': scatterPlot3DStep5,
+  'scatterPlot3DStep6': scatterPlot3DStep6,
+  'axesTest': axesTest,
+  'text': text
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
 scene.clearColor = new Color3(30/256,30/256,32/256)
+
+
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
@@ -88,7 +112,18 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-// scene.debugLayer.show();
+
+let mesh = createTextMesh({
+  text: ``,
+  font: fnt,
+  scene,
+  atlas: png,
+  engine: scene.getEngine()
+});
+
+mesh.dispose();
+
+//scene.debugLayer.show();
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {

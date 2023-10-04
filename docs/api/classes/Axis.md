@@ -12,13 +12,17 @@
 
 - [CoT](Axis.md#cot)
 - [background](Axis.md#background)
+- [domain](Axis.md#domain)
 - [grid](Axis.md#grid)
+- [label](Axis.md#label)
 - [name](Axis.md#name)
 - [options](Axis.md#options)
 - [scales](Axis.md#scales)
 - [scene](Axis.md#scene)
-- [shape](Axis.md#shape)
-- [ticks](Axis.md#ticks)
+- [setBackground](Axis.md#setbackground)
+- [setDomain](Axis.md#setdomain)
+- [setGrid](Axis.md#setgrid)
+- [setLabel](Axis.md#setlabel)
 
 ### Methods
 
@@ -41,7 +45,7 @@
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:35](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L35)
+[prefabs/Axis/Axis.ts:56](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L56)
 
 ## Properties
 
@@ -51,61 +55,63 @@
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:26](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L26)
+[prefabs/Axis/Axis.ts:42](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L42)
 
 ___
 
 ### background
 
-• **background**: (`this`: [`Axis`](Axis.md), `options`: {}, `properties`: {}) => [`Axis`](Axis.md) = `backgroundAlt`
+• **background**: `Object`
 
 #### Type declaration
 
-▸ (`this`, `options?`, `properties?`): [`Axis`](Axis.md)
-
-##### Parameters
-
 | Name | Type |
 | :------ | :------ |
-| `this` | [`Axis`](Axis.md) |
-| `options` | `Object` |
-| `properties` | `Object` |
-
-##### Returns
-
-[`Axis`](Axis.md)
+| `x?` | [`Selection`](Selection.md) |
+| `y?` | [`Selection`](Selection.md) |
+| `z?` | [`Selection`](Selection.md) |
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:102](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L102)
+[prefabs/Axis/Axis.ts:45](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L45)
+
+___
+
+### domain
+
+• **domain**: [`Selection`](Selection.md)
+
+#### Defined in
+
+[prefabs/Axis/Axis.ts:44](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L44)
 
 ___
 
 ### grid
 
-• **grid**: (`this`: [`Axis`](Axis.md), `labels`: { `x`: `undefined` \| [] ; `y`: `undefined` \| [] ; `z`: `undefined` \| []  }) => [`Axis`](Axis.md) = `tickAlt`
-
-#### Type declaration
-
-▸ (`this`, `labels?`): [`Axis`](Axis.md)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Axis`](Axis.md) |
-| `labels` | `Object` |
-| `labels.x` | `undefined` \| [] |
-| `labels.y` | `undefined` \| [] |
-| `labels.z` | `undefined` \| [] |
-
-##### Returns
-
-[`Axis`](Axis.md)
+• **grid**: [`Selection`](Selection.md)
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:104](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L104)
+[prefabs/Axis/Axis.ts:46](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L46)
+
+___
+
+### label
+
+• **label**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `x?` | [`Selection`](Selection.md) |
+| `y?` | [`Selection`](Selection.md) |
+| `z?` | [`Selection`](Selection.md) |
+
+#### Defined in
+
+[prefabs/Axis/Axis.ts:47](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L47)
 
 ___
 
@@ -115,7 +121,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:22](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L22)
+[prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L39)
 
 ___
 
@@ -125,7 +131,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:24](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L24)
+[prefabs/Axis/Axis.ts:40](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L40)
 
 ___
 
@@ -135,7 +141,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:27](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L27)
+[prefabs/Axis/Axis.ts:43](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L43)
 
 ___
 
@@ -145,70 +151,115 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:25](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L25)
+[prefabs/Axis/Axis.ts:41](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L41)
 
 ___
 
-### shape
+### setBackground
 
-• **shape**: (`this`: [`Axis`](Axis.md), `options`: { `radius?`: `number`  }, `properties`: {}) => [`Axis`](Axis.md) = `shapeAlt`
+• `Private` **setBackground**: (`this`: [`Axis`](Axis.md)) => { `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `backgroundAlt`
 
 #### Type declaration
 
-▸ (`this`, `options?`, `properties?`): [`Axis`](Axis.md)
+▸ (`this`): `Object`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `this` | [`Axis`](Axis.md) |
-| `options` | `Object` |
-| `options.radius?` | `number` |
-| `properties` | `Object` |
 
 ##### Returns
 
-[`Axis`](Axis.md)
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `x?` | [`Selection`](Selection.md) |
+| `y?` | [`Selection`](Selection.md) |
+| `z?` | [`Selection`](Selection.md) |
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:101](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L101)
+[prefabs/Axis/Axis.ts:130](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L130)
 
 ___
 
-### ticks
+### setDomain
 
-• **ticks**: (`this`: [`Axis`](Axis.md), `labels`: { `x`: `undefined` \| [] ; `y`: `undefined` \| [] ; `z`: `undefined` \| []  }, `options`: { `x`: `undefined` \| {} ; `y`: `undefined` \| {} ; `z`: `undefined` \| {}  }, `properties`: { `x`: {} ; `y`: {} ; `z`: {}  }) => [`Axis`](Axis.md) = `labelAlt`
+• `Private` **setDomain**: (`this`: [`Axis`](Axis.md)) => [`Selection`](Selection.md) = `domain`
 
 #### Type declaration
 
-▸ (`this`, `labels?`, `options?`, `properties?`): [`Axis`](Axis.md)
+▸ (`this`): [`Selection`](Selection.md)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `this` | [`Axis`](Axis.md) |
-| `labels` | `Object` |
-| `labels.x` | `undefined` \| [] |
-| `labels.y` | `undefined` \| [] |
-| `labels.z` | `undefined` \| [] |
-| `options` | `Object` |
-| `options.x` | `undefined` \| {} |
-| `options.y` | `undefined` \| {} |
-| `options.z` | `undefined` \| {} |
-| `properties` | `Object` |
-| `properties.x` | `Object` |
-| `properties.y` | `Object` |
-| `properties.z` | `Object` |
 
 ##### Returns
 
-[`Axis`](Axis.md)
+[`Selection`](Selection.md)
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:103](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L103)
+[prefabs/Axis/Axis.ts:129](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L129)
+
+___
+
+### setGrid
+
+• `Private` **setGrid**: (`this`: [`Axis`](Axis.md)) => [`Selection`](Selection.md) = `grid`
+
+#### Type declaration
+
+▸ (`this`): [`Selection`](Selection.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Axis`](Axis.md) |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+#### Defined in
+
+[prefabs/Axis/Axis.ts:131](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L131)
+
+___
+
+### setLabel
+
+• `Private` **setLabel**: (`this`: [`Axis`](Axis.md)) => { `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `labelAlt`
+
+#### Type declaration
+
+▸ (`this`): `Object`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Axis`](Axis.md) |
+
+##### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `x?` | [`Selection`](Selection.md) |
+| `y?` | [`Selection`](Selection.md) |
+| `z?` | [`Selection`](Selection.md) |
+
+#### Defined in
+
+[prefabs/Axis/Axis.ts:132](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L132)
 
 ## Methods
 
@@ -222,7 +273,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:44](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L44)
+[prefabs/Axis/Axis.ts:70](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L70)
 
 ___
 
@@ -252,4 +303,4 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:55](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Axis/Axis.ts#L55)
+[prefabs/Axis/Axis.ts:81](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L81)

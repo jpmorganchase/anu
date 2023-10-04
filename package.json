@@ -1,5 +1,5 @@
 {
-  "name": "anu",
+  "name": "@jpmorganchase/anu",
   "version": "0.0.1",
   "description": "",
   "type": "module",
@@ -22,7 +22,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
-    "docs": "cd docs && npm run docs:dev"
+    "docs": "cd docs && npm run docs:dev",
+    "clean": "rm -rf ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jpmorganchase/anu.git"
   },
   "keywords": [],
   "author": "",
@@ -34,19 +39,17 @@
     "prettier": "^2.7.1",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
-    "typedoc": "^0.23.28",
-    "typedoc-plugin-markdown": "^3.13.6",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
-    "vite-plugin-dts": "^2.3.0"
-  
+    "vite-plugin-dts": "^2.3.0",
+    "typedoc": "^0.25.1",
+    "typedoc-plugin-markdown": "^3.16.0"
   },
   "dependencies": {
+    "@babylonjs/core": "^6.12.3",
+    "babylon-msdf-text": "^0.0.3",
     "d3": "^7.8.5",
-    "ol": "^7.3.0",
-    "lodash-es": "^4.17.21"
-  },
-  "peerDependencies": {
-    "@babylonjs/core": "^6.12.3"
-  }
+    "lodash-es": "^4.17.21",
+    "ol": "^7.3.0"
+     }
 }

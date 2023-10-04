@@ -14,14 +14,17 @@
 
 - [bind](modules.md#bind)
 - [create](modules.md#create)
+- [createAxes](modules.md#createaxes)
+- [createPlaneText](modules.md#createplanetext)
 - [createTextureGlobe](modules.md#createtextureglobe)
 - [createTextureMap](modules.md#createtexturemap)
+- [cylinderLayout](modules.md#cylinderlayout)
+- [planeLayout](modules.md#planelayout)
 - [select](modules.md#select)
 - [selectData](modules.md#selectdata)
 - [selectId](modules.md#selectid)
 - [selectName](modules.md#selectname)
 - [selectTag](modules.md#selecttag)
-- [text2d](modules.md#text2d)
 
 ## Functions
 
@@ -50,7 +53,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[bind.ts:19](https://github.com/jpmorganchase/anu/blob/4ed179d/src/bind.ts#L19)
+[bind.ts:19](https://github.com/jpmorganchase/anu/blob/8044627/src/bind.ts#L19)
 
 ___
 
@@ -78,7 +81,51 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[create.ts:60](https://github.com/jpmorganchase/anu/blob/4ed179d/src/create.ts#L60)
+[create.ts:65](https://github.com/jpmorganchase/anu/blob/8044627/src/create.ts#L65)
+
+___
+
+### createAxes
+
+▸ **createAxes**(`name`, `scene`, `options`): [`Axis`](classes/Axis.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `scene` | `Scene` |
+| `options` | `AxisOptions` |
+
+#### Returns
+
+[`Axis`](classes/Axis.md)
+
+#### Defined in
+
+[prefabs/Axis/Axis.ts:141](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Axis/Axis.ts#L141)
+
+___
+
+### createPlaneText
+
+▸ **createPlaneText**(`name`, `options`, `scene`): `Mesh`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `options` | `planeTextOptions` |
+| `scene` | `Scene` |
+
+#### Returns
+
+`Mesh`
+
+#### Defined in
+
+prefabs/Text/planeText.ts:121
 
 ___
 
@@ -104,7 +151,7 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Mapping/textureGlobe.ts#L123)
+[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Mapping/textureGlobe.ts#L123)
 
 ___
 
@@ -131,7 +178,51 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/Mapping/textureMap.ts#L191)
+[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Mapping/textureMap.ts#L191)
+
+___
+
+### cylinderLayout
+
+▸ **cylinderLayout**(`name`, `options`, `scene`): `Layout`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `options` | `LayoutOptions` |
+| `scene` | `Scene` |
+
+#### Returns
+
+`Layout`
+
+#### Defined in
+
+[prefabs/Layout/Layout.ts:260](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Layout/Layout.ts#L260)
+
+___
+
+### planeLayout
+
+▸ **planeLayout**(`name`, `options`, `scene`): `Layout`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `options` | `LayoutOptions` |
+| `scene` | `Scene` |
+
+#### Returns
+
+`Layout`
+
+#### Defined in
+
+[prefabs/Layout/Layout.ts:245](https://github.com/jpmorganchase/anu/blob/8044627/src/prefabs/Layout/Layout.ts#L245)
 
 ___
 
@@ -158,7 +249,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:17](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L17)
+[select.ts:17](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L17)
 
 ___
 
@@ -186,7 +277,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:98](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L98)
+[select.ts:98](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L98)
 
 ___
 
@@ -213,7 +304,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:61](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L61)
+[select.ts:61](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L61)
 
 ___
 
@@ -240,7 +331,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:44](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L44)
+[select.ts:44](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L44)
 
 ___
 
@@ -267,33 +358,4 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:78](https://github.com/jpmorganchase/anu/blob/4ed179d/src/select.ts#L78)
-
-___
-
-### text2d
-
-▸ **text2d**(`name`, `options`, `scene`): `Mesh`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `options` | `Object` |
-| `options.backgroundColor?` | `string` |
-| `options.fontColor?` | `string` |
-| `options.fontMod?` | `string` |
-| `options.fontSize?` | `number` |
-| `options.fontStyle?` | `string` |
-| `options.size?` | `number` |
-| `options.text?` | `string` |
-| `scene` | `Scene` |
-
-#### Returns
-
-`Mesh`
-
-#### Defined in
-
-[prefabs/text2d.ts:7](https://github.com/jpmorganchase/anu/blob/4ed179d/src/prefabs/text2d.ts#L7)
+[select.ts:78](https://github.com/jpmorganchase/anu/blob/8044627/src/select.ts#L78)

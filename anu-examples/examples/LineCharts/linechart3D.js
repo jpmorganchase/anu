@@ -3,7 +3,7 @@
 
 import * as d3 from "d3";
 import * as anu from "anu";
-import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera, MeshBuilder } from "@babylonjs/core";
+import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
 
 export function linechart3D(babylonEngine) {
   const scene = new Scene(babylonEngine);
@@ -20,8 +20,6 @@ export function linechart3D(babylonEngine) {
   camera.position = new Vector3(10.5,7,-10.5);
 
   let CoT = new TransformNode("cot");
-
- 
 
   d3.csv("../data/yield-curve.csv", (d) => d).then((data) => {
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
@@ -75,64 +73,31 @@ export function linechart3D(babylonEngine) {
 
     ribbon.setVerticesData(VertexBuffer.ColorKind, colors);
 
-    let axis = new anu.Axis("testAxis", scene, {
-      cot: anu.select("#cot", scene),
-      x: scaleX,
-      y: scaleY,
-      z: scaleZ,
-    })
-      .shape(
-        { radius: 0.02 },
-        {
-          "material.diffuseColor": Color3.Black,
-          "material.alpha": 1,
-          "material.specularColor": Color3.Black,
-        }
-      )
-      .background()
-      .ticks(
-        {
-          x: scaleX.ticks(d3.timeYear.every(2)),
-          y: scaleY.ticks(),
-        },
-        {
-          x: {
-            text: (d) => {
-              return dateFormat(d.text);
-            },
-          },
-          y: {
-            text: (d) => {
-              if (d.text === undefined) {
-                return "0%";
-              } else {
-                return d.text + "%";
-              }
-            },
-          },
-        }
-      )
-      .grid({
-        x: scaleX.ticks(d3.timeYear.every(2)),
-        y: scaleY.ticks(),
-      });
+    anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
+                                    scale: {x: scaleX, y: scaleY, z: scaleZ},
+                                    domainMaterialOptions: { "color": Color3.Black(), width: 5},
+                                    gridTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
+                                    labelTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
+                                    labelFormat: {x: dateFormat, y: (text) => {
+                                                  if (text == undefined) {
+                                                    return text;
+                                                  } else {
+                                                    return text + "%";
+                                                  }}
+                                                }
+                                  });
 
-    
     let whiteLines = anu
       .select("#cot", scene)
       .bind("lineSystem", { lines: myPaths2 })
       .attr("color", new Color3(1, 1, 1))
       .prop("alpha", 0.5);
-
+  
     let  blackOutline = anu
       .select("#cot", scene)
       .bind("lines", { points: myPaths2[0]})
       .attr("color", new Color3(0, 0, 0));
-      
-  });
-
-
-  
-
+    });
+                                  
   return scene;
 }
