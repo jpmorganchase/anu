@@ -11,7 +11,7 @@ import { HemisphericLight,
          Color3
         } from '@babylonjs/core';
 import * as d3 from 'd3';
-import * as anu from 'anu';
+import * as anu from '@jpmorganchase/anu';
 
 export function barchart2d(babylonEngine){
     const scene = new Scene(babylonEngine)

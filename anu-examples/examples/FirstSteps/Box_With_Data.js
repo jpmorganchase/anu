@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { HemisphericLight, ArcRotateCamera, Vector3, Scene} from '@babylonjs/core';
-import * as anu from 'anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
+import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 
 
 //create and export a function that takes a babylon engine and returns a scene

@@ -13,7 +13,7 @@ import { HemisphericLight,
          MeshBuilder,
         Node} from '@babylonjs/core';
 import * as d3 from 'd3';
-import * as anu from 'anu';
+import * as anu from '@jpmorganchase/anu';
 
 export function barchart3D(babylonEngine){
     const scene = new Scene(babylonEngine)
