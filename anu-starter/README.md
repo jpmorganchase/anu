@@ -1,9 +1,11 @@
-# create-my-template
+# Anu-Starter
 
-Example project to showcase how to build your own `create-my-template` npx starter template.
+Use this script to generate a Babylonjs and Anu javascript project template using vite. 
 
 ```bash
-$ npx create-my-template my-app
+npx anu-starter my-app
+cd my-app
+npm install
+npm run dev
 ```
 
-[Read my article on how this works](https://petermekhaeil.com/how-to-build-an-npx-starter-template/).
