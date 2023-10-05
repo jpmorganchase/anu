@@ -57,13 +57,6 @@ export function barchart2d(babylonEngine){
                                                       .map((v) => v / 255)
                                             return new Color3(...rgb)}) 
 
-    //Create our axises using the anu axis prefab
-    // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY})
-    // .shape()
-    // .background()
-    // .ticks()
-    // .grid();
-
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
 
    

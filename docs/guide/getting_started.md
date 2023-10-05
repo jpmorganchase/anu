@@ -60,26 +60,19 @@ We recommend following the [Babylon + Vite](https://doc.babylonjs.com/guidedLear
 Once your project structure is up and running install Anu.js by building it locally in a different file directory and linking it to your project. 
 
 ```bash
-git clone <repo url>
-cd babylonjs-anu
-npm install 
-npm run dev
+npm install @jpmorganchase/anu
 ```
 
-### Linking to another node project
-```bash
-npm link path-to-install-target-project
+Then import the anu name space
+
+```js 
+import * as anu from '@jpmorganchase/anu'
 ```
 
-### Run
-```bash
-cd path-to-your-project
-npm run dev
-```
+You can now call anu methods as such
 
-### View the WIP documentation
-```bash
-cd AnuDocs
-npm run docs:dev
+```js
+//mesh, name, scene
+anu.create('box', 'myBox', scene)
 ```
 
