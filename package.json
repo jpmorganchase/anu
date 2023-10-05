@@ -1,0 +1,9 @@
+{
+  "name": "@jpmorganchase/anu-starter",
+  "version": "1.0.0",
+  "description": "Anu template generator",
+  "bin": {
+    "anu-starter": "./index.js"
+  },
+  "license": "MIT"
+}
