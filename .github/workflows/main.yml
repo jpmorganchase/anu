@@ -24,5 +24,9 @@ jobs:
           npm install
           npm run build
           npm publish --access public
+          cd anu-starter
+          npm install
+          npm run build
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
