@@ -9,7 +9,7 @@ aside: false
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=linechart2D">
+        src="/examples.html?example=linechart2D">
     </iframe>
 </div>
 

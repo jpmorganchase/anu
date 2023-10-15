@@ -9,7 +9,7 @@ aside: false
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterplot2D">
+        src="/examples.html?example=scatterplot2D">
     </iframe>
 </div>
 

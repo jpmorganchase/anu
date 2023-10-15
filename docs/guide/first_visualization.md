@@ -27,7 +27,7 @@ let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterPlot3DStep1">
+        src="/examples.html?example=scatterPlot3DStep1">
     </iframe>
 </div>
 
@@ -56,7 +56,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterPlot3DStep2">
+        src="/examples.html?example=scatterPlot3DStep2">
     </iframe>
 </div>
 
@@ -120,7 +120,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterPlot3DStep4">
+        src="/examples.html?example=scatterPlot3DStep4">
     </iframe>
 </div>
 
@@ -159,7 +159,7 @@ anu.createAxes('axes', scene, { parent: cot,
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterPlot3DStep6">
+        src="/examples.html?example=scatterPlot3DStep6">
     </iframe>
 </div>
 

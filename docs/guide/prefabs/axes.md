@@ -68,5 +68,5 @@ anu.createAxes('myAxes', scene, {scale: {x: scaleX, y: scaleY, z: scaleZ}});
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/index.html/?example=axesTest">
+      src="/examples.html?example=axesTest">
   </iframe>

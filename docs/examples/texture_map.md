@@ -9,7 +9,7 @@ aside: false
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=textureMap">
+        src="/examples.html?example=textureMap">
     </iframe>
 </div>
 

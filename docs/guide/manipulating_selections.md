@@ -23,7 +23,7 @@ Inspector.Show(scene, {
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/index.html/?example=mod_value">
+    src="/examples.html?example=mod_value">
 </iframe>However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 
 1. d: The data bound to the node when it was created.
@@ -46,7 +46,7 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/index.html/?example=mod_function">
+    src="/examples.html?example=mod_function">
 </iframe>
 
 ## Wrapper Methods
@@ -91,7 +91,7 @@ spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.p
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/index.html/?example=prop">
+    src="/examples.html?example=prop">
 </iframe>
 
 
@@ -114,7 +114,7 @@ spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/index.html/?example=props">
+    src="/examples.html?example=props">
 </iframe>
 
 ## Putting It All Together
