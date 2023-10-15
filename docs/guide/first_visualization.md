@@ -84,7 +84,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/index.html/?example=scatterPlot3DStep3">
+        src="./?example=scatterPlot3DStep3">
     </iframe>
 </div>
 

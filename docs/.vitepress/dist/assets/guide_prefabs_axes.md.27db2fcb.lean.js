@@ -1,0 +1,2 @@
+import{_ as s,o as a,c as e,a as n,O as t,z as l}from"./chunks/framework.eb48dd0f.js";const h=JSON.parse('{"title":"Axes","description":"","frontmatter":{"outline":"deep"},"headers":[],"relativePath":"guide/prefabs/axes.md","filePath":"guide/prefabs/axes.md"}'),o={name:"guide/prefabs/axes.md"},p=t("",10),r=l("iframe",{id:"inlineFrameExample",title:"Inline Frame Example",width:"100%",height:"400",src:"/index.html/?example=axesTest"},`
+  `,-1);function c(i,y,D,A,d,F){return a(),e("div",null,[p,n(),r])}const f=s(o,[["render",c]]);export{h as __pageData,f as default};
