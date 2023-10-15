@@ -38,7 +38,8 @@ There are many ways to contribute such as:
     2. Request of Contribute a visualization example for the gallery via github issues
     3. Ask or answer questions on our forum via github discussions 
     4. Bug fixes and code contributions via pull request
-    5. If you would like to work on a item from the road map or a new idea for the library, open a discussion on our forum first to get more information and feedback
+    5. If you would like to work on a item from the road map or a new idea for the library, 
+    open a discussion on our forum first to get more information and feedback
 
 If you would like to open and merge a pull request, you must first sign the contributor license agreement (CLA) found in the root of this repo.
 
