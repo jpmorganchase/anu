@@ -123,7 +123,8 @@ let mesh = createTextMesh({
 
 mesh.dispose();
 
-//scene.debugLayer.show();
+  
+const xrHelper = await scene.createDefaultXRExperienceAsync();
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
