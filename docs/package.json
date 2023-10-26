@@ -12,4 +12,5 @@
     "vitepress": "^1.0.0-alpha.75",
     "@babylonjs/core": "^6.12.3"
   }
+  
 }
