@@ -24,8 +24,8 @@ aside: false
     }
 </style>
 
-<!-- ::: code-group
-<<< @/../anu-examples/examples/geographic/texture_Globe.js 
+::: code-group
+<<< @./anu-examples/examples/geographic/texture_Globe.js 
 
-<<< @/../anu-examples/data/airports.csv
-::: -->
+<<< @./anu-examples/data/airports.csv
+:::
