@@ -25,7 +25,7 @@ aside: false
 </style>
 
 ::: code-group
-<<< @/../anu-examples/examples/geographic/texture_Map.js 
+<<< @/../anu-examples/examples/Geographic/Texture_Map.js 
 
 <<< @/../anu-examples/data/airports.csv
 :::
