@@ -19,7 +19,7 @@ BABYLON.MeshBuilder.CreateBox('ourBox', {size:2}, scene)
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/examples.html?example=box">
+      src="/anu/examples.html?example=box">
   </iframe>
 
 ## Using Data and Functions
@@ -43,7 +43,7 @@ let box = anu.create('box',
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/examples.html?example=box_data">
+      src="/anu/examples.html?example=box_data">
   </iframe>
 
 ## Binding Data to Boxes
@@ -71,7 +71,7 @@ Instead of using [create()](../api/modules.html#create) to create and return a s
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/examples.html?example=box_bind">
+      src="/anu/examples.html?example=box_bind">
   </iframe>
 
 ## Manipulating Boxes with Selections
@@ -103,7 +103,7 @@ We will cover [Selection](../api/classes/Selection.md) in more detail later on, 
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/examples.html?example=box_selection">
+      src="/anu/examples.html?example=box_selection">
   </iframe>
 
   ## Whats Next

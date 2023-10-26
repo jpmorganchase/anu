@@ -120,7 +120,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/examples.html?example=scatterPlot3DStep4">
+        src="/anu/examples.html?example=scatterPlot3DStep4">
     </iframe>
 </div>
 
@@ -159,7 +159,7 @@ anu.createAxes('axes', scene, { parent: cot,
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
         title="Inline Frame Example"
-        src="/examples.html?example=scatterPlot3DStep6">
+        src="/anu/examples.html?example=scatterPlot3DStep6">
     </iframe>
 </div>
 

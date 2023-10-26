@@ -8,8 +8,10 @@ aside: false
 
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
+     allow="xr-spatial-tracking"
+        allowfullscreen=""
         title="Inline Frame Example"
-        src="/examples.html?example=textureMap">
+        src="/anu/examples.html?example=textureMap">
     </iframe>
 </div>
 

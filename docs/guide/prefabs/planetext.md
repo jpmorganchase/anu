@@ -50,5 +50,5 @@ anu.createPlaneText('text2d', options, scene);
       title="Inline Frame Example"
       width="100%"
       height="400"
-      src="/examples.html?example=text">
+      src="/anu/examples.html?example=text">
   </iframe>

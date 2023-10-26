@@ -8,8 +8,10 @@ aside: false
 
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
+     allow="xr-spatial-tracking"
+        allowfullscreen=""
         title="Inline Frame Example"
-        src="/examples.html?example=scatterplot2D">
+        src="/anu/examples.html?example=scatterplot2D">
     </iframe>
 </div>
 
