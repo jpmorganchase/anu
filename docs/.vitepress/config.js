@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/anu/',
   title: "Anu",
   description: "Immersive Visualizations with Data Drive Babylon",
   themeConfig: {
