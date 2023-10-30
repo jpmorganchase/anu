@@ -38,7 +38,7 @@ sphere.position = new Vector3(1,0,0)
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=select">
+    src="/anu/examples.html?example=select">
 </iframe>
 
 ### Select by Name and ID
@@ -67,7 +67,7 @@ let sphere_selection = anu.selectId('sphere-ID', scene)
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=select_name_tag">
+    src="/anu/examples.html?example=select_name_tag">
 </iframe>
 
 ### Select by Tags
@@ -144,7 +144,7 @@ Inspector.Show(scene, {
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=cot_bind">
+    src="/anu/examples.html?example=cot_bind">
 </iframe>
 
 
@@ -173,7 +173,7 @@ Inspector.Show(scene, {
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=spheres_bind">
+    src="/anu/examples.html?example=spheres_bind">
 </iframe>
 
 
@@ -199,7 +199,7 @@ boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=boxes_transform">
+    src="/anu/examples.html?example=boxes_transform">
 </iframe>
 
 In contrast, if we change the transform properties of the parent node instead (in our case the cot selection), the result is much less dramatic. This is because we are changing the transform of only one node, and because the boxes are children of that node they are all being transformed in the same way. This can be useful when we want to move, scale, or rotate a group of meshes at once. For example, if we create a scatter plot and all the meshes are children of a single transform node, we can change the position, scale, and rotation of the whole scatter plot by changing the properties of the root parent node, but more on that later.
@@ -222,7 +222,7 @@ cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=cot_transform">
+    src="/anu/examples.html?example=cot_transform">
 </iframe>
 
 ## Nested Selections
@@ -258,7 +258,7 @@ Inspector.Show(scene, {
     title="Inline Frame Example"
     width="100%"
     height="400"
-    src="/examples.html?example=select_boxes">
+    src="/anu/examples.html?example=select_boxes">
 </iframe>
 
 <!-- ## Getting Selection Values
