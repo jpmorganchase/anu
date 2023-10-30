@@ -11,7 +11,7 @@ aside: false
      allow="xr-spatial-tracking"
         allowfullscreen=""
         title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterplot3D">
+        src="https://jpmorganchase.github.io/anu/anu/examples.html?example=scatterplot3D">
     </iframe>
 </div>
 
