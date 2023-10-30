@@ -2,6 +2,9 @@
 
 Anujs is an immersive data visualization toolkit built on the web-based 3D game engine [Babylon.js](https://www.babylonjs.com/) and [WebXR](https://immersiveweb.dev/). Anu is heavily inspired by [D3's](https://d3js.org/) data-binding DOM manipulation patterns and visualization utility. Anu works in synergy with D3 to bring these patterns to Babylon, enabling developers to dynamically manipulate the Babylon scene graph with data and augment 3D immersive visualizations with utilities, pre-fabs, and interactions. 
 
+---
+See our docs for more the details: https://jpmorganchase.github.io/anu/
+
 ## Version
 
 Anu is currently in alpha, version 0.0.1, and development of the library remains fluid. Please see the road map to learn what features are finished or planned. Alpha release may have changes that break backwards compatibility as syntax, properties, methods, and functions will change as the library is developed further and improved. This also means that now is the best time to contribute codes, suggestions, and bug reports. See the contributing section to learn how you can contribute. 
