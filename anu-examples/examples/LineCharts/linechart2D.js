@@ -23,7 +23,7 @@ export function linechart2D(babylonEngine) {
 
  
 
-  csv("../data/yield-curve.csv", (d) => d).then((data) => {
+  csv("../anu/data/yield-curve.csv", (d) => d).then((data) => {
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
 
     var parseTime = timeParse("%m/%d/%Y");

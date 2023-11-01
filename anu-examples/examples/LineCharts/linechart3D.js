@@ -21,7 +21,7 @@ export function linechart3D(babylonEngine) {
 
   let CoT = new TransformNode("cot");
 
-  d3.csv("../data/yield-curve.csv", (d) => d).then((data) => {
+  d3.csv("../anu/data/yield-curve.csv", (d) => d).then((data) => {
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
 
     var parseTime = d3.timeParse("%m/%d/%Y");
