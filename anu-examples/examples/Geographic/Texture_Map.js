@@ -15,7 +15,7 @@ export function textureMap(babylonEngine){
   camera.position = new Vector3(0, 100, -20)
 
   //Use D3 to read in our csv data
-  csv("../data/airports.csv", (d) => d).then((data) => {
+  csv("../anu/data/airports.csv", (d) => d).then((data) => {
     //Our data has over 3000 points so we will use mesh instancing for better performance
     //To do this we must first create a mesh to be our root and register a buffer for color
     let rootSphere = anu.create('sphere', 'sphere', scene, {diameter: 0.2})

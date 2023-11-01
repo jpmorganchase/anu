@@ -17,7 +17,7 @@ export function textureGlobe(babylonEngine){
 
 
   //Use D3 to read in our csv data
-  csv("../data/airports.csv", (d) => d).then((data) => {
+  csv("../anu/data/airports.csv", (d) => d).then((data) => {
 
     let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10}, scene)
  
