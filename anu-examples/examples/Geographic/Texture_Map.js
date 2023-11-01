@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera } from '@babylonjs/core';
-import * as anu from 'anu';
+import * as anu from '@jpmorganchase/anu';
 import {csv} from 'd3';
 
 export function textureMap(babylonEngine){

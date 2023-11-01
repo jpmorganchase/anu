@@ -19,7 +19,7 @@ import { HemisphericLight,
          PointerDragBehavior
         } from '@babylonjs/core';
 import * as d3 from 'd3';
-import * as anu from 'anu';
+import * as anu from '@jpmorganchase/anu';
 import * as gui from '@babylonjs/gui'
 import { assign, update } from 'lodash-es';
 

@@ -16,7 +16,7 @@ import { HemisphericLight,
          PointerDragBehavior
         } from '@babylonjs/core';
 import * as d3 from 'd3';
-import * as anu from 'anu';
+import * as anu from '@jpmorganchase/anu';
 import { assign, update } from 'lodash-es';
 import * as gui from '@babylonjs/gui'
 
@@ -47,11 +47,11 @@ export function layoutNew(babylonEngine){
 
     let charts = anu.selectName('cot', scene);
 
-    charts.scalingX((d) => Math.max(Math.random(), .5) * 2)
-    charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
-    chart4.scalingZ((d) => Math.max(Math.random(), .4) * 2)
-    chart6.scalingZ((d) => Math.max(Math.random(), .4) * 2)
-    chart9.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+    // charts.scalingX((d) => Math.max(Math.random(), .5) * 2)
+    // charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
+    // chart4.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+    // chart6.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+    // chart9.scalingZ((d) => Math.max(Math.random(), .4) * 2)
 
     var isstretch = false;
     var iszalign = false;

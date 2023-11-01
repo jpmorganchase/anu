@@ -39,17 +39,18 @@
     "prettier": "^2.7.1",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.25.1",
+    "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
-    "vite-plugin-dts": "^2.3.0",
-    "typedoc": "^0.25.1",
-    "typedoc-plugin-markdown": "^3.16.0"
+    "vite-plugin-dts": "^2.3.0"
   },
   "dependencies": {
     "@babylonjs/core": "^6.12.3",
     "babylon-msdf-text": "^0.0.3",
     "d3": "^7.8.5",
+    "d3-force-3d": "^3.0.5",
     "lodash-es": "^4.17.21",
     "ol": "^7.3.0"
-     }
+  }
 }

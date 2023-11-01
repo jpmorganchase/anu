@@ -3,7 +3,7 @@
 
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as d3 from 'd3';  //D3 for scales
-import * as anu from 'anu' //Anu for Scene-Graph Manipulation
+import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, StandardMaterial, Color3} from '@babylonjs/core'; 
 
