@@ -28,7 +28,7 @@ import { HemisphericLight,
       Line
     } from "@babylonjs/gui";
     import * as d3 from "d3";
-    import { forceSimulation } from 'd3-force-3d';
+    import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force-3d';
   
   
     export function force3d(babylonEngine){
@@ -53,9 +53,9 @@ import { HemisphericLight,
           console.log(nodes);
           // Create a simulation with several forces.
           const simulation = forceSimulation(nodes, 3)
-              .force("link", d3.forceLink(links).id(d => d.id))
-              .force("charge", d3.forceManyBody())
-              .force("center", d3.forceCenter(width / 2, height / 2))
+              .force("link", forceLink(links).id(d => d.id))
+              .force("charge", forceManyBody())
+              .force("center", forceCenter(width / 2, height / 2))
                .on("tick", ticked);
   
           let dots = [];
