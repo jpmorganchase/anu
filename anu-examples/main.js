@@ -29,6 +29,7 @@ import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
 import { layoutNew } from './examples/Layouts/layoutNew';
 import { force3d } from './examples/Force3D/force3d';
+import { sphericalforce } from './examples/Force3D/sphericalforce';
 import { cotBind } from './examples/Selections/cot_bind';
 import { spheresBind } from './examples/Selections/spheres_bind';
 import { cotTransform } from './examples/Selections/cot_transform';
@@ -80,6 +81,7 @@ const scenes = {
   'layout': layout,
   'layoutNew': layoutNew,
   'force3d': force3d,
+  'sphericalforce': sphericalforce,
   'cot_bind': cotBind,
   'spheres_bind': spheresBind,
   'cot_transform': cotTransform,

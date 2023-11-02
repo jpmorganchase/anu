@@ -28,13 +28,16 @@ import { HemisphericLight,
       Line
     } from "@babylonjs/gui";
     import * as d3 from "d3";
-    import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force-3d';
+    import { forceSimulation, forceLink, forceCollide, forceManyBody, forceCenter, forceRadial } from 'd3-force-3d';
+
   
-    export function force3d(babylonEngine){
+    export function sphericalforce(babylonEngine){
         const scene = new Scene(babylonEngine)      
         new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
         const camera = new ArcRotateCamera("Camera", Tools.ToRadians(90), Tools.ToRadians(65), 30, Vector3.Zero(), scene);
         camera.attachControl(true)
+
+        let tempcenter = new Vector3(0, 0, 0);
         
         const data = d3.json("../data/data.json").then(function(d)
         {
@@ -49,14 +52,26 @@ import { HemisphericLight,
           // so that re-evaluating this cell produces the same result.
           const links = d.links.map(d => ({...d}));
           const nodes = d.nodes.map(d => ({...d}));
-          console.log(nodes);
-          // Create a simulation with several forces.
+
+          //Create a simulation with several forces.
           const simulation = forceSimulation(nodes, 3)
-              .force("link", forceLink(links).id(d => d.id))
+              .force("link", forceLink(links).id(d => d.id).strength(.1))
               .force("charge", forceManyBody())
               .force("center", forceCenter(width / 2, height / 2))
-               .on("tick", ticked);
-  
+              .force("center", forceRadius(nodes, 150))
+              .on("tick", ticked)
+
+            // const simulation = forceSimulation(nodes, 3)
+            // .force("link", forceLink(links).id(d => d.id).strength(0.02))
+            // .force("collide", forceCollide().radius(5))
+            // .force("charge", null)
+            // //.force("center", forceCenter(width / 2, height / 2))
+            // .force("r", forceRadial(100))
+            // //.force("center", forceRadius(nodes, 100))
+            // .on("tick", ticked)
+
+          console.log(nodes)
+                
           let dots = [];
           let isdragged = [];
           let textLabels = [];
@@ -99,14 +114,14 @@ import { HemisphericLight,
   
           nodes.forEach((node, i) => {
   
-            console.log(node);
+            //console.log(node);
             const sphere = MeshBuilder.CreateSphere("sphere", scene); //scene is optional and defaults to the current scene
             sphere.material = groupcolors[Number(node.group)];
             sphere.scaling = new Vector3(10, 10, 10)
             dots.push(sphere)
             sphere.actionManager = new ActionManager(scene);
             sphere.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, function(ev){	
-              console.log(nodes[i].id)
+              //console.log(nodes[i].id)
               textLabels[i].getControlByName("target").isVisible = true;
               textLabels[i].getControlByName("rect").isVisible = true;
               textLabels[i].getControlByName("line").isVisible = true;
@@ -236,8 +251,8 @@ import { HemisphericLight,
               lines[i] = MeshBuilder.CreateTube("tube", options[i]);
   
             })
-            
-            let tempcenter = new Vector3(0, 0, 0);
+
+            tempcenter = new Vector3(0, 0, 0);
             let cnt  = 0;
             dots.forEach((d,i) => {
                 tempcenter = tempcenter.add(d.position);
@@ -289,7 +304,6 @@ import { HemisphericLight,
         scene.clipPlane = null;
         return scene;
 }
-    
 
 function forceRadius(nodes, R = 1) {
   return () => {
