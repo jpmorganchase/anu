@@ -4,7 +4,8 @@
 import * as d3 from "d3";
 import * as anu from '@jpmorganchase/anu';
 import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
-import data from '../../data/yield-curve.csv'
+import data from 'anu/../../data/yield-curve.csv'
+
 
 export function linechart3D(babylonEngine) {
   const scene = new Scene(babylonEngine);

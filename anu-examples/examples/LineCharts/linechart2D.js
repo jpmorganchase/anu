@@ -4,7 +4,8 @@
 import {extent, csv, timeYear, timeParse, timeFormat, scaleTime, scaleLinear, scaleSequential, interpolateBlues} from "d3";
 import * as anu from '@jpmorganchase/anu';
 import {Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
-import data from '../../data/yield-curve.csv'
+import data from 'anu/../../data/yield-curve.csv'
+
 
 export function linechart2D(babylonEngine) {
   const scene = new Scene(babylonEngine);
