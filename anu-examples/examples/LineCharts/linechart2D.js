@@ -4,6 +4,8 @@
 import {extent, csv, timeYear, timeParse, timeFormat, scaleTime, scaleLinear, scaleSequential, interpolateBlues} from "d3";
 import * as anu from '@jpmorganchase/anu';
 import {Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
+import data from '../../data/yield-curve.csv'
+
 
 export function linechart2D(babylonEngine) {
   const scene = new Scene(babylonEngine);
@@ -23,7 +25,6 @@ export function linechart2D(babylonEngine) {
 
  
 
-  csv("../anu/data/yield-curve.csv", (d) => d).then((data) => {
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
 
     var parseTime = timeParse("%m/%d/%Y");
@@ -69,7 +70,6 @@ export function linechart2D(babylonEngine) {
                   }
     });
       
-  });
-
+ 
   return scene;
 }

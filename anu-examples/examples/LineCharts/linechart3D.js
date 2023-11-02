@@ -4,6 +4,8 @@
 import * as d3 from "d3";
 import * as anu from '@jpmorganchase/anu';
 import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
+import data from '../../data/yield-curve.csv'
+
 
 export function linechart3D(babylonEngine) {
   const scene = new Scene(babylonEngine);
@@ -21,7 +23,6 @@ export function linechart3D(babylonEngine) {
 
   let CoT = new TransformNode("cot");
 
-  d3.csv("/anu/public/data/yield-curve.csv", (d) => d).then((data) => {
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
 
     var parseTime = d3.timeParse("%m/%d/%Y");
@@ -97,7 +98,7 @@ export function linechart3D(babylonEngine) {
       .select("#cot", scene)
       .bind("lines", { points: myPaths2[0]})
       .attr("color", new Color3(0, 0, 0));
-    });
+   
                                   
   return scene;
 }

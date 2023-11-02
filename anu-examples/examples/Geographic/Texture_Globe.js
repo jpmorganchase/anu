@@ -4,6 +4,8 @@
 import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import {csv} from 'd3';
+import data from '../../data/airports.csv'
+
 
 export function textureGlobe(babylonEngine){
   const scene = new Scene(babylonEngine);
@@ -17,7 +19,7 @@ export function textureGlobe(babylonEngine){
 
 
   //Use D3 to read in our csv data
-  csv("../anu/data/airports.csv", (d) => d).then((data) => {
+
 
     let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10}, scene)
  
@@ -31,6 +33,6 @@ export function textureGlobe(babylonEngine){
     .scaling(new Vector3(0.1,0.1,0.1))
     .position((d) => globe.lonLatToVector3([d.longitude, d.latitude]))
 
-  });
+
   return scene;
 }

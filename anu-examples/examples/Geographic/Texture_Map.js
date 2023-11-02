@@ -4,6 +4,8 @@
 import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import {csv} from 'd3';
+import data from '../../data/airports.csv'
+
 
 export function textureMap(babylonEngine){
   const scene = new Scene(babylonEngine);
@@ -15,7 +17,6 @@ export function textureMap(babylonEngine){
   camera.position = new Vector3(0, 100, -20)
 
   //Use D3 to read in our csv data
-  csv("../anu/data/airports.csv", (d) => d).then((data) => {
     //Our data has over 3000 points so we will use mesh instancing for better performance
     //To do this we must first create a mesh to be our root and register a buffer for color
     let rootSphere = anu.create('sphere', 'sphere', scene, {diameter: 0.2})
@@ -71,6 +72,6 @@ export function textureMap(babylonEngine){
                 .positionZ((d) => scaleLat([d.longitude, d.latitude]))
                 .prop("isVisible", (d,m,i) => bounds(m))
     });
-  });
+  
   return scene;
 }
