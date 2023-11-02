@@ -41,6 +41,7 @@ export function textureMap(babylonEngine){
     map.getView().setCenter([-100, 40]);
     map.getView().setZoom(5)
 
+    
     //Helper function to determine if a mesh will be rendered inside the map plane or not
     let bounds = function(mesh){
       let parentBoundingBox = textureMap.mesh.getBoundingInfo().boundingBox;

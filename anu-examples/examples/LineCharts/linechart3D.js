@@ -6,7 +6,6 @@ import * as anu from '@jpmorganchase/anu';
 import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
 import data from '../../data/yield-curve.csv'
 
-
 export function linechart3D(babylonEngine) {
   const scene = new Scene(babylonEngine);
   new HemisphericLight("light1", new Vector3(0, 10, 0), scene);

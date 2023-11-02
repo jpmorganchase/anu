@@ -7,6 +7,7 @@ import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, StandardMaterial, Color3} from '@babylonjs/core'; 
 
+
 //create and export a function that takes a babylon engine and returns a scene
 export const scatterplot2D = function(engine){
 

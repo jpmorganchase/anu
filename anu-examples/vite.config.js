@@ -19,5 +19,6 @@ export default defineConfig({
   }, 
   plugins: [
     dsv(),
-  ]
+  ],
+  base: "/anu/",
 })

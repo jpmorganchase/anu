@@ -6,7 +6,6 @@ import * as anu from '@jpmorganchase/anu';
 import {csv} from 'd3';
 import data from '../../data/airports.csv'
 
-
 export function textureGlobe(babylonEngine){
   const scene = new Scene(babylonEngine);
   //Add some lighting
