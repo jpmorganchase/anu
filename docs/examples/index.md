@@ -13,17 +13,17 @@ layout: page
 <hr>
 <div class="cards">
 
-<card title="3D Scatter Plot" example="scatterplot3D" link="/examples/scatter_plot_3D"></card>
+<card title="3D Scatter Plot" example="scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
   
-<card title="3D Bar Chart" example="barchart3D" link="/examples/bar_chart_3D"></card>
+<card title="3D Bar Chart" example="barchart3D" link="/anu/examples/bar_chart_3D"></card>
 
-<card title="3D Line Chart" example="linechart3D" link="/examples/line_chart_3D"></card>
+<card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card>
 
-<card title="2D Scatter Plot" example="scatterplot2D" link="/examples/scatter_plot_2D"></card>
+<card title="2D Scatter Plot" example="scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
 
-<card title="2D Bar Chart" example="barchart2D" link="/examples/bar_chart_2D"></card>
+<card title="2D Bar Chart" example="barchart2D" link="/anu/examples/bar_chart_2D"></card>
 
-<card title="2D Line Chart" example="linechart2D" link="/examples/line_chart_2D"></card>
+<card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card>
  
 </div>
 </div>
@@ -33,9 +33,9 @@ layout: page
 <hr>
 <div class="cards">
 
-<card title="Texture Map" example="textureMap" link="/examples/texture_map"></card>
+<card title="Texture Map" example="textureMap" link="/anu/examples/texture_map"></card>
 
-<card title="Texture Globe" example="textureGlobe" link="/examples/texture_globe"></card>
+<card title="Texture Globe" example="textureGlobe" link="/anu/examples/texture_globe"></card>
   
 </div>
 </div>
