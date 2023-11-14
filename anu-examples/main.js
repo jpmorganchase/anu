@@ -124,7 +124,13 @@ let mesh = createTextMesh({
 mesh.dispose();
 
   
-const xrHelper = await scene.createDefaultXRExperienceAsync();
+//const xrHelper = await scene.createDefaultXRExperienceAsync();
+
+var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
+  uiOptions: {
+      sessionMode: 'immersive-ar'
+  }
+});
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
