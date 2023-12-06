@@ -36,13 +36,13 @@ export function barchart3D(babylonEngine){
 
     //Get Min/Max values for our linear scales
     const horsepowerMinMax = d3.extent([...new Set(carsRollup.map(item => item.Horsepower))])
-    const MPGMinMax = d3.extent([...new Set(carsRollup.map(item => item.Miles_per_Gallon))])
+    const MPGMinMax = d3.extent([...new Set(carsRollup.map(item => item.Miles_per_Gallon))]).reverse()
     
     //Create our scales for positioning and coloring meshes
     let scaleX = d3.scaleBand().domain(cylinders).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
     let scaleY = d3.scaleLinear().domain(horsepowerMinMax).range([0,5]).nice();
     let scaleZ = d3.scaleBand().domain(origin).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
-    let scaleC = d3.scaleSequential(d3.interpolatePuBuGn).domain(MPGMinMax);
+    let scaleC = d3.scaleSequential(anu.linearChromatic('OrRd').toColor3()).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
     let CoT = new TransformNode('cot')
@@ -55,11 +55,7 @@ export function barchart3D(babylonEngine){
                     .scalingY((d) => scaleY(d.Horsepower))
                     .positionY((d) => scaleY(d.Horsepower) / 2)
                     .material((d, i) => new StandardMaterial("myMaterial", scene)) 
-                    .diffuseColor((d) => { let rgb = scaleC(d.Miles_per_Gallon)
-                                                      .replace(/[^\d,]/g, '')
-                                                      .split(',')
-                                                      .map((v) => v / 255)
-                                            return new Color3(...rgb)}) 
+                    .diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
     //Create our axises using the anu axis prefab
     // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})

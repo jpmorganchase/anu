@@ -33,6 +33,7 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.16.16",
@@ -48,8 +49,8 @@
   "dependencies": {
     "@babylonjs/core": "^6.12.3",
     "babylon-msdf-text": "^0.0.3",
+    "chroma-js": "^2.4.2",
     "d3": "^7.8.5",
-    "d3-force-3d": "^3.0.5",
     "lodash-es": "^4.17.21",
     "ol": "^7.3.0"
   }
