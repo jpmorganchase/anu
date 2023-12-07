@@ -31,7 +31,8 @@ export const scatterplot3D = function(engine){
 
   //This is a function that will create a color scale for our three types of flowers in our data
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
-  var scaleC = scaleOrdinal(anu.categoricalChromatic('d310').toStandardMaterial())
+  console.log(anu.ordinalChromatic('d310').toStandardMaterial())
+  var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
   
   //Create a transform node to use as the parent node for all our meshes

@@ -1,62 +1,76 @@
-import { Color3, Color4, PBRMaterial, PBRMetallicRoughnessBlock, PBRMetallicRoughnessMaterial, PBRSpecularGlossinessMaterial, Scene, StandardMaterial, float, int } from "@babylonjs/core";
+import { Color3, Color4, PBRMetallicRoughnessMaterial, PBRSpecularGlossinessMaterial, StandardMaterial, float, int } from "@babylonjs/core";
 import chroma from "chroma-js";
 
-class CategoricalChromatic{
+class OrdinalChromatic{
     scheme: string;
 
     constructor(scheme: string){
         this.scheme = scheme;
     }
 
-    public toColor3(steps: int = categorical[this.scheme].length){
-        return categorical[this.scheme].slice(0,steps).map((v: string) => Color3.FromHexString(v));
+    public toColor3(steps: int = schemes[this.scheme].length){
+        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => Color3.FromHexString(v));
     }
 
-    public toColor4(steps: int = categorical[this.scheme].length){
-        return categorical[this.scheme].slice(0,steps).map((v: string) => Color4.FromHexString(v));
+    public toColor4(steps: int = schemes[this.scheme].length){
+        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => Color4.FromHexString(v));
     }
 
-    public toStandardMaterial(steps: int = categorical[this.scheme].length){
-        return categorical[this.scheme].slice(0,steps).map((v: string) => { let material = new StandardMaterial(v);
-                                                                material.diffuseColor = Color3.FromHexString(v)
-                                                                return material });
+    public toStandardMaterial(steps: int = schemes[this.scheme].length){
+        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makeStandardMaterial(v));
     }
 
-    public toPBRMaterialRough(steps: int = categorical[this.scheme].length){
-        return categorical[this.scheme].slice(0,steps).map((v: string) => { let material = new PBRMetallicRoughnessMaterial(v);
-                                                                material.baseColor = Color3.FromHexString(v)
-                                                                return material });
+    public toPBRMaterialRough(steps: int = schemes[this.scheme].length){
+        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makePBRMaterialRough(v));
     }
 
-    public toPBRMaterialGlossy(steps: int = categorical[this.scheme].length){
-        return categorical[this.scheme].slice(0,steps).map((v: string) => { let material = new PBRSpecularGlossinessMaterial(v);
-                                                                material.diffuseColor = Color3.FromHexString(v);
-                                                                material.specularColor = Color3.FromHexString(v);
-                                                                return material });
+    public toPBRMaterialGlossy(steps: int = schemes[this.scheme].length){
+        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makePBRMaterialGlossy(v));
     }
 
 }
 
-class LinearChromatic{
+class SequentialChromatic{
     scheme: string;
 
     constructor(scheme: string){
         this.scheme = scheme;
     }
 
-    public toColor3(steps: int = 0){
-        console.log(linear)
-        return (d: float) => Color3.FromHexString(chroma.scale(this.scheme)(d).hex());
+    public toColor3(steps: int | undefined | number[] = undefined){
+        
+        return (steps === undefined) ? (d: float) => Color3.FromHexString(chroma.scale(schemes[this.scheme])(d).hex())
+                                     : (d: float) => Color3.FromHexString(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
         
     }
+
+    public toColor4(steps: int | undefined | number[] = undefined){
+        return (steps === undefined) ? (d: float) => Color4.FromHexString(chroma.scale(schemes[this.scheme])(d).hex())
+                                     : (d: float) => Color4.FromHexString(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+    }
+
+    public toStandardMaterial(steps: int | undefined | number[] = undefined){
+        return (steps === undefined) ? (d: float) => makeStandardMaterial(chroma.scale(schemes[this.scheme])(d).hex())
+                                     : (d: float) => makeStandardMaterial(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+    }
+
+    public toPBRMaterialRough(steps: int | undefined | number[] = undefined){
+        return (steps === undefined) ? (d: float) => makePBRMaterialRough(chroma.scale(schemes[this.scheme])(d).hex())
+                                     : (d: float) => makePBRMaterialRough(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+    }
+
+    public toPBRMaterialGlossy(steps: int | undefined | number[] = undefined){
+        return (steps === undefined) ? (d: float) => makePBRMaterialGlossy(chroma.scale(schemes[this.scheme])(d).hex())
+                                     : (d: float) => makePBRMaterialGlossy(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+    }
 }
 
-export function categoricalChromatic(scheme: string){
-    return new CategoricalChromatic(scheme);
+export function ordinalChromatic(scheme: string){
+    return new OrdinalChromatic(scheme);
 }
 
-export function linearChromatic(scheme: string){
-    return new LinearChromatic(scheme);
+export function sequentialChromatic(scheme: string){
+    return new SequentialChromatic(scheme);
 }
 
 
@@ -64,7 +78,8 @@ interface StringByAny {
     [key: string]: any;
   }
 
-let categorical: StringByAny = {
+let schemes: StringByAny = {
+    ...chroma.brewer,
     'd310': [
         "#1f77b4",
         "#ff7f0e",
@@ -83,3 +98,21 @@ let linear: StringByAny = {
     ...chroma.brewer
 }
 
+function makeStandardMaterial(hex: string) {
+    let material = new StandardMaterial(hex);
+    material.diffuseColor = Color3.FromHexString(hex)
+    return material 
+}
+
+function makePBRMaterialRough(hex: string){ 
+    let material = new PBRMetallicRoughnessMaterial(hex);
+    material.baseColor = Color3.FromHexString(hex)
+    return material 
+}
+
+function makePBRMaterialGlossy(hex: string){ 
+    let material = new PBRSpecularGlossinessMaterial(hex);
+    material.diffuseColor = Color3.FromHexString(hex);
+    material.specularColor = Color3.FromHexString(hex);
+    return material 
+}

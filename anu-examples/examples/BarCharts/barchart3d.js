@@ -42,7 +42,7 @@ export function barchart3D(babylonEngine){
     let scaleX = d3.scaleBand().domain(cylinders).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
     let scaleY = d3.scaleLinear().domain(horsepowerMinMax).range([0,5]).nice();
     let scaleZ = d3.scaleBand().domain(origin).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
-    let scaleC = d3.scaleSequential(anu.linearChromatic('OrRd').toColor3()).domain(MPGMinMax);
+    let scaleC = d3.scaleSequential(anu.sequentialChromatic('OrRd').toPBRMaterialRough()).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
     let CoT = new TransformNode('cot')
@@ -54,8 +54,8 @@ export function barchart3D(babylonEngine){
                     .positionZ((d) => scaleZ(d.Origin))
                     .scalingY((d) => scaleY(d.Horsepower))
                     .positionY((d) => scaleY(d.Horsepower) / 2)
-                    .material((d, i) => new StandardMaterial("myMaterial", scene)) 
-                    .diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
+                    .material((d, i) => scaleC(d.Miles_per_Gallon)) 
+                    //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
     //Create our axises using the anu axis prefab
     // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})
