@@ -28,7 +28,7 @@ export const scatterPlot3DStep6 = function(engine){
 
   var scaleC = scaleOrdinal().domain(['setosa', 'versicolor', 'virginica']).range(schemeCategory10)
 
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
   let spheres = cot.bind('sphere', {diameter: 0.5}, iris);
   
 

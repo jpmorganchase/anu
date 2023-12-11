@@ -26,7 +26,7 @@ export const scatterPlot3DStep5 = function(engine){
   var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-10,10]).nice(); //
   var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-10,10]).nice(); //Same as X for our Y and Z dimensions 
 
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
   let spheres = cot.bind('sphere', {diameter: 0.5}, iris);
   
 

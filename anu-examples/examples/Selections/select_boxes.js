@@ -20,16 +20,16 @@ export const selectBoxes = function(engine){
   //a single TransformNode 'cot' aka Center of Transform.
   //By default the name and ID of a node will be the mesh type
   //In this case "cot"
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
 
   //Create a sphere for each row of data in the iris data set.
-  //These spheres will be the childern of our cot node.
+  //These spheres will be the children of our cot node.
   let spheres = cot.bind('sphere', {diameter: 1}, iris);
   let boxes = spheres.bind('box')
 
   //Create a new box at the root level of the scene-graph
   //Move it on the x axis to -2
-  let root_box = anu.bind('box', scene);
+  let root_box = anu.bind('box');
   root_box.positionX(-2)
 
   //Select the boxes who are childern of the nodes in the sphere selection

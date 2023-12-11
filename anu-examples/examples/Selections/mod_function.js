@@ -18,7 +18,7 @@ export const modFunction = function(engine){
   camera.position = new Vector3(-5,-2,-1)
 
 
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
   let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
   spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)

@@ -18,7 +18,6 @@ export const box_data = function(engine){
 
   let box = anu.create('box', 
                       'ourBox',
-                      scene, 
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,

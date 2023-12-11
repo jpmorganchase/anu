@@ -14,6 +14,6 @@ export const box = function(engine){
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
 
-  let box = anu.create('box', 'ourBox', scene, {size: 2}, [{count: 2}]);
+  let box = anu.create('box', 'ourBox', {size: 2}, [{count: 2}]);
   return scene;
 }; 

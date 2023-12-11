@@ -21,7 +21,7 @@ export const cotBind = function(engine){
   //a single TransformNode 'cot' aka Center of Transform.
   //By default the name and ID of a node will be the mesh type
   //In this case "cot"
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
 
   //Create a sphere for each row of data in the iris data set.
   //These spheres will be the childern of our cot node.

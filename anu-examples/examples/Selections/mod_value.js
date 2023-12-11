@@ -17,7 +17,7 @@ export const modValue = function(engine){
   camera.attachControl(true)
 
 
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
   let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
   spheres.position(new Vector3(1,1,1)) // type vector3(x,y,z)

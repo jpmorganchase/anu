@@ -7,8 +7,8 @@ When passed, the data object is appended to our mesh's metadata property and all
 
 ::: code-group
 ```js [anu]
-//create(mesh: string, name: string, scene: Scene, options?: {}, data?: {})
-let box = anu.create('box', 'ourBox', scene, {size: 2})
+//create(mesh: string, name: string, options?: {}, data?: {}, scene?: Scene, )
+let box = anu.create('box', 'ourBox', {size: 2})
 ```
 ```js [babylon]
 //CreateBox(name: string, options?: {}, scene?: Scene)

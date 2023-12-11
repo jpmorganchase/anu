@@ -16,7 +16,7 @@ export const boxesTransform = function(engine){
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
 
-  let cot = anu.bind('cot', scene);
+  let cot = anu.bind('cot');
 
   let boxes = cot.bind('box', {size: 1}, iris);
 

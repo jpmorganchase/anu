@@ -17,7 +17,6 @@ export const box_bind = function(engine){
   camera.attachControl(true)
 
   let box = anu.bind('box', 
-                      scene, 
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,

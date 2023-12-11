@@ -14,18 +14,18 @@ export const select_name_tag = function(engine){
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
 
-  let box = anu.create("box", {}, scene)
+  let box = anu.create("box", {})
   box.name = "box-name";
   box.position = new Vector3(-1,0,0)
 
-  let sphere = anu.create("sphere", {}, scene)
+  let sphere = anu.create("sphere", {})
   sphere.id = "sphere-ID";
   sphere.position = new Vector3(1,0,0)
 
-  let boxMaterial = new StandardMaterial('boxMaterial', scene)
+  let boxMaterial = new StandardMaterial('boxMaterial')
   boxMaterial.diffuseColor = new Color3(1,0,0);
 
-  let sphereMaterial = new StandardMaterial('sphereMaterial', scene)
+  let sphereMaterial = new StandardMaterial('sphereMaterial')
   sphereMaterial.diffuseColor = new Color3(0,1,0);
 
   let box_selection = anu.selectName('box-name', scene)
