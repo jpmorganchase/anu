@@ -66,8 +66,8 @@ export function create(
   shape: string,
   name: string,
   options: object = {},
-  scene?: Scene,
   data: object = {},
+  scene?: Scene
 ): Mesh {
   let executedOptions: StringByAny = {};
 
@@ -77,7 +77,7 @@ export function create(
 
   let builder: Function = meshList[shape];
   let mesh = builder(name, executedOptions, scene);
-  if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(scene);
+  if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(mesh.getScene());
   Tags.EnableFor(mesh);
   mesh.metadata = { ...mesh.metadata, data: data };
 

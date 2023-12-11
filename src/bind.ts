@@ -16,10 +16,10 @@ import { create } from './create';
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind(shape: string, options?: object, scene?: Scene, data: Array<object> = [{}]): Selection {
+export function bind(shape: string, options?: object, data: Array<object> = [{}], scene?: Scene): Selection {
   let meshes: Node[] = [];
   data.forEach((element, i) => {
-    var mesh = create(shape, shape, options, scene, element);
+    var mesh = create(shape, shape, options, element, scene);
     meshes.push(mesh);
   });
 
@@ -35,7 +35,8 @@ export function bind(shape: string, options?: object, scene?: Scene, data: Array
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindInstance(mesh: Mesh, scene: Scene, data: Array<object> = [{}]): Selection {
+export function bindInstance(mesh: Mesh, scene?: Scene, data: Array<object> = [{}]): Selection {
+  scene = (scene != undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var instance = mesh.createInstance(mesh.name + '_' + i);

@@ -19,7 +19,7 @@ export function bind(this: Selection, shape: string, options: object = {}, data:
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
-      var mesh = create(shape, shape, options, this.scene, element);
+      var mesh = create(shape, shape, options, element, this.scene);
       mesh.setParent(node);
       meshes.push(mesh as Mesh);
     });
