@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 
 interface StringByFunc {
@@ -13,11 +13,11 @@ interface StringByAny {
 }
 
 function createCOT(name: string, options: object, scene: Scene) {
-  return new TransformNode(name, scene);
+  return new TransformNode(name);
 }
 
 function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
-  return CreateGreasedLine(name, options, {}, scene);
+  return CreateGreasedLine(name, options, {});
 }
 
 const meshList: StringByFunc = {
@@ -65,9 +65,9 @@ const meshList: StringByFunc = {
 export function create(
   shape: string,
   name: string,
-  scene: Scene,
   options: object = {},
   data: object = {},
+  scene?: Scene
 ): Mesh {
   let executedOptions: StringByAny = {};
 
@@ -77,7 +77,7 @@ export function create(
 
   let builder: Function = meshList[shape];
   let mesh = builder(name, executedOptions, scene);
-  if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(scene);
+  if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(mesh.getScene());
   Tags.EnableFor(mesh);
   mesh.metadata = { ...mesh.metadata, data: data };
 

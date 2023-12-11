@@ -71,6 +71,8 @@ class PlaneText {
   // // plane.billboardMode =  Mesh.BILLBOARDMODE_ALL;
   // //plane.preserveParentRotationForBillboard = true;
 
+  let cot = new Mesh('cot');
+
   let plane = createTextMesh({
     text: this.options.text.toString(),
     //width: this.options.width,
@@ -80,9 +82,9 @@ class PlaneText {
     opacity: this.options.opacity,
     align: this.options.align,
     font: this.options.font,
-    scene: this.scene,
+    scene: cot.getScene(),
     atlas: this.options.atlas,
-    engine: this.scene.getEngine(),
+    engine: cot.getScene().getEngine(),
   });
 
   plane.computeWorldMatrix(true)
@@ -96,7 +98,6 @@ class PlaneText {
   plane.computeWorldMatrix(true);
   plane.bakeCurrentTransformIntoVertices();
   let size = plane.getBoundingInfo().boundingBox;
-  let cot = new Mesh('cot', this.scene);
   cot.position = new Vector3(size.center.x, size.center.y, 0);
   plane.setParent(cot);
 

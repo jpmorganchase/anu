@@ -12,5 +12,6 @@ export { createTextureMap } from './prefabs/Mapping/textureMap';
 export { createTextureGlobe } from './prefabs/Mapping/textureGlobe';
 export { planeLayout, cylinderLayout } from './prefabs/Layout/Layout';
 export { createAxes } from './prefabs/Axis/Axis';
+export { ordinalChromatic, sequentialChromatic } from './prefabs/Chromatic/Chromatic';
 
 

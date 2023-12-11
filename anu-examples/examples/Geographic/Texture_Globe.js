@@ -23,7 +23,7 @@ export function textureGlobe(babylonEngine){
 
     let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10}, scene)
  
-    let rootSphere = anu.create('sphere', 'sphere', scene, {diameter: 0.2})
+    let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.2})
     rootSphere.isVisible = false;
     rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
