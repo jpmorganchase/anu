@@ -13,11 +13,11 @@ interface StringByAny {
 }
 
 function createCOT(name: string, options: object, scene: Scene) {
-  return new TransformNode(name, scene);
+  return new TransformNode(name);
 }
 
 function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
-  return CreateGreasedLine(name, options, {}, scene);
+  return CreateGreasedLine(name, options, {});
 }
 
 const meshList: StringByFunc = {
@@ -65,8 +65,8 @@ const meshList: StringByFunc = {
 export function create(
   shape: string,
   name: string,
-  scene: Scene,
   options: object = {},
+  scene?: Scene,
   data: object = {},
 ): Mesh {
   let executedOptions: StringByAny = {};

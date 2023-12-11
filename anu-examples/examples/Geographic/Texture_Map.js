@@ -18,7 +18,7 @@ export function textureMap(babylonEngine){
   csv("../data/airports.csv", (d) => d).then((data) => {
     //Our data has over 3000 points so we will use mesh instancing for better performance
     //To do this we must first create a mesh to be our root and register a buffer for color
-    let rootSphere = anu.create('sphere', 'sphere', scene, {diameter: 0.2})
+    let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.2})
     rootSphere.isVisible = false;
     rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
@@ -58,7 +58,7 @@ export function textureMap(babylonEngine){
     }
 
     //Create a cot for our spheres
-    let cot = anu.bind('cot', scene)
+    let cot = anu.bind('cot')
     //Use binInstace to create an instance of root sphere for each data point
     //set our color instance buffer Color4 to black 
     let spheres =  cot.bindInstance(rootSphere, data)
