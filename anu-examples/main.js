@@ -128,7 +128,7 @@ mesh.dispose();
 
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
   uiOptions: {
-      sessionMode: 'immersive-ar'
+      sessionMode: 'immersive-vr'
   }
 });
 
