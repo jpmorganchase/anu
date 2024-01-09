@@ -2,70 +2,70 @@ import { Color3, Color4, PBRMetallicRoughnessMaterial, PBRSpecularGlossinessMate
 import chroma from "chroma-js";
 
 class OrdinalChromatic{
-    scheme: string;
+    scheme: string[];
 
-    constructor(scheme: string){
-        this.scheme = scheme;
+    constructor(scheme: string | string[]){
+        this.scheme = (typeof(scheme) === 'string') ? schemes[scheme] : scheme;
     }
 
-    public toColor3(steps: int = schemes[this.scheme].length){
-        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => Color3.FromHexString(v));
+    public toColor3(steps: int = this.scheme.length){
+        return chroma.scale(this.scheme).colors(steps).map((v: string) => Color3.FromHexString(v));
     }
 
-    public toColor4(steps: int = schemes[this.scheme].length){
-        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => Color4.FromHexString(v));
+    public toColor4(steps: int = this.scheme.length){
+        return chroma.scale(this.scheme).colors(steps).map((v: string) => Color4.FromHexString(v));
     }
 
-    public toStandardMaterial(steps: int = schemes[this.scheme].length){
-        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makeStandardMaterial(v));
+    public toStandardMaterial(steps: int = this.scheme.length){
+        return chroma.scale(this.scheme).colors(steps).map((v: string) => makeStandardMaterial(v));
     }
 
-    public toPBRMaterialRough(steps: int = schemes[this.scheme].length){
-        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makePBRMaterialRough(v));
+    public toPBRMaterialRough(steps: int = this.scheme.length){
+        return chroma.scale(this.scheme).colors(steps).map((v: string) => makePBRMaterialRough(v));
     }
 
-    public toPBRMaterialGlossy(steps: int = schemes[this.scheme].length){
-        return chroma.scale(schemes[this.scheme]).colors(steps).map((v: string) => makePBRMaterialGlossy(v));
+    public toPBRMaterialGlossy(steps: int = this.scheme.length){
+        return chroma.scale(this.scheme).colors(steps).map((v: string) => makePBRMaterialGlossy(v));
     }
 
 }
 
 class SequentialChromatic{
-    scheme: string;
+    scheme: string[];
 
-    constructor(scheme: string){
-        this.scheme = scheme;
+    constructor(scheme: string | string[]){
+        this.scheme = (typeof(scheme) === 'string') ? schemes[scheme] : scheme;
     }
 
     public toColor3(steps: int | undefined | number[] = undefined){
         
-        return (steps === undefined) ? (d: float) => Color3.FromHexString(chroma.scale(schemes[this.scheme])(d).hex())
-                                     : (d: float) => Color3.FromHexString(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+        return (steps === undefined) ? (d: float) => Color3.FromHexString(chroma.scale(this.scheme)(d).hex())
+                                     : (d: float) => Color3.FromHexString(chroma.scale(this.scheme).classes(steps)(d).hex());
         
     }
 
     public toColor4(steps: int | undefined | number[] = undefined){
-        return (steps === undefined) ? (d: float) => Color4.FromHexString(chroma.scale(schemes[this.scheme])(d).hex())
-                                     : (d: float) => Color4.FromHexString(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+        return (steps === undefined) ? (d: float) => Color4.FromHexString(chroma.scale(this.scheme)(d).hex())
+                                     : (d: float) => Color4.FromHexString(chroma.scale(this.scheme).classes(steps)(d).hex());
     }
 
     public toStandardMaterial(steps: int | undefined | number[] = undefined){
-        return (steps === undefined) ? (d: float) => makeStandardMaterial(chroma.scale(schemes[this.scheme])(d).hex())
-                                     : (d: float) => makeStandardMaterial(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+        return (steps === undefined) ? (d: float) => makeStandardMaterial(chroma.scale(this.scheme)(d).hex())
+                                     : (d: float) => makeStandardMaterial(chroma.scale(this.scheme).classes(steps)(d).hex());
     }
 
     public toPBRMaterialRough(steps: int | undefined | number[] = undefined){
-        return (steps === undefined) ? (d: float) => makePBRMaterialRough(chroma.scale(schemes[this.scheme])(d).hex())
-                                     : (d: float) => makePBRMaterialRough(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+        return (steps === undefined) ? (d: float) => makePBRMaterialRough(chroma.scale(this.scheme)(d).hex())
+                                     : (d: float) => makePBRMaterialRough(chroma.scale(this.scheme).classes(steps)(d).hex());
     }
 
     public toPBRMaterialGlossy(steps: int | undefined | number[] = undefined){
-        return (steps === undefined) ? (d: float) => makePBRMaterialGlossy(chroma.scale(schemes[this.scheme])(d).hex())
-                                     : (d: float) => makePBRMaterialGlossy(chroma.scale(schemes[this.scheme]).classes(steps)(d).hex());
+        return (steps === undefined) ? (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme)(d).hex())
+                                     : (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme).classes(steps)(d).hex());
     }
 }
 
-export function ordinalChromatic(scheme: string){
+export function ordinalChromatic(scheme: string | string[]){
     return new OrdinalChromatic(scheme);
 }
 
