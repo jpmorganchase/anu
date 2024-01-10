@@ -78,7 +78,7 @@ interface StringByAny {
     [key: string]: any;
   }
 
-let schemes: StringByAny = {
+export let schemes: StringByAny = {
     ...chroma.brewer,
     'd310': [
         "#1f77b4",

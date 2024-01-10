@@ -1,13 +1,35 @@
 {
-  "hash": "7f01ceb6",
-  "browserHash": "7bd87b7a",
+  "hash": "a6c3896b",
+  "browserHash": "5238795d",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "20861bcd",
+      "fileHash": "d1ab6927",
+      "needsInterop": false
+    },
+    "@jpmorganchase/anu": {
+      "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
+      "file": "@jpmorganchase_anu.js",
+      "fileHash": "92f88fa1",
+      "needsInterop": false
+    },
+    "@babylonjs/core": {
+      "src": "../../../node_modules/@babylonjs/core/index.js",
+      "file": "@babylonjs_core.js",
+      "fileHash": "d580722a",
+      "needsInterop": false
+    },
+    "d3": {
+      "src": "../../../node_modules/d3/src/index.js",
+      "file": "d3.js",
+      "fileHash": "3518cf5c",
       "needsInterop": false
     }
   },
-  "chunks": {}
+  "chunks": {
+    "chunk-Z4KRIAJD": {
+      "file": "chunk-Z4KRIAJD.js"
+    }
+  }
 }

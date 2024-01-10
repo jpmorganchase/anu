@@ -116,8 +116,8 @@ export default defineConfig({
     ]
   },
       vite: {
-        rollupOptions: {
-          external: ["@babylonjs/core"],
-        }
+        // rollupOptions: {
+        //   external: ["@babylonjs/core"],
+        // }
       }
 })
