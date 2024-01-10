@@ -3,6 +3,7 @@ outline: deep
 ---
 <script setup>
   import {ref} from 'vue';
+  import {schemes} from '@jpmorganchase/anu';
   import chroma from './chroma.vue';
 
   const types = ref({ ordinal: {
@@ -37,11 +38,13 @@ outline: deep
     }
   })
 
-  let selectedType = ref("Ordinal");
-  let selectedMaterial = ref("Standard");
-  let scheme = ref("d3");
+  const schemeList  = ref(Object.keys(schemes).reverse())
+
+  let selectedType = ref(["Ordinal"]);
+  let selectedMaterial = ref(["Color3"]);
+  let selectedScheme = ref(["d310"]);
   let meshes = ref(10);
-  let steps = ref(10);
+  let steps = ref(0);
 
   
 
@@ -91,13 +94,12 @@ anu.sequentialChromatic(string | string[]).toColor3()
   
 
   
-  <select class="form-control" :required="true" @change="changeLocation" multiple size="5">
-   <option v-for="material in materials" v-bind:value="material.name" >{{ material.name }}</option>
+  <select class="form-control" :required="true" @change="changeLocation" multiple size="5" v-model="selectedMaterial">
+   <option v-for="material in materials" v-bind:value="material.name" :selected="selectedMaterial === material.name"  >{{ material.name }}</option>
   </select>
 
-  <select class="form-control" :required="true" @change="changeLocation" multiple size="4">
-   <option :selected="true">Material</option>
-   <option v-for="color in colors" v-bind:value="color" >{{ color }}</option>
+  <select class="form-control" :required="true" @change="changeLocation" multiple size="5" v-model="selectedScheme">
+   <option v-for="scheme in schemeList" v-bind:value="scheme" :selected="selectedScheme === scheme" >{{ scheme }}</option>
   </select>
 
   
@@ -108,20 +110,18 @@ anu.sequentialChromatic(string | string[]).toColor3()
       <input  type="range" min="5" max="50" class="slider" v-model.number="meshes">
     </label>
     <label> Steps
-    <input type="range" min="0" max="100" class="slider" id="myRange" v-model.number="steps">
+    <input type="range" min="0" max="100" class="slider" v-model.number="steps">
     </label>
   </div>
      
   </div>
 
-  <chroma :type="selectedType[0]" :scheme="scheme" :material="selectedMaterial" :meshes="meshes" :steps="steps" />
+  <chroma :type="selectedType[0]" :scheme="selectedScheme[0]" :material="selectedMaterial[0]" :meshes="meshes" :steps="steps" />
 </div>
 
 ```js
 test
 ```
-
-
 
   <style>
      .cards {
