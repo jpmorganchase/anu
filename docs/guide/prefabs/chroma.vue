@@ -37,8 +37,8 @@ import { Material, StandardMaterial } from '@babylonjs/core';
 
     const camera = new BABYLON.ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new BABYLON.Vector3(0, 0, 0), scene);
     camera.position = new BABYLON.Vector3(0, 0, -props.meshes)
-    camera.lowerRadiusLimit = -props.meshes;
-    camera.upperRadiusLimit = -props.meshes;
+    camera.lowerRadiusLimit = props.meshes;
+    camera.upperRadiusLimit = props.meshes;
     camera.attachControl(true)
 
     let data = [...Array(props.meshes).keys()].map((i) => { return {"data": i}})
@@ -47,7 +47,7 @@ import { Material, StandardMaterial } from '@babylonjs/core';
     let ordinalScale = d3.scaleOrdinal(anu.ordinalChromatic(props.scheme)[
       (props.material == "Color3") ? 'toColor3' :
       (props.material == "Color4") ? 'toColor4' :
-      (props.material == "Standard") ? 'toStandardMaterial' :
+      (props.material == "Standard Material") ? 'toStandardMaterial' :
       (props.material == "PBR Rough") ? 'toPBRMaterialRough' :
       (props.material == "PBR Glossy") ? 'toPBRMaterialGlossy' :
       null
@@ -84,15 +84,12 @@ import { Material, StandardMaterial } from '@babylonjs/core';
   watch(() => [props.type, props.meshes, props.steps, props.material, props.scheme], 
   ([type, meshes, steps, material, scheme]) => {
 
-    console.log(material, type, steps, scheme, meshes)
-
     anu.selectName('sphere',scene).dispose();
 
+    camera.lowerRadiusLimit = meshes;
+    camera.upperRadiusLimit = meshes;
     camera.position = new BABYLON.Vector3(0, 0, -meshes)
-    camera.lowerRadiusLimit = -meshes;
-    camera.upperRadiusLimit = -meshes;
-    
-
+   
     let data = [...Array(meshes).keys()].map((i) => { return {"data": i}})
     let scaleX = d3.scaleLinear().domain([0,meshes-1]).range([-meshes/2,meshes/2])
 

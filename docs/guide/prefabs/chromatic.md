@@ -2,37 +2,37 @@
 outline: deep
 ---
 <script setup>
-  import {ref} from 'vue';
+  import {ref, computed } from 'vue';
   import {schemes} from '@jpmorganchase/anu';
   import chroma from './chroma.vue';
 
-  const types = ref({ ordinal: {
+  const types = ref({ Ordinal: {
     name: "Ordinal",
     method: "d3.scaleOrdinal(anu.ordinalChromatic"
   },
-    sequential: {
+    Sequential: {
     name: "Sequential",
     method: "d3.scaleSequential(anu.sequentialChromatic"
   }})
 
   const materials = ref({ 
-    color3: {
+    Color3: {
       name: "Color3",
       method: "toColor3",
     },
-    color4: {
+    Color4: {
       name: "Color4",
       method: "toColor4",
     },
-    standard: {
+    Standard_Material: {
       name: "Standard Material",
       method: "toStandardMaterial",
     },
-    pbrRough: {
+    PBR_Rough: {
       name: "PBR Rough",
       method: "toPBRMaterialRough",
     },
-    pbrGlossy: {
+    PBR_Glossy: {
       name: "PBR Glossy",
       method: "toPBRMaterialGlossy",
     }
@@ -46,9 +46,15 @@ outline: deep
   let meshes = ref(10);
   let steps = ref(0);
 
+  let suffix = computed(() => ".domain([0," +  (meshes.value - 1) + "])")
   
+  let materialCode =  computed(() => (selectedMaterial.value[0] == "Color3") ? 'material(() => new BABYLON.StandardMaterial("mat"))\n\xa0\xa0\xa0\xa0\xa0\xa0\xa0.diffuseColor((d) => color(d.data))' :
+      (selectedMaterial.value[0] == "Color4") ? 'material(() => new BABYLON.StandardMaterial("mat"))\n\xa0\xa0\xa0\xa0\xa0\xa0\xa0.diffuseColor((d) => color(d.data))' :
+      (selectedMaterial.value[0] == "Standard Material") ? 'material((d) => color(d.data))' :
+      (selectedMaterial.value[0] == "PBR Rough") ? 'material((d) => color(d.data))' :
+      (selectedMaterial.value[0] == "PBR Glossy") ? 'material((d) => color(d.data))' : 
+      null)
 
-  const colors = ref(['1','2','3']);
 </script>
 
 # Color Scales
@@ -119,8 +125,20 @@ anu.sequentialChromatic(string | string[]).toColor3()
   <chroma :type="selectedType[0]" :scheme="selectedScheme[0]" :material="selectedMaterial[0]" :meshes="meshes" :steps="steps" />
 </div>
 
-```js
-test
+
+```js-vue
+//Creating some "data" as a simple object list of numbers 0-n
+let data = [...Array({{meshes}}).keys()].map((i) => { return {"data": i}})
+
+//Create our color scale function
+let color = {{ types[selectedType[0]].method }}('{{ selectedScheme[0] }}').{{ materials[selectedMaterial[0].replace(/ /g,"_")].method }}({{ (steps > 0) ? steps : null }})){{ (selectedType[0] == "Sequential") ? suffix : null  }}
+
+//Create spheres and bind our data to them, 
+//move spheres into position and apply our color or material
+let spheres = anu.bind('sphere', {}, data)
+       .positionX((d) => d.data)
+       .{{ materialCode }}
+
 ```
 
   <style>
