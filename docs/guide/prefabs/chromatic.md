@@ -90,7 +90,7 @@ anu.sequentialChromatic(string | string[]).toColor3()
 
 ## Examples
 
-<div class="container">
+<div class="container2">
  <div class="ui">
 
   
@@ -142,16 +142,7 @@ let spheres = anu.bind('sphere', {}, data)
 ```
 
   <style>
-     .cards {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    margin-top: 10px;
-  }
-
-    .container {
+  .container2 {
     width: 100%
   }
 
