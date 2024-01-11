@@ -82,7 +82,7 @@ anu.sequentialChromatic(string | string[]).toColor3()
 | Method       |    Return | 
 | ------------- | ------------- | 
 |   toColor3(steps)  | returns type of [color3](https://doc.babylonjs.com/typedoc/classes/BABYLON.Color3) length of steps or scheme by default | 
-|   toColor4(steps)  | returns type of [color3](https://doc.babylonjs.com/typedoc/classes/BABYLON.Color4) length of steps or scheme by default | 
+|   toColor4(steps)  | returns type of [color4](https://doc.babylonjs.com/typedoc/classes/BABYLON.Color4) length of steps or scheme by default | 
 |   toStandardMaterial(steps)  | returns type of [standardMaterial](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial) length of steps or scheme by default | 
 |   toPBRMaterialRough(steps)  | returns type of [PBRMetallicRoughnessMaterial](https://doc.babylonjs.com/typedoc/classes/BABYLON.PBRMetallicRoughnessMaterial) length of steps or scheme by default | 
 |   toPBRMaterialGlossy(steps)  | returns type of [PBRSpecularGlossinessMaterial](https://doc.babylonjs.com/typedoc/classes/BABYLON.PBRSpecularGlossinessMaterial) length of steps or scheme by default | 
