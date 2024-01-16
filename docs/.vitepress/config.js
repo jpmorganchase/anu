@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 
 
 // https://vitepress.dev/reference/site-config
@@ -11,7 +11,8 @@ export default defineConfig({
     nav: [
       { text: 'Docs', link: '/guide/' },
       { text: 'Examples', link: '/examples/' },
-      { text: 'API', link: '/api/modules.md' }
+      { text: 'API', link: '/api/modules.md' },
+      { text: 'Sandbox', link: '/sandbox/'}
     ],
 
     sidebar: {
@@ -119,5 +120,20 @@ export default defineConfig({
         // rollupOptions: {
         //   external: ["@babylonjs/core"],
         // }
+        server: {
+          headers: {
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+            'Cross-Origin-Opener-Policy': 'same-origin',
+          },
+        },
+        plugins: [
+          {configureServer(server) {
+                  server.middlewares.use((_req, res, next) => {
+                      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+                      res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
+                      next();
+                  });
+           }
+      }]
       }
 })

@@ -5,12 +5,15 @@
     "docs:preview": "vitepress preview"
   },
   "devDependencies": {
+    "vite-plugin-monaco-editor": "^1.1.0",
     "vue": "^3.3.4"
   },
   "dependencies": {
     "@babylonjs/core": "^6.37.1",
     "@jpmorganchase/anu": "^0.0.22",
+    "@webcontainer/api": "^1.1.8",
     "bootstrap": "^5.3.0",
+    "monaco-editor": "^0.45.0",
     "vitepress": "^1.0.0-alpha.75"
   }
 }
