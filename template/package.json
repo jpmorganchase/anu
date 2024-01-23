@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "@babylonjs/inspector": "^6.22.1",
-    "@jpmorganchase/anu": "^0.0.1"
+    "@jpmorganchase/anu": "*"
   }
 }
