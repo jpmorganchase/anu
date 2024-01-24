@@ -59,6 +59,6 @@ Below is a list of select completed and planned features
 - [ ] Network visualizations (in progress)
 - [ ] Data based animation tools 
 - [ ] Common data visualization interactions
-- [ ] Color scale materials / shaders
+- [x] Color scale materials / shaders
 
 
