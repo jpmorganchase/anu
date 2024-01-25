@@ -23,7 +23,7 @@ import { Coordinate } from 'ol/coordinate';
 
 export class textureGlobe {
   name: string;
-  scene: Scene;
+  scene?: Scene;
   layers: TileLayer<OSM>[];
   target: string;
   view: View;
@@ -36,7 +36,7 @@ export class textureGlobe {
   diameter: number;
   lonLatToVector3: Function;
 
-  constructor(name: string, scene: Scene, layers: TileLayer<OSM>[], view: View, resolution: Vector2, diameter: number) {
+  constructor(name: string, layers: TileLayer<OSM>[], view: View, resolution: Vector2, diameter: number, scene?: Scene,) {
     this.name = name;
     this.scene = scene;
     this.layers = layers;
@@ -126,9 +126,9 @@ export function createTextureGlobe(
     layers?: TileLayer<any>[];
     view?: View;
     resolution?: Vector2;
-    diameter: number;
-  },
-  scene: Scene,
+    diameter?: number;
+  } = {},
+  scene?: Scene,
 ) {
   const layers: TileLayer<any>[] = options.layers || [
     new TileLayer({ source: new OSM(), extent: [-180, -90, 180, 90] })
@@ -145,7 +145,7 @@ export function createTextureGlobe(
   const resolution: Vector2 = options.resolution || new Vector2(1000, 500);
   const diameter: number = options.diameter || 1;
 
-  let map = new textureGlobe(name, scene, layers, view, resolution, diameter);
+  let map = new textureGlobe(name, layers, view, resolution, diameter, scene);
 
   return map;
 }
