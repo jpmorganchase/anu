@@ -12,7 +12,7 @@ export default defineConfig({
       { text: 'Docs', link: '/guide/' },
       { text: 'Examples', link: '/examples/' },
       { text: 'API', link: '/api/modules.md' },
-      { text: 'Sandbox', link: '/sandbox/'}
+      //{ text: 'Sandbox', link: '/sandbox/'}
     ],
 
     sidebar: {
