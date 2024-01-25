@@ -21,7 +21,7 @@ export function textureGlobe(babylonEngine){
   //Use D3 to read in our csv data
 
 
-    let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10}, scene)
+    let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10})
  
     let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.2})
     rootSphere.isVisible = false;

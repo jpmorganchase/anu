@@ -23,7 +23,7 @@ import TileSource from 'ol/source/Tile';
 
 export class Map2D {
   name: string;
-  scene: Scene;
+  scene?: Scene;
   layers: TileLayer<OSM>[];
   target: string;
   view: View;
@@ -39,11 +39,11 @@ export class Map2D {
 
   constructor(
     name: string,
-    scene: Scene,
     layers: TileLayer<OSM>[],
     view: View,
     resolution: { width: number; height: number },
     size: number,
+    scene?: Scene,
   ) {
     this.name = name;
     this.scene = scene;
@@ -112,7 +112,7 @@ export class Map2D {
       this.scene,
     );
 
-    let materialGround = new StandardMaterial(this.name + '_material', this.scene);
+    let materialGround = new StandardMaterial(this.name + '_material', (this.scene != undefined) ? this.scene : undefined);
 
     materialGround.diffuseTexture = this.texture;
     materialGround.specularColor = new Color3(0, 0, 0);
@@ -137,8 +137,9 @@ export class Map2D {
     return [scaleLon, scaleLat];
   }
 
-  keyboardControls() {
-    this.scene.onKeyboardObservable.add((kbInfo) => {
+  keyboardControls(scene: Scene) {
+   
+    scene.onKeyboardObservable.add((kbInfo) => {
       switch (kbInfo.type) {
         case KeyboardEventTypes.KEYDOWN:
           switch (kbInfo.event.key) {
@@ -196,8 +197,8 @@ export function createTextureMap(
     mapWidth?: number;
     mapHeight?: number;
     meshSize?: number;
-  },
-  scene: Scene,
+  } = {},
+  scene?: Scene,
 ) {
   const layers: TileLayer<any>[] = options.layers || [new TileLayer({ source: new OSM() })];
   const view: View = options.view || new View({ center: [0, 0], zoom: 1 });
@@ -205,7 +206,7 @@ export function createTextureMap(
   const mapHeight: number = options.mapHeight || 1000;
   const meshSize: number = options.meshSize || 50;
 
-  let map = new Map2D(name, scene, layers, view, { width: mapWidth, height: mapHeight }, meshSize);
+  let map = new Map2D(name, layers, view, { width: mapWidth, height: mapHeight }, meshSize, scene);
 
   return map;
 }

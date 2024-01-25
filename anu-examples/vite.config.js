@@ -9,6 +9,10 @@ export default defineConfig({
     // Uncomment to allow access from network
     // (or use `npm run dev -- -- host=0.0.0.0`)
     //host: '0.0.0.0',
+    fs: {
+      // Allow serving files from one level up to the project root
+      allow: ['..'],
+    },
   },
   build: {
     target: 'esnext',

@@ -24,9 +24,9 @@ export function textureMap(babylonEngine){
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
 
     //Using the texture map prefab we create a plane with a canvas OL map set as the texture 
-    let textureMap = anu.createTextureMap('test', {}, scene);
+    let textureMap = anu.createTextureMap('test');
     //Keyboard controls WASD and -+ can be enabled on the prefab
-    textureMap.keyboardControls();
+    textureMap.keyboardControls(scene);
 
     //The prefab generated our scales for us
     //The take [Lon, Lat] as input and return a x, y pixel coordinate. 
