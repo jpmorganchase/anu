@@ -49,7 +49,8 @@ export default defineConfig({
             items: [
             { text: 'Plane Text', link: '/guide/prefabs/planetext.md' },
             { text: 'Axes', link: '/guide/prefabs/axes.md' },
-            { text: 'Color Scales', link: '/guide/prefabs/chromatic.md'}
+            { text: 'Color Scales', link: '/guide/prefabs/chromatic.md'},
+            { text: 'Texture Maps', link: '/guide/prefabs/texturemaps.md'}
             //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
             //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
             //{ text: 'Layout', link: '/guide/manipulating_selections.md' },
