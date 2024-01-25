@@ -76,3 +76,16 @@ You can now call anu methods as such
 anu.create('box', 'myBox', scene)
 ```
 
+### Or Use The Anu-Starter Template
+
+```js
+npx @jpmorganchase/anu-starter@latest my_project 
+```
+
+```js
+cd my_project
+npm install 
+npm run dev
+```
+
+See and modify main.js to get started. 
