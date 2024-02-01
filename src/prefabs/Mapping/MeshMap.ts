@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-// SPDX-License-Identifier: Apache-2.0
-// Copyright : J.P. Morgan Chase & Co.
-
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine, MeshBuilder, Mesh, StandardMaterial, Color3, Vector2, TransformNode, Nullable, Node} from '@babylonjs/core';
+import { Vector3, Scene,  MeshBuilder, Mesh, TransformNode, Nullable, Node} from '@babylonjs/core';
 import * as d3 from 'd3';
 import * as topojsonClient from "topojson-client";
 import * as topojsonSimplify from "topojson-simplify";
