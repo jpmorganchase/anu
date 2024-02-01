@@ -35,8 +35,12 @@
   "devDependencies": {
     "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
+    "@types/earcut": "^2.1.4",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.16.16",
+    "@types/topojson-client": "^3.1.4",
+    "@types/topojson-server": "^3.0.4",
+    "@types/topojson-simplify": "^3.0.3",
     "prettier": "^2.7.1",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
@@ -51,7 +55,12 @@
     "babylon-msdf-text": "^0.0.3",
     "chroma-js": "^2.4.2",
     "d3": "^7.8.5",
+    "d3-geo-projection": "^4.0.0",
+    "earcut": "^2.2.4",
     "lodash-es": "^4.17.21",
-    "ol": "^7.3.0"
+    "ol": "^7.3.0",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3"
   }
 }

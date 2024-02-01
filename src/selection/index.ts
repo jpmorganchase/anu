@@ -40,9 +40,9 @@ import { name, id, metadata } from './property/metadata';
 */
 export class Selection {
   selected: Node[];
-  scene: Scene;
+  scene?: Scene;
 
-  constructor(nodes: Node[], scene: Scene) {
+  constructor(nodes: Node[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
   }

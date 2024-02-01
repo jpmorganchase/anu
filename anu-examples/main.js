@@ -45,6 +45,7 @@ import { text } from './examples/Text/text';
 import { scatterPlot3DStep4 } from './examples/CreateAVis/step4';
 import { scatterPlot3DStep5 } from './examples/CreateAVis/step5';
 import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
+import { meshMap } from './examples/Geographic/Mesh_Map';
 
 
 
@@ -94,7 +95,8 @@ const scenes = {
   'scatterPlot3DStep5': scatterPlot3DStep5,
   'scatterPlot3DStep6': scatterPlot3DStep6,
   'axesTest': axesTest,
-  'text': text
+  'text': text,
+  'meshMap': meshMap,
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
