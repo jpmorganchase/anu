@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine, MeshBuilder, Mesh, StandardMaterial, Color3, Vector2, TransformNode} from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine, MeshBuilder, Mesh, StandardMaterial, Color3, Vector2, TransformNode, Nullable, Node} from '@babylonjs/core';
 import * as d3 from 'd3';
 import * as topojsonClient from "topojson-client";
 import * as topojsonSimplify from "topojson-simplify";
@@ -21,11 +21,11 @@ export class meshMap {
   projection: d3.GeoProjection;
   transform: [number, number];
   simplification: number;
-  cot?:  Node | TransformNode | Mesh;
+  cot: Nullable<Node>;
   selection?: Selection;
   depth?: number;
 
-  constructor(name: string, geoJson: d3.GeoGeometryObjects, projection: d3.GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, cot?:  Node | TransformNode | Mesh, scene?: Scene) {
+  constructor(name: string, geoJson: d3.GeoGeometryObjects, projection: d3.GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, cot: Nullable<Node>, scene?: Scene) {
     this.name = name;
     this.scene = scene;
     this.geoJson = geoJson;
@@ -40,8 +40,8 @@ export class meshMap {
 
   createMap(): Selection{
 
-    let preProjection = d3Geo.geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform));
-    let geoProjection = d3Geo.geoProject(preProjection, d3.geoIdentity().reflectY(true));
+    let preProjection = d3Geo.geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform).reflectY(true));
+    let geoProjection = d3Geo.geoProject(preProjection, d3.geoIdentity());
     let topoJson = topojsonServer.topology({ features: geoProjection });
     let preSimpleTopoJson = topojsonSimplify.presimplify(topoJson as any);
     let simpleTopojson = topojsonSimplify.simplify(preSimpleTopoJson, this.simplification);
@@ -50,12 +50,17 @@ export class meshMap {
     let mesh;
     let states: any[] = [];
 
-    (simpleGeojson as any).features.forEach((features: { geometry: { type: string; coordinates: any[]; } | null; }) => { 
+    (simpleGeojson as any).features.forEach((features: {
+      properties: null; geometry: { type: string; coordinates: any[]; } | null; 
+}) => { 
     if (features.geometry != null) {
         if (features.geometry.type === "Polygon"){
         let path: Vector3[] = []
         features.geometry.coordinates[0].forEach((coord: (number | undefined)[]) => path.push(new Vector3(coord[0], 0, coord[1])))
-        mesh = MeshBuilder.ExtrudePolygon("polygon", {shape: path, depth: this.depth, wrap: true, sideOrientation: 2}, this.scene, earcut);
+        mesh = MeshBuilder.ExtrudePolygon("polygon", {shape: path, depth: this.depth, wrap: false, sideOrientation: 2}, this.scene, earcut);
+        mesh!.name = "polygon"
+        mesh!.parent = this.cot;
+        mesh!.metadata = { ...mesh!.metadata, data: (features.properties != null) ? features.properties : null };
         states.push(mesh);
         } else if (features.geometry.type === "MultiPolygon") {
         let meshes: Mesh[] = []
@@ -63,16 +68,18 @@ export class meshMap {
             coords.forEach((coord: any[]) => {
             let path: Vector3[] = []
             coord.forEach((coord: (number | undefined)[]) => path.push(new Vector3(coord[0], 0, coord[1])))
-            meshes.push(MeshBuilder.ExtrudePolygon("polygon", {shape: path, depth: this.depth, wrap: true, sideOrientation: 2}, this.scene, earcut));
+            meshes.push(MeshBuilder.ExtrudePolygon("polygon", {shape: path, depth: this.depth, wrap: false, sideOrientation: 2}, this.scene, earcut));
         })
         })
         mesh = Mesh.MergeMeshes(meshes, true, true);
+        mesh!.name = "polygon"
+        mesh!.parent = this.cot;
+        mesh!.metadata = { ...mesh!.metadata, data: (features.properties != null) ? features.properties : null};
         states.push(mesh)
         }
     }
     });
-
-
+    
     return new Selection(states, this.scene);
   }
 
