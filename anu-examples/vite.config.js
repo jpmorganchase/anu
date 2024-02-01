@@ -16,7 +16,7 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    outDir: '../docs/public'
+    outDir: '../docs/public',
   },
   rollupOptions: {
     external: ["@babylonjs/core"],
