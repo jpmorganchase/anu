@@ -41,7 +41,8 @@ export function meshMap(babylonEngine){
     .positionZ((d) => projection([d.longitude, d.latitude])[1])
     .setInstancedBuffer("color", new Color4(0,0,0,1))
 
-  mapCot.position(new Vector3(0,1.5,-0.5))
+  mapCot.position(new Vector3(0,0.5,-0.5))
+
 
   return scene;
 }

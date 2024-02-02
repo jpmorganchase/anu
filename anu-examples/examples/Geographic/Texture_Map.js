@@ -67,7 +67,7 @@ export function textureMap(babylonEngine){
     cot.run((d,n,i) => {
       textureMap.mesh.parent = n;
       n.normalizeToUnitCube();
-    }).positionY(1.5)
+    }).positionY(0.5)
 
     
     //Use binInstace to create an instance of root sphere for each data point

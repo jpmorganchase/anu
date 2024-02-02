@@ -124,11 +124,14 @@ var xrHelper = await scene.createDefaultXRExperienceAsync({
   floorMeshes: [env.ground]
 });
 
+try {
 const featureManager = xrHelper.baseExperience.featuresManager;
-
 featureManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
   xrInput: xrHelper.input,
 });
+} catch {
+  console.log("hand tracking error");
+}
 
 
 // hide/show the Inspector
