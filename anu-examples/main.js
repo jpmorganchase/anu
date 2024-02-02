@@ -121,7 +121,7 @@ const xr = await scene.createDefaultXRExperienceAsync({
   //   uiOptions: {
   //     sessionMode: 'immersive-vr'
   // },
-  // floorMeshes: [env.ground]
+  floorMeshes: [env.ground]
 });
 xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
     xrInput: xr.input
