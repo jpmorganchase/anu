@@ -21,13 +21,13 @@ export const scatterplot3D = function(engine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(28,0,-30);
+  camera.position = new Vector3(2,0,-5);
 
   //Create the functions that we will use to scale our data according to our desired dimensions. In this case we want to scale the position of our points. 
   //These functions will take a number and scale it between -10 and 10. calling .nice() adds some padding at the beginning and end 
-  var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
-  var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-10,10]).nice(); //
-  var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-10,10]).nice(); //Same as X for our Y and Z dimensions 
+  var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
+  var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice(); //
+  var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-1,1]).nice(); //Same as X for our Y and Z dimensions 
 
   //This is a function that will create a color scale for our three types of flowers in our data
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
@@ -43,7 +43,7 @@ export const scatterplot3D = function(engine){
 
   //This series of chained methods will create our visualization 
   //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
-  let spheres = chart.bind('sphere', {diameter: 0.5}, iris) 
+  let spheres = chart.bind('sphere', {diameter: 0.05}, iris) 
     .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
     .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
     .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int

@@ -19,7 +19,8 @@ export function linechart2D(babylonEngine) {
     scene
   );
   camera.attachControl(true);
-  camera.position = new Vector3(10.5,7,-10.5);
+  camera.position = new Vector3(3,0,-6);
+
 
   let CoT = new TransformNode("cot");
 
@@ -31,9 +32,9 @@ export function linechart2D(babylonEngine) {
     var dateFormat = timeFormat("%y");
     let dates = data.map((d) => parseTime(d.Date))
   
-    var scaleX = scaleTime().domain(extent(dates)).range([-5, 5]);
-    var scaleY = scaleLinear().domain([0, 9]).range([-2, 2]).nice();
-    var scaleC = scaleSequential(interpolateBlues).domain([2, -2]);
+    var scaleX = scaleTime().domain(extent(dates)).range([-2, 2]);
+    var scaleY = scaleLinear().domain([0, 9]).range([-1, 1]).nice();
+    var scaleC = scaleSequential(interpolateBlues).domain([1, -1]);
 
     let myPaths2 = years.map((r) => {
       return data.map((c)=> {

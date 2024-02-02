@@ -6,9 +6,8 @@ import './style.css'
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import * as BABYLON from "@babylonjs/core";
-import { createTextMesh } from "babylon-msdf-text";
-import fnt from "./fonts/roboto-regular.json";
-import png from "./fonts/roboto-regular.png";
+import { GridMaterial } from '@babylonjs/materials';
+import * as anu from "@jpmorganchase/anu";
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import { Engine, Scene, Color3 } from "@babylonjs/core";
@@ -115,24 +114,16 @@ window.addEventListener("resize", function () {
 });
 
 
-let mesh = createTextMesh({
-  text: ``,
-  font: fnt,
-  scene,
-  atlas: png,
-  engine: scene.getEngine()
-});
-
-mesh.dispose();
-
-  
-//const xrHelper = await scene.createDefaultXRExperienceAsync();
+const env = scene.createDefaultEnvironment();
+env.setMainColor(Color3.FromHexString('#0e0e17'));
 
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
   uiOptions: {
       sessionMode: 'immersive-vr'
-  }
+  },
+  floorMeshes: [env.ground]
 });
+
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
