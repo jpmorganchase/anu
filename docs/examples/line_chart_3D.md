@@ -8,7 +8,7 @@ aside: false
 
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking"
+        allow="xr-spatial-tracking; camera"
         allowfullscreen=""
         title="Inline Frame Example"
         src="/anu/examples.html?example=linechart3D">

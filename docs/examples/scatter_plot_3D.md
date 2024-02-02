@@ -8,7 +8,7 @@ aside: false
 
 <div style="width: 100%;">
     <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking"
+     allow="xr-spatial-tracking; camera"
         allowfullscreen=""
         title="Inline Frame Example"
         src="https://jpmorganchase.github.io/anu/examples.html?example=scatterplot3D">

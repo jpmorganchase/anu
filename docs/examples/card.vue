@@ -1,6 +1,7 @@
 <template> 
     <div style="position:relative; display: flex; flex-direction: column; align-items: center;">
         <iframe id="inlineFrameExample"
+            allow="xr-spatial-tracking; camera"
             title="Inline Frame Example"
             :src="`/anu/examples.html?example=${example}`">
         </iframe>
