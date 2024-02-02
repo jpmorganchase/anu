@@ -117,22 +117,18 @@ window.addEventListener("resize", function () {
 const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
-var xrHelper = await scene.createDefaultXRExperienceAsync({
-  uiOptions: {
+const xr = await scene.createDefaultXRExperienceAsync({
+    uiOptions: {
       sessionMode: 'immersive-vr'
   },
   floorMeshes: [env.ground]
 });
-
-try {
-const featureManager = xrHelper.baseExperience.featuresManager;
-featureManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
-  xrInput: xrHelper.input,
+xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+    xrInput: xr.input,
+    jointMeshes: {
+        enablePhysics: true
+    }
 });
-} catch {
-  console.log("hand tracking error");
-}
-
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
