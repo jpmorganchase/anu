@@ -53,7 +53,7 @@ const canvas = document.createElement('canvas');
 app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
-const babylonEngine = new BABYLON.Engine(canvas, true)
+const babylonEngine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false});
 
 //This is an object of scene functions we can call dynamically to help us switch scenes. 
 const scenes = {
