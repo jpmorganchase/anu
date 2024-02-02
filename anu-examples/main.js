@@ -3,14 +3,9 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import "@babylonjs/core/Debug/debugLayer";
-import "@babylonjs/inspector";
 import * as BABYLON from "@babylonjs/core";
-import { GridMaterial } from '@babylonjs/materials';
-import * as anu from "@jpmorganchase/anu";
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
-import { Engine, Scene, Color3 } from "@babylonjs/core";
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
 import { barchart3D } from './examples/BarCharts/barchart3d';
 import { box } from './examples/FirstSteps/Box';
@@ -58,7 +53,7 @@ const canvas = document.createElement('canvas');
 app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
-const babylonEngine = new Engine(canvas, true)
+const babylonEngine = new BABYLON.Engine(canvas, true)
 
 //This is an object of scene functions we can call dynamically to help us switch scenes. 
 const scenes = {
@@ -99,7 +94,7 @@ const scenes = {
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
-scene.clearColor = new Color3(30/256,30/256,32/256)
+scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
 
 
 
@@ -115,7 +110,7 @@ window.addEventListener("resize", function () {
 
 
 const env = scene.createDefaultEnvironment();
-env.setMainColor(Color3.FromHexString('#0e0e17'));
+env.setMainColor(BABYLON.Color3.FromHexString('#0e0e17'));
 
 const xr = await scene.createDefaultXRExperienceAsync({
   //   uiOptions: {
@@ -128,13 +123,13 @@ xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TR
   });
 
 // hide/show the Inspector
-window.addEventListener("keydown", (ev) => {
-    // Shift+Ctrl+Alt+I
-    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
-        if (scene.debugLayer.isVisible()) {
-            scene.debugLayer.hide();
-        } else {
-            scene.debugLayer.show();
-        }
-    }
-});
+// window.addEventListener("keydown", (ev) => {
+//     // Shift+Ctrl+Alt+I
+//     if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+//         if (scene.debugLayer.isVisible()) {
+//             scene.debugLayer.hide();
+//         } else {
+//             scene.debugLayer.show();
+//         }
+//     }
+// });
