@@ -105,9 +105,9 @@ const xr = await scene.createDefaultXRExperienceAsync({
   // },
   floorMeshes: [env.ground]
 });
-xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
-    xrInput: xr.input
-  });
+// xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+//     xrInput: xr.input
+//   });
 
 
 //Render the scene we created
