@@ -118,17 +118,14 @@ const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
 const xr = await scene.createDefaultXRExperienceAsync({
-    uiOptions: {
-      sessionMode: 'immersive-vr'
-  },
-  floorMeshes: [env.ground]
+  //   uiOptions: {
+  //     sessionMode: 'immersive-vr'
+  // },
+  // floorMeshes: [env.ground]
 });
 xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
-    xrInput: xr.input,
-    jointMeshes: {
-        enablePhysics: true
-    }
-});
+    xrInput: xr.input
+  });
 
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
