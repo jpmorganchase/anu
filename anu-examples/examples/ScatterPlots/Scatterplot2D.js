@@ -20,7 +20,7 @@ export const scatterplot2D = function(engine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(2,0,-5);
+  camera.position = new Vector3(0.5,2,-1.5);
 
   //Create the functions that we will use to scale our data according to our desired dimensions. In this case we want to scale the position of our points. 
   //These functions will take a number and scale it between -10 and 10. calling .nice() adds some padding at the beginning and end 
@@ -32,7 +32,7 @@ export const scatterplot2D = function(engine){
   var scaleC = d3.scaleOrdinal().domain(['setosa', 'versicolor', 'virginica']).range(d3.schemeCategory10)
   
   //Create a transform node to use as the parent node for all our meshes
-  let CoT = new TransformNode('cot')
+  let CoT = anu.create("cot", "cot");
 
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
@@ -49,6 +49,11 @@ export const scatterplot2D = function(engine){
 
   anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
     
+
+  CoT.normalizeToUnitCube();
+  chart.positionY(1.5)
+  camera.setTarget(CoT)
+
 
     return scene;
   

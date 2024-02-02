@@ -117,11 +117,17 @@ window.addEventListener("resize", function () {
 const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
-var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
+var xrHelper = await scene.createDefaultXRExperienceAsync({
   uiOptions: {
       sessionMode: 'immersive-vr'
   },
   floorMeshes: [env.ground]
+});
+
+const featureManager = xrHelper.baseExperience.featuresManager;
+
+featureManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+  xrInput: xrHelper.input,
 });
 
 

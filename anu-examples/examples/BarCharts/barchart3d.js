@@ -20,7 +20,7 @@ export function barchart3D(babylonEngine){
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.attachControl(true)
-    camera.position = new Vector3(10.5,7,-10.5);
+    camera.position = new Vector3(1,2,-2);
    
     //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];
@@ -45,7 +45,7 @@ export function barchart3D(babylonEngine){
     let scaleC = d3.scaleSequential(anu.sequentialChromatic('OrRd').toPBRMaterialRough()).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
-    let CoT = new TransformNode('cot')
+    let CoT = anu.create("cot", "cot");
     let chart = anu.selectName('cot', scene);
     
     //Bind boxes to our rolled-up data, position, scale, and color with our scales
@@ -58,6 +58,12 @@ export function barchart3D(babylonEngine){
                     //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+
+
+    chart.run((d,n,i) => {
+        n.normalizeToUnitCube();
+        camera.setTarget(n);;
+    }).positionY(1.5)
    
     return scene;
 }

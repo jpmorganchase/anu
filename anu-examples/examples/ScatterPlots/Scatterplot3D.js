@@ -21,7 +21,7 @@ export const scatterplot3D = function(engine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(2,0,-5);
+  camera.position = new Vector3(2,2,-3.5);
 
   //Create the functions that we will use to scale our data according to our desired dimensions. In this case we want to scale the position of our points. 
   //These functions will take a number and scale it between -10 and 10. calling .nice() adds some padding at the beginning and end 
@@ -31,12 +31,11 @@ export const scatterplot3D = function(engine){
 
   //This is a function that will create a color scale for our three types of flowers in our data
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
-  console.log(anu.ordinalChromatic('d310').toStandardMaterial())
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
   
   //Create a transform node to use as the parent node for all our meshes
-  let CoT = new TransformNode('cot')
+  let CoT = anu.create("cot", "cot");
 
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
@@ -50,21 +49,24 @@ export const scatterplot3D = function(engine){
     .material((d,m,i) => scaleC(d.species))
     //.diffuseColor((d) => scaleC(d.species)) //change the diffuse color of our material using our color scale function.
     //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped. 
-    .action((d) => new InterpolateValueAction( 
+    .action((d,n,i) => new InterpolateValueAction( 
           ActionManager.OnPointerOverTrigger,
-          d,
+          n,
           'scaling',
           new Vector3(1.2, 1.2, 1.2),
           100
       ))
-      .action((d) => new InterpolateValueAction(
+      .action((d,n,i) => new InterpolateValueAction(
         ActionManager.OnPointerOutTrigger,
-        d,
+        n,
         'scaling',
         new Vector3(1, 1, 1),
         100));
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+
+    chart.positionY(1.5)
+    camera.setTarget(CoT);
 
     return scene;
   

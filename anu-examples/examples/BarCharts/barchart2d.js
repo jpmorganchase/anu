@@ -18,7 +18,8 @@ export function barchart2d(babylonEngine){
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.attachControl(true)
-    camera.position = new Vector3(10.5,7,-10.5);
+    camera.position = new Vector3(1,3,-5);
+   
    
     //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];
@@ -36,8 +37,8 @@ export function barchart2d(babylonEngine){
     const MPGMinMax = d3.extent([...new Set(carsRollup.map(item => item.Miles_per_Gallon))])
     
     //Create our scales for positioning and coloring meshes
-    let scaleX = d3.scaleBand().domain(cylinders).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
-    let scaleY = d3.scaleLinear().domain(horsepowerMinMax).range([0,5]).nice();
+    let scaleX = d3.scaleBand().domain(cylinders).range([-1,1]).paddingInner(1).paddingOuter(0.5);
+    let scaleY = d3.scaleLinear().domain(horsepowerMinMax).range([0,2]).nice();
     let scaleC = d3.scaleSequential(d3.interpolatePuBuGn).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
@@ -45,7 +46,7 @@ export function barchart2d(babylonEngine){
     let chart = anu.selectName('cot', scene);
     
     //Bind boxes to our rolled-up data, position, scale, and color with our scales
-    let bars = chart.bind('plane', {height: 1, width: 0.8, sideOrientation:2}, carsRollup)
+    let bars = chart.bind('plane', {height: 1, width: 0.3, sideOrientation:2}, carsRollup)
                     .positionX((d) => scaleX(d.Cylinders))
                     .positionZ(-0.01)
                     .scalingY((d) => scaleY(d.Horsepower))
@@ -58,6 +59,8 @@ export function barchart2d(babylonEngine){
                                             return new Color3(...rgb)}) 
 
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
+
+    chart.positionY(0).positionZ(0.5)
 
    
     return scene;
