@@ -94,20 +94,7 @@ const scenes = {
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
-scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
-
-
-
-//Render the scene we created
-babylonEngine.runRenderLoop(() => {
-  scene.render()
-})
-
-//Listen for window size changes and resize the scene accordingly 
-window.addEventListener("resize", function () {
-  babylonEngine.resize();
-});
-
+//scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
 
 const env = scene.createDefaultEnvironment();
 env.setMainColor(BABYLON.Color3.FromHexString('#0e0e17'));
@@ -121,6 +108,19 @@ const xr = await scene.createDefaultXRExperienceAsync({
 xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
     xrInput: xr.input
   });
+
+
+//Render the scene we created
+babylonEngine.runRenderLoop(() => {
+  scene.render()
+})
+
+//Listen for window size changes and resize the scene accordingly 
+window.addEventListener("resize", function () {
+  babylonEngine.resize();
+});
+
+
 
 // hide/show the Inspector
 // window.addEventListener("keydown", (ev) => {
