@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
+import { WebXRFeatureName, Color3, Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import data from 'anu/../../data/airports.csv'
 import geoJ from "anu/../../data/gz_2010_us_040_00_5m.json"
 import * as d3 from 'd3';
 
 
-export function meshMap(babylonEngine){
+export async function meshMap(babylonEngine){
   const scene = new Scene(babylonEngine);
   //Add some lighting
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
@@ -43,6 +43,18 @@ export function meshMap(babylonEngine){
 
   mapCot.position(new Vector3(0,0.5,-0.5))
 
+  const env = scene.createDefaultEnvironment();
+  env.setMainColor(Color3.FromHexString('#0e0e17'));
+
+  const xr = await scene.createDefaultXRExperienceAsync({
+    //   uiOptions: {
+    //     sessionMode: 'immersive-vr'
+    // },
+    floorMeshes: [env.ground]
+  });
+  xr.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+      xrInput: xr.input
+  });
 
   return scene;
 }

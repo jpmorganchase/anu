@@ -93,22 +93,8 @@ const scenes = {
   'meshMap': meshMap,
 }
 
-let scene = scenes[urlParams.get('example')](babylonEngine);
+let scene = await scenes[urlParams.get('example')](babylonEngine);
 //scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
-
-const env = scene.createDefaultEnvironment();
-env.setMainColor(BABYLON.Color3.FromHexString('#0e0e17'));
-
-const xr = await scene.createDefaultXRExperienceAsync({
-  //   uiOptions: {
-  //     sessionMode: 'immersive-vr'
-  // },
-  floorMeshes: [env.ground]
-});
-// xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
-//     xrInput: xr.input
-//   });
-
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
