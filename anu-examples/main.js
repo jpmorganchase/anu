@@ -101,21 +101,27 @@ const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
 
-try {
-  var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]} );
-  const featureManager = defaultXRExperience.baseExperience.featuresManager;
+var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
 
-  if (!featureManager) {
-      throw Error("no base experience", featureManager)
+if (!defaultXRExperience.baseExperience) {
+  console.log("No XR")
   } else {
-    defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
-        xrInput: defaultXRExperience.input
-    });
-  }
 
-} catch {
-  throw Error("WebXR not available")
+    const featureManager = defaultXRExperience.baseExperience.featuresManager;
+
+    if (!featureManager) {
+
+      console.log("No Feature Manager")
+
+  } else {
+
+      defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+          xrInput: defaultXRExperience.input
+      });
+      
+    }
 }
+
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
   scene.render()
