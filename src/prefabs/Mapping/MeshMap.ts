@@ -37,7 +37,7 @@ export class meshMap {
 
   createMap(): Selection{
 
-    let preProjection = d3Geo.geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform).reflectY(true));
+    let preProjection = d3Geo.geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform));
     let geoProjection = d3Geo.geoProject(preProjection, d3.geoIdentity());
     let topoJson = topojsonServer.topology({ features: geoProjection });
     let preSimpleTopoJson = topojsonSimplify.presimplify(topoJson as any);
