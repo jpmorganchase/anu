@@ -3,8 +3,8 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import * as BABYLON from "@babylonjs/core";
-// import { WebXRGenericHandController } from '@babylonjs/core';
+//import * as BABYLON from "@babylonjs/core";
+import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking} from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -54,7 +54,7 @@ const canvas = document.createElement('canvas');
 app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
-const babylonEngine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false});
+const babylonEngine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false});
 
 //This is an object of scene functions we can call dynamically to help us switch scenes. 
 const scenes = {
@@ -98,7 +98,7 @@ let scene = scenes[urlParams.get('example')](babylonEngine);
 //scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
 
 const env = scene.createDefaultEnvironment();
-env.setMainColor(BABYLON.Color3.FromHexString('#0e0e17'));
+env.setMainColor(Color3.FromHexString('#0e0e17'));
 
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]} );
 const featureManager = await defaultXRExperience.baseExperience.featuresManager;
@@ -107,12 +107,10 @@ if (!featureManager) {
     throw Error("no base experience", featureManager)
 } else {
   console.log(featureManager)
-  defaultXRExperience.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+  defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
       xrInput: defaultXRExperience.input
   });
 }
-
-  
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
