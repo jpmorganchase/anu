@@ -106,9 +106,6 @@ const featureManager = defaultXRExperience.baseExperience.featuresManager;
 if (!featureManager) {
     throw Error("no base experience", featureManager)
 } else {
-  console.log(featureManager)
-  console.log(WebXRFeatureName.HAND_TRACKING)
-  console.log(WebXRHandTracking)
   defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
       xrInput: defaultXRExperience.input
   });
