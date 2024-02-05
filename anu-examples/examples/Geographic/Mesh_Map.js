@@ -18,7 +18,7 @@ export function meshMap(babylonEngine){
   camera.position = new Vector3(0, 20, -20)
 
 
-  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.5, projection: d3.geoAlbers()});
+  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.5, projection: d3.geoAlbers().reflectY(true)});
 
   let projection = map.projection;
 
