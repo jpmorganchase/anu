@@ -3,7 +3,7 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-//import * as BABYLON from "@babylonjs/core";
+import * as BABYLON from "@babylonjs/core";
 import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking} from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
@@ -101,12 +101,14 @@ const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]} );
-const featureManager = await defaultXRExperience.baseExperience.featuresManager;
+const featureManager = defaultXRExperience.baseExperience.featuresManager;
 
 if (!featureManager) {
     throw Error("no base experience", featureManager)
 } else {
   console.log(featureManager)
+  console.log(WebXRFeatureName.HAND_TRACKING)
+  console.log(WebXRHandTracking)
   defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
       xrInput: defaultXRExperience.input
   });
