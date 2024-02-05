@@ -4,6 +4,7 @@
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
 import * as BABYLON from "@babylonjs/core";
+// import { WebXRGenericHandController } from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -99,16 +100,19 @@ let scene = scenes[urlParams.get('example')](babylonEngine);
 const env = scene.createDefaultEnvironment();
 env.setMainColor(BABYLON.Color3.FromHexString('#0e0e17'));
 
-const xr = await scene.createDefaultXRExperienceAsync({
-  //   uiOptions: {
-  //     sessionMode: 'immersive-vr'
-  // },
-  floorMeshes: [env.ground]
-});
-// xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
-//     xrInput: xr.input
-//   });
+var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]} );
+const featureManager = await defaultXRExperience.baseExperience.featuresManager;
 
+if (!featureManager) {
+    throw Error("no base experience", featureManager)
+} else {
+  console.log(featureManager)
+  defaultXRExperience.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+      xrInput: defaultXRExperience.input
+  });
+}
+
+  
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
