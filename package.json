@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.0.25",
+  "version": "0.0.27",
   "description": "",
   "type": "module",
   "files": [
@@ -51,7 +51,7 @@
     "vite-plugin-dts": "^2.3.0"
   },
   "dependencies": {
-    "@babylonjs/core": "^6.12.3",
+    "@babylonjs/core": "^6.41.0",
     "babylon-msdf-text": "^0.0.3",
     "chroma-js": "^2.4.2",
     "d3": "^7.8.5",

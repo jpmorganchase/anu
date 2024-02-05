@@ -3,7 +3,7 @@
 
 import * as d3 from "d3";
 import * as anu from '@jpmorganchase/anu';
-import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera} from "@babylonjs/core";
+import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera, SimplificationType} from "@babylonjs/core";
 import data from './yield-curve.csv'
 
 
@@ -19,7 +19,7 @@ export function linechart3D(babylonEngine) {
     scene
   );
   camera.attachControl(true);
-  camera.position = new Vector3(10.5,7,-10.5);
+  camera.position = new Vector3(5,0,-6);
 
   let CoT = new TransformNode("cot");
 
@@ -29,10 +29,10 @@ export function linechart3D(babylonEngine) {
     var dateFormat = d3.timeFormat("%y");
     let dates = data.map((d) => parseTime(d.Date))
   
-    var scaleX = d3.scaleTime().domain(d3.extent(dates)).range([-5, 5]);
-    var scaleY = d3.scaleLinear().domain([0, 9]).range([-2, 2]).nice();
-    var scaleZ = d3.scalePoint().domain(years).range([-3, 3]);
-    var scaleC = d3.scaleSequential(d3.interpolateBlues).domain([2, -2]);
+    var scaleX = d3.scaleTime().domain(d3.extent(dates)).range([-3, 3]);
+    var scaleY = d3.scaleLinear().domain([0, 9]).range([-1, 1]).nice();
+    var scaleZ = d3.scalePoint().domain(years).range([-2, 2]);
+    var scaleC = d3.scaleSequential(d3.interpolateBlues).domain([1, -1]);
 
     let myPaths2 = years.map((r) => {
       return data.map((c)=> {

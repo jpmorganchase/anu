@@ -13,7 +13,7 @@ export function textureMap(babylonEngine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(0, 100, -20)
+  camera.position = new Vector3(0, 3, -0.25)
 
   //Use D3 to read in our csv data
     //Our data has over 3000 points so we will use mesh instancing for better performance
@@ -27,6 +27,8 @@ export function textureMap(babylonEngine){
     let textureMap = anu.createTextureMap('test');
     //Keyboard controls WASD and -+ can be enabled on the prefab
     textureMap.keyboardControls(scene);
+
+  
 
     //The prefab generated our scales for us
     //The take [Lon, Lat] as input and return a x, y pixel coordinate. 
@@ -60,6 +62,14 @@ export function textureMap(babylonEngine){
 
     //Create a cot for our spheres
     let cot = anu.bind('cot')
+
+
+    cot.run((d,n,i) => {
+      textureMap.mesh.parent = n;
+      n.normalizeToUnitCube();
+    }).positionY(0.5)
+
+    
     //Use binInstace to create an instance of root sphere for each data point
     //set our color instance buffer Color4 to black 
     let spheres =  cot.bindInstance(rootSphere, data)

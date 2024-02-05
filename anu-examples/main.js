@@ -3,15 +3,10 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import "@babylonjs/core/Debug/debugLayer";
-import "@babylonjs/inspector";
-import * as BABYLON from "@babylonjs/core";
-import { createTextMesh } from "babylon-msdf-text";
-import fnt from "./fonts/roboto-regular.json";
-import png from "./fonts/roboto-regular.png";
+//import * as BABYLON from "@babylonjs/core";
+import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking} from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
-import { Engine, Scene, Color3 } from "@babylonjs/core";
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
 import { barchart3D } from './examples/BarCharts/barchart3d';
 import { box } from './examples/FirstSteps/Box';
@@ -59,7 +54,7 @@ const canvas = document.createElement('canvas');
 app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
-const babylonEngine = new Engine(canvas, true)
+const babylonEngine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false});
 
 //This is an object of scene functions we can call dynamically to help us switch scenes. 
 const scenes = {
@@ -100,9 +95,22 @@ const scenes = {
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
-scene.clearColor = new Color3(30/256,30/256,32/256)
+//scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
 
+const env = scene.createDefaultEnvironment();
+env.setMainColor(Color3.FromHexString('#0e0e17'));
 
+var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]} );
+const featureManager = await defaultXRExperience.baseExperience.featuresManager;
+
+if (!featureManager) {
+    throw Error("no base experience", featureManager)
+} else {
+  console.log(featureManager)
+  defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+      xrInput: defaultXRExperience.input
+  });
+}
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
@@ -115,33 +123,15 @@ window.addEventListener("resize", function () {
 });
 
 
-let mesh = createTextMesh({
-  text: ``,
-  font: fnt,
-  scene,
-  atlas: png,
-  engine: scene.getEngine()
-});
-
-mesh.dispose();
-
-  
-//const xrHelper = await scene.createDefaultXRExperienceAsync();
-
-var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
-  uiOptions: {
-      sessionMode: 'immersive-vr'
-  }
-});
 
 // hide/show the Inspector
-window.addEventListener("keydown", (ev) => {
-    // Shift+Ctrl+Alt+I
-    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
-        if (scene.debugLayer.isVisible()) {
-            scene.debugLayer.hide();
-        } else {
-            scene.debugLayer.show();
-        }
-    }
-});
+// window.addEventListener("keydown", (ev) => {
+//     // Shift+Ctrl+Alt+I
+//     if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+//         if (scene.debugLayer.isVisible()) {
+//             scene.debugLayer.hide();
+//         } else {
+//             scene.debugLayer.show();
+//         }
+//     }
+// });

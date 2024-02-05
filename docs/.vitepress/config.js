@@ -107,7 +107,8 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'Texture Map', link: './texture_map' },
-          { text: 'Texture Globe', link: './texture_globe' }
+          { text: 'Texture Globe', link: './texture_globe' },
+          { text: 'Mesh Map', link: './mesh_map' },
         ]
       }
     ]

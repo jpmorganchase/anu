@@ -15,14 +15,17 @@ export function meshMap(babylonEngine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(0, 20, -20)
+  camera.position = new Vector3(0, 2.5, -1)
 
 
-  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.5, projection: d3.geoAlbers().reflectY(true)});
+
+  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.05, projection: d3.geoAlbers().reflectY(true), size: [1,1], simplification: 0.00001});
+
 
   let projection = map.projection;
 
   let states = map.selection;
+
 
   let colorScale = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
@@ -30,7 +33,7 @@ export function meshMap(babylonEngine){
 
   let mapCot = anu.selectName('meshMapCOT', scene);
 
-  let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.02})
+  let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.002})
     rootSphere.isVisible = false;
     rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
@@ -39,6 +42,9 @@ export function meshMap(babylonEngine){
     .positionX((d) =>  projection([d.longitude, d.latitude])[0])
     .positionZ((d) => projection([d.longitude, d.latitude])[1])
     .setInstancedBuffer("color", new Color4(0,0,0,1))
+
+  mapCot.position(new Vector3(0,0.5,-0.5))
+
 
   return scene;
 }

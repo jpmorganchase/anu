@@ -14,16 +14,16 @@ export function textureGlobe(babylonEngine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(0, 20, -20)
+  camera.position = new Vector3(0, 4, -2.5)
 
 
 
   //Use D3 to read in our csv data
 
 
-    let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:10})
+    let globe = anu.createTextureGlobe('globe', {resolution: new Vector2(5000,2500), diameter:1})
  
-    let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.2})
+    let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.02})
     rootSphere.isVisible = false;
     rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
@@ -33,6 +33,9 @@ export function textureGlobe(babylonEngine){
     .scaling(new Vector3(0.1,0.1,0.1))
     .position((d) => globe.lonLatToVector3([d.longitude, d.latitude]))
 
+
+
+    anu.selectName('globe', scene).position(new Vector3(0,1.5,-1))
 
   return scene;
 }
