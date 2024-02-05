@@ -4,7 +4,7 @@
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
 import * as BABYLON from "@babylonjs/core";
-// import { WebXRGenericHandController } from '@babylonjs/core';
+import { WebXRHandTracking } from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -107,7 +107,7 @@ if (!featureManager) {
     throw Error("no base experience", featureManager)
 } else {
   console.log(featureManager)
-  defaultXRExperience.baseExperience.featuresManager.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, "latest", {
+  defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRHandTracking, "latest", {
       xrInput: defaultXRExperience.input
   });
 }
