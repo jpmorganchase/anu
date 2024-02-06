@@ -36,7 +36,7 @@ export function attr(this: Selection, accessor: string, value: any) {
 export function prop(this: Selection, accessor: string, value: any) {
   this.selected.forEach((node, i) => {
     hasIn(node, accessor)
-      ? set(node, accessor, value instanceof Function ? value(node.metadata.data, node, i) : value)
+      ? set(node, accessor, value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value)
       : console.error(accessor + ' not a property of ' + node);
   });
   return this;
@@ -57,7 +57,7 @@ export function props(this: Selection, properties: {}) {
             node,
             accessor,
             (properties as any)[accessor] instanceof Function
-              ? (properties as any)[accessor](node.metadata.data, node, i)
+              ? (properties as any)[accessor](node.metadata.data ??= {}, node, i)
               : (properties as any)[accessor],
           )
         : console.log(accessor + ' not property of ' + node);
