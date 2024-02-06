@@ -24,7 +24,7 @@ import {
   specularTexture,
 } from './property/material';
 import { registerInstancedBuffer, setInstancedBuffer } from './property/instancedBuffer';
-import { attr, props, prop } from './property/attr';
+import { attr, props, prop } from './property/prop';
 import { run } from './utility/run';
 import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
