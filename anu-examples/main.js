@@ -131,7 +131,7 @@ var defaultXRExperience = await scene.createDefaultXRExperienceAsync({
       sessionMode: 'immersive-vr'
   }
 });
-
+scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I

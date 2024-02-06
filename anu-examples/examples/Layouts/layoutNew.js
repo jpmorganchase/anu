@@ -1,4 +1,5 @@
 import cars from '../../data/cars.json' assert {type: 'json'};
+import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 
 import { HemisphericLight, 
         Mesh,
@@ -44,14 +45,12 @@ export function layoutNew(babylonEngine){
     let chart14 = make3Dchart(scene, 14);
     let chart15 = makechart(scene, 15);
     
-
     let charts = anu.selectName('cot', scene);
 
+    //console.log(charts);
     charts.scalingX((d) => Math.max(Math.random(), .5) * 2)
     charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
-    chart4.scalingZ((d) => Math.max(Math.random(), .4) * 2)
-    chart6.scalingZ((d) => Math.max(Math.random(), .4) * 2)
-    chart9.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+    charts.scalingZ((d) => Math.max(Math.random(), .4) * 2)
 
     var isstretch = false;
     var iszalign = false;
@@ -163,6 +162,10 @@ export function layoutNew(babylonEngine){
 }
 
 function makechart(scene, id){
+   
+    new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+   
+    //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];
     const cylinders = [...new Set(cars.map(item => item.Cylinders))].sort();
 
@@ -183,14 +186,10 @@ function makechart(scene, id){
     let scaleC = d3.scaleSequential(d3.interpolatePuBuGn).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
-    //let CoT = anu.create('box', 'cot', scene, {}, [{'a' : 1}])
-    //let chart = anu.bind('cylinder', scene);
+    let CoT = anu.create('cot', 'cot' + id)
+    let chart = anu.selectName('cot' + id, scene);
     
-    let CoT = anu.create('cot', 'cot', scene, {});
-    CoT.id = id;
-    let chart = anu.selectId(id, scene);
-
-    //console.log(chart);
+    
     //Bind boxes to our rolled-up data, position, scale, and color with our scales
     let bars = chart.bind('plane', {height: 1, width: 0.8, sideOrientation:2}, carsRollup)
                     .positionX((d) => scaleX(d.Cylinders))
@@ -204,26 +203,15 @@ function makechart(scene, id){
                                                       .map((v) => v / 255)
                                             return new Color3(...rgb)}) 
 
-    //Create our axises using the anu axis prefab
-    // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY})
-    // .shape()
-    // .background()
-    // .ticks()
-    // .grid();
-
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
-
-
-    return chart
+   
+    chart.name('cot');
+    return chart;
 }
 
 function make3Dchart(scene, id){
 
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
-    const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-    camera.attachControl(true)
-    camera.position = new Vector3(10.5,7,-10.5);
-   
     //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];
     const cylinders = [...new Set(cars.map(item => item.Cylinders))].sort().reverse();
@@ -238,18 +226,17 @@ function make3Dchart(scene, id){
 
     //Get Min/Max values for our linear scales
     const horsepowerMinMax = d3.extent([...new Set(carsRollup.map(item => item.Horsepower))])
-    const MPGMinMax = d3.extent([...new Set(carsRollup.map(item => item.Miles_per_Gallon))])
+    const MPGMinMax = d3.extent([...new Set(carsRollup.map(item => item.Miles_per_Gallon))]).reverse()
     
     //Create our scales for positioning and coloring meshes
     let scaleX = d3.scaleBand().domain(cylinders).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
     let scaleY = d3.scaleLinear().domain(horsepowerMinMax).range([0,5]).nice();
     let scaleZ = d3.scaleBand().domain(origin).range([-2.5,2.5]).paddingInner(1).paddingOuter(0.5);
-    let scaleC = d3.scaleSequential(d3.interpolatePuBuGn).domain(MPGMinMax);
+    let scaleC = d3.scaleSequential(anu.sequentialChromatic('OrRd').toPBRMaterialRough()).domain(MPGMinMax);
 
     //Create and select a transform node to be our parent
-    let CoT = anu.create('cot', 'cot', scene, {})
-    CoT.id = id;
-    let chart = anu.selectId(id, scene);
+    let CoT = anu.create('cot', 'cot' + id)
+    let chart = anu.selectName('cot' + id, scene);
     
     //Bind boxes to our rolled-up data, position, scale, and color with our scales
     let bars = chart.bind('box', {height: 1, width: 0.8, depth: 0.8}, carsRollup)
@@ -257,21 +244,12 @@ function make3Dchart(scene, id){
                     .positionZ((d) => scaleZ(d.Origin))
                     .scalingY((d) => scaleY(d.Horsepower))
                     .positionY((d) => scaleY(d.Horsepower) / 2)
-                    .material((d, i) => new StandardMaterial("myMaterial", scene)) 
-                    .diffuseColor((d) => { let rgb = scaleC(d.Miles_per_Gallon)
-                                                      .replace(/[^\d,]/g, '')
-                                                      .split(',')
-                                                      .map((v) => v / 255)
-                                            return new Color3(...rgb)}) 
+                    .material((d, i) => scaleC(d.Miles_per_Gallon)) 
+                    //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
-    //Create our axises using the anu axis prefab
-    // new anu.Axis('testAxis', scene, {cot: chart, x: scaleX, y: scaleY, z: scaleZ})
-    // .shape()
-    // .background()
-    // .ticks()
-    // .grid();
-   
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+
+    chart.name('cot');
 
     return chart;
 
