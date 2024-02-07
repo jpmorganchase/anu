@@ -11,8 +11,8 @@ hero:
       text: Get Started
       link: /guide/
     - theme: alt
-      text: API Examples
-      link: /api/modules.md
+      text: Examples
+      link: /examples/
 
 features:
   - title: Data Binding
