@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, Mesh} from '@babylonjs/core'; 
+import { HemisphericLight, PointerDragBehavior, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, Mesh, ExecuteCodeAction} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map, interpolateBlues} from "d3";
 
 //import { Mesh } from 'anu';
@@ -65,9 +65,6 @@ export const facetPosition = function(engine){
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
-    chart.positionY(1.5)
-    camera.setTarget(CoT);
-
     let bounds = chart.boundingBox();
 
     let boundingMesh = new Mesh("bounds", scene);
@@ -76,6 +73,33 @@ export const facetPosition = function(engine){
     
     boundingMesh.setBoundingInfo(bounds);
     boundingMesh.showBoundingBox = true;
+
+    console.log(bounds.boundingBox)
+
+    const pointerDragBehavior = new PointerDragBehavior();
+
+    let grab = chart.bind("capsule", {height: bounds.boundingBox.extendSize._x / 1.5, radius: 0.03})
+                    .rotation(new Vector3(0,0, 1.57))
+                    .positionY(bounds.boundingBox.minimum.y - 0.1)
+                    .positionZ(bounds.boundingBox.minimum.z)
+                    .action((d,n,i) => new ExecuteCodeAction( 
+                      ActionManager.OnPickDownTrigger,
+                      (d,n,i) => {
+                        chart.selected[0].addBehavior(pointerDragBehavior);
+                      }
+                  ))
+                  .action((d,n,i) => new ExecuteCodeAction( 
+                    ActionManager.OnPickUpTrigger,
+                    (d,n,i) => {
+                      chart.selected[0].removeBehavior(pointerDragBehavior);
+                    }
+                ))
+
+    //chart.positionY(1.5)
+    //camera.setTarget(CoT);
+
+   
+
     
 
     return scene;
