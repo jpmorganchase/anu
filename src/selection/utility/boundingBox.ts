@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, Vector3, BoundingInfo } from '@babylonjs/core';
+import { Mesh, Vector3, BoundingInfo, TransformNode } from '@babylonjs/core';
 import { Selection } from '../index';
 
 /**
@@ -10,15 +10,16 @@ import { Selection } from '../index';
  * @returns instance of BoundingInfo class, an object containing all bounding box values.
  */
 export function boundingBox(this: Selection): BoundingInfo {
-  let selectionMin = new Vector3(0, 0, 0);
-  let selectionMax = new Vector3(0, 0, 0);
-  // if (this.selected[0] instanceof Mesh) {
-  //   selectionMin = this.selected[0].getBoundingInfo().boundingBox.minimumWorld;
-  //   selectionMax = this.selected[0].getBoundingInfo().boundingBox.maximumWorld;
-  // }
+  let firstNode = this.selected[0];
+  let selectionMin: Vector3 = (firstNode instanceof Mesh) ? firstNode.getBoundingInfo().boundingBox.minimumWorld : (firstNode instanceof TransformNode) ? (this.selected[0] as TransformNode).position : new Vector3;
+  let selectionMax: Vector3 = (firstNode instanceof Mesh) ? firstNode.getBoundingInfo().boundingBox.maximumWorld : (firstNode instanceof TransformNode) ? (this.selected[0] as TransformNode).position : new Vector3;
+
 
   this.selected.forEach((node, i) => {
-    let meshes = node.getChildMeshes();
+    let meshes = (node.getChildMeshes().length > 0) ? node.getChildMeshes() : [node as Mesh];
+    console.log(meshes)
+    //selectionMin = meshes[0].getBoundingInfo().boundingBox.minimumWorld;
+    //selectionMax = meshes[0].getBoundingInfo().boundingBox.maximumWorld;
     meshes.forEach((mesh, j) => {
       mesh.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
       let nodeMin = mesh.getBoundingInfo().boundingBox.minimumWorld;

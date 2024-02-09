@@ -41,6 +41,7 @@ import { scatterPlot3DStep4 } from './examples/CreateAVis/step4';
 import { scatterPlot3DStep5 } from './examples/CreateAVis/step5';
 import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
 import { meshMap } from './examples/Geographic/Mesh_Map';
+import { facetPosition } from './examples/Interactions/FacetPosition';
 
 
 
@@ -92,6 +93,7 @@ const scenes = {
   'axesTest': axesTest,
   'text': text,
   'meshMap': meshMap,
+  'facetPosition': facetPosition
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -134,14 +136,16 @@ window.addEventListener("resize", function () {
 
 
 
+
+
 // hide/show the Inspector
-// window.addEventListener("keydown", (ev) => {
-//     // Shift+Ctrl+Alt+I
-//     if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
-//         if (scene.debugLayer.isVisible()) {
-//             scene.debugLayer.hide();
-//         } else {
-//             scene.debugLayer.show();
-//         }
-//     }
-// });
+window.addEventListener("keydown", (ev) => {
+    // Shift+Ctrl+Alt+I
+    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+        if (scene.debugLayer.isVisible()) {
+            scene.debugLayer.hide();
+        } else {
+            scene.debugLayer.show();
+        }
+    }
+});
