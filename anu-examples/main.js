@@ -4,7 +4,7 @@
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
 import * as BABYLON from "@babylonjs/core";
-import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking} from '@babylonjs/core';
+import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking, Vector3} from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -42,6 +42,8 @@ import { scatterPlot3DStep5 } from './examples/CreateAVis/step5';
 import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
 import { meshMap } from './examples/Geographic/Mesh_Map';
 import { facetPosition } from './examples/Interactions/FacetPosition';
+
+
 
 
 
@@ -93,7 +95,7 @@ const scenes = {
   'axesTest': axesTest,
   'text': text,
   'meshMap': meshMap,
-  'facetPosition': facetPosition
+  'facetposition': facetPosition
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -101,6 +103,7 @@ let scene = scenes[urlParams.get('example')](babylonEngine);
 
 const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
+env.ground.position = new Vector3(0,-2,0);
 
 
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );

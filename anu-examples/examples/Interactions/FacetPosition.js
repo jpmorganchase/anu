@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import { HemisphericLight, PointerDragBehavior, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, Mesh, ExecuteCodeAction} from '@babylonjs/core'; 
+import {UtilityLayerRenderer, Angle, PlaneRotationGizmo, HemisphericLight, PointerDragBehavior, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, Mesh, ExecuteCodeAction, SixDofDragBehavior} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map, interpolateBlues} from "d3";
 
 //import { Mesh } from 'anu';
@@ -35,10 +35,12 @@ export const facetPosition = function(engine){
 
   
   //Create a transform node to use as the parent node for all our meshes
-  let CoT = anu.create("cot", "cot");
+  let CoT = anu.create("cot", "center", {}, {});
 
   //Select our center or transform with Anu to give us a selection obj CoT.
-  let chart = anu.selectName('cot', scene);
+  let chart = anu.selectName('center', scene);
+
+  
 
   //This series of chained methods will create our visualization 
   //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
@@ -65,37 +67,77 @@ export const facetPosition = function(engine){
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
+   
+
     let bounds = chart.boundingBox();
 
-    let boundingMesh = new Mesh("bounds", scene);
-
-    boundingMesh.computeWorldMatrix(true);
+    // let boundingMesh = new Mesh("bounds", scene);
     
-    boundingMesh.setBoundingInfo(bounds);
-    boundingMesh.showBoundingBox = true;
+    // boundingMesh.setBoundingInfo(bounds);
+    // boundingMesh.showBoundingBox = true;
 
-    console.log(bounds.boundingBox)
+    // console.log(bounds.boundingBox)
 
-    const pointerDragBehavior = new PointerDragBehavior();
+    // const drag = new SixDofDragBehavior();
 
-    let grab = chart.bind("capsule", {height: bounds.boundingBox.extendSize._x / 1.5, radius: 0.03})
-                    .rotation(new Vector3(0,0, 1.57))
-                    .positionY(bounds.boundingBox.minimum.y - 0.1)
-                    .positionZ(bounds.boundingBox.minimum.z)
-                    .action((d,n,i) => new ExecuteCodeAction( 
-                      ActionManager.OnPickDownTrigger,
-                      (d,n,i) => {
-                        chart.selected[0].addBehavior(pointerDragBehavior);
-                      }
-                  ))
-                  .action((d,n,i) => new ExecuteCodeAction( 
-                    ActionManager.OnPickUpTrigger,
-                    (d,n,i) => {
-                      chart.selected[0].removeBehavior(pointerDragBehavior);
-                    }
-                ))
+    // drag.faceCameraOnDragStart = true;
+    // drag.rotateAroundYOnly = true;
 
-    //chart.positionY(1.5)
+    // let grab = chart.bind("capsule", {height: bounds.boundingBox.extendSize._x / 1.5, radius: 0.03})
+    //                 .rotation(new Vector3(0,0, 1.57))
+    //                 .positionY(bounds.boundingBox.minimum.y - 0.1)
+    //                 .positionZ(bounds.boundingBox.minimum.z)
+    //                 .action((d,n,i) => new ExecuteCodeAction( 
+    //                   ActionManager.OnPickDownTrigger,
+    //                   (d,n,i) => {
+    //                     chart.selected[0].addBehavior(drag);
+    //                   }
+    //               ))
+    //               .action((d,n,i) => new ExecuteCodeAction( 
+    //                 ActionManager.OnPickOutTrigger,
+    //                 (d,n,i) => {
+    //                   console.log("out")
+    //                   chart.selected[0].removeBehavior(drag);
+    //                 }
+    //             ))
+
+                    
+  //               const utilLayer = new UtilityLayerRenderer(scene);
+  //               console.log(UtilityLayerRenderer.DefaultKeepDepthUtilityLayer)
+  //               utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
+  //               var gizmo1 = new PlaneRotationGizmo(new Vector3(0,1,0), undefined, utilLayer)
+  //               gizmo1.updateScale = false;
+               
+  //   let rotate = anu.create("torus", "torus", {diameter: bounds.boundingBox.extendSize._x * 0.10, thickness: bounds.boundingBox.extendSize._x * 0.025}, {},  gizmo1.gizmoLayer.utilityLayerScene)
+                    
+  //                   //.positionY(bounds.boundingBox.minimum.y - 0.1)
+  //                   //.positionZ(bounds.boundingBox.minimum.z)
+  //                   //.positionX(-0.5)
+  
+
+  // gizmo1.attachedMesh = CoT;
+  // gizmo1.setCustomMesh(rotate)
+
+
+
+  // let rotate2 = chart.bind("torus", {diameter: bounds.boundingBox.extendSize._x * 0.08, thickness: bounds.boundingBox.extendSize._x * 0.025})
+  // .positionY(bounds.boundingBox.minimum.y - 0.1)
+  // .positionZ(bounds.boundingBox.minimum.z)
+  // .positionX(-0.5)
+  // .rotationX(1.57)
+
+  // let rotate3 = chart.bind("torus", {diameter: bounds.boundingBox.extendSize._x * 0.09, thickness: bounds.boundingBox.extendSize._x * 0.025})
+  // .positionY(bounds.boundingBox.minimum.y - 0.1)
+  // .positionZ(bounds.boundingBox.minimum.z)
+  // .positionX(-0.5)
+  // .rotationZ(1.57)
+
+  //chart.positionY(4)
+
+  //chart.positionUI();
+    chart.positionY(1.5)
+    chart.positionUI();
+
     //camera.setTarget(CoT);
 
    

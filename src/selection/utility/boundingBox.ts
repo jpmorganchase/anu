@@ -16,16 +16,23 @@ export function boundingBox(this: Selection): BoundingInfo {
 
 
   this.selected.forEach((node, i) => {
-    let meshes = (node.getChildMeshes().length > 0) ? node.getChildMeshes() : [node as Mesh];
+    node.computeWorldMatrix(true);
+    let meshes = (node.getChildMeshes().length > 0) ? node.getChildMeshes() : [node];
     console.log(meshes)
     //selectionMin = meshes[0].getBoundingInfo().boundingBox.minimumWorld;
     //selectionMax = meshes[0].getBoundingInfo().boundingBox.maximumWorld;
     meshes.forEach((mesh, j) => {
       mesh.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
+      if (mesh instanceof Mesh) {
       let nodeMin = mesh.getBoundingInfo().boundingBox.minimumWorld;
       let nodeMax = mesh.getBoundingInfo().boundingBox.maximumWorld;
       selectionMin = Vector3.Minimize(selectionMin, nodeMin);
       selectionMax = Vector3.Maximize(selectionMax, nodeMax);
+      } else {
+        selectionMin = Vector3.Minimize(selectionMin, (mesh as TransformNode).position);
+        selectionMax = Vector3.Maximize(selectionMax, (mesh as TransformNode).position);
+      }
+    
     });
   });
 
