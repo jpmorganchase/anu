@@ -31,7 +31,7 @@ import { drawTextDT, scaleDT } from './property/dynamicTexture';
 import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
-import { positionUI } from '../prefabs/Interactions/facetPosition';
+import { positionUI, scaleUI } from '../prefabs/Interactions/facetPosition';
 
 /*
     The core class of anujs. All functions should return 
@@ -97,4 +97,6 @@ export class Selection {
   public id = id;
   public metadata = metadata;
   public positionUI = positionUI;
+  public scaleUI = scaleUI;
+
 }

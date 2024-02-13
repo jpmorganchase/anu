@@ -135,9 +135,11 @@ export const facetPosition = function(engine){
   //chart.positionY(4)
 
   //chart.positionUI();
-    chart.positionY(1.5)
+    //
     chart.positionUI();
-
+    chart.scaleUI();
+    //chart.scaling(new Vector3(2,2,2))
+    chart.positionY(2)
     //camera.setTarget(CoT);
 
    
