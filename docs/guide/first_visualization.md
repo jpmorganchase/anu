@@ -76,9 +76,9 @@ let scaleZ = scaleLinear().domain(extentZ).range([-10,10]).nice(); // [!code foc
 let cot = anu.bind('cot', scene);
 let spheres = cot.bind('sphere', {diameter: 0.5}, iris); 
 
-spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
-       .positionY((d,n,i) => scaleY(d.petalLength)) // [!code focus]
-       .positionZ((d,n,i) => scaleZ(d.sepalWidth)); // [!code focus]
+spheres.positionX((d,n,i) => d.sepalLength) // [!code focus]
+       .positionY((d,n,i) => d.petalLength) // [!code focus]
+       .positionZ((d,n,i) => d.sepalWidth); // [!code focus]
 ```
 
 <div style="width: 100%;">
