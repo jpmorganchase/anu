@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu-starter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Anu template generator",
   "bin": {
     "anu-starter": "./index.js"
