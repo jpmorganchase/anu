@@ -51,9 +51,9 @@ import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-//Grab DOM element where we will atach our canvas. #app is the id assiged to an empty <div> in our index.html 
+//Grab DOM element where we will attach our canvas. #app is the id assigned to an empty <div> in our index.html 
 const app = document.querySelector('#app');
-//Create a canvas element and appened it to #app div
+//Create a canvas element and append it to #app div
 const canvas = document.createElement('canvas');
 app.appendChild(canvas);
 
