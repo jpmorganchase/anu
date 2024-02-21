@@ -52,7 +52,6 @@ export function layoutNew(babylonEngine){
     charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
     charts.scalingZ((d) => Math.max(Math.random(), .4) * 2)
 
-    var isstretch = false;
     var iszalign = false;
     var showBoundingbox = false;
     var rows = 3;
@@ -62,19 +61,12 @@ export function layoutNew(babylonEngine){
     // let planelayout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(1, 3)}, scene)
     //     .attr("row", 2)    
     //     .attr("margin", new Vector2(0, 2))
-    //     .stretch()
     //     .zalign()
 
     let layout = new anu.cylinderLayout('PlaneLayout1', {selection: charts, rows: rows, margin: new Vector2(0, 0), radius: 20}, scene)
         .attr("row", 2)    
         //.attr("margin", new Vector2(5, 2))
-        // .stretch()
         // .zalign()
-
-    var toStretch = function(isChecked){
-        isstretch = isChecked;
-        layout.stretch();
-    }
 
     var toAlign = function(isChecked){
         iszalign = isChecked;
@@ -118,15 +110,18 @@ export function layoutNew(babylonEngine){
             case 1: 
                 layout.cylinderLayout();
             break
+            case 2: 
+                layout.sphereLayout();
+            break
         }
 	}
 
     var layoutGroup = new gui.RadioGroup("Layout");
 	layoutGroup.addRadio("Plane", setLayout);
     layoutGroup.addRadio("Cylinder", setLayout, true);
+    layoutGroup.addRadio("Sphere", setLayout, false);
 
     var transformGroup = new gui.CheckboxGroup("Settings");
-	transformGroup.addCheckbox("Stretch", toStretch);
 	transformGroup.addCheckbox("Zalign", toAlign);
     transformGroup.addCheckbox("ShowBoundingBox", toToggleBoundingBox);
 
@@ -141,7 +136,7 @@ export function layoutNew(babylonEngine){
 	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 0, displayValue);
 
     var marginy = new gui.SliderGroup("MarginY", "S");
-	marginy.addSlider("marginy", updateMarginY, "unit", 0, 20, 0, displayValue);
+	marginy.addSlider("marginy", updateMarginY, "unit", 0, 60, 0, displayValue);
 
     var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 

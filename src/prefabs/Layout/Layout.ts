@@ -134,6 +134,8 @@ export class Layout{
                     this.planeLayout();
                 if(this.currentLayout == 2)
                     this.cylinderLayout();
+                if(this.currentLayout == 3)
+                    this.sphereLayout();
                 break;
             case "margin":
                 let newmargin = val as Vector2;
@@ -142,6 +144,8 @@ export class Layout{
                     this.planeLayout();
                 if(this.currentLayout == 2)
                     this.cylinderLayout();
+                if(this.currentLayout == 3)
+                    this.sphereLayout();
                 break;
             case "showBoundingBox":
                 this.options.showBoundingBox = Boolean(val);
@@ -149,11 +153,15 @@ export class Layout{
                     this.planeLayout();
                 if(this.currentLayout == 2)
                     this.cylinderLayout();
+                if(this.currentLayout == 3)
+                    this.sphereLayout();
                 break;
             case "radius":
                 this.options.radius = Number(val);
                 if(this.currentLayout == 2)
                     this.cylinderLayout();
+                if(this.currentLayout == 3)
+                    this.sphereLayout();
                 break;
             default:
                 break;
@@ -190,16 +198,17 @@ export class Layout{
                 cells[i].parent = this.root;
             } else {
                 (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                this.animateRotation((node.parent as TransformNode), new Vector3(0, 0, 0));
                 cells.push((node.parent as Mesh));
                 cells[i].parent = this.root;
             }
             (node.parent as Mesh).showBoundingBox = showBox;
-
             let origin = new Mesh("vect", this.scene);
             origin.position = new Vector3(0, 0, 0);
             let rowid = Math.floor(i / colnum);
             let colid = i % colnum;
-            origin.rotate((node.parent as TransformNode).getDirection(up), colid * (angle + margin.x * Math.PI / 180));
+            //origin.rotate((node.parent as TransformNode).getDirection(up), colid * (angle + margin.x) * Math.PI / 180);
+            origin.rotate(new Vector3(0, 1, 0), colid * (angle + margin.x) * Math.PI / 180);
             let originforward = origin.getDirection(forward).normalize();
             let pos = originforward.multiplyByFloats(radius, radius, radius);
             let newPos = new Vector3(pos.x,  rowid * (widthY + margin.y), pos.z)
@@ -212,6 +221,55 @@ export class Layout{
 
         return this;
     }
+
+    public sphereLayout(){
+        this.currentLayout = 3;
+        let rownum = this.options.rows || 1
+        let margin = this.options.margin || new Vector2(0,0)
+        let chartnum = this.options.selection.selected.length
+        let boundingBox = this.boundingBoxLocal(this.options.selection)
+        let radius = this.options.radius || 5
+        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
+        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+        let colnum = this.options.columns || chartnum;
+        let showBox = this.options.showBoundingBox || false;
+
+        colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
+
+        let angle = Math.atan(widthX / 2 / radius) * 2 * 180 / Math.PI;
+        let angleY = Math.atan(widthY / 2 / radius) * 2 * 180 / Math.PI;
+
+        let cells : Mesh[] = [];
+        
+        this.options.selection.selected.forEach((node, i) => {
+            if(node.parent == null){
+                let m = new Mesh("cell", this.scene);
+                m.setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                node.parent = m;
+                cells.push(m);
+                cells[i].parent = this.root;
+            } else {
+                (node.parent as Mesh).setBoundingInfo(new BoundingInfo(boundingBox.boundingBox.minimumWorld, boundingBox.boundingBox.maximumWorld));
+                cells.push((node.parent as Mesh));
+                cells[i].parent = this.root;
+            }
+            (node.parent as Mesh).showBoundingBox = showBox;
+            
+            //make a 3D coord x, y, z for the chart
+            let rowid = Math.floor(i / colnum) - Math.floor(rownum / 2);
+            let colid = i % colnum - Math.floor(colnum / 2);
+            let anglephi = Math.min(colid * (angle + margin.x), 360) * Math.PI / 180;
+            let angletheta = Math.min(Math.abs(90 - rowid * (angleY + margin.y)), 180) * Math.PI / 180;
+            let newPos = new Vector3(radius * Math.sin(angletheta) * Math.cos(anglephi), radius * Math.sin(angletheta) * Math.sin(anglephi), radius * Math.cos(angletheta));
+            this.animatePosition((node.parent as TransformNode), newPos);
+            this.animatePosition((node as TransformNode), new Vector3(0, 0, 0));
+            let newRot = new Vector3(-anglephi, angletheta, 0);
+            this.animateRotation((node.parent as TransformNode), newRot);
+            
+        })
+
+        return this;
+    }
     
     public zalign(){
         let boundingBox = this.boundingBoxLocal(this.options.selection)
@@ -220,18 +278,6 @@ export class Layout{
             let test = new Selection([this.options.selection.selected[i]], this.scene);
             let zSize = this.boundingBoxLocal(test).boundingBox.maximumWorld.z - this.boundingBoxLocal(test).boundingBox.minimumWorld.z;
             this.animatePosition((node as TransformNode), new Vector3((node as TransformNode).position.x, (node as TransformNode).position.y, zSize / 2 - widthZ / 2));
-        })
-        return this;
-    }
-
-    public stretch(){
-        let boundingBox = this.boundingBoxLocal(this.options.selection)
-        let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-        let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
-        let widthZ = boundingBox.boundingBox.maximumWorld.z - boundingBox.boundingBox.minimumWorld.z;
-        this.options.selection.selected.forEach((node, i) => {
-            //TODO: Investigate why divide by 6 works
-            this.animateScale((node as TransformNode), new Vector3(widthX / 6, widthY / 6, widthZ / 6));
         })
         return this;
     }
@@ -270,6 +316,21 @@ export function cylinderLayout(name: string, options: LayoutOptions, scene: Scen
     }
  
     return new Layout(name, Options, scene).cylinderLayout();
+
+}
+
+export function sphereLayout(name: string, options: LayoutOptions, scene: Scene): Layout {
+
+    const Options: LayoutOptions = {
+        selection: options.selection,
+        rows: options.rows || 1,
+        columns: options.columns || options.selection.selected.length,
+        margin: options.margin || new Vector2(0, 0),
+        order: options.order || [],
+        showBoundingBox: options.showBoundingBox || false,
+    }
+ 
+    return new Layout(name, Options, scene).sphereLayout();
 
 }
 
