@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node, BoundingInfo } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
+import { Selection } from './selection';
 
 interface StringByFunc {
   [key: string]: Function;
@@ -18,6 +19,17 @@ function createCOT(name: string, options: object, scene: Scene) {
 
 function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
   return CreateGreasedLine(name, options, {});
+}
+
+function createContainer(name: string, options: {}, scene: Scene){
+  let container: Mesh = new Mesh(name, scene);
+  let selection: Selection = new Selection([container], scene);
+  let boundingInfo: BoundingInfo = selection.boundingBox();
+  container.setBoundingInfo(boundingInfo);
+  container.onAfterWorldMatrixUpdateObservable.add(() => {
+    boundingInfo = selection.boundingBox();
+    container.setBoundingInfo(boundingInfo);
+  })
 }
 
 const meshList: StringByFunc = {
@@ -50,6 +62,7 @@ const meshList: StringByFunc = {
   goldberg: MeshBuilder.CreateGoldberg,
   planeText: createPlaneText,
   greasedLine: createGL,
+  container: createContainer,
 };
 
 /**

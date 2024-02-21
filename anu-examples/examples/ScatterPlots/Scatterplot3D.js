@@ -33,6 +33,7 @@ export const scatterplot3D = function(engine){
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
+  let container = anu.bind("container")
   
   //Create a transform node to use as the parent node for all our meshes
   let CoT = anu.create("cot", "cot");
