@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node, BoundingInfo } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node, BoundingInfo, Observable } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { Selection } from './selection';
+import { isEmpty, isEqual, update, xorWith } from 'lodash';
+
+
 
 interface StringByFunc {
   [key: string]: Function;
@@ -21,15 +24,18 @@ function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: S
   return CreateGreasedLine(name, options, {});
 }
 
+export const isArrayEqual = (x: any, y: any) => isEmpty(xorWith(x, y, isEqual));
+
 function createContainer(name: string, options: {}, scene: Scene){
   let container: Mesh = new Mesh(name, scene);
-  let selection: Selection = new Selection([container], scene);
-  let boundingInfo: BoundingInfo = selection.boundingBox();
-  container.setBoundingInfo(boundingInfo);
-  container.onAfterWorldMatrixUpdateObservable.add(() => {
-    boundingInfo = selection.boundingBox();
-    container.setBoundingInfo(boundingInfo);
+  let { min, max } = container.getHierarchyBoundingVectors();
+  container.setBoundingInfo(new BoundingInfo(min, max));
+  container.onAfterWorldMatrixUpdateObservable.add((v) => {
+   container._updateBoundingInfo()
   })
+  
+
+  return container
 }
 
 const meshList: StringByFunc = {

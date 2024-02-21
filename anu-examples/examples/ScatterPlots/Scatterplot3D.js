@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import {NodeMaterialModes, LightBlock, GradientBlock, GradientBlockColorStep, RemapBlock, Vector2, AnimatedInputBlockTypes, NodeMaterial, InputBlock, NodeMaterialSystemValues, TransformBlock, VertexOutputBlock, Color4, FragmentOutputBlock, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder, Material} from '@babylonjs/core'; 
+import {Mesh, BoundingInfo, NodeMaterialModes, LightBlock, GradientBlock, GradientBlockColorStep, RemapBlock, Vector2, AnimatedInputBlockTypes, NodeMaterial, InputBlock, NodeMaterialSystemValues, TransformBlock, VertexOutputBlock, Color4, FragmentOutputBlock, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder, Material} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map, interpolateBlues} from "d3";
 
 //import { Mesh } from 'anu';
@@ -34,6 +34,8 @@ export const scatterplot3D = function(engine){
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
   let container = anu.bind("container")
+
+  container.prop("showBoundingBox", true);
   
   //Create a transform node to use as the parent node for all our meshes
   let CoT = anu.create("cot", "cot");
@@ -41,9 +43,11 @@ export const scatterplot3D = function(engine){
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
 
+  
+
   //This series of chained methods will create our visualization 
   //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
-  let spheres = chart.bind('sphere', {diameter: 0.05}, iris) 
+  let spheres = container.bind('sphere', {diameter: 0.05}, iris) 
     .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
     .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
     .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int
@@ -64,10 +68,25 @@ export const scatterplot3D = function(engine){
         new Vector3(1, 1, 1),
         100));
         
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    anu.createAxes('test', scene, {parent: container, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
-    chart.positionY(1.5)
-    camera.setTarget(CoT);
+  
+
+    //chart.positionY(1.5)
+
+    // let bounds = chart.boundingBox();
+    // let boundingMesh = new Mesh('mesh', scene);
+    // boundingMesh.setBoundingInfo(bounds);
+    // boundingMesh.showBoundingBox = true;
+    //camera.setTarget(container);
+
+    // container.run((d,n,i) => {
+    //   const { min, max } = n.getHierarchyBoundingVectors();
+    //   n.setBoundingInfo(new BoundingInfo(min, max));
+    // })
+
+    container.positionY(2)
+ 
 
     return scene;
   
