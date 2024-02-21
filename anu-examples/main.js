@@ -102,7 +102,7 @@ let scene = scenes[urlParams.get('example')](babylonEngine);
 const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 
-
+try {
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
 
 if (!defaultXRExperience.baseExperience) {
@@ -122,6 +122,9 @@ if (!defaultXRExperience.baseExperience) {
       });
       
     }
+}
+} catch {
+  console.warn('XR Not Supported');
 }
 
 //Render the scene we created
