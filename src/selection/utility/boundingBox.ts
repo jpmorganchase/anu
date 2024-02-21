@@ -18,12 +18,9 @@ export function boundingBox(this: Selection, exclude: string = ""): BoundingInfo
   this.selected.forEach((node, i) => {
     node.computeWorldMatrix(true);
     let meshes = (node.getChildMeshes().length > 0) ? node.getChildMeshes() : [node];
-    console.log(meshes)
-    //selectionMin = meshes[0].getBoundingInfo().boundingBox.minimumWorld;
-    //selectionMax = meshes[0].getBoundingInfo().boundingBox.maximumWorld;
     meshes.forEach((mesh, j) => {
-      mesh.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
-      if (mesh instanceof Mesh && !Tags.MatchesQuery(mesh, exclude)) {
+      mesh.computeWorldMatrix(true); //without this the bounding box is calculated at the mesh creation position...TODO investigate.
+      if (mesh instanceof Mesh && !Tags.MatchesQuery((Tags.HasTags(mesh)) ? Tags.GetTags(mesh) : '', exclude)) {
       let nodeMin = mesh.getBoundingInfo().boundingBox.minimumWorld;
       let nodeMax = mesh.getBoundingInfo().boundingBox.maximumWorld;
       selectionMin = Vector3.Minimize(selectionMin, nodeMin);

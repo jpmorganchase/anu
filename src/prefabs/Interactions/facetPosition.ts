@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior, FollowBehavior } from '@babylonjs/core';
 import { bind, Selection } from '../../index';
 
 
@@ -47,15 +47,17 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
 
 
 
-    // let boundingMesh = new Mesh("bounds", this.scene);
+    let boundingMesh = new Mesh("bounds", this.scene);
     
-    // boundingMesh.setBoundingInfo(bounds);
-    // boundingMesh.showBoundingBox = true;
+    boundingMesh.setBoundingInfo(bounds);
+    boundingMesh.showBoundingBox = true;
 
-    // console.log(bounds.boundingBox)
+    console.log(bounds.boundingBox)
+
+    boundingMesh.setParent(this.selected[0])
 
   
-    let grab = this.bind("capsule", {height: width, radius: radius})
+    let grab = bind("capsule", {height: width, radius: radius})
                     .name((d,n,i) => options.name ??= n.name + "_positionUI")
                     .position(position.addInPlace(offset))
                     .rotation(new Vector3(0,0, 1.57))
@@ -64,16 +66,29 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickDownTrigger,
                       () => {
+                        //boundingMesh.billboardMode = 0;
                         this.selected[i].addBehavior(behavior);
                       }
                   ))
                   .action((d,n,i) => new ExecuteCodeAction( 
                     ActionManager.OnPickOutTrigger,
                     () => {
-                    
+                      //boundingMesh.billboardMode = 2;
                       this.selected[i].removeBehavior(behavior);
                     }
-                ))
+                )).run((d,n,i) => (n as Mesh).setParent(boundingMesh))
+
+    //boundingMesh.billboardMode = 2;
+
+    console.log(this.selected[0])
+
+    // const followBehavior = new FollowBehavior();
+    // followBehavior.attach(grab.selected[0] as TransformNode);
+    // followBehavior.useFixedVerticalOffset = true;
+    // followBehavior.fixedVerticalOffset = 2
+    // followBehavior.
+
+    
 
     grab.addTags("exclude")
 
@@ -239,7 +254,7 @@ Object.keys(axis).forEach((key) => { if (axis[key] == true)  data.push({"axis": 
                     () => {
                       n.removeBehavior(behaviors[d.axis]);
                     }
-                ))
+                )).prop("billboardMode", 7)
             
               behaviors.x.onDragObservable.add((event)=>{
                 console.log("x", event.dragDistance);
