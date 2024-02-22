@@ -33,7 +33,7 @@ export const scatterplot3D = function(engine){
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
-  let container = anu.bind("container")
+  let container = anu.bind("container", {childObserver: true})
 
   container.prop("showBoundingBox", true);
   
@@ -85,7 +85,7 @@ export const scatterplot3D = function(engine){
     //   n.setBoundingInfo(new BoundingInfo(min, max));
     // })
 
-    container.positionY(2)
+    //container.positionY(2)
  
 
     return scene;

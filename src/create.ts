@@ -1,12 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node, BoundingInfo, Observable } from '@babylonjs/core';
+import { Mesh, MeshBuilder, TransformNode, Scene, Nullable, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions, Node, BoundingInfo, Observable, AbstractMesh } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
-import { Selection } from './selection';
-import { isEmpty, isEqual, update, xorWith } from 'lodash';
-
-
 
 interface StringByFunc {
   [key: string]: Function;
@@ -17,24 +13,47 @@ interface StringByAny {
 }
 
 function createCOT(name: string, options: object, scene: Scene) {
-  return new TransformNode(name);
+  return new TransformNode(name, scene);
 }
 
 function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
-  return CreateGreasedLine(name, options, {});
+  return CreateGreasedLine(name, options, {}, scene);
 }
 
-export const isArrayEqual = (x: any, y: any) => isEmpty(xorWith(x, y, isEqual));
+interface containerOptions {
+  calculateBounds?: boolean,
+  exclude?: Nullable<(abstractMesh: AbstractMesh) => boolean> | undefined,
+  childObserver?: boolean,
+}
 
-function createContainer(name: string, options: {}, scene: Scene){
+function createContainer(name: string, options: containerOptions, scene: Scene){
+  let calculateBounds = options.calculateBounds || true;
+  let exclude = options.exclude || undefined;
+  let childObserver = options.childObserver || false; 
+
   let container: Mesh = new Mesh(name, scene);
-  let { min, max } = container.getHierarchyBoundingVectors();
-  container.setBoundingInfo(new BoundingInfo(min, max));
-  container.onAfterWorldMatrixUpdateObservable.add((v) => {
-   container._updateBoundingInfo()
-  })
-  
 
+  if (calculateBounds){
+    let { min, max } = container.getHierarchyBoundingVectors(true, exclude);
+    container.setBoundingInfo(new BoundingInfo(min, max));
+  }
+  
+  if (childObserver){
+    container.onAfterWorldMatrixUpdateObservable.add(() => {
+        setTimeout(() => {
+            if ((container as any).detectReentrancy) {
+                return;
+            }
+            (container as any).detectReentrancy = true;
+            let { min, max } = container.getHierarchyBoundingVectors(true, exclude); //triggers observable causing infinite loop
+            container.setBoundingInfo(new BoundingInfo(min, max));
+            setTimeout(() => {
+              (container as any).detectReentrancy = false;
+            });
+        });
+    })
+  }
+  
   return container
 }
 
