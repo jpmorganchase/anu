@@ -4,8 +4,8 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import {NodeMaterialModes, LightBlock, GradientBlock, GradientBlockColorStep, RemapBlock, Vector2, AnimatedInputBlockTypes, NodeMaterial, InputBlock, NodeMaterialSystemValues, TransformBlock, VertexOutputBlock, Color4, FragmentOutputBlock, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder, Material} from '@babylonjs/core'; 
-import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map, interpolateBlues} from "d3";
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction } from '@babylonjs/core'; 
+import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 
 //import { Mesh } from 'anu';
 
@@ -32,7 +32,6 @@ export const scatterplot3D = function(engine){
   //This is a function that will create a color scale for our three types of flowers in our data
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
-
   
   //Create a transform node to use as the parent node for all our meshes
   let CoT = anu.create("cot", "cot");
@@ -64,9 +63,7 @@ export const scatterplot3D = function(engine){
         100));
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
-
-    chart.positionY(1.5)
-    camera.setTarget(CoT);
+ 
 
     return scene;
   
