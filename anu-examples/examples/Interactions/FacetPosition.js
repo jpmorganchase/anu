@@ -4,8 +4,8 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import {UtilityLayerRenderer, Angle, PlaneRotationGizmo, HemisphericLight, PointerDragBehavior, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, Mesh, ExecuteCodeAction, SixDofDragBehavior} from '@babylonjs/core'; 
-import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map, interpolateBlues} from "d3";
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction} from '@babylonjs/core'; 
+import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 
 //import { Mesh } from 'anu';
 
@@ -67,75 +67,7 @@ export const facetPosition = function(engine){
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
-   
 
-    let bounds = chart.boundingBox();
-
-    // let boundingMesh = new Mesh("bounds", scene);
-    
-    // boundingMesh.setBoundingInfo(bounds);
-    // boundingMesh.showBoundingBox = true;
-
-    // console.log(bounds.boundingBox)
-
-    // const drag = new SixDofDragBehavior();
-
-    // drag.faceCameraOnDragStart = true;
-    // drag.rotateAroundYOnly = true;
-
-    // let grab = chart.bind("capsule", {height: bounds.boundingBox.extendSize._x / 1.5, radius: 0.03})
-    //                 .rotation(new Vector3(0,0, 1.57))
-    //                 .positionY(bounds.boundingBox.minimum.y - 0.1)
-    //                 .positionZ(bounds.boundingBox.minimum.z)
-    //                 .action((d,n,i) => new ExecuteCodeAction( 
-    //                   ActionManager.OnPickDownTrigger,
-    //                   (d,n,i) => {
-    //                     chart.selected[0].addBehavior(drag);
-    //                   }
-    //               ))
-    //               .action((d,n,i) => new ExecuteCodeAction( 
-    //                 ActionManager.OnPickOutTrigger,
-    //                 (d,n,i) => {
-    //                   console.log("out")
-    //                   chart.selected[0].removeBehavior(drag);
-    //                 }
-    //             ))
-
-                    
-  //               const utilLayer = new UtilityLayerRenderer(scene);
-  //               console.log(UtilityLayerRenderer.DefaultKeepDepthUtilityLayer)
-  //               utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
-  //               var gizmo1 = new PlaneRotationGizmo(new Vector3(0,1,0), undefined, utilLayer)
-  //               gizmo1.updateScale = false;
-               
-  //   let rotate = anu.create("torus", "torus", {diameter: bounds.boundingBox.extendSize._x * 0.10, thickness: bounds.boundingBox.extendSize._x * 0.025}, {},  gizmo1.gizmoLayer.utilityLayerScene)
-                    
-  //                   //.positionY(bounds.boundingBox.minimum.y - 0.1)
-  //                   //.positionZ(bounds.boundingBox.minimum.z)
-  //                   //.positionX(-0.5)
-  
-
-  // gizmo1.attachedMesh = CoT;
-  // gizmo1.setCustomMesh(rotate)
-
-
-
-  // let rotate2 = chart.bind("torus", {diameter: bounds.boundingBox.extendSize._x * 0.08, thickness: bounds.boundingBox.extendSize._x * 0.025})
-  // .positionY(bounds.boundingBox.minimum.y - 0.1)
-  // .positionZ(bounds.boundingBox.minimum.z)
-  // .positionX(-0.5)
-  // .rotationX(1.57)
-
-  // let rotate3 = chart.bind("torus", {diameter: bounds.boundingBox.extendSize._x * 0.09, thickness: bounds.boundingBox.extendSize._x * 0.025})
-  // .positionY(bounds.boundingBox.minimum.y - 0.1)
-  // .positionZ(bounds.boundingBox.minimum.z)
-  // .positionX(-0.5)
-  // .rotationZ(1.57)
-
-  //chart.positionY(4)
-
-  //chart.positionUI();
-    //
     chart.positionUI();
     chart.scaleUI({minimum: 0.5, maximum: 2});
     chart.rotateUI();
@@ -143,9 +75,6 @@ export const facetPosition = function(engine){
     //chart.positionY(2)
     //camera.setTarget(CoT);
 
-   
-
-    
 
     return scene;
   
