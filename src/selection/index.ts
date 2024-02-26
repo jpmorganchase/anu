@@ -31,6 +31,7 @@ import { drawTextDT, scaleDT } from './property/dynamicTexture';
 import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
+import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
 
 /*
     The core class of anujs. All functions should return 
@@ -39,10 +40,10 @@ import { name, id, metadata } from './property/metadata';
     The selection class also exposes all of anus core functions. 
 */
 export class Selection {
-  selected: Node[];
+  selected: Node[] | TransformNode[] | Mesh[];
   scene?: Scene;
 
-  constructor(nodes: Node[], scene?: Scene) {
+  constructor(nodes: Node[] | TransformNode[] | Mesh[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
   }
@@ -95,4 +96,8 @@ export class Selection {
   public name = name;
   public id = id;
   public metadata = metadata;
+  public positionUI = positionUI;
+  public scaleUI = scaleUI;
+  public rotateUI = rotateUI;
+
 }

@@ -5,7 +5,7 @@ import { Mesh, Vector3, BoundingInfo, TransformNode, Tags, AbstractMesh } from '
 import { Selection } from '../index';
 
 /**
- * Calculates the cumalitive bounding box of the current selection.
+ * Calculates the cumulative bounding box of the current selection.
  *
  * @returns instance of BoundingInfo class, an object containing all bounding box values.
  */
