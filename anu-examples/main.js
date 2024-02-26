@@ -105,7 +105,7 @@ const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 env.ground.position = new Vector3(0,-2,0);
 
-
+try {
 var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
 
 if (!defaultXRExperience.baseExperience) {
@@ -126,6 +126,9 @@ if (!defaultXRExperience.baseExperience) {
       
     }
 }
+} catch {
+  console.warn('XR Not Supported');
+}
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
@@ -140,7 +143,7 @@ window.addEventListener("resize", function () {
 
 
 
-scene.debugLayer.show()
+scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I

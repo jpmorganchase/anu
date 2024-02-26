@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, Vector3, BoundingInfo, TransformNode, Tags } from '@babylonjs/core';
+import { Mesh, Vector3, BoundingInfo, TransformNode, Tags, AbstractMesh } from '@babylonjs/core';
 import { Selection } from '../index';
 
 /**
