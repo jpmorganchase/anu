@@ -99,41 +99,54 @@ const scenes = {
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
+
+let screenshot = urlParams.get('thumbnail') || false;
 //scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
 
 const env = scene.createDefaultEnvironment();
 env.setMainColor(Color3.FromHexString('#0e0e17'));
 env.ground.position = new Vector3(0,-2,0);
 
-try {
-var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
 
-if (!defaultXRExperience.baseExperience) {
-  console.log("No XR")
-  } else {
+if (screenshot == true){
+  console.log("screenshot")
+  scene.onReadyObservable.add(() => {
+    setTimeout(() => scene.dispose(), 1000)
+  });
+} else {
 
-    const featureManager = defaultXRExperience.baseExperience.featuresManager;
+  try {
+  var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
 
-    if (!featureManager) {
+  if (!defaultXRExperience.baseExperience) {
+    console.log("No XR")
+    } else {
 
-      console.log("No Feature Manager")
+      const featureManager = defaultXRExperience.baseExperience.featuresManager;
 
-  } else {
+      if (!featureManager) {
 
-      defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
-          xrInput: defaultXRExperience.input
-      });
-      
-    }
-}
-} catch {
-  console.warn('XR Not Supported');
+        console.log("No Feature Manager")
+
+    } else {
+
+        defaultXRExperience.baseExperience.featuresManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+            xrInput: defaultXRExperience.input
+        });
+        
+      }
+  }
+  } catch {
+    console.warn('XR Not Supported');
+  }
 }
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
   scene.render()
 })
+
+
 
 //Listen for window size changes and resize the scene accordingly 
 window.addEventListener("resize", function () {
@@ -143,7 +156,7 @@ window.addEventListener("resize", function () {
 
 
 
-scene.debugLayer.show();
+//scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I

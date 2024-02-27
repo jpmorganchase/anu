@@ -3,7 +3,7 @@
         <iframe id="inlineFrameExample"
             allow="xr-spatial-tracking; camera"
             title="Inline Frame Example"
-            :src="`/anu/examples.html?example=${example}`">
+            :src="`/anu/examples.html?example=${example}&thumbnail=1`">
         </iframe>
         <a :href=link style="position:absolute; top:0; left:0; display:inline-block; width:13vh; height:13vh; z-index:5;"></a>
         <span>{{ title }}</span>
