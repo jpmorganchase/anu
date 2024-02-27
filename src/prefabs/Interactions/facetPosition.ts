@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior, FollowBehavior, Tags } from '@babylonjs/core';
-import { bind, Selection, create } from '../../index';
+import { Vector3, Color3, StandardMaterial, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, BoundingInfo, TransformNode, PointerDragBehavior, Tags } from '@babylonjs/core';
+import { Selection, create } from '../../index';
 
 
 interface positionUIOptions {
@@ -161,7 +161,6 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
                   ))
             
     behavior.onDragObservable.add((event)=>{
-      console.log('event');
         let scaleFactor = -event.dragDistance
         let currentScale = (node as TransformNode).scaling
         let afterScale = currentScale.add(new Vector3(scaleFactor, scaleFactor, scaleFactor)) 
@@ -269,17 +268,14 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
                   ))
               
                 behaviors.x.onDragObservable.add((event)=>{
-                  console.log("x", event.dragDistance);
                   (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3(event.dragDistance, 0,0))
                 })
 
                 behaviors.y.onDragObservable.add((event)=>{
-                  console.log("y", event.dragDistance);
                   (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3(0, -event.dragDistance, 0))
                 })
 
                 behaviors.z.onDragObservable.add((event)=>{
-                  console.log("z", event.dragDistance);
                   (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3( 0, 0, -event.dragDistance))
                 })
               });
