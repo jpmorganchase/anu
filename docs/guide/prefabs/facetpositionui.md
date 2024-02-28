@@ -77,6 +77,6 @@ root.positionUI(options?: {})
 </div>
 
 ::: code-group
-<<< @/../anu-examples/examples/interactions/FacetPosition.js 
+<<< @/../anu-examples/examples/interactions/facetposition.js 
 :::
 
