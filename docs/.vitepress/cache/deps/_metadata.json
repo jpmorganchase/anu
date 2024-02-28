@@ -1,35 +1,13 @@
 {
-  "hash": "0f0d4fbc",
-  "browserHash": "799471ae",
+  "hash": "85cf1261",
+  "browserHash": "36a012d3",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "b17c9f1e",
-      "needsInterop": false
-    },
-    "@jpmorganchase/anu": {
-      "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
-      "file": "@jpmorganchase_anu.js",
-      "fileHash": "9d49f07a",
-      "needsInterop": false
-    },
-    "d3": {
-      "src": "../../../node_modules/d3/src/index.js",
-      "file": "d3.js",
-      "fileHash": "f0a26d8d",
-      "needsInterop": false
-    },
-    "@babylonjs/core": {
-      "src": "../../../node_modules/@babylonjs/core/index.js",
-      "file": "@babylonjs_core.js",
-      "fileHash": "9880a81b",
+      "fileHash": "79c29225",
       "needsInterop": false
     }
   },
-  "chunks": {
-    "chunk-NSXT4D2O": {
-      "file": "chunk-NSXT4D2O.js"
-    }
-  }
+  "chunks": {}
 }

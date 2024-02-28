@@ -3,7 +3,6 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import * as BABYLON from "@babylonjs/core";
 import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking, Vector3} from '@babylonjs/core';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
