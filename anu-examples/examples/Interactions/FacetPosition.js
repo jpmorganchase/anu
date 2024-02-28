@@ -50,6 +50,7 @@ export const facetPosition = function(engine){
 
 
     return scene;
+    
 };
   
 
