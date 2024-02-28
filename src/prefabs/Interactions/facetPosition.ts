@@ -254,18 +254,7 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
                     .material(material)
                     .prop('visibility', visibility)
                     .addTags("exclude")
-                    .action((d,n,i) => new ExecuteCodeAction( 
-                      ActionManager.OnPickDownTrigger,
-                      () => {
-                        node.addBehavior(behaviors[d.axis]);
-                      }
-                    ))
-                    .action((d,n,i) => new ExecuteCodeAction( 
-                      ActionManager.OnPickOutTrigger,
-                      () => {
-                        node.removeBehavior(behaviors[d.axis]);
-                      }
-                  ))
+                    .run((d,n,i) => n.addBehavior(behaviors[d.axis]))
               
                 behaviors.x.onDragObservable.add((event)=>{
                   (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3(event.dragDistance, 0,0))
