@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Color3, StandardMaterial, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, BoundingInfo, TransformNode, PointerDragBehavior, Tags } from '@babylonjs/core';
+import { Vector3, Color3, StandardMaterial, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, BoundingInfo, TransformNode, PointerDragBehavior, Tags, Quaternion, Space } from '@babylonjs/core';
 import { Selection, create } from '../../index';
 
 
@@ -48,6 +48,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
         behavior = new SixDofDragBehavior();
         behavior.faceCameraOnDragStart = true;
         behavior.rotateAroundYOnly = true;
+        behavior.zDragFactor = 100;
       } else {
         behavior = options.behavior;
       }
@@ -57,6 +58,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
     
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
+    boundingMesh.isPickable = false;
     //boundingMesh.showBoundingBox = true;
     boundingMesh.billboardMode = (billboard) ? 2 : 0;
 
@@ -71,14 +73,14 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickDownTrigger,
                       () => {
-                        //(billboard) ? boundingMesh.billboardMode = 0 : null;
+                        //(node  as TransformNode).rotationQuaternion = null;
                          node.addBehavior(behavior);
                       }
                     ))
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickOutTrigger,
                       () => {
-                        //(billboard) ? boundingMesh.billboardMode = 2 : null;
+                        //(node  as TransformNode).rotationQuaternion = null;
                         node.removeBehavior(behavior);
                       }
                   ))
@@ -135,6 +137,7 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
     
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
+    boundingMesh.isPickable = false;
     //boundingMesh.showBoundingBox = true;
     boundingMesh.billboardMode = (billboard) ? 2 : 0;
 
@@ -147,16 +150,16 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
                     .material(material)
                     .prop('visibility', visibility)
                     .addTags("exclude")
-                    .action(() => new ExecuteCodeAction( 
+                    .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickDownTrigger,
                       () => {
-                        node.addBehavior(behavior);
+                        n.addBehavior(behavior);
                       }
                     ))
-                    .action(() => new ExecuteCodeAction( 
+                    .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickOutTrigger,
                       () => {
-                        node.removeBehavior(behavior);
+                        n.removeBehavior(behavior);
                       }
                   ))
             
@@ -232,6 +235,7 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
     
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
+    boundingMesh.isPickable = false;
     //boundingMesh.showBoundingBox = true;
     boundingMesh.billboardMode = (billboard) ? 2 : 0;
 
@@ -254,18 +258,29 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
                     .material(material)
                     .prop('visibility', visibility)
                     .addTags("exclude")
-                    .run((d,n,i) => n.addBehavior(behaviors[d.axis]))
+                    .action((d,n,i) => new ExecuteCodeAction( 
+                      ActionManager.OnPickDownTrigger,
+                      () => {
+                        n.addBehavior(behaviors[d.axis]);
+                      }
+                    ))
+                    .action((d,n,i) => new ExecuteCodeAction( 
+                      ActionManager.OnPickOutTrigger,
+                      () => {
+                        n.removeBehavior(behaviors[d.axis]);
+                      }
+                  ))
               
                 behaviors.x.onDragObservable.add((event)=>{
-                  (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3(event.dragDistance, 0,0))
+                  (node as TransformNode).rotate(new Vector3(1, 0, 0), event.dragDistance, Space.LOCAL);
                 })
 
                 behaviors.y.onDragObservable.add((event)=>{
-                  (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3(0, -event.dragDistance, 0))
+                  (node as TransformNode).rotate(new Vector3(0, -1, 0), event.dragDistance, Space.LOCAL);
                 })
 
                 behaviors.z.onDragObservable.add((event)=>{
-                  (node  as TransformNode).rotation = (node as TransformNode).rotation.add(new Vector3( 0, 0, -event.dragDistance))
+                  (node as TransformNode).rotate(new Vector3(0, 0, -1), event.dragDistance, Space.LOCAL);
                 })
               });
             
