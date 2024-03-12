@@ -1,6 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright : J.P. Morgan Chase & Co.
-
 import * as anu from '@jpmorganchase/anu' 
 import iris from '../../data/iris.json' assert {type: 'json'}; 
 import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction} from '@babylonjs/core'; 
@@ -11,7 +8,7 @@ export const facetPosition = function(engine){
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(2,2,-3.5);
+  camera.position = new Vector3(2,0,-5.5);
 
   var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice(); 
   var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice(); 

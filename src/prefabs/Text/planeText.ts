@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh, Texture, Engine, EngineStore } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh } from '@babylonjs/core';
 import fnt from "../../assets/roboto-regular.json";
 import png from "../../assets/roboto-regular.png";
 import { createTextMesh } from "babylon-msdf-text";

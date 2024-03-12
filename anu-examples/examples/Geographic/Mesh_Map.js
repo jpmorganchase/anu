@@ -1,6 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright : J.P. Morgan Chase & Co.
-
 import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import data from 'anu/../../data/airports.csv'

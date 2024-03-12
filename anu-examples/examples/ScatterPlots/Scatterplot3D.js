@@ -45,22 +45,8 @@ export const scatterplot3D = function(engine){
     .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
     .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
     .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int
-    .material((d,m,i) => scaleC(d.species))
-    //.diffuseColor((d) => scaleC(d.species)) //change the diffuse color of our material using our color scale function.
-    //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped. 
-    .action((d,n,i) => new InterpolateValueAction( 
-          ActionManager.OnPointerOverTrigger,
-          n,
-          'scaling',
-          new Vector3(1.2, 1.2, 1.2),
-          100
-      ))
-      .action((d,n,i) => new InterpolateValueAction(
-        ActionManager.OnPointerOutTrigger,
-        n,
-        'scaling',
-        new Vector3(1, 1, 1),
-        100));
+    .material((d) => scaleC(d.species))
+   
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
  

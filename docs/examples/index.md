@@ -42,6 +42,20 @@ layout: page
 </div>
 </div>
 
+<div class='section'>
+    <h2>Interaction and UI</h2>
+<hr>
+<div class="cards">
+
+<card title="Pointer Hover" example="hover" link="/anu/examples/hover"></card>
+
+<card title="Details On Demand" example="details" link="/anu/examples/details"></card>
+
+<card title="Facet and Position" example="facetposition" link="/anu/examples/facet_position"></card>
+  
+</div>
+</div>
+
 </div>
 
 <style>

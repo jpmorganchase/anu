@@ -19,7 +19,7 @@ export default defineConfig({
     outDir: '../docs/public',
   },
   rollupOptions: {
-    external: ["@babylonjs/core"],
+    external: ["@babylonjs/core", "@babylonjs/gui"],
   }, 
   plugins: [
     dsv(),

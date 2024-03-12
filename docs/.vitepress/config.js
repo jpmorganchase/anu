@@ -112,6 +112,15 @@ export default defineConfig({
           { text: 'Texture Globe', link: './texture_globe' },
           { text: 'Mesh Map', link: './mesh_map' },
         ]
+      },
+      {
+        text: 'Interactions and UI',
+        collapsed: false,
+        items: [
+          { text: 'Pointer Hover', link: './hover' },
+          { text: 'Details on Demand', link: './details' },
+          { text: 'Facet and Position', link: './facet_position' },
+        ]
       }
     ]
   },

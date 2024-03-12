@@ -41,9 +41,8 @@ import { scatterPlot3DStep5 } from './examples/CreateAVis/step5';
 import { scatterPlot3DStep6 } from './examples/CreateAVis/step6';
 import { meshMap } from './examples/Geographic/Mesh_Map';
 import { facetPosition } from './examples/Interactions/FacetPosition';
-
-
-
+import { hover } from './examples/Interactions/Hover';
+import { details } from './examples/Interactions/Details';
 
 
 const queryString = window.location.search;
@@ -94,7 +93,9 @@ const scenes = {
   'axesTest': axesTest,
   'text': text,
   'meshMap': meshMap,
-  'facetposition': facetPosition
+  'facetposition': facetPosition,
+  'hover': hover,
+  'details': details
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -145,15 +146,10 @@ babylonEngine.runRenderLoop(() => {
   scene.render()
 })
 
-
-
 //Listen for window size changes and resize the scene accordingly 
 window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
-
-
-
 
 //scene.debugLayer.show();
 // hide/show the Inspector
