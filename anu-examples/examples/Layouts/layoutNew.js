@@ -29,25 +29,37 @@ export function layoutNew(babylonEngine){
     camera.attachControl(true)
     camera.position = new Vector3(10.5,7,-10.5);
 
-    let chart1 = makechart(scene, 1);
-    let chart2 = makechart(scene, 2);
-    let chart3 = makechart(scene, 3);
-    let chart4 = make3Dchart(scene, 4);
-    let chart5 = makechart(scene, 5);
-    let chart6 = make3Dchart(scene, 6);
-    let chart7 = makechart(scene, 7);
-    let chart8 = makechart(scene, 8);
-    let chart9 = make3Dchart(scene, 9);
-    let chart10 = makechart(scene, 10);
-    let chart11 = make3Dchart(scene, 11);
-    let chart12 = makechart(scene, 12);
-    let chart13 = makechart(scene, 13);
-    let chart14 = make3Dchart(scene, 14);
-    let chart15 = makechart(scene, 15);
+    let allcharts = [];
+
+    for (let i = 0; i < 15; i++) {
+        let n = Math.random();
+        if(n > 0.5){
+            let chart = makechart(scene, Math.random() * 1000);
+            allcharts.push(chart);
+        } else {
+            let chart = make3Dchart(scene, Math.random() * 1000);
+            allcharts.push(chart);
+        }
+    }
+    // let chart1 = makechart(scene, 1);
+    // let chart2 = makechart(scene, 2);
+    // let chart3 = makechart(scene, 3);
+    // let chart4 = make3Dchart(scene, 4);
+    // let chart5 = makechart(scene, 5);
+    // let chart6 = make3Dchart(scene, 6);
+    // let chart7 = makechart(scene, 7);
+    // let chart8 = makechart(scene, 8);
+    // let chart9 = make3Dchart(scene, 9);
+    // let chart10 = makechart(scene, 10);
+    // let chart11 = make3Dchart(scene, 11);
+    // let chart12 = makechart(scene, 12);
+    // let chart13 = makechart(scene, 13);
+    // let chart14 = make3Dchart(scene, 14);
+    // let chart15 = makechart(scene, 15);
     
     let charts = anu.selectName('cot', scene);
 
-    //console.log(charts);
+    console.log(charts);
     charts.scalingX((d) => Math.max(Math.random(), .5) * 2)
     charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
     charts.scalingZ((d) => Math.max(Math.random(), .4) * 2)
@@ -102,6 +114,29 @@ export function layoutNew(babylonEngine){
         return Math.floor(value);
     }
 
+    var addChart = function() {
+        let chartnew = make3Dchart(scene, 0);
+        chartnew.scalingX((d) => Math.max(Math.random(), .5) * 2)
+        chartnew.scalingY((d) => Math.max(Math.random(), .5) * 2)
+        chartnew.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+        allcharts.push(chartnew);
+        charts = anu.selectName('cot', scene);
+        layout.options.selection = charts;
+        layout.update();    
+    }
+
+    var removeChart = function() {
+        if(allcharts.length == 0)
+            return;
+
+        allcharts[allcharts.length - 1].dispose();
+        allcharts.pop();
+        charts = anu.selectName('cot', scene);
+        layout.options.selection = charts;
+        //let layout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, radius: 20}, scene)
+        layout.update();    
+    }
+
     var setLayout = function(val) {   
 		switch(val) {
             case 0: 
@@ -151,13 +186,43 @@ export function layoutNew(babylonEngine){
     selectBox.fontFamily = "times new roman";
     selectBox.fontSize = "20pt";
 
+    var rect2 = gui.Button.CreateSimpleButton("button2", "add chart");
+    rect2.width = 0.2; // 0.2 = 20%
+    rect2.height = "40px";
+    rect2.cornerRadius = 20;
+    rect2.color = "white";
+    rect2.thickness = 4;
+    rect2.background = "blue";
+
+    rect2.top = 200; //200 px
+    rect2.left = "10%";
+    rect2.onPointerClickObservable.add(() => {
+        addChart();
+    });
+
+    var rect1 = gui.Button.CreateSimpleButton("button2", "remove chart");
+    rect1.width = 0.2; // 0.2 = 20%
+    rect1.height = "40px";
+    rect1.cornerRadius = 20;
+    rect1.color = "white";
+    rect1.thickness = 4;
+    rect1.background = "blue";
+
+    rect1.top = 250; //200 px
+    rect1.left = "10%";
+    rect1.onPointerClickObservable.add(() => {
+        removeChart();
+    });
+    advancedTexture.addControl(rect1);
+    advancedTexture.addControl(rect2);
+
     advancedTexture.addControl(selectBox);
 
     return scene;
 }
 
 function makechart(scene, id){
-   
+         
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
    
     //Get unique values for our categorical and ordinal scales
@@ -205,8 +270,9 @@ function makechart(scene, id){
 }
 
 function make3Dchart(scene, id){
-
+   
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+   
     //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];
     const cylinders = [...new Set(cars.map(item => item.Cylinders))].sort().reverse();
