@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { GreasedLineMeshBuilderOptions, TransformNode, Vector3 } from '@babylonjs/core';
+import { Texture, TransformNode } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { Selection } from '../../selection';
-import { shapeAlt } from './shape';
 import { labelAlt } from './label';
 import { backgroundAlt } from './background';
 import { grid } from './grid';
-import { select } from '../../select';
-import { size } from 'lodash-es';
 import { domain } from './domain';
+import png from '../../assets/roboto-regular.png';
 
 interface AxisOptions {
   parent?: Selection;
@@ -33,6 +31,7 @@ interface AxisOptions {
   labelProperties?: any;
   labelTicks?: {x?: any, y?: any, z?: any};
   labelFormat?: {x? : any, y?: any, z?: any};
+  atlas?: Texture
 }
 
 export class Axes {
@@ -45,17 +44,9 @@ export class Axes {
   background: {x?: Selection, y?: Selection, z?: Selection};;
   grid: Selection;
   label: {x?: Selection, y?: Selection, z?: Selection};
-  //tick: Selection;
-
-  // background: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
-  // shape: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
-  // label: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
-  // majorTick: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
-  // minorTick: {'x': Selection | null, 'y': Selection | null, 'z': Selection | null} | null;
 
   constructor(name: string, scene: Scene, options: AxisOptions = {}) {
     this.name = name;
-    //this.selection = selection;
     this.options = options;
     this.scene = scene;
     this.CoT = this.setCoT();
@@ -64,7 +55,6 @@ export class Axes {
     this.background = this.options.background ? this.setBackground() : {};
     this.grid = this.options.grid ? this.setGrid() : new Selection([], scene); 
     this.label = this.options.label ? this.setLabel() : {};
-    //this.tick = new Selection([], scene);
   }
 
   private setCoT(): Selection {
@@ -130,10 +120,6 @@ export class Axes {
   private setBackground = backgroundAlt;
   private setGrid = grid;
   private setLabel = labelAlt;
-  // public shape = shapeAlt;
-  // public background = backgroundAlt;
-  // public ticks = labelAlt;
-  // public grid = tickAlt;
 }
 
 
@@ -157,7 +143,8 @@ export function createAxes(name: string, scene: Scene, options: AxisOptions){
     labelOptions: options.labelOptions || {},
     labelProperties: options.labelProperties || {},
     labelTicks: options.labelTicks || {},
-    labelFormat: options.labelFormat || {}
+    labelFormat: options.labelFormat || {},
+    atlas: options.atlas || new Texture(png, scene)
   }
 
   let axes = new Axes(name, scene, Options)
