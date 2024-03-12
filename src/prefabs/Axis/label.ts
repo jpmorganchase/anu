@@ -45,9 +45,9 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.x != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier, atlas: this.options.atlas};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier, atlas: this.options.atlas};
     }
 
     let default_properties = { };
@@ -89,9 +89,9 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.y != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
     }
 
     let default_properties = { };
@@ -133,9 +133,9 @@ export function labelAlt(
 
     let default_options;
     if (this.options.labelFormat?.z != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.z(d.text), size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => this.options.labelFormat?.z(d.text), size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier};
+      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
     }
 
     let default_properties = {'rotation.y': - Math.PI / 2};
