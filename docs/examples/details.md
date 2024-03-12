@@ -28,7 +28,7 @@ Example demonstrating how to use the .action() method to add [Babylon pointer ac
 </style>
 
 ::: code-group
-<<< @/../anu-examples/examples/interactions/Details.js 
+<<< @/../anu-examples/examples/Interactions/Details.js 
 
 <<< @/../anu-examples/data/cars.json
 :::
