@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as t,O as n}from"./chunks/framework.ccd7224a.js";const b=JSON.parse('{"title":"Anu","description":"","frontmatter":{},"headers":[],"relativePath":"api/README.md","filePath":"api/README.md"}'),s={name:"api/README.md"},i=n("",22),o=[i];function l(r,p,c,u,h,d){return e(),t("div",null,o)}const g=a(s,[["render",l]]);export{b as __pageData,g as default};
