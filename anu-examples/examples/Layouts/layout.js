@@ -2,31 +2,23 @@ import cars from '../../data/cars.json' assert {type: 'json'};
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 
 import { HemisphericLight, 
-        Mesh,
         Vector2,
          Vector3,
          Scene,
          ArcRotateCamera, 
          TransformNode, 
          StandardMaterial, 
-         Color3,
-         KeyboardEventTypes,
-         BoundingInfo,
-         Animation,
-         BezierCurveEase,
-         PointerDragBehavior
+         Color3
         } from '@babylonjs/core';
+// clean the import only the needed ones
 import * as d3 from 'd3';
 import * as anu from '@jpmorganchase/anu';
-import { assign, update } from 'lodash-es';
 import * as gui from '@babylonjs/gui'
 
 
 export function layout(babylonEngine){
     const scene = new Scene(babylonEngine)
-    new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
-    new HemisphericLight('light1', new Vector3(10, 0, 0), scene)
-    new HemisphericLight('light1', new Vector3(0, 0, 10), scene)
+    new HemisphericLight('light1', new Vector3(0, 1, 0), scene)
 
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.attachControl(true)
@@ -122,6 +114,7 @@ export function layout(babylonEngine){
         }
 	}
 
+    //Code for making the UIs to change the layout
     var layoutGroup = new gui.RadioGroup("Layout");
 	layoutGroup.addRadio("Plane", setLayout);
     layoutGroup.addRadio("Cylinder", setLayout, true);

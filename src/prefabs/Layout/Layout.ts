@@ -2,7 +2,7 @@
 //planeLayout.Update({options})
 //planeLayout.Transform({options})
 import { Selection } from "../../selection";
-import { BoundingInfo, Scene, Vector2, Vector3, Vector4, Mesh, Animation, BezierCurveEase, TransformNode, Quaternion } from "@babylonjs/core";
+import { BoundingInfo, Scene, Vector2, Vector3, Mesh, Animation, BezierCurveEase, TransformNode } from "@babylonjs/core";
 
 interface LayoutOptions {
     selection: Selection,
@@ -19,10 +19,11 @@ export class Layout{
     scene: Scene;
     currentLayout: Number = 0;
     root: Mesh;
-        
+    
     constructor(name: string, options: LayoutOptions, scene: Scene) {
         this.name = name;
         this.options = options;
+        //scene is required because of animations
         this.scene = scene;
         this.root = new Mesh(this.name, this.scene);
     }
