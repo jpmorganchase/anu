@@ -14,7 +14,14 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ["@babylonjs/core"],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          "@babylonjs/core": '@babylonjs/core',
+        },
     },
+  },
   },
   plugins: [dts()],
 })
