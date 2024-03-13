@@ -12,11 +12,11 @@ export function meshMap(babylonEngine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(0, 2.5, -1)
+  camera.position = new Vector3(0, 2.5, -2)
 
 
 
-  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.05, projection: d3.geoAlbers().reflectY(true), size: [1,1], simplification: 0.00001});
+  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.05, projection: d3.geoAlbers().reflectY(true), size: [2,2], simplification: 0.00001});
 
 
   let projection = map.projection;
@@ -26,11 +26,13 @@ export function meshMap(babylonEngine){
 
   let colorScale = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
 
-  states.material((d) => colorScale(d.NAME));
+  states.material((d) => colorScale(d.NAME))
+        .prop("isPickable", false); //complex geometry has performance impact when pickable 
+                                    //if you need to select it wrap it in a empty mesh with bounding box set
 
   let mapCot = anu.selectName('meshMapCOT', scene);
 
-  let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.002})
+  let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.003})
     rootSphere.isVisible = false;
     rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
@@ -40,8 +42,9 @@ export function meshMap(babylonEngine){
     .positionZ((d) => projection([d.longitude, d.latitude])[1])
     .setInstancedBuffer("color", new Color4(0,0,0,1))
 
-  mapCot.position(new Vector3(0,0.5,-0.5))
+  mapCot.position(new Vector3(0,1,-0.5))
 
+  camera.setTarget(mapCot.selected[0]);
 
   return scene;
 }
