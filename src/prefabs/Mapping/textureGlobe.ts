@@ -5,7 +5,7 @@ import 'ol/ol.css';
 import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
-import { OSM, TileDebug } from 'ol/source';
+import { OSM } from 'ol/source';
 import {
   MeshBuilder,
   Color3,

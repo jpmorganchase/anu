@@ -15,7 +15,7 @@ interface positionUIOptions {
     diffuseColor?: Color3 | Color4;
     visibility?: number;
     behavior?: SixDofDragBehavior;
-    billboard?: boolean;
+    billboard?: number;
 }
 
 /**
@@ -34,7 +34,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
       let radius = options.radius || width * 0.05;
       let position = options.position || new Vector3(0, -bounds.boundingBox.extendSize.y, -Math.hypot(bounds.boundingBox.extendSize.x, bounds.boundingBox.extendSize.z)); 
       let offset = options.offset || new Vector3(0, -radius * 2.5 ,0)
-      let billboard = options.billboard || true;
+      let billboard = options.billboard || 0;
       let material: any;
       if (options.material === undefined){
           material = new StandardMaterial('PositionUIMat', this.scene);
@@ -59,8 +59,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
     boundingMesh.isPickable = false;
-    //boundingMesh.showBoundingBox = true;
-    boundingMesh.billboardMode = (billboard) ? 2 : 0;
+    boundingMesh.billboardMode = billboard;
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
 
@@ -104,7 +103,7 @@ interface scaleUIOptions {
   material?: any;
   diffuseColor?: Color3 | Color4;
   visibility?: number;
-  billboard?: boolean;
+  billboard?: number;
   behavior?: PointerDragBehavior;
   minimum?: number;
   maximum?: number;
@@ -118,7 +117,7 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
     let diameter = options.diameter ||  ((bounds.boundingBox.extendSize.x * 0.5) * 0.05) * 2;
     let position = options.position || new Vector3(0, -bounds.boundingBox.extendSize.y, -Math.hypot(bounds.boundingBox.extendSize.x, bounds.boundingBox.extendSize.z)); 
     let offset = options.offset || new Vector3((bounds.boundingBox.extendSize.x * 0.5) * 1.5 / 2, (-diameter / 2) * 2.5, 0)
-    let billboard = options.billboard || true;
+    let billboard = options.billboard || 2;
     let material: any;
     if (options.material === undefined){
         material = new StandardMaterial('PositionUIMat', this.scene);
@@ -142,8 +141,7 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
     boundingMesh.isPickable = false;
-    //boundingMesh.showBoundingBox = true;
-    boundingMesh.billboardMode = (billboard) ? 2 : 0;
+    boundingMesh.billboardMode = billboard;
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
 
@@ -203,7 +201,7 @@ interface rotateUIOptions {
   material?: any;
   diffuseColor?: Color3 | Color4;
   visibility?: number;
-  billboard?: boolean;
+  billboard?: number;
   //behavior?: {[key: string]: PointerDragBehavior};
 }
 
@@ -212,7 +210,7 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
     let { min, max } = node.getHierarchyBoundingVectors(true, (child) => !Tags.MatchesQuery(child, 'exclude'));
     let bounds = new BoundingInfo(min, max);
     let name = options.name || node.name + "ScaleUI"
-    let billboard = options.billboard || true;
+    let billboard = options.billboard || 0;
     let axis = options.axis|| {x: true, y: true, z: true};
     let diameter = options.diameter ||  ((bounds.boundingBox.extendSize.x * 0.5) * 0.05) * 2;
     let thickness = options.thickness || diameter / 2;
@@ -248,7 +246,7 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
     boundingMesh.setBoundingInfo(bounds);
     boundingMesh.isPickable = false;
     //boundingMesh.showBoundingBox = true;
-    boundingMesh.billboardMode = (billboard) ? 2 : 0;
+    boundingMesh.billboardMode = billboard
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
 

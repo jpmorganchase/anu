@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Mesh, Color3, StandardMaterial, TransformNode } from '@babylonjs/core';
+import { Vector3, Color3, StandardMaterial } from '@babylonjs/core';
 import { assign } from 'lodash-es';
 import { Axes } from './Axis';
 

@@ -2,27 +2,27 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Vector3, Scene,  MeshBuilder, Mesh, TransformNode, Nullable, Node} from '@babylonjs/core';
-import * as d3 from 'd3';
+import { GeoGeometryObjects, GeoProjection, geoAlbers, geoIdentity } from 'd3-geo';
 import * as topojsonClient from "topojson-client";
 import * as topojsonSimplify from "topojson-simplify";
 import * as topojsonServer from "topojson-server";
 import earcut from "earcut";
-import * as d3Geo from 'd3-geo-projection';
+import { geoProject } from "d3-geo-projection";
 import { Selection } from '../../selection';
 
 export class meshMap {
   name: string;
   scene?: Scene;
   size: [number, number];
-  geoJson: d3.GeoGeometryObjects;
-  projection: d3.GeoProjection;
+  geoJson: GeoGeometryObjects;
+  projection: GeoProjection;
   transform: [number, number];
   simplification: number;
   cot: Nullable<Node>;
   selection?: Selection;
   depth?: number;
 
-  constructor(name: string, geoJson: d3.GeoGeometryObjects, projection: d3.GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, cot: Nullable<Node>, scene?: Scene) {
+  constructor(name: string, geoJson: GeoGeometryObjects, projection: GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, cot: Nullable<Node>, scene?: Scene) {
     this.name = name;
     this.scene = scene;
     this.geoJson = geoJson;
@@ -37,8 +37,8 @@ export class meshMap {
 
   createMap(): Selection{
 
-    let preProjection = d3Geo.geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform));
-    let geoProjection = d3Geo.geoProject(preProjection, d3.geoIdentity());
+    let preProjection = geoProject(this.geoJson, this.projection.fitSize(this.size, this.geoJson).translate(this.transform));
+    let geoProjection = geoProject(preProjection, geoIdentity());
     let topoJson = topojsonServer.topology({ features: geoProjection });
     let preSimpleTopoJson = topojsonSimplify.presimplify(topoJson as any);
     let simpleTopojson = topojsonSimplify.simplify(preSimpleTopoJson, this.simplification);
@@ -86,8 +86,8 @@ export class meshMap {
 export function createMeshMap(
   name: string,
   options: {
-    geoJson: d3.GeoGeometryObjects;
-    projection?: d3.GeoProjection;
+    geoJson: GeoGeometryObjects;
+    projection?: GeoProjection;
     size?: [number, number];
     transform?: [number, number];
     simplification?: number;
@@ -98,7 +98,7 @@ export function createMeshMap(
 ) {
 
     const geoJson = options.geoJson;
-    const projection = options.projection || d3.geoAlbers();
+    const projection = options.projection || geoAlbers();
     const size = options.size || [10,10];
     const transform = options.transform || [0,0];
     const simplification = options.simplification || 0;

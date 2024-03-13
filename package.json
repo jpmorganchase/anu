@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.0.4",
+  "version": "0.0.41",
   "description": "",
   "type": "module",
   "files": [
@@ -54,8 +54,9 @@
     "@babylonjs/core": "^6.42.0",
     "babylon-msdf-text": "^0.0.4",
     "chroma-js": "^2.4.2",
-    "d3": "^7.8.5",
+    "d3-geo": "^3.1.1",
     "d3-geo-projection": "^4.0.0",
+    "d3-scale": "^4.0.2",
     "earcut": "^2.2.4",
     "lodash-es": "^4.17.21",
     "ol": "^7.3.0",

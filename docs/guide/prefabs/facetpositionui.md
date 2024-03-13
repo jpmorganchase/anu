@@ -32,7 +32,7 @@ root.positionUI(options?: {})
 | diffuseColor | (Color3 | Color4) the diffuse color of the material if not defined | White |
 | visibility | (number) the visibility of the capsule 0-1 | 1 |
 | behavior | (SixDofDragBehavior) the behavior attached to the parent node | SixDofDragBehavior forceCameraOnDragStart=true rotateAroundYOnly=true |
-| billboard | (boolean) whether or not to turn billboard mode for the y axis of the UI parent node | true |
+| billboard | (number) the billboard mode setting for the parent mesh | 0 |
 
 ### Rotation UI
 
@@ -47,7 +47,7 @@ root.positionUI(options?: {})
 | material | (Material) the material of the torus mesh | StandardMaterial |
 | diffuseColor | (Color3 | Color4) the diffuse color of the material if not defined | White |
 | visibility | (number) the visibility of the torus 0-1 | 1 |
-| billboard | (boolean) whether or not to turn billboard mode for the y axis of the UI parent node | true |
+| billboard | (number) the billboard mode setting for the parent mesh | 0 |
 
 ### Scale UI
 
@@ -61,7 +61,7 @@ root.positionUI(options?: {})
 | diffuseColor | (Color3 | Color4) the diffuse color of the material if not defined | White |
 | visibility | (number) the visibility of the sphere 0-1 | 1 |
 | behavior | (PointerDragBehavior) the behavior attached to the parent node | PointerDragBehavior dragAxis (0,1,0) moveAttached=false |
-| billboard | (boolean) whether or not to turn billboard mode for the y axis of the UI parent node | true |
+| billboard | (number) the billboard mode setting for the parent mesh | 0 |
 | minimum | (number) minimum scale factor | infinity |
 | maximum | (number) maximum scale factor | infinity |
 

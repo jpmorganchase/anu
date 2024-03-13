@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Mesh, Color3, StandardMaterial, TransformNode, CreateGreasedLine, GreasedLineMeshBuilderOptions, GreasedLineMaterialBuilderOptions, GreasedLineMeshMaterialType } from '@babylonjs/core';
+import { Vector3, Color3, CreateGreasedLine, GreasedLineMeshBuilderOptions, GreasedLineMaterialBuilderOptions } from '@babylonjs/core';
 import { assign } from 'lodash-es';
 import { Axes } from './Axis';
 import { Selection } from '../../selection';
-import { create } from '../../create';
-import { material } from '../../selection/property/material';
 
 export function domain(
   this: Axes

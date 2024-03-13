@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
@@ -19,7 +19,6 @@ import {
 } from '@babylonjs/core';
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
-import TileSource from 'ol/source/Tile';
 
 export class Map2D {
   name: string;
