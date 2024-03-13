@@ -15,7 +15,7 @@
     "@babylonjs/core": "^6.46.0",
     "@babylonjs/gui": "^6.46.0",
     "@babylonjs/inspector": "^6.12.3",
-    "@jpmorganchase/anu": "^0.0.39",
+    "@jpmorganchase/anu": "^0.0.4",
     "d3": "^7.6.1",
     "simplify-3d": "^1.0.0",
     "topojson-simplify": "^3.0.3"
