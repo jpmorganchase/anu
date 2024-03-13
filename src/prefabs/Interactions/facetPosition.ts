@@ -117,7 +117,7 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
     let diameter = options.diameter ||  ((bounds.boundingBox.extendSize.x * 0.5) * 0.05) * 2;
     let position = options.position || new Vector3(0, -bounds.boundingBox.extendSize.y, -Math.hypot(bounds.boundingBox.extendSize.x, bounds.boundingBox.extendSize.z)); 
     let offset = options.offset || new Vector3((bounds.boundingBox.extendSize.x * 0.5) * 1.5 / 2, (-diameter / 2) * 2.5, 0)
-    let billboard = options.billboard || 2;
+    let billboard = options.billboard || 0;
     let material: any;
     if (options.material === undefined){
         material = new StandardMaterial('PositionUIMat', this.scene);
@@ -245,7 +245,6 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
     boundingMesh.setParent(node);
     boundingMesh.setBoundingInfo(bounds);
     boundingMesh.isPickable = false;
-    //boundingMesh.showBoundingBox = true;
     boundingMesh.billboardMode = billboard
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
