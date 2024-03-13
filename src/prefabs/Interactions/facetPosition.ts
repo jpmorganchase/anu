@@ -73,17 +73,21 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickDownTrigger,
                       () => {
-                        //(node  as TransformNode).rotationQuaternion = null;
                          node.addBehavior(behavior);
                       }
                     ))
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickOutTrigger,
                       () => {
-                        //(node  as TransformNode).rotationQuaternion = null;
                         node.removeBehavior(behavior);
                       }
-                  ))
+                    ))
+                    .action((d,n,i) => new ExecuteCodeAction( 
+                      ActionManager.OnPickUpTrigger,
+                      () => {
+                        node.removeBehavior(behavior);
+                      }
+                    ))
 
                 grab.addTags("exclude")
 
@@ -162,6 +166,13 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
                         n.removeBehavior(behavior);
                       }
                   ))
+                  .action((d,n,i) => new ExecuteCodeAction( 
+                    ActionManager.OnPickUpTrigger,
+                    () => {
+                      n.removeBehavior(behavior);
+                    }
+                  ))
+
             
     behavior.onDragObservable.add((event)=>{
         let scaleFactor = -event.dragDistance
@@ -269,6 +280,12 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
                       () => {
                         n.removeBehavior(behaviors[d.axis]);
                       }
+                  ))
+                  .action((d,n,i) => new ExecuteCodeAction( 
+                    ActionManager.OnPickUpTrigger,
+                    () => {
+                      n.removeBehavior(behaviors[d.axis]);
+                    }
                   ))
               
                 behaviors.x.onDragObservable.add((event)=>{
