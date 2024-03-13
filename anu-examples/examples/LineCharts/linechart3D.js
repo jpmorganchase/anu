@@ -73,6 +73,7 @@ export function linechart3D(babylonEngine) {
     }
 
     ribbon.setVerticesData(VertexBuffer.ColorKind, colors);
+    ribbon.isPickable = false; //mesh geometry is complex turning off picking is recommended for performance. 
 
     anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
                                     scale: {x: scaleX, y: scaleY, z: scaleZ},
