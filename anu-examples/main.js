@@ -43,6 +43,7 @@ import { meshMap } from './examples/Geographic/Mesh_Map';
 import { facetPosition } from './examples/Interactions/FacetPosition';
 import { hover } from './examples/Interactions/Hover';
 import { details } from './examples/Interactions/Details';
+import { nodelink3d } from './examples/Networks/NodeLink3D';
 
 
 const queryString = window.location.search;
@@ -95,7 +96,8 @@ const scenes = {
   'meshMap': meshMap,
   'facetposition': facetPosition,
   'hover': hover,
-  'details': details
+  'details': details,
+  'nodelink3d': nodelink3d
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

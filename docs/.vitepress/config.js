@@ -121,6 +121,13 @@ export default defineConfig({
           { text: 'Details on Demand', link: './details' },
           { text: 'Facet and Position', link: './facet_position' },
         ]
+      },
+      {
+        text: 'Networks',
+        collapsed: false,
+        items: [
+          { text: 'Node Link 3D', link: './node_link_3d' },
+        ]
       }
     ]
   },
