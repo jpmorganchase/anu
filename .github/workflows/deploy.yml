@@ -5,7 +5,7 @@ name: Deploy VitePress site to Pages
 on:
   push:
     paths:
-      - folder1/**
+      - docs/**
 
 
   # Allows you to run this workflow manually from the Actions tab
