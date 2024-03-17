@@ -52,6 +52,8 @@ layout: page
 <card title="Details On Demand" example="details" link="/anu/examples/details"></card>
 
 <card title="Facet and Position" example="facetposition" link="/anu/examples/facet_position"></card>
+
+<card title="Layouts" example="layout" link="/anu/examples/layout"></card>
   
 </div>
 </div>

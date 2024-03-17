@@ -52,10 +52,10 @@ export default defineConfig({
             { text: 'Color Scales', link: '/guide/prefabs/chromatic.md'},
             { text: 'Texture Maps', link: '/guide/prefabs/texturemaps.md'},
             { text: 'Mesh Map', link: '/guide/prefabs/meshmap.md'},
-            { text: 'Facet & Position UI', link: "/guide/prefabs/facetpositionui.md"}
+            { text: 'Facet & Position UI', link: "/guide/prefabs/facetpositionui.md"},
             //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
             //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
-            //{ text: 'Layout', link: '/guide/manipulating_selections.md' },
+            { text: 'Layout', link: '/guide/prefabs/layout.md' },
             ]
           },
          
@@ -120,6 +120,7 @@ export default defineConfig({
           { text: 'Pointer Hover', link: './hover' },
           { text: 'Details on Demand', link: './details' },
           { text: 'Facet and Position', link: './facet_position' },
+          { text: 'Layouts', link: './layout' },
         ]
       },
       {
