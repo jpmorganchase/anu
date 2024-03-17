@@ -33,6 +33,10 @@ npm install
 npm run dev
 ```
 
+## Questions, Comments, or Suggestions?
+
+If you have any questions, comments or suggestions please feel free to drop by the [discussion forum](https://github.com/jpmorganchase/anu/discussions)!
+
 ## Contributing 
 
 There are many ways to contribute such as:
