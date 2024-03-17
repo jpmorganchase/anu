@@ -13,7 +13,7 @@ The Facet & Position UI prefab allows you to quickly attach position, rotation, 
 let root = anu.bind("cot") // returns selections of one transform node
 
 root.positionUI(options?: {})
-    .rotationUI(options?: {})
+    .rotateUI(options?: {})
     .scaleUI(options?: {})
 ```
 
