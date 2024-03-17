@@ -50,7 +50,7 @@ layout.update();
 | ------------- | ------------- | 
 |   root  |  (Mesh) the parent TransformNode of the layout  |
 |   currentLayout  |  (number) the current layout created (1 = plane; 2 = cylinder; 3 = sphere)  |
-|   attr  |  quickly change a option parameter and update the layout |
+|   attr  |  quickly change an option parameter and update the layout |
 |   update  | update the layout |
 
 ## Examples
