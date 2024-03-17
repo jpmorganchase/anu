@@ -39,7 +39,7 @@ layout.update();
 
 | Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
-|   selection  | ([Selection](http://localhost:5173/anu/api/classes/Selection.html)) a list of nodes in the Babylon scene-graph represeting a group of chart objects |
+|   selection  | (anu.Selection) a list of nodes in the Babylon scene-graph to be added to the layout, one cell per node. The expected usage is to pass a selection of root nodes for each chart. | null |
 | rows    | (number)  the number of rows for the layout   |   1 |
 | radius    |   (number) the radius of the layout, only applicable to cylindrical/spherical layouts | 5 |
 | margin   |   (Vector2) the margin of the layout in x and y dimensions  | (0, 0) |
