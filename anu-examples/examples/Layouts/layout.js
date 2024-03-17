@@ -51,6 +51,9 @@ export function layout(babylonEngine){
     let layout = new anu.cylinderLayout('Layout', {selection: charts, rows: rows, margin: new Vector2(20, 5), radius: 20}, scene)
         .attr("row", 2)    
 
+    layout.root.normalizeToUnitCube()
+    camera.setTarget(layout.root)
+
     //Example functions to update the configurations of the layout, such as curvature, row number, margins
     var changeRow = function(rownum) {
         rows = rownum;

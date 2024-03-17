@@ -55,4 +55,15 @@ layout.update();
 
 ## Examples
 
-[Layouts](https://jpmorganchase.github.io/anu?examples/layout.html)
+<div style="width: 100%;">
+    <iframe id="inlineFrameExample"
+     allow="xr-spatial-tracking; camera"
+        allowfullscreen=""
+        title="Inline Frame Example"
+        src="/anu/examples.html?example=layout">
+    </iframe>
+</div>
+
+::: code-group
+<<< @/../anu-examples/examples/Layouts/layout.js 
+:::
