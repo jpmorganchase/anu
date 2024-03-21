@@ -23,7 +23,7 @@ camera.position = new Vector3(-10, 10, -20)
 camera.attachControl(true)
 
 //Make a box as a anu Selection object
-let box = anu.bind('box', scene);
+let box = anu.bind('box');
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
