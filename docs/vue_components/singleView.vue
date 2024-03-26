@@ -10,11 +10,9 @@ import { Engine } from '@babylonjs/core/Engines/engine';
 import { Scene } from '@babylonjs/core/scene';
 import { Color3 } from '@babylonjs/core/Maths/math.color';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { WebXRFeatureName } from '@babylonjs/core/XR/webXRFeaturesManager.js'
-import { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience.js'
-import { WebXRHandTracking } from "@babylonjs/core/XR/features/WebXRHandTracking"
-
-
+import { WebXRFeatureName } from '@babylonjs/core/XR/webXRFeaturesManager.js';
+import { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience.js';
+import { WebXRHandTracking } from '@babylonjs/core/XR/features/WebXRHandTracking';
 
 const props = defineProps({
   scene: Function,
@@ -36,8 +34,8 @@ onMounted(async () => {
   try {
     var defaultXRExperience = await scene.createDefaultXRExperienceAsync({ floorMeshes: [env.ground] });
 
-    defaultXRExperience.enterExitUI.overlay.style.position = "relative"
-    defaultXRExperience.enterExitUI.overlay.style.float = "right"
+    defaultXRExperience.enterExitUI.overlay.style.position = 'relative';
+    defaultXRExperience.enterExitUI.overlay.style.float = 'right';
 
     if (!defaultXRExperience.baseExperience) {
       console.log('No XR');
@@ -71,10 +69,10 @@ onUnmounted(() => {
 </script>
 
 <style>
-
-
 .canvas-container {
-    margin-bottom: 2px;
+  margin-bottom: 2px;
+  width: 100%;
+  height: 50vh;
 }
 
 #canvas {
