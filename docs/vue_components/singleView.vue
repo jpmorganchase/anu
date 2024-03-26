@@ -1,6 +1,6 @@
 <template>
-  <div class="canvas-container">
-    <canvas id="canvas"></canvas>
+  <div class="singleView-container">
+    <canvas class="singleView-canvas" id="canvas"></canvas>
   </div>
 </template>
 
@@ -69,13 +69,13 @@ onUnmounted(() => {
 </script>
 
 <style>
-.canvas-container {
+.singleView-container {
   margin-bottom: 2px;
   width: 100%;
   height: 50vh;
 }
 
-#canvas {
+.singleView-canvas {
   width: 100%;
   height: 50vh;
   display: block;
