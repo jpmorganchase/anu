@@ -4,6 +4,8 @@ name: Deploy VitePress site to Pages
 
 on:
   push:
+    branches:
+      - 'main'
     paths:
       - docs/**
 
