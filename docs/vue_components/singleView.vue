@@ -1,6 +1,6 @@
 <template>
   <div class="singleView-container">
-    <canvas class="singleView-canvas" id="canvas"></canvas>
+    <canvas class="singleView-canvas" id="singleView-canvas"></canvas>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ const props = defineProps({
 let babylonEngine;
 
 onMounted(async () => {
-  const canvas = document.querySelector('#canvas');
+  const canvas = document.querySelector('#singleView-canvas');
 
   babylonEngine = new Engine(canvas, true);
 
