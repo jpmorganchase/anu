@@ -6,6 +6,9 @@ hero:
   name: "Anu"
   text: "Immersive Visualizations with Data-Driven Babylon"
   tagline: Create 3D and immersive data visualizations in Babylon.js with powerful data binding scene graph manipulation patterns, pre-fabs, and interactions.
+  image:
+    src: /assets/anu-breath.svg
+    alt: VitePress
   actions:
     - theme: brand
       text: Get Started
