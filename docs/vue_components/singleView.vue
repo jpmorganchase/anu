@@ -73,6 +73,7 @@ onUnmounted(() => {
   margin-bottom: 2px;
   width: 100%;
   height: 50vh;
+  border: 2px;
 }
 
 .singleView-canvas {

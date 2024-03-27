@@ -9,9 +9,11 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "@babylonjs/core": "^6.41.0",
-    "@jpmorganchase/anu": "^0.0.35",
+    "@babylonjs/core": "^6.48.1",
+    "@babylonjs/gui": "^6.48.1",
+    "@jpmorganchase/anu": "^0.0.43",
     "bootstrap": "^5.3.0",
+    "d3": "^7.9.0",
     "vitepress": "^1.0.0-alpha.75"
   }
 }

@@ -6356,7 +6356,7 @@ var Delaunator = class _Delaunator {
     this._hullPrev = new Uint32Array(n);
     this._hullNext = new Uint32Array(n);
     this._hullTri = new Uint32Array(n);
-    this._hullHash = new Int32Array(this._hashSize).fill(-1);
+    this._hullHash = new Int32Array(this._hashSize);
     this._ids = new Uint32Array(n);
     this._dists = new Float64Array(n);
     this.update();
@@ -6383,9 +6383,8 @@ var Delaunator = class _Delaunator {
     }
     const cx = (minX + maxX) / 2;
     const cy = (minY + maxY2) / 2;
-    let minDist = Infinity;
     let i0, i1, i2;
-    for (let i = 0; i < n; i++) {
+    for (let i = 0, minDist = Infinity; i < n; i++) {
       const d = dist(cx, cy, coords[2 * i], coords[2 * i + 1]);
       if (d < minDist) {
         i0 = i;
@@ -6394,8 +6393,7 @@ var Delaunator = class _Delaunator {
     }
     const i0x = coords[2 * i0];
     const i0y = coords[2 * i0 + 1];
-    minDist = Infinity;
-    for (let i = 0; i < n; i++) {
+    for (let i = 0, minDist = Infinity; i < n; i++) {
       if (i === i0)
         continue;
       const d = dist(i0x, i0y, coords[2 * i], coords[2 * i + 1]);
@@ -6427,9 +6425,10 @@ var Delaunator = class _Delaunator {
       let j = 0;
       for (let i = 0, d0 = -Infinity; i < n; i++) {
         const id2 = this._ids[i];
-        if (this._dists[id2] > d0) {
+        const d = this._dists[id2];
+        if (d > d0) {
           hull[j++] = id2;
-          d0 = this._dists[id2];
+          d0 = d;
         }
       }
       this.hull = hull.subarray(0, j);
@@ -9363,7 +9362,7 @@ function circleRadius(cosRadius, point6) {
   return ((-point6[2] < 0 ? -radius : radius) + tau5 - epsilon7) % tau5;
 }
 function circle_default() {
-  var center2 = constant_default8([0, 0]), radius = constant_default8(90), precision = constant_default8(6), ring, rotate, stream = { point: point6 };
+  var center2 = constant_default8([0, 0]), radius = constant_default8(90), precision = constant_default8(2), ring, rotate, stream = { point: point6 };
   function point6(x4, y4) {
     ring.push(x4 = rotate(x4, y4));
     x4[0] *= degrees3, x4[1] *= degrees3;
@@ -9720,7 +9719,7 @@ function clipAntimeridianInterpolate(from, to, direction, stream) {
 
 // node_modules/d3-geo/src/clip/circle.js
 function circle_default2(radius) {
-  var cr = cos2(radius), delta = 6 * radians2, smallRadius = cr > 0, notHemisphere = abs3(cr) > epsilon7;
+  var cr = cos2(radius), delta = 2 * radians2, smallRadius = cr > 0, notHemisphere = abs3(cr) > epsilon7;
   function interpolate(from, to, direction, stream) {
     circleStream(stream, radius, delta, direction, from, to);
   }
@@ -14763,6 +14762,9 @@ var Accent_default = colors_default("7fc97fbeaed4fdc086ffff99386cb0f0027fbf5b176
 // node_modules/d3-scale-chromatic/src/categorical/Dark2.js
 var Dark2_default = colors_default("1b9e77d95f027570b3e7298a66a61ee6ab02a6761d666666");
 
+// node_modules/d3-scale-chromatic/src/categorical/observable10.js
+var observable10_default = colors_default("4269d0efb118ff725c6cc5b03ca951ff8ab7a463f297bbf59c6b4e9498a0");
+
 // node_modules/d3-scale-chromatic/src/categorical/Paired.js
 var Paired_default = colors_default("a6cee31f78b4b2df8a33a02cfb9a99e31a1cfdbf6fff7f00cab2d66a3d9affff99b15928");
 
@@ -17890,6 +17892,7 @@ export {
   scheme12 as schemeGnBu,
   scheme23 as schemeGreens,
   scheme24 as schemeGreys,
+  observable10_default as schemeObservable10,
   scheme13 as schemeOrRd,
   scheme27 as schemeOranges,
   scheme2 as schemePRGn,
