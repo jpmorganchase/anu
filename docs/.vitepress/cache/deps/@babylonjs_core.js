@@ -930,7 +930,37 @@ import {
   setStereoscopicAnaglyphRigMode,
   setStereoscopicRigMode,
   setVRRigMode
-} from "./chunk-GNPZITUW.js";
+} from "./chunk-SULBHGMW.js";
+import {
+  AnimationGroup,
+  BaseSixDofDragBehavior,
+  BoxBuilder,
+  ClipboardEventTypes,
+  ClipboardInfo,
+  Constants,
+  CreateBox,
+  CreateBoxVertexData,
+  CreatePlane,
+  CreatePlaneVertexData,
+  CreateSegmentedBoxVertexData,
+  FadeInOutBehavior,
+  FollowBehavior,
+  Gizmo,
+  GizmoAnchorPoint,
+  GizmoCoordinatesMode,
+  HandConstraintBehavior,
+  HandConstraintOrientation,
+  HandConstraintVisibility,
+  HandConstraintZone,
+  Layer,
+  LayerSceneComponent,
+  PivotTools,
+  PlaneBuilder,
+  PointerDragBehavior,
+  SixDofDragBehavior,
+  SurfaceMagnetismBehavior,
+  TargetedAnimation
+} from "./chunk-SOAYB2LT.js";
 import {
   AdvancedTimer,
   ArcRotateCameraGamepadInput,
@@ -1023,37 +1053,7 @@ import {
   Xbox360Dpad,
   Xbox360Pad,
   setAndStartTimer
-} from "./chunk-AW6YK7LR.js";
-import {
-  AnimationGroup,
-  BaseSixDofDragBehavior,
-  BoxBuilder,
-  ClipboardEventTypes,
-  ClipboardInfo,
-  Constants,
-  CreateBox,
-  CreateBoxVertexData,
-  CreatePlane,
-  CreatePlaneVertexData,
-  CreateSegmentedBoxVertexData,
-  FadeInOutBehavior,
-  FollowBehavior,
-  Gizmo,
-  GizmoAnchorPoint,
-  GizmoCoordinatesMode,
-  HandConstraintBehavior,
-  HandConstraintOrientation,
-  HandConstraintVisibility,
-  HandConstraintZone,
-  Layer,
-  LayerSceneComponent,
-  PivotTools,
-  PlaneBuilder,
-  PointerDragBehavior,
-  SixDofDragBehavior,
-  SurfaceMagnetismBehavior,
-  TargetedAnimation
-} from "./chunk-4TAAHQM4.js";
+} from "./chunk-FXOXMUXA.js";
 import {
   Animation,
   AnimationKeyInterpolation,
@@ -1088,7 +1088,7 @@ import {
   _staticOffsetValueSize,
   _staticOffsetValueVector2,
   _staticOffsetValueVector3
-} from "./chunk-OHWPCADU.js";
+} from "./chunk-XD6JXWEK.js";
 import {
   AbstractMesh,
   Angle,
@@ -1234,13 +1234,7 @@ import {
   runCoroutine,
   runCoroutineAsync,
   runCoroutineSync
-} from "./chunk-ITV2C7F3.js";
-import {
-  Engine,
-  PerformanceMonitor,
-  RollingAverage,
-  allocateAndCopyTypedBuffer
-} from "./chunk-7PMSBYDW.js";
+} from "./chunk-C6RLMJCY.js";
 import {
   AbstractActionManager,
   AbstractScene,
@@ -1321,6 +1315,12 @@ import {
   ToGammaSpace,
   ToLinearSpace
 } from "./chunk-PQO2DACS.js";
+import {
+  Engine,
+  PerformanceMonitor,
+  RollingAverage,
+  allocateAndCopyTypedBuffer
+} from "./chunk-7PMSBYDW.js";
 import {
   PerfCounter
 } from "./chunk-IISHVUYQ.js";

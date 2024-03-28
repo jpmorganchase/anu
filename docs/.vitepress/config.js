@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress';
-
+import dsv from '@rollup/plugin-dsv' 
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -141,6 +141,7 @@ export default defineConfig({
         // rollupOptions: {
         //   external: ["@babylonjs/core"],
         // }
+        
         server: {
           headers: {
             'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -148,6 +149,7 @@ export default defineConfig({
           },
         },
         plugins: [
+            dsv(),
           {configureServer(server) {
                   server.middlewares.use((_req, res, next) => {
                       res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");

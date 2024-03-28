@@ -1,7 +1,7 @@
 import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
-import data from 'anu/../data/airports.csv'
-import geoJ from "anu/..//data/gz_2010_us_040_00_5m.json"
+import data from '../data/airports.csv'
+import geoJ from "../data/gz_2010_us_040_00_5m.json"
 import * as d3 from 'd3';
 
 

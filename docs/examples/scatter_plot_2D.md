@@ -1,33 +1,17 @@
 ---
 aside: false
 ---
-
+<script setup>
+import { scatterplot2D } from '../anu-examples/ScatterPlots/Scatterplot2D.js'
+import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # 2D Scatter Plot 
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterplot2D">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="scatterplot2D" />
 
 ::: code-group
-<<< @/../anu-examples/examples/ScatterPlots/Scatterplot2D.js 
+<<< @/./anu-examples/ScatterPlots/Scatterplot2D.js 
 
-<<< @/../anu-examples/data/iris.json
+<<< @/./anu-examples/data/iris.json
 :::

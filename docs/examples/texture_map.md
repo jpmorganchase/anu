@@ -2,32 +2,17 @@
 aside: false
 ---
 
+<script setup>
+import { textureMap } from '../anu-examples/Geographic/Texture_Map.js'
+import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # Texture Map
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=textureMap">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="textureMap" />
 
 ::: code-group
-<<< @/../anu-examples/examples/Geographic/Texture_Map.js 
+<<< @/./anu-examples/Geographic/Texture_Map.js 
 
-<<< @/../anu-examples/data/airports.csv
+<<< @/./anu-examples/data/airports.csv
 :::

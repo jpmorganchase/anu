@@ -3,7 +3,7 @@
 
 import * as d3 from "d3";
 import * as anu from '@jpmorganchase/anu';
-import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera, SimplificationType} from "@babylonjs/core";
+import {VertexBuffer, Mesh, TransformNode, Color3, Scene, Vector3, HemisphericLight, ArcRotateCamera } from "@babylonjs/core";
 import data from './yield-curve.csv'
 
 

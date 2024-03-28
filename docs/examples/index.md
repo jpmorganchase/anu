@@ -2,7 +2,7 @@
 layout: page
 ---
 <script setup>
-    import card from './card.vue'
+    import card from '../vue_components/card.vue'
 </script>
 
 <div class='container'>
