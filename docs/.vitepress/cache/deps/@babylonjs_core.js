@@ -16,6 +16,7 @@ import {
   Animatable,
   AnimationAssetTask,
   AnimationEvent,
+  AnimationGroup,
   AnimationGroupMask,
   AnimationGroupMaskMode,
   AnimationPropertiesOverride,
@@ -43,6 +44,7 @@ import {
   BackgroundMaterial,
   BakedVertexAnimationManager,
   BallAndSocketConstraint,
+  BaseSixDofDragBehavior,
   BasisFileInfo,
   BasisTools,
   BasisToolsOptions,
@@ -67,6 +69,7 @@ import {
   BoundingBoxGizmo,
   BoundingBoxRenderer,
   BoxBlock,
+  BoxBuilder,
   BoxParticleEmitter,
   BufferBindingType,
   BufferMapState,
@@ -83,6 +86,8 @@ import {
   ClampBlock,
   ClearCoatBlock,
   ClipPlanesBlock,
+  ClipboardEventTypes,
+  ClipboardInfo,
   CloudBlock,
   CloudPoint,
   Collider,
@@ -109,10 +114,13 @@ import {
   ConditionalBlock,
   ConditionalBlockConditions,
   ConeParticleEmitter,
+  Constants,
   ContainerAssetTask,
   ConversionMode,
   ConvolutionPostProcess,
   CopyTextureToTexture,
+  CreateBox,
+  CreateBoxVertexData,
   CreateCapsule,
   CreateCapsuleVertexData,
   CreateDecal,
@@ -127,6 +135,8 @@ import {
   CreateHemisphere,
   CreateImageDataArrayBufferViews,
   CreateLathe,
+  CreatePlane,
+  CreatePlaneVertexData,
   CreatePolygon,
   CreatePolygonVertexData,
   CreatePolyhedron,
@@ -139,6 +149,7 @@ import {
   CreateScreenshotUsingRenderTarget,
   CreateScreenshotUsingRenderTargetAsync,
   CreateScreenshotWithResizeAsync,
+  CreateSegmentedBoxVertexData,
   CreateText,
   CreateTextShapePaths,
   CreateTiledBox,
@@ -224,6 +235,7 @@ import {
   ExtrudeShape,
   ExtrudeShapeCustom,
   FactorGradient,
+  FadeInOutBehavior,
   FeatureName,
   FilesInput,
   FilterMode,
@@ -354,6 +366,7 @@ import {
   FlyCameraKeyboardInput,
   FlyCameraMouseInput,
   FogBlock,
+  FollowBehavior,
   FollowCamera,
   FollowCameraInputsManager,
   FollowCameraKeyboardMoveInput,
@@ -414,6 +427,9 @@ import {
   GetInternalFormatFromBasisFormat,
   GetTGAHeader,
   GetTextureDataAsync,
+  Gizmo,
+  GizmoAnchorPoint,
+  GizmoCoordinatesMode,
   GizmoManager,
   GlowLayer,
   GoldbergMesh,
@@ -442,6 +458,10 @@ import {
   HDRFiltering,
   HDRTools,
   Halton2DSequence,
+  HandConstraintBehavior,
+  HandConstraintOrientation,
+  HandConstraintVisibility,
+  HandConstraintZone,
   HardwareScalingOptimization,
   HavokPlugin,
   HeightToNormalBlock,
@@ -475,6 +495,8 @@ import {
   KhronosTextureContainer,
   KhronosTextureContainer2,
   LatheBuilder,
+  Layer,
+  LayerSceneComponent,
   LengthBlock,
   LensFlare,
   LensFlareSystem,
@@ -624,7 +646,9 @@ import {
   PhysicsViewer,
   PhysicsVortexEventOptions,
   PipelineErrorReason,
+  PivotTools,
   PlaneBlock,
+  PlaneBuilder,
   PlaneDragGizmo,
   PlaneRotationGizmo,
   PlayAnimationAction,
@@ -632,6 +656,7 @@ import {
   PointColor,
   PointLight,
   PointParticleEmitter,
+  PointerDragBehavior,
   PointsCloudSystem,
   PointsGroup,
   Polar,
@@ -756,6 +781,7 @@ import {
   SimplificationQueue,
   SimplificationSettings,
   SimplificationType,
+  SixDofDragBehavior,
   Skeleton,
   SkeletonViewer,
   SliderConstraint,
@@ -800,10 +826,12 @@ import {
   SubSurfaceBlock,
   SubSurfaceSceneComponent,
   SubtractBlock,
+  SurfaceMagnetismBehavior,
   SwitchBooleanAction,
   TAARenderingPipeline,
   TBNBlock,
   TGATools,
+  TargetedAnimation,
   TeleportInBlock,
   TeleportOutBlock,
   TextFileAssetTask,
@@ -926,43 +954,17 @@ import {
   createPBRSheenPlugin,
   createPBRSubSurfacePlugin,
   getRichTypeFromValue,
+  init_core,
   normalizeEnvInfo,
   setStereoscopicAnaglyphRigMode,
   setStereoscopicRigMode,
   setVRRigMode
-} from "./chunk-SULBHGMW.js";
-import {
-  AnimationGroup,
-  BaseSixDofDragBehavior,
-  BoxBuilder,
-  ClipboardEventTypes,
-  ClipboardInfo,
-  Constants,
-  CreateBox,
-  CreateBoxVertexData,
-  CreatePlane,
-  CreatePlaneVertexData,
-  CreateSegmentedBoxVertexData,
-  FadeInOutBehavior,
-  FollowBehavior,
-  Gizmo,
-  GizmoAnchorPoint,
-  GizmoCoordinatesMode,
-  HandConstraintBehavior,
-  HandConstraintOrientation,
-  HandConstraintVisibility,
-  HandConstraintZone,
-  Layer,
-  LayerSceneComponent,
-  PivotTools,
-  PlaneBuilder,
-  PointerDragBehavior,
-  SixDofDragBehavior,
-  SurfaceMagnetismBehavior,
-  TargetedAnimation
-} from "./chunk-SOAYB2LT.js";
+} from "./chunk-G3IHUYCR.js";
 import {
   AdvancedTimer,
+  Animation,
+  AnimationKeyInterpolation,
+  AnimationRange,
   ArcRotateCameraGamepadInput,
   ArcRotateCameraInputsManager,
   ArcRotateCameraKeyboardMoveInput,
@@ -980,18 +982,26 @@ import {
   CreateCylinderVertexData,
   CreateDashedLines,
   CreateDashedLinesVertexData,
+  CreateGround,
+  CreateGroundFromHeightMap,
+  CreateGroundFromHeightMapVertexData,
+  CreateGroundVertexData,
   CreateLineSystem,
   CreateLineSystemVertexData,
   CreateLines,
   CreateSphere,
   CreateSphereVertexData,
+  CreateTiledGround,
+  CreateTiledGroundVertexData,
   CreateTorus,
   CreateTorusVertexData,
   CubicEase,
   CylinderBuilder,
+  DetailMapConfiguration,
   DualShockButton,
   DualShockDpad,
   DualShockPad,
+  DynamicTexture,
   EasingFunction,
   ElasticEase,
   ExponentialEase,
@@ -1006,10 +1016,18 @@ import {
   GamepadManager,
   GamepadSystemSceneComponent,
   GenericPad,
+  GroundBuilder,
+  GroundMesh,
+  HemisphericLight,
   InstancedLinesMesh,
   InstancedMesh,
+  Light,
   LinesBuilder,
   LinesMesh,
+  MaterialDetailMapDefines,
+  MaterialFlags,
+  MaterialPluginBase,
+  MaterialPluginManager,
   NativeXRLayerRenderTargetTextureProvider,
   NativeXRLayerWrapper,
   NativeXRRenderTarget,
@@ -1017,14 +1035,22 @@ import {
   QuadraticEase,
   QuarticEase,
   QuinticEase,
+  Ray,
+  RegisterMaterialPlugin,
+  ShaderMaterial,
   SineEase,
   SphereBuilder,
+  StandardMaterial,
+  StandardMaterialDefines,
   StickValues,
   TargetCamera,
   TimerState,
   TorusBuilder,
   TouchCamera,
   UniversalCamera,
+  UnregisterAllMaterialPlugins,
+  UnregisterMaterialPlugin,
+  UtilityLayerRenderer,
   WebXRAbstractMotionController,
   WebXRCamera,
   WebXRControllerComponent,
@@ -1052,43 +1078,14 @@ import {
   Xbox360Button,
   Xbox360Dpad,
   Xbox360Pad,
-  setAndStartTimer
-} from "./chunk-FXOXMUXA.js";
-import {
-  Animation,
-  AnimationKeyInterpolation,
-  AnimationRange,
-  CreateGround,
-  CreateGroundFromHeightMap,
-  CreateGroundFromHeightMapVertexData,
-  CreateGroundVertexData,
-  CreateTiledGround,
-  CreateTiledGroundVertexData,
-  DetailMapConfiguration,
-  DynamicTexture,
-  GroundBuilder,
-  GroundMesh,
-  HemisphericLight,
-  Light,
-  MaterialDetailMapDefines,
-  MaterialFlags,
-  MaterialPluginBase,
-  MaterialPluginManager,
-  Ray,
-  RegisterMaterialPlugin,
-  ShaderMaterial,
-  StandardMaterial,
-  StandardMaterialDefines,
-  UnregisterAllMaterialPlugins,
-  UnregisterMaterialPlugin,
-  UtilityLayerRenderer,
   _staticOffsetValueColor3,
   _staticOffsetValueColor4,
   _staticOffsetValueQuaternion,
   _staticOffsetValueSize,
   _staticOffsetValueVector2,
-  _staticOffsetValueVector3
-} from "./chunk-XD6JXWEK.js";
+  _staticOffsetValueVector3,
+  setAndStartTimer
+} from "./chunk-BGDPTJD2.js";
 import {
   AbstractMesh,
   Angle,
@@ -1234,7 +1231,7 @@ import {
   runCoroutine,
   runCoroutineAsync,
   runCoroutineSync
-} from "./chunk-C6RLMJCY.js";
+} from "./chunk-LKAP33XN.js";
 import {
   AbstractActionManager,
   AbstractScene,
@@ -1294,7 +1291,22 @@ import {
   serializeAsTexture,
   serializeAsVector2,
   serializeAsVector3
-} from "./chunk-MGIQNXLG.js";
+} from "./chunk-HR5KTCVE.js";
+import {
+  Color3,
+  Color4,
+  Scalar,
+  TmpColors
+} from "./chunk-AA3MBXDE.js";
+import {
+  Engine,
+  PerformanceMonitor,
+  RollingAverage,
+  allocateAndCopyTypedBuffer
+} from "./chunk-5SWTPNQ2.js";
+import {
+  PerfCounter
+} from "./chunk-P3J2XBLI.js";
 import {
   Matrix,
   Quaternion,
@@ -1302,32 +1314,17 @@ import {
   Vector2,
   Vector3,
   Vector4
-} from "./chunk-KF2PBIOU.js";
-import {
-  Color3,
-  Color4,
-  Scalar,
-  TmpColors
-} from "./chunk-HW4XGYU2.js";
+} from "./chunk-TESUJ6ZX.js";
 import {
   Epsilon,
   PHI,
   ToGammaSpace,
   ToLinearSpace
-} from "./chunk-PQO2DACS.js";
-import {
-  Engine,
-  PerformanceMonitor,
-  RollingAverage,
-  allocateAndCopyTypedBuffer
-} from "./chunk-7PMSBYDW.js";
-import {
-  PerfCounter
-} from "./chunk-IISHVUYQ.js";
+} from "./chunk-G4HJMV2J.js";
 import {
   WebXRFeatureName,
   WebXRFeaturesManager
-} from "./chunk-7NS6XXZR.js";
+} from "./chunk-BBK2SF62.js";
 import {
   AsyncLoop,
   BaseError,
@@ -1365,11 +1362,7 @@ import {
   WebRequest,
   _injectLTSFileTools,
   className
-} from "./chunk-CP55DDXS.js";
-import {
-  GetClass,
-  RegisterClass
-} from "./chunk-AJT353ZC.js";
+} from "./chunk-TOSJRSWD.js";
 import {
   AlphaState,
   DataBuffer,
@@ -1395,14 +1388,20 @@ import {
   WebGLDataBuffer,
   WebGLHardwareTexture,
   WebGLPipelineContext
-} from "./chunk-TFTPPWZW.js";
+} from "./chunk-655E2T6V.js";
+import {
+  GetClass,
+  RegisterClass
+} from "./chunk-WM5N7J5Q.js";
 import {
   EngineStore,
   EventState,
   Observable,
   Observer,
   PerformanceConfigurator
-} from "./chunk-2PRSVFDC.js";
+} from "./chunk-AD6Y6P3L.js";
+import "./chunk-CF3WPAMV.js";
+init_core();
 export {
   AbstractActionManager,
   AbstractAssetTask,

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../dev/core/src/Misc/typeStore.ts"],
+  "sourcesContent": ["/** @internal */\r\n// eslint-disable-next-line @typescript-eslint/naming-convention\r\nconst _RegisteredTypes: { [key: string]: Object } = {};\r\n\r\n/**\r\n * @internal\r\n */\r\nexport function RegisterClass(className: string, type: Object) {\r\n    _RegisteredTypes[className] = type;\r\n}\r\n\r\n/**\r\n * @internal\r\n */\r\nexport function GetClass(fqdn: string): any {\r\n    return _RegisteredTypes[fqdn];\r\n}\r\n"],
+  "mappings": ";;;;;AAOM,SAAU,cAAc,WAAmB,MAAY;AACzD,mBAAiB,SAAS,IAAI;AAClC;AAKM,SAAU,SAAS,MAAY;AACjC,SAAO,iBAAiB,IAAI;AAChC;AAhBA,IAEM;AAFN;;AAEA,IAAM,mBAA8C,CAAA;;;",
+  "names": []
+}

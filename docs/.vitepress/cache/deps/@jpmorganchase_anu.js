@@ -4,22 +4,19 @@ import {
   ExecuteCodeAction,
   MeshBuilder,
   PBRMetallicRoughnessMaterial,
-  PBRSpecularGlossinessMaterial
-} from "./chunk-SULBHGMW.js";
-import {
+  PBRSpecularGlossinessMaterial,
   PointerDragBehavior,
-  SixDofDragBehavior
-} from "./chunk-SOAYB2LT.js";
-import {
-  BezierCurveEase,
-  InstancedMesh
-} from "./chunk-FXOXMUXA.js";
+  SixDofDragBehavior,
+  init_core
+} from "./chunk-G3IHUYCR.js";
 import {
   Animation,
+  BezierCurveEase,
   DynamicTexture,
+  InstancedMesh,
   ShaderMaterial,
   StandardMaterial
-} from "./chunk-XD6JXWEK.js";
+} from "./chunk-BGDPTJD2.js";
 import {
   AbstractMesh,
   Axis,
@@ -29,32 +26,34 @@ import {
   Texture,
   TransformNode,
   VertexData
-} from "./chunk-C6RLMJCY.js";
+} from "./chunk-LKAP33XN.js";
 import {
   KeyboardEventTypes,
   Tags,
   VertexBuffer
-} from "./chunk-MGIQNXLG.js";
-import {
-  Vector2,
-  Vector3
-} from "./chunk-KF2PBIOU.js";
+} from "./chunk-HR5KTCVE.js";
 import {
   Color3,
   Color4
-} from "./chunk-HW4XGYU2.js";
-import "./chunk-PQO2DACS.js";
-import "./chunk-7PMSBYDW.js";
-import "./chunk-IISHVUYQ.js";
-import "./chunk-7NS6XXZR.js";
-import "./chunk-CP55DDXS.js";
-import "./chunk-AJT353ZC.js";
+} from "./chunk-AA3MBXDE.js";
+import "./chunk-5SWTPNQ2.js";
+import "./chunk-P3J2XBLI.js";
+import {
+  Vector2,
+  Vector3
+} from "./chunk-TESUJ6ZX.js";
+import "./chunk-G4HJMV2J.js";
+import "./chunk-BBK2SF62.js";
+import "./chunk-TOSJRSWD.js";
 import {
   Effect
-} from "./chunk-TFTPPWZW.js";
-import "./chunk-2PRSVFDC.js";
+} from "./chunk-655E2T6V.js";
+import "./chunk-WM5N7J5Q.js";
+import "./chunk-AD6Y6P3L.js";
+import "./chunk-CF3WPAMV.js";
 
 // node_modules/@jpmorganchase/anu/dist/anu.js
+init_core();
 function pR(n4) {
   let e = n4[0], t = n4.slice(1), i = [];
   return e === "." ? (this.selected.forEach((r) => i = i.concat(r == null ? void 0 : r.getChildren((s) => s.name == t))), new Kt(i, this.scene)) : e === "#" ? (this.selected.forEach((r) => i = i.concat(r == null ? void 0 : r.getChildren((s) => s.id == t))), new Kt(i, this.scene)) : e === "$" ? (this.selected.forEach((r) => i = i.concat(r == null ? void 0 : r.getChildren((s) => Tags.MatchesQuery(s, t) == true))), new Kt(i, this.scene)) : new Kt([], this.scene);

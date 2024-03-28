@@ -19,11 +19,12 @@ const canvas = ref()
 
 const props = defineProps({
   scene: Function,
+  inspector: Boolean,
 });
 
 onMounted(async () => {
 
-  window.dispatchEvent(new CustomEvent('test', { detail: {canvas: canvas.value, scene: props.scene}}))
+  window.dispatchEvent(new CustomEvent('test', { detail: {canvas: canvas.value, scene: props.scene, inspector: props.inspector}}))
 
 });
 
@@ -34,7 +35,7 @@ onMounted(async () => {
   margin-bottom: 2px;
   width: 100%;
   height: 500px;
-  border: 2px;
+  margin: 5px;
 }
 
 .inlineView-canvas {
