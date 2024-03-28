@@ -6,8 +6,6 @@ import { spheresBind } from '../anu-examples/Selections/spheres_bind';
 import { cotTransform } from '../anu-examples/Selections/cot_transform';
 import { boxesTransform } from '../anu-examples/Selections/boxes_transform';
 import { selectBoxes } from '../anu-examples/Selections/select_boxes';
-import { modValue } from '../anu-examples/Selections/mod_value';
-import { modFunction } from '../anu-examples/Selections/mod_function';
 import { prop } from '../anu-examples/Selections/prop';
 import { props } from '../anu-examples/Selections/props';
 import { select } from '../anu-examples/Selections/select';

@@ -1,3 +1,15 @@
+<script setup>
+  import multiView from "../vue_components/multiView.vue"
+  import inlineView from "../vue_components/inlineView.vue"
+  import { modValue } from '../anu-examples/Selections/mod_value';
+import { modFunction } from '../anu-examples/Selections/mod_function';
+import { prop } from '../anu-examples/Selections/prop';
+import { props } from '../anu-examples/Selections/props';
+
+</script>
+
+<multiView>
+
 # Manipulating Selections
 Manipulating nodes and meshes with Anu revolves around selecting nodes from the scene graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of nodes in a selection, the current scene, and the methods of Selection. When we invoke one of these methods, the method will be repeated for each node in the selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the nodes of a Selection object to create dynamic and data-driven scenes.  
 
@@ -19,12 +31,10 @@ Inspector.Show(scene, {
 });
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=mod_value">
-</iframe>However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
+
+<inlineView :scene="modValue" inspector="true" />
+
+However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 
 1. d: The data bound to the node when it was created.
 2. n: The node being modified.
@@ -42,12 +52,9 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
         .name((d,n,i) => "iris_sphere:" + i); // type string
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=mod_function">
-</iframe>
+
+<inlineView :scene="modFunction" />
+
 
 ## Wrapper Methods
 
@@ -87,12 +94,8 @@ spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.p
         .prop('renderOutline', true);
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=prop">
-</iframe>
+
+<inlineView :scene="prop" />
 
 
 ## Modifying Many Properties
@@ -110,13 +113,11 @@ spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d
                 'renderOutline': true});
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=props">
-</iframe>
+
+<inlineView :scene="props" />
 
 ## Putting It All Together
 
 If you have been following this guide in order, you now should know how we can use data and Anu to create, select, and manipulate nodes in the Babylon scene graph. It may not seem like it, but this is all we need to start building immersive data visualizations! In the next section, we will walk through step by step how to make a basic data visualization with Anu. 
+
+</multiView>
