@@ -1,3 +1,19 @@
+<script setup>
+  import multiView from "../vue_components/multiView.vue"
+  import inlineView from "../vue_components/inlineView.vue"
+import { scatterPlot3DStep1 } from '../anu-examples/CreateAVis/step1';
+import { scatterPlot3DStep2 } from '../anu-examples/CreateAVis/step2';
+import { scatterPlot3DStep3 } from '../anu-examples/CreateAVis/step3';
+import { scatterPlot3DStep4 } from '../anu-examples/CreateAVis/step4';
+import { scatterPlot3DStep5 } from '../anu-examples/CreateAVis/step5';
+import { scatterPlot3DStep6 } from '../anu-examples/CreateAVis/step6';
+
+  
+
+</script>
+
+<multiView>
+
 # Creating a Visualization
 
 Now that we have covered the basics of creating, selecting, and manipulating nodes with Anu, we can start building our first data visualization. What better way to start than with the hello world of data vis, an iris dataset scatter plot!  
@@ -24,12 +40,9 @@ let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
 <<< @/../anu-examples/data/iris.json
 :::
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterPlot3DStep1">
-    </iframe>
-</div>
+
+<inlineView :scene="scatterPlot3DStep1" inspector="true" />
+
 
 <div class="tip custom-block" style="padding-top: 8px">
 Tip: bind() behaves differently when called standalone vs. from a selection. 
@@ -53,12 +66,10 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
        .positionZ((d,n,i) => scaleZ(d.sepalWidth)); // [!code focus]
 ```
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterPlot3DStep2">
-    </iframe>
-</div>
+
+<inlineView :scene="scatterPlot3DStep2" />
+
+
 
 However, there are some issues with this approach and indeed returning the raw data value as the node position is poor practice. For one, our spheres are overlapping, We could fix this by scaling our spheres down but this approach is limited as we can only make them so small before they are no longer visible. Furthermore, imagine our data values were much larger or very small, our spheres could end up being positioned way too far apart or close together. We don't want to conflate our data dimensions with our global and local rendering dimensions. Instead, we should interpolate the values from our data to our rendering coordinates. While Anu does not provide these methods directly, Anu was designed to work with the fantastic scale methods from D3. 
 
@@ -81,12 +92,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
        .positionZ((d,n,i) => scaleZ(d.sepalWidth)); // [!code focus]
 ```
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterPlot3DStep3">
-    </iframe>
-</div>
+<inlineView :scene="scatterPlot3DStep3" />
 
 That is looking better! Above we are using linear scales from d3 to transform our data values to render space values. The domain is the extent, the minimum and maximum values, of our data keys and the range is the min and max values output by our function. For example, the smallest sepal length with output -10 and the largest 10. The nice() method simply adds some padding to make things look nicer. 
 We then use these functions directly in our position x,y,z calls, passing in the raw data values and returning the transformed values between -10 and 10.
@@ -117,13 +123,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
                                 }); // [!code focus]
 ```
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterPlot3DStep4">
-    </iframe>
-</div>
-
+<inlineView :scene="scatterPlot3DStep3" />
 
 ## Step 4: Adding Color
 
@@ -156,13 +156,9 @@ anu.createAxes('axes', scene, { parent: cot,
                                 }); 
 ```
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=scatterPlot3DStep6">
-    </iframe>
-</div>
+<inlineView :scene="scatterPlot3DStep4" />
 
 
+</multiView>
 
 
