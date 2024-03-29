@@ -32,7 +32,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="modValue" inspector="true" />
+<inlineView :scene="modValue" :inspector="true" />
 
 However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 

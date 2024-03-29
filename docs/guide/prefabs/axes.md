@@ -1,6 +1,12 @@
 ---
 outline: deep
 ---
+
+<script setup>
+  import singleView from  "../../vue_components/singleView.vue"
+  import { axesTest } from  "../../anu-examples/Axes/axesTest.js"
+</script>
+
 # Axes
 
 ## Overview
@@ -64,9 +70,5 @@ anu.createAxes('myAxes', scene, {scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
 ```
 
- <iframe id="inlineFrameExample"
-      title="Inline Frame Example"
-      width="100%"
-      height="400"
-      src="/anu/examples.html?example=axesTest">
-  </iframe>
+<singleView :scene="axesTest" />
+

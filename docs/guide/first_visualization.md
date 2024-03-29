@@ -41,7 +41,7 @@ let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
 :::
 
 
-<inlineView :scene="scatterPlot3DStep1" inspector="true" />
+<inlineView :scene="scatterPlot3DStep1" :inspector="true" />
 
 
 <div class="tip custom-block" style="padding-top: 8px">
@@ -123,7 +123,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
                                 }); // [!code focus]
 ```
 
-<inlineView :scene="scatterPlot3DStep3" />
+<inlineView :scene="scatterPlot3DStep5" />
 
 ## Step 4: Adding Color
 
@@ -156,7 +156,7 @@ anu.createAxes('axes', scene, { parent: cot,
                                 }); 
 ```
 
-<inlineView :scene="scatterPlot3DStep4" />
+<inlineView :scene="scatterPlot3DStep6" />
 
 
 </multiView>

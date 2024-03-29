@@ -152,7 +152,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="cotBind" inspector=true />
+<inlineView :scene="cotBind" :inspector="true" />
 
 If we call bind on a selection with more than one node it will repeat the method for each node in the selection. Note, this is how the majority of Selection methods function. Here we call bind on our Selection of spheres. This will create a box mesh as a child node of each sphere.
 
@@ -176,7 +176,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="spheresBind" inspector=true />
+<inlineView :scene="spheresBind" :inspector="true" />
 
 
 ## Manipulating Nodes with Selections
@@ -248,7 +248,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="selectBoxes" inspector="true" />
+<inlineView :scene="selectBoxes" :inspector="true" />
 
 <!-- ## Getting Selection Values
 We can retrieve values of properties from nodes in a [Selection](../api/classes/Selection.md) object.  -->

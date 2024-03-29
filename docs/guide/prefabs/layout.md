@@ -1,6 +1,12 @@
 ---
 outline: deep
 ---
+
+<script setup>
+  import singleView from  "../../vue_components/singleView.vue"
+  import { layout } from  "../../anu-examples/Layouts/layout.js"
+</script>
+
 # Layouts
 
 ## Overview 
@@ -55,15 +61,8 @@ layout.update();
 
 ## Examples
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=layout">
-    </iframe>
-</div>
+<singleView :scene="layout" />
 
 ::: code-group
-<<< @/../anu-examples/examples/Layouts/layout.js 
+<<< @/./anu-examples/Layouts/layout.js 
 :::

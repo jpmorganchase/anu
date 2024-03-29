@@ -1,6 +1,14 @@
 ---
 outline: deep
 ---
+
+<script setup>
+  import singleView from  "../../vue_components/singleView.vue"
+  import { textureMap } from  "../../anu-examples/Geographic/Texture_Map.js"
+  import { textureGlobe } from  "../../anu-examples/Geographic/Texture_Globe.js"
+</script>
+
+
 # Texture Maps
 
 ## Overview 
@@ -66,6 +74,14 @@ let textureGlobe = anu.createTextureGlobe(name: String, options?: {}, scene?: BA
 
 ## Examples
 
-[TextureMap](https://jpmorganchase.github.io/anu/examples/texture_map.html)
+<singleView :scene="textureMap" />
 
-[TextureGlobe](https://jpmorganchase.github.io/anu/examples/texture_globe.html)
+<singleView :scene="textureGlobe" />
+
+::: code-group
+<<< @/./anu-examples/Geographic/Texture_Map.js 
+
+<<< @/./anu-examples/Geographic/Texture_Globe.js 
+
+<<< @/./anu-examples/data/airports.csv
+:::

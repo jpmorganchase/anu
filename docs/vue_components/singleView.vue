@@ -1,6 +1,6 @@
 <template>
   <div class="singleView-container">
-    <canvas class="singleView-canvas" id="singleView-canvas"></canvas>
+    <canvas ref="canvas" class="singleView-canvas" id="singleView-canvas"></canvas>
   </div>
 </template>
 
@@ -18,12 +18,13 @@ const props = defineProps({
   scene: Function,
 });
 
+let canvas = ref();
+
 let babylonEngine;
 
 onMounted(async () => {
-  const canvas = document.querySelector('#singleView-canvas');
 
-  babylonEngine = new Engine(canvas, true);
+  babylonEngine = new Engine(canvas.value, true);
 
   let scene = props.scene(babylonEngine);
 
@@ -72,15 +73,10 @@ onUnmounted(() => {
 .singleView-container {
   margin-bottom: 2px;
   width: 100%;
-  height: 50vh;
-  border: 2px;
 }
 
 .singleView-canvas {
   width: 100%;
   height: 50vh;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>
