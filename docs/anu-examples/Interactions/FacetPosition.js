@@ -3,7 +3,7 @@ import iris from '../data/iris.json' assert {type: 'json'};
 import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 
-export const facetPosition = function(engine){
+export function facetPosition(engine){
   const scene = new Scene(engine)
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);

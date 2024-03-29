@@ -1,143 +1,158 @@
 {
   "hash": "31184f20",
-  "browserHash": "d6f99d09",
+  "browserHash": "6843b0a8",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "01ad7aee",
+      "fileHash": "ef721e8c",
       "needsInterop": false
     },
     "@babylonjs/core/Engines/engine": {
       "src": "../../../node_modules/@babylonjs/core/Engines/engine.js",
       "file": "@babylonjs_core_Engines_engine.js",
-      "fileHash": "4900b08a",
+      "fileHash": "d125fea4",
       "needsInterop": false
     },
     "@babylonjs/core/scene": {
       "src": "../../../node_modules/@babylonjs/core/scene.js",
       "file": "@babylonjs_core_scene.js",
-      "fileHash": "d2627a05",
+      "fileHash": "dac32dbd",
       "needsInterop": false
     },
     "@babylonjs/core/Maths/math.color": {
       "src": "../../../node_modules/@babylonjs/core/Maths/math.color.js",
       "file": "@babylonjs_core_Maths_math__color.js",
-      "fileHash": "96aec6eb",
+      "fileHash": "77c81d33",
       "needsInterop": false
     },
     "@babylonjs/core/Maths/math.vector": {
       "src": "../../../node_modules/@babylonjs/core/Maths/math.vector.js",
       "file": "@babylonjs_core_Maths_math__vector.js",
-      "fileHash": "803d103a",
+      "fileHash": "6a8d45be",
       "needsInterop": false
     },
     "@babylonjs/core/XR/webXRFeaturesManager.js": {
       "src": "../../../node_modules/@babylonjs/core/XR/webXRFeaturesManager.js",
       "file": "@babylonjs_core_XR_webXRFeaturesManager__js.js",
-      "fileHash": "f1c89038",
+      "fileHash": "af880457",
       "needsInterop": false
     },
     "@babylonjs/core/XR/webXRDefaultExperience.js": {
       "src": "../../../node_modules/@babylonjs/core/XR/webXRDefaultExperience.js",
       "file": "@babylonjs_core_XR_webXRDefaultExperience__js.js",
-      "fileHash": "3772fa17",
+      "fileHash": "f03e7576",
       "needsInterop": false
     },
     "@babylonjs/core/XR/features/WebXRHandTracking": {
       "src": "../../../node_modules/@babylonjs/core/XR/features/WebXRHandTracking.js",
       "file": "@babylonjs_core_XR_features_WebXRHandTracking.js",
-      "fileHash": "3fe76354",
+      "fileHash": "ec75b426",
       "needsInterop": false
     },
     "@babylonjs/core": {
       "src": "../../../node_modules/@babylonjs/core/index.js",
       "file": "@babylonjs_core.js",
-      "fileHash": "e3bd9107",
+      "fileHash": "ff4bdcff",
       "needsInterop": false
     },
     "@jpmorganchase/anu": {
       "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
       "file": "@jpmorganchase_anu.js",
-      "fileHash": "0597fd93",
+      "fileHash": "4df3c6ce",
       "needsInterop": false
     },
     "@babylonjs/inspector": {
       "src": "../../../node_modules/@babylonjs/inspector/dist/babylon.inspector.bundle.max.js",
       "file": "@babylonjs_inspector.js",
-      "fileHash": "585f90c5",
+      "fileHash": "5848c738",
       "needsInterop": true
     },
     "d3": {
       "src": "../../../node_modules/d3/src/index.js",
       "file": "d3.js",
-      "fileHash": "6df4c8b8",
+      "fileHash": "27498b95",
       "needsInterop": false
     },
     "@babylonjs/gui": {
       "src": "../../../node_modules/@babylonjs/gui/index.js",
       "file": "@babylonjs_gui.js",
-      "fileHash": "975f079a",
+      "fileHash": "f2f7bdeb",
       "needsInterop": false
     },
     "babylon-msdf-text": {
       "src": "../../../node_modules/babylon-msdf-text/dist/babylon-msdf-text.es.js",
       "file": "babylon-msdf-text.js",
-      "fileHash": "46aea937",
+      "fileHash": "6569edfb",
+      "needsInterop": false
+    },
+    "chroma-js": {
+      "src": "../../../node_modules/chroma-js/chroma.js",
+      "file": "chroma-js.js",
+      "fileHash": "bbfec0c3",
+      "needsInterop": true
+    },
+    "d3-force-3d": {
+      "src": "../../../node_modules/d3-force-3d/src/index.js",
+      "file": "d3-force-3d.js",
+      "fileHash": "f322934a",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-JE4HI737": {
-      "file": "chunk-JE4HI737.js"
+    "chunk-E5TECFJZ": {
+      "file": "chunk-E5TECFJZ.js"
     },
-    "chunk-Q57NYUAC": {
-      "file": "chunk-Q57NYUAC.js"
+    "chunk-IH6SPDTA": {
+      "file": "chunk-IH6SPDTA.js"
     },
-    "chunk-FR3RIKZD": {
-      "file": "chunk-FR3RIKZD.js"
+    "chunk-CIXCNVD5": {
+      "file": "chunk-CIXCNVD5.js"
     },
-    "chunk-ZWNIOCDX": {
-      "file": "chunk-ZWNIOCDX.js"
+    "chunk-CHIHTB2R": {
+      "file": "chunk-CHIHTB2R.js"
     },
-    "chunk-JJ3GRWI2": {
-      "file": "chunk-JJ3GRWI2.js"
+    "chunk-2VG5SISC": {
+      "file": "chunk-2VG5SISC.js"
     },
-    "chunk-EWIR4KEZ": {
-      "file": "chunk-EWIR4KEZ.js"
+    "chunk-NXGNFVPM": {
+      "file": "chunk-NXGNFVPM.js"
     },
-    "chunk-UWCK7EUI": {
-      "file": "chunk-UWCK7EUI.js"
+    "chunk-MADDKXJQ": {
+      "file": "chunk-MADDKXJQ.js"
     },
-    "chunk-JUO77RBY": {
-      "file": "chunk-JUO77RBY.js"
+    "chunk-AD5M3D2V": {
+      "file": "chunk-AD5M3D2V.js"
     },
-    "chunk-AJIB2Q6H": {
-      "file": "chunk-AJIB2Q6H.js"
+    "chunk-A4OKAQEU": {
+      "file": "chunk-A4OKAQEU.js"
     },
-    "chunk-XS4HXWVV": {
-      "file": "chunk-XS4HXWVV.js"
+    "chunk-MZH63JEL": {
+      "file": "chunk-MZH63JEL.js"
     },
-    "chunk-AA3MBXDE": {
-      "file": "chunk-AA3MBXDE.js"
+    "chunk-KSTZC6MF": {
+      "file": "chunk-KSTZC6MF.js"
     },
-    "chunk-G4HJMV2J": {
-      "file": "chunk-G4HJMV2J.js"
+    "chunk-YK7R2M7K": {
+      "file": "chunk-YK7R2M7K.js"
     },
-    "chunk-R44SWCMV": {
-      "file": "chunk-R44SWCMV.js"
+    "chunk-R3MONVPG": {
+      "file": "chunk-R3MONVPG.js"
     },
-    "chunk-VBM6ATJO": {
-      "file": "chunk-VBM6ATJO.js"
+    "chunk-BMKUQ6K3": {
+      "file": "chunk-BMKUQ6K3.js"
     },
-    "chunk-G255QWNV": {
-      "file": "chunk-G255QWNV.js"
-    },
-    "chunk-743TXSLS": {
-      "file": "chunk-743TXSLS.js"
+    "chunk-JVYIJCPB": {
+      "file": "chunk-JVYIJCPB.js"
     },
     "chunk-WM5N7J5Q": {
       "file": "chunk-WM5N7J5Q.js"
+    },
+    "chunk-GEMGH3AZ": {
+      "file": "chunk-GEMGH3AZ.js"
+    },
+    "chunk-AD6Y6P3L": {
+      "file": "chunk-AD6Y6P3L.js"
     },
     "chunk-CF3WPAMV": {
       "file": "chunk-CF3WPAMV.js"

@@ -6,7 +6,7 @@ import { extent, scaleOrdinal, scaleLinear, map, flatGroup, } from "d3";
 import { AdvancedDynamicTexture, Rectangle, TextBlock} from '@babylonjs/gui'
 import { lab } from 'chroma-js';
 
-export const details = function (engine) {
+export function details(engine) {
 
     //Create an empty scene
     const scene = new Scene(engine)

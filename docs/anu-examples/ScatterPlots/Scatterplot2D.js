@@ -9,7 +9,7 @@ import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, Stand
 
 
 //create and export a function that takes a babylon engine and returns a scene
-export const scatterplot2D = function(engine){
+export function scatterplot2D(engine){
 
   //Create an empty scene
   const scene = new Scene(engine)

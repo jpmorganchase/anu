@@ -10,7 +10,7 @@ import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 //import { Mesh } from 'anu';
 
 //create and export a function that takes a babylon engine and returns a scene
-export const scatterplot3D = function(engine){
+export function scatterplot3D(engine){
 
   //Create an empty scene
   const scene = new Scene(engine)

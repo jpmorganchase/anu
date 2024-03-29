@@ -931,7 +931,7 @@ import {
   setStereoscopicAnaglyphRigMode,
   setStereoscopicRigMode,
   setVRRigMode
-} from "./chunk-Q57NYUAC.js";
+} from "./chunk-CIXCNVD5.js";
 import {
   AnimationGroup,
   BaseSixDofDragBehavior,
@@ -961,7 +961,7 @@ import {
   SixDofDragBehavior,
   SurfaceMagnetismBehavior,
   TargetedAnimation
-} from "./chunk-FR3RIKZD.js";
+} from "./chunk-CHIHTB2R.js";
 import {
   AdvancedTimer,
   ArcRotateCameraGamepadInput,
@@ -1054,7 +1054,7 @@ import {
   Xbox360Dpad,
   Xbox360Pad,
   setAndStartTimer
-} from "./chunk-ZWNIOCDX.js";
+} from "./chunk-2VG5SISC.js";
 import {
   Animation,
   AnimationKeyInterpolation,
@@ -1089,7 +1089,7 @@ import {
   _staticOffsetValueSize,
   _staticOffsetValueVector2,
   _staticOffsetValueVector3
-} from "./chunk-JJ3GRWI2.js";
+} from "./chunk-NXGNFVPM.js";
 import {
   AbstractMesh,
   Angle,
@@ -1235,13 +1235,13 @@ import {
   runCoroutine,
   runCoroutineAsync,
   runCoroutineSync
-} from "./chunk-EWIR4KEZ.js";
+} from "./chunk-MADDKXJQ.js";
 import {
   Engine,
   PerformanceMonitor,
   RollingAverage,
   allocateAndCopyTypedBuffer
-} from "./chunk-UWCK7EUI.js";
+} from "./chunk-AD5M3D2V.js";
 import {
   AbstractActionManager,
   AbstractScene,
@@ -1301,7 +1301,7 @@ import {
   serializeAsTexture,
   serializeAsVector2,
   serializeAsVector3
-} from "./chunk-JUO77RBY.js";
+} from "./chunk-A4OKAQEU.js";
 import {
   Matrix,
   Quaternion,
@@ -1309,26 +1309,26 @@ import {
   Vector2,
   Vector3,
   Vector4
-} from "./chunk-AJIB2Q6H.js";
-import {
-  PerfCounter
-} from "./chunk-XS4HXWVV.js";
+} from "./chunk-MZH63JEL.js";
 import {
   Color3,
   Color4,
   Scalar,
   TmpColors
-} from "./chunk-AA3MBXDE.js";
+} from "./chunk-KSTZC6MF.js";
 import {
   Epsilon,
   PHI,
   ToGammaSpace,
   ToLinearSpace
-} from "./chunk-G4HJMV2J.js";
+} from "./chunk-YK7R2M7K.js";
+import {
+  PerfCounter
+} from "./chunk-R3MONVPG.js";
 import {
   WebXRFeatureName,
   WebXRFeaturesManager
-} from "./chunk-R44SWCMV.js";
+} from "./chunk-BMKUQ6K3.js";
 import {
   AsyncLoop,
   BaseError,
@@ -1366,7 +1366,11 @@ import {
   WebRequest,
   _injectLTSFileTools,
   className
-} from "./chunk-VBM6ATJO.js";
+} from "./chunk-JVYIJCPB.js";
+import {
+  GetClass,
+  RegisterClass
+} from "./chunk-WM5N7J5Q.js";
 import {
   AlphaState,
   DataBuffer,
@@ -1392,18 +1396,14 @@ import {
   WebGLDataBuffer,
   WebGLHardwareTexture,
   WebGLPipelineContext
-} from "./chunk-G255QWNV.js";
+} from "./chunk-GEMGH3AZ.js";
 import {
   EngineStore,
   EventState,
   Observable,
   Observer,
   PerformanceConfigurator
-} from "./chunk-743TXSLS.js";
-import {
-  GetClass,
-  RegisterClass
-} from "./chunk-WM5N7J5Q.js";
+} from "./chunk-AD6Y6P3L.js";
 import "./chunk-CF3WPAMV.js";
 init_core();
 export {

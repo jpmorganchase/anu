@@ -5,15 +5,7 @@
 </template>
 
 <script setup>
-  import inlineView from "../vue_components/inlineView.vue"
-import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { Engine } from '@babylonjs/core/Engines/engine';
-import { Scene } from '@babylonjs/core/scene';
-import { Color3 } from '@babylonjs/core/Maths/math.color';
-import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { WebXRFeatureName } from '@babylonjs/core/XR/webXRFeaturesManager.js';
-import { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience.js';
-import { WebXRHandTracking } from '@babylonjs/core/XR/features/WebXRHandTracking';
+import { ref, watch, onMounted } from 'vue';
 
 const canvas = ref()
 
@@ -22,10 +14,8 @@ const props = defineProps({
   inspector: Boolean,
 });
 
-onMounted(async () => {
-
+onMounted(() => {
   window.dispatchEvent(new CustomEvent('test', { detail: {canvas: canvas.value, scene: props.scene, inspector: props.inspector}}))
-
 });
 
 </script>

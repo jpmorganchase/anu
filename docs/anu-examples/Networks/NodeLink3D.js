@@ -6,8 +6,7 @@ import { forceSimulation, forceCenter, forceManyBody, forceLink, forceCollide } 
 import leMis from '../data/miserables.json' assert {type: 'json'}; //Our data
 
 
-export const nodelink3d = function (engine) {
-
+export function nodelink3d (engine) {
     //create a scene object using our engine
     const scene = new Scene(engine)
 
@@ -41,7 +40,8 @@ export const nodelink3d = function (engine) {
      .force("charge", forceManyBody())
      .force("collide", forceCollide())//.radius((d) => d.count))
      .force("center", forceCenter(0, 0, 0))
-     .on("tick", ticked);
+     .on("tick", ticked)
+     .on("end", () => simulation.stop());
 
     //create a "container" or empty mesh to act as the root node for our network 
     //childObserver true will ensure the bounding box updates to fit the extend of the children nodes
@@ -99,7 +99,13 @@ export const nodelink3d = function (engine) {
 
     camera.setTarget(cot.selected[0])
 
+    //stops the simulation when we change pages useful for multi-page apps ignore otherwise
+    window.navigation.addEventListener("navigate", (event) => {
+        simulation.stop();
+    })
+
     return scene
+
 }
 
 

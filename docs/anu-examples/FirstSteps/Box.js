@@ -5,7 +5,7 @@ import * as anu from '@jpmorganchase/anu' //import anu, this project is using a 
 import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Mesh, TransformNode} from "@babylonjs/core";
 
 //create and export a function that takes a babylon engine and returns a scene
-export const box = function(engine){
+export const box = async function(engine){
     
   const scene = new Scene(engine)
 

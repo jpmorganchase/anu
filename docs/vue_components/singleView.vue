@@ -5,14 +5,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { Engine } from '@babylonjs/core/Engines/engine';
-import { Scene } from '@babylonjs/core/scene';
-import { Color3 } from '@babylonjs/core/Maths/math.color';
-import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { WebXRFeatureName } from '@babylonjs/core/XR/webXRFeaturesManager.js';
-import { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience.js';
-import { WebXRHandTracking } from '@babylonjs/core/XR/features/WebXRHandTracking';
+import { ref, watch, onMounted, onUnmounted, onBeforeUnmount } from 'vue';
+import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
 
 const props = defineProps({
   scene: Function,
@@ -21,6 +15,10 @@ const props = defineProps({
 let canvas = ref();
 
 let babylonEngine;
+
+ function resize() {
+    babylonEngine?.resize();
+  }
 
 onMounted(async () => {
 
@@ -59,12 +57,11 @@ onMounted(async () => {
     scene.render();
   });
 
-  window.addEventListener('resize', function () {
-    babylonEngine.resize();
-  });
+  window.addEventListener('resize', resize);
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resize);
   babylonEngine?.dispose();
 });
 </script>

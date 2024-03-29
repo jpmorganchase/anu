@@ -4,7 +4,7 @@ import penguins from '../data/penguins.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core';
 import { extent, scaleOrdinal, scaleLinear, map, } from "d3";
 
-export const hover = function (engine) {
+export function hover(engine) {
 
     //Create an empty scene
     const scene = new Scene(engine)

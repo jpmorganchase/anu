@@ -6,7 +6,7 @@ import * as anu from '@jpmorganchase/anu' //import anu, this project is using a 
 
 
 //create and export a function that takes a babylon engine and returns a scene
-export const box_selection = function(engine){
+export const box_selection = async function(engine){
     
   const scene = new Scene(engine)
 
