@@ -1,5 +1,5 @@
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
+import { h, defineAsyncComponent } from 'vue'
 import Theme from 'vitepress/theme'
 import './style.css'
 
@@ -13,5 +13,8 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     // ...
+    app.component('card', defineAsyncComponent(() =>
+      import('../../vue_components/card.vue')
+    ))
   }
 }

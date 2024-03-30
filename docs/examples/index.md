@@ -3,7 +3,7 @@ layout: page
 ---
 
 <script setup>
-  import card from '../vue_components/card.vue'
+  //import card from '../vue_components/card.vue'
   import multiView from '../vue_components/multiView.vue'
   import {scatterplot3D } from '../anu-examples/ScatterPlots/Scatterplot3D';
   import { barchart3D } from '../anu-examples/BarCharts/barchart3d';
@@ -89,6 +89,7 @@ layout: page
 </div>
 
 </multiView>
+
 
 <style>
 h1,
