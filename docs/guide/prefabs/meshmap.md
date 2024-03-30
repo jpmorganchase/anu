@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
   import singleView from  "../../vue_components/singleView.vue"
-  import { meshMap } from  "../../anu-examples/Geographic/mesh_map.js"
+  import { meshMap } from  "../../anu-examples/Geographic/Mesh_Map.js"
 </script>
 
 # Mesh Map

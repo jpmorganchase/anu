@@ -11,14 +11,11 @@ import { Inspector } from '@babylonjs/inspector';
 import { JSONfn } from 'jsonfn';
 
 
-//let tempCanvas = document.createElement('canvas');
-//let tempOffScreen = tempCanvas.transferControlToOffscreen();
-
-var worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
+let worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
 
 
 async function createScene(e){
-  let canvas = e.detail.canvas
+  let canvas = e.detail.canvas;
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
   var offscreen = canvas.transferControlToOffscreen();
