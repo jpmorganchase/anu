@@ -3,10 +3,12 @@ import dsv from '@rollup/plugin-dsv'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  head: [['link', { rel: 'icon', href: '/assets/favicon-32x32.png' }]],
   base: '/anu/',
   title: "Anu",
   description: "Immersive Visualizations with Data Drive Babylon",
   themeConfig: {
+    logo: '/assets/anu.svg',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/guide/' },
