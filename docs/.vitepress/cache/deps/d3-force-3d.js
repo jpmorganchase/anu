@@ -2,7 +2,7 @@ import {
   dispatch_default,
   quadtree,
   timer
-} from "./chunk-IH6SPDTA.js";
+} from "./chunk-EXUDKIXA.js";
 import "./chunk-CF3WPAMV.js";
 
 // node_modules/d3-force-3d/src/center.js
