@@ -140,25 +140,31 @@ export default defineConfig({
     ]
   },
       vite: {
-        rollupOptions: {
-          external: ["@babylonjs/core"],
+        worker: {
+          format: "es"
         },
+        // rollupOptions: {
+        //   external: ["@babylonjs/core"],
+        // },
         
         server: {
-          headers: {
-            'Cross-Origin-Embedder-Policy': 'require-corp',
-            'Cross-Origin-Opener-Policy': 'same-origin',
-          },
+            // watch: {
+            //     followSymlinks: false,
+            // },
+          // headers: {
+          //   'Cross-Origin-Embedder-Policy': 'require-corp',
+          //   'Cross-Origin-Opener-Policy': 'same-origin',
+          // },
         },
         plugins: [
             dsv(),
-          {configureServer(server) {
-                  server.middlewares.use((_req, res, next) => {
-                      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-                      res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
-                      next();
-                  });
-           }
-      }]
+          // {configureServer(server) {
+          //         server.middlewares.use((_req, res, next) => {
+          //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+          //             res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
+          //             next();
+          //         });
+          //}
+        ]
       }
 })

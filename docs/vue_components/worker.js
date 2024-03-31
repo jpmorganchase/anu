@@ -1,11 +1,4 @@
-import { Engine, Scene, Color3, Vector3} from "@babylonjs/core";
-import { JSONfn } from 'jsonfn';
-//import { barchart3D } from "../anu-examples/BarCharts/barchart3d";
-
-// let tempCanvas = document.createElement('canvas');
-// let engine = new Engine(tempCanvas, true);
-
-// let engine = new Engine(canvas, true);
+import { Engine, Color3, Vector3} from "@babylonjs/core";
 
 let engine = undefined;
 
@@ -25,24 +18,24 @@ self.onmessage = async function (evt) {
     env.setMainColor(Color3.FromHexString('#0e0e17'));
     env.ground.position = new Vector3(0, -2, 0);
 
-  //   scene.detachControl();
+    scene.detachControl();
 
-  //   canvas.addEventListener('mouseout', (i) => {
-  //     scene.detachControl();
-  //   })
+    canvas.addEventListener('mouseout', (i) => {
+      scene.detachControl();
+    })
 
-  // canvas.addEventListener('mouseover', (i) => {
-  //     engine.inputElement = canvas
-  //     scene.attachControl();
+  canvas.addEventListener('mouseover', (i) => {
+      engine.inputElement = canvas
+      scene.attachControl();
 
-      // // if (e.detail.inspector) {
-      // //   Inspector.Show(scene, {
-      // //     globalRoot: canvas.parentElement,
-      // //     embedMode: true,
-      // //     showInspector: false,
-      // //   });
-      // }
-    //});
+    //   if (e.detail.inspector) {
+    //     Inspector.Show(scene, {
+    //        globalRoot: canvas.parentElement,
+    //        embedMode: true,
+    //        showInspector: false,
+    //      });
+    //   }
+    });
 
     engine.activeView = view;
 

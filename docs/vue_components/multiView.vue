@@ -8,7 +8,6 @@
 import { ref, watch, onBeforeUnmount, onBeforeMount, onMounted} from 'vue';
 import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
 import { Inspector } from '@babylonjs/inspector';
-import { JSONfn } from 'jsonfn';
 
 
 let worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
@@ -19,7 +18,7 @@ async function createScene(e){
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
   var offscreen = canvas.transferControlToOffscreen();
-  worker.postMessage({"canvas": offscreen, "scene": JSONfn.stringify(e.detail.scene) }, [offscreen]);
+  worker.postMessage({"canvas": offscreen }, [offscreen]);
   worker.onmessage = function(event){
         console.log(event.data);
     };

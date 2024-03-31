@@ -1,23 +1,24 @@
 {
-   "scripts": {
-      "docs:dev": "vitepress dev",
-      "docs:build": "vitepress build",
-      "docs:preview": "vitepress preview"
-   },
-   "devDependencies": {
-      "@rollup/plugin-dsv": "^3.0.4",
-      "vite-plugin-monaco-editor": "^1.1.0",
-      "vue": "^3.3.4"
-   },
-   "dependencies": {
-      "@babylonjs/core": "^6.41.0",
-      "@babylonjs/gui": "^6.41.0",
-      "@babylonjs/inspector": "^6.41.0",
-      "@jpmorganchase/anu": "^0.0.43",
-      "bootstrap": "^5.3.0",
-      "d3": "^7.9.0",
-      "d3-force-3d": "^3.0.5",
-      "jsonfn": "^0.31.0",
-      "vitepress": "^1.0.0-alpha.75"
-   }
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@babylonjs/core": "^6.49.0",
+    "@babylonjs/loaders": "^6.49.0",
+    "@babylonjs/gui": "^6.49.0",
+    "@babylonjs/inspector": "^6.49.0",
+    "@rollup/plugin-dsv": "^3.0.4",
+    "vite-plugin-monaco-editor": "^1.1.0",
+    "vue": "^3.3.4"
+  },
+  "dependencies": {
+    "@jpmorganchase/anu": "^0.0.43",
+    "bootstrap": "^5.3.0",
+    "d3": "^7.9.0",
+    "d3-force-3d": "^3.0.5",
+    "vitepress": "^1.0.1"
+  }
 }
