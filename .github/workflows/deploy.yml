@@ -46,6 +46,7 @@ jobs:
       - name: Build with VitePress
         run: |
           cd docs
+          export NODE_OPTIONS="--max_old_space_size=4096"
           npm ci
           npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
           # touch docs/.vitepress/dist/.nojekyll
