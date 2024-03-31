@@ -143,9 +143,9 @@ export default defineConfig({
         worker: {
           format: "es"
         },
-        // rollupOptions: {
-        //   external: ["@babylonjs/core"],
-        // },
+        rollupOptions: {
+          external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
+        },
         
         server: {
             // watch: {
