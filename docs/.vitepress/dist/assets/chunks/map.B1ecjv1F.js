@@ -1,1 +1,0 @@
-function e(r,o){if(typeof r[Symbol.iterator]!="function")throw new TypeError("values is not iterable");if(typeof o!="function")throw new TypeError("mapper is not a function");return Array.from(r,(t,n)=>o(t,n,r))}export{e as m};

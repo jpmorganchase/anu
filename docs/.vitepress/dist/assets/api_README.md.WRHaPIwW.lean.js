@@ -1,1 +1,0 @@
-import{_ as a,c as e,o as t,a5 as n}from"./chunks/framework.Dom3zjHH.js";const m=JSON.parse('{"title":"Anu","description":"","frontmatter":{},"headers":[],"relativePath":"api/README.md","filePath":"api/README.md"}'),s={name:"api/README.md"},i=n("",22),o=[i];function r(l,p,h,u,d,c){return t(),e("div",null,o)}const g=a(s,[["render",r]]);export{m as __pageData,g as default};
