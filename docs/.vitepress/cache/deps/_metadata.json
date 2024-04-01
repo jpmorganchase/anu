@@ -1,82 +1,82 @@
 {
-  "hash": "36662612",
-  "configHash": "42002e6e",
-  "lockfileHash": "32a5b016",
-  "browserHash": "7698e8dc",
+  "hash": "8caf3c8f",
+  "configHash": "6daf2d15",
+  "lockfileHash": "9d64d213",
+  "browserHash": "e285d747",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "7fd2b999",
+      "fileHash": "8df606ff",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "7c74445d",
+      "fileHash": "aee4a15f",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "f92999a7",
-      "needsInterop": false
-    },
-    "@jpmorganchase/anu": {
-      "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
-      "file": "@jpmorganchase_anu.js",
-      "fileHash": "a29c74e4",
+      "fileHash": "e0450142",
       "needsInterop": false
     },
     "@babylonjs/core": {
       "src": "../../../node_modules/@babylonjs/core/index.js",
       "file": "@babylonjs_core.js",
-      "fileHash": "d8821926",
-      "needsInterop": false
-    },
-    "d3": {
-      "src": "../../../node_modules/d3/src/index.js",
-      "file": "d3.js",
-      "fileHash": "d2e881f1",
+      "fileHash": "fece775b",
       "needsInterop": false
     },
     "@babylonjs/inspector": {
       "src": "../../../node_modules/@babylonjs/inspector/dist/babylon.inspector.bundle.max.js",
       "file": "@babylonjs_inspector.js",
-      "fileHash": "47014ae7",
+      "fileHash": "57f0a034",
       "needsInterop": true
+    },
+    "@jpmorganchase/anu": {
+      "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
+      "file": "@jpmorganchase_anu.js",
+      "fileHash": "c011286a",
+      "needsInterop": false
+    },
+    "d3": {
+      "src": "../../../node_modules/d3/src/index.js",
+      "file": "d3.js",
+      "fileHash": "2bf09f7d",
+      "needsInterop": false
     },
     "@babylonjs/gui": {
       "src": "../../../node_modules/@babylonjs/gui/index.js",
       "file": "@babylonjs_gui.js",
-      "fileHash": "4eebb165",
+      "fileHash": "d5532a60",
       "needsInterop": false
     },
     "chroma-js": {
       "src": "../../../node_modules/chroma-js/chroma.js",
       "file": "chroma-js.js",
-      "fileHash": "43934289",
+      "fileHash": "73e90ca6",
       "needsInterop": true
     },
     "d3-force-3d": {
       "src": "../../../node_modules/d3-force-3d/src/index.js",
       "file": "d3-force-3d.js",
-      "fileHash": "ce84d23e",
+      "fileHash": "cb9fb729",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-OTMO5A4L": {
-      "file": "chunk-OTMO5A4L.js"
-    },
     "chunk-JPCUKPQ5": {
       "file": "chunk-JPCUKPQ5.js"
     },
-    "chunk-TGCW2JON": {
-      "file": "chunk-TGCW2JON.js"
-    },
     "chunk-EXUDKIXA": {
       "file": "chunk-EXUDKIXA.js"
+    },
+    "chunk-OTMO5A4L": {
+      "file": "chunk-OTMO5A4L.js"
+    },
+    "chunk-TGCW2JON": {
+      "file": "chunk-TGCW2JON.js"
     },
     "chunk-Z6B2QTD3": {
       "file": "chunk-Z6B2QTD3.js"

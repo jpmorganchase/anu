@@ -1,18 +1,6 @@
 <script setup>
   import multiView from "../vue_components/multiView.vue"
-  import inlineView from "../vue_components/inlineView.vue"
-import { cotBind } from '../anu-examples/Selections/cot_bind';
-import { spheresBind } from '../anu-examples/Selections/spheres_bind';
-import { cotTransform } from '../anu-examples/Selections/cot_transform';
-import { boxesTransform } from '../anu-examples/Selections/boxes_transform';
-import { selectBoxes } from '../anu-examples/Selections/select_boxes';
-import { prop } from '../anu-examples/Selections/prop';
-import { props } from '../anu-examples/Selections/props';
-import { select } from '../anu-examples/Selections/select';
-import { select_name_tag } from '../anu-examples/Selections/select_name_tag';
-
-  
-
+  //import inlineView from "../vue_components/inlineView.vue"
 </script>
 
 <multiView>
@@ -54,7 +42,7 @@ sphere.position = new Vector3(1,0,0)
 ```
 ::: 
 
-<inlineView :scene="select" />
+<inlineView scene="Selections/select" />
 
 ### Select by Name and ID
 
@@ -79,7 +67,7 @@ let sphere_selection = anu.selectId('sphere-ID', scene)
 ```
 ::: 
 
-<inlineView :scene="select_name_tag" />
+<inlineView scene="Selections/select_name_tag" />
 
 ### Select by Tags
 
@@ -152,7 +140,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="cotBind" :inspector="true" />
+<inlineView scene="Selections/cot_bind" :inspector="true" />
 
 If we call bind on a selection with more than one node it will repeat the method for each node in the selection. Note, this is how the majority of Selection methods function. Here we call bind on our Selection of spheres. This will create a box mesh as a child node of each sphere.
 
@@ -176,7 +164,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="spheresBind" :inspector="true" />
+<inlineView scene="Selections/spheres_bind" :inspector="true" />
 
 
 ## Manipulating Nodes with Selections
@@ -197,7 +185,7 @@ boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
 ```
 ::: 
 
-<inlineView :scene="boxesTransform" />
+<inlineView scene="Selections/boxes_transform" />
 
 In contrast, if we change the transform properties of the parent node instead (in our case the cot selection), the result is much less dramatic. This is because we are changing the transform of only one node, and because the boxes are children of that node they are all being transformed in the same way. This can be useful when we want to move, scale, or rotate a group of meshes at once. For example, if we create a scatter plot and all the meshes are children of a single transform node, we can change the position, scale, and rotation of the whole scatter plot by changing the properties of the root parent node, but more on that later.
 
@@ -216,7 +204,7 @@ cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
 ```
 ::: 
 
-<inlineView :scene="cotTransform" />
+<inlineView scene="Selections/cot_transform" />
 
 ## Nested Selections
 
@@ -248,7 +236,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="selectBoxes" :inspector="true" />
+<inlineView scene="Selections/select_boxes" :inspector="true" />
 
 <!-- ## Getting Selection Values
 We can retrieve values of properties from nodes in a [Selection](../api/classes/Selection.md) object.  -->

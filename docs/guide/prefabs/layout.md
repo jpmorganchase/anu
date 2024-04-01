@@ -3,7 +3,7 @@ outline: deep
 ---
 
 <script setup>
-  import singleView from  "../../vue_components/singleView.vue"
+  //import singleView from  "../../vue_components/singleView.vue"
   import { layout } from  "../../anu-examples/Layouts/layout.js"
 </script>
 

@@ -1,10 +1,6 @@
 <script setup>
   import multiView from "../vue_components/multiView.vue"
-  import inlineView from "../vue_components/inlineView.vue"
-  import { box } from "../anu-examples/FirstSteps/Box.js"
-  import { box_data } from "../anu-examples/FirstSteps/Box_With_Data.js"
-  import { box_bind } from "../anu-examples/FirstSteps/Box_Bind.js"
-  import { box_selection } from "../anu-examples/FirstSteps/Box_Selection.js"
+  //import inlineView from "../vue_components/inlineView.vue"
 </script>
 
 <multiView>
@@ -27,7 +23,7 @@ BABYLON.MeshBuilder.CreateBox('ourBox', {size:2}, scene)
 ```
 :::
 
-<inlineView :scene="box" />
+<inlineView scene="FirstSteps/Box" />
 
 ## Using Data and Functions
 Anu's core philosophy is enabling you to manipulate the scene-graph and its meshes with data. We can begin to see how this is implemented when we pass data into [create()](../api/modules.html#create). In this example, we pass some example data into our function. We can now use this data to dynamically set the initializing properties of our box mesh. Instead of passing a raw value in our options object, we can pass [anonymous functions](https://www.geeksforgeeks.org/javascript-anonymous-functions/) instead. These functions will be passed the variable "d" which is the data object we passed into this method. We can now return the value of the data we want to use by indexing our data object by key. Our functions can perform any valid javascript code so long as they return the appropriate value for the option we are setting, in this case a number.  
@@ -47,7 +43,7 @@ let box = anu.create('box',
 ```
 :::
 
-<inlineView :scene="box_data" />
+<inlineView scene="FirstSteps/Box_With_Data" />
 
 ## Binding Data to Boxes
 Instead of using [create()](../api/modules.html#create) to create and return a single mesh, we can use [bind()](../api/modules.html#bind) to create a mesh for each index data we pass to the method. We call the bind method and pass an array length 3 of our data. [bind()](../api/modules.html#bind) creates a mesh for each element of the array and binds the respective index of data to the meshes metadata property. In the same way as [create()](../api/modules.html#create), we can use this data to manipulate the starting parameters of our meshes. But what if we want to manipulate other properties of our meshes such as their position? Notice that [bind()](../api/modules.html#bind) returns an instance of [Selection](../api/classes/Selection.md), this will be the key to dynamically manipulating our scene-graphs. 
@@ -70,7 +66,7 @@ Instead of using [create()](../api/modules.html#create) to create and return a s
 ```
 :::
 
-<inlineView :scene="box_bind" />
+<inlineView scene="FirstSteps/Box_Bind" />
 
 
 ## Manipulating Boxes with Selections
@@ -99,7 +95,7 @@ We will cover [Selection](../api/classes/Selection.md) in more detail later on, 
 ```
 :::
 
-<inlineView :scene="box_selection" />
+<inlineView scene="FirstSteps/Box_Selection" />
 
   ## Whats Next
   By this point, you should hopefully see how we can scale up these techniques to create and manipulate Babylon meshes to create data visualizations. In the following sections, we will work toward these goals more concretely. First by learning more about selections and how to use them, and then by building a 3D visualization from the ground up. 

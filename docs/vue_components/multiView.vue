@@ -10,58 +10,61 @@ import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureNam
 import { Inspector } from '@babylonjs/inspector';
 
 
-let worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
-
+// let worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
+let canvas = document.createElement('canvas');
+let engine = new Engine(canvas, true)
 
 async function createScene(e){
   let canvas = e.detail.canvas;
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-  var offscreen = canvas.transferControlToOffscreen();
-  worker.postMessage({"canvas": offscreen }, [offscreen]);
-  worker.onmessage = function(event){
-        console.log(event.data);
-    };
-    // let scene = await e.detail.scene(engine)
-    // let view = engine.registerView(e.detail.canvas, scene.activeCamera);
-    // const env = scene.createDefaultEnvironment();
-    // env.setMainColor(Color3.FromHexString('#0e0e17'));
-    // env.ground.position = new Vector3(0, -2, 0);
 
-    // scene.detachControl();
+  let module = await import("../anu-examples/" + e.detail.scene + ".js")
+  let fn = Object.keys(module)[0];
+  let scene = await module[fn](engine)
+  let view = engine.registerView(canvas, scene.activeCamera);
+  const env = scene.createDefaultEnvironment();
+  env.setMainColor(Color3.FromHexString('#0e0e17'));
+  env.ground.position = new Vector3(0, -2, 0);
 
-    // e.detail.canvas.addEventListener('mouseout', (i) => {
-    //   scene.detachControl();
-    // })
+  scene.detachControl();
 
-    // e.detail.canvas.addEventListener('mouseover', (i) => {
-    //   engine.inputElement = e.detail.canvas;
-    //   scene.attachControl();
+  canvas.addEventListener('mouseout', (i) => {
+    scene.detachControl();
+  })
 
-    //   if (e.detail.inspector) {
-    //     Inspector.Show(scene, {
-    //       globalRoot: e.detail.canvas.parentElement,
-    //       embedMode: true,
-    //       showInspector: false,
-    //     });
-    //   }
-    // });
+  canvas.addEventListener('mouseover', (i) => {
+    engine.inputElement = canvas
+    scene.attachControl();
 
-    // engine.activeView = view;
+    if (e.detail.inspector) {
+      Inspector.Show(scene, {
+         globalRoot: canvas.parentElement,
+         embedMode: true,
+         showInspector: false,
+       });
+    }
+  });
 
-    // engine.runRenderLoop(() => {
-    //   if (engine.activeView === view) {
-    //     scene.render();
-    //   }
-    // });
+  engine.activeView = view;
+
+
+  engine.runRenderLoop(() => {
+    if (engine.activeView === view) {
+    
+      scene.render();
+
+    }
+    // scene.render();
+  });
+
+    
      
 }
 
 window.addEventListener('test', createScene)
 
-// window.addEventListener('resize', function () {
-//       engine?.resize();
-//     });
+window.addEventListener('resize', function () {
+      engine?.resize();
+    });
 
 onBeforeUnmount(() => {
   engine.dispose();

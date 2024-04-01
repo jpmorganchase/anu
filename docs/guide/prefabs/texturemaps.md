@@ -3,7 +3,7 @@ outline: deep
 ---
 
 <script setup>
-  import singleView from  "../../vue_components/singleView.vue"
+  //import singleView from  "../../vue_components/singleView.vue"
   import { textureMap } from  "../../anu-examples/Geographic/Texture_Map.js"
   import { textureGlobe } from  "../../anu-examples/Geographic/Texture_Globe.js"
 </script>

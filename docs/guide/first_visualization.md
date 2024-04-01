@@ -1,15 +1,6 @@
 <script setup>
   import multiView from "../vue_components/multiView.vue"
-  import inlineView from "../vue_components/inlineView.vue"
-import { scatterPlot3DStep1 } from '../anu-examples/CreateAVis/step1';
-import { scatterPlot3DStep2 } from '../anu-examples/CreateAVis/step2';
-import { scatterPlot3DStep3 } from '../anu-examples/CreateAVis/step3';
-import { scatterPlot3DStep4 } from '../anu-examples/CreateAVis/step4';
-import { scatterPlot3DStep5 } from '../anu-examples/CreateAVis/step5';
-import { scatterPlot3DStep6 } from '../anu-examples/CreateAVis/step6';
-
-  
-
+  //import inlineView from "../vue_components/inlineView.vue"
 </script>
 
 <multiView>
@@ -41,7 +32,7 @@ let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
 :::
 
 
-<inlineView :scene="scatterPlot3DStep1" :inspector="true" />
+<inlineView scene="CreateAVis/step1" :inspector="true" />
 
 
 <div class="tip custom-block" style="padding-top: 8px">
@@ -67,7 +58,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
 ```
 
 
-<inlineView :scene="scatterPlot3DStep2" />
+<inlineView scene="CreateAVis/step2" />
 
 
 
@@ -92,7 +83,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
        .positionZ((d,n,i) => scaleZ(d.sepalWidth)); // [!code focus]
 ```
 
-<inlineView :scene="scatterPlot3DStep3" />
+<inlineView scene="CreateAVis/step3" />
 
 That is looking better! Above we are using linear scales from d3 to transform our data values to render space values. The domain is the extent, the minimum and maximum values, of our data keys and the range is the min and max values output by our function. For example, the smallest sepal length with output -10 and the largest 10. The nice() method simply adds some padding to make things look nicer. 
 We then use these functions directly in our position x,y,z calls, passing in the raw data values and returning the transformed values between -10 and 10.
@@ -123,7 +114,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
                                 }); // [!code focus]
 ```
 
-<inlineView :scene="scatterPlot3DStep5" />
+<inlineView scene="CreateAVis/step5" />
 
 ## Step 4: Adding Color
 
@@ -156,7 +147,7 @@ anu.createAxes('axes', scene, { parent: cot,
                                 }); 
 ```
 
-<inlineView :scene="scatterPlot3DStep6" />
+<inlineView scene="CreateAVis/step6" />
 
 
 </multiView>

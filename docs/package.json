@@ -10,12 +10,15 @@
     "@babylonjs/inspector": "^7.0.0",
     "@babylonjs/loaders": "^7.0.0",
     "@rollup/plugin-dsv": "^3.0.4",
+    "@rollup/plugin-dynamic-import-vars": "^2.1.2",
+    "vite-plugin-dynamic-import": "^1.5.0",
     "vue": "^3.3.4"
   },
   "dependencies": {
     "@jpmorganchase/anu": "^0.0.5",
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",
+    "jsonfn": "^0.31.0",
     "vitepress": "^1.0.1"
   }
 }

@@ -1,11 +1,6 @@
 <script setup>
   import multiView from "../vue_components/multiView.vue"
-  import inlineView from "../vue_components/inlineView.vue"
-  import { modValue } from '../anu-examples/Selections/mod_value';
-import { modFunction } from '../anu-examples/Selections/mod_function';
-import { prop } from '../anu-examples/Selections/prop';
-import { props } from '../anu-examples/Selections/props';
-
+  //import inlineView from "../vue_components/inlineView.vue"
 </script>
 
 <multiView>
@@ -32,7 +27,7 @@ Inspector.Show(scene, {
 ```
 ::: 
 
-<inlineView :scene="modValue" :inspector="true" />
+<inlineView scene="Selections/mod_value" :inspector="true" />
 
 However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 
@@ -53,7 +48,7 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
 ```
 ::: 
 
-<inlineView :scene="modFunction" />
+<inlineView scene="Selections/mod_function" />
 
 
 ## Wrapper Methods
@@ -95,7 +90,7 @@ spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.p
 ```
 ::: 
 
-<inlineView :scene="prop" />
+<inlineView scene="Selections/prop" />
 
 
 ## Modifying Many Properties
@@ -114,7 +109,7 @@ spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d
 ```
 ::: 
 
-<inlineView :scene="props" />
+<inlineView scene="Selections/props" />
 
 ## Putting It All Together
 

@@ -3,7 +3,7 @@ aside: false
 ---
 <script setup>
 import { barchart3D } from '../anu-examples/BarCharts/barchart3d.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 3D Bar Chart

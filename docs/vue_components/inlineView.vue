@@ -10,7 +10,7 @@ import { ref, watch, onMounted } from 'vue';
 const canvas = ref()
 
 const props = defineProps({
-  scene: Function,
+  scene: String,
   inspector: Boolean,
 });
 

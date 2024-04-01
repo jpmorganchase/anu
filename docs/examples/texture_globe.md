@@ -4,7 +4,7 @@ aside: false
 
 <script setup>
 import { textureGlobe } from '../anu-examples/Geographic/Texture_Globe.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Texture Globe

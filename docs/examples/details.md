@@ -3,7 +3,7 @@ aside: false
 ---
 <script setup>
 import { details } from '../anu-examples/Interactions/Details.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Details On Demand

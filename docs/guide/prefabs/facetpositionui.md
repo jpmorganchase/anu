@@ -3,7 +3,7 @@ outline: deep
 ---
 
 <script setup>
-  import singleView from  "../../vue_components/singleView.vue"
+  //import singleView from  "../../vue_components/singleView.vue"
   import { facetPosition } from  "../../anu-examples/Interactions/FacetPosition.js"
 </script>
 

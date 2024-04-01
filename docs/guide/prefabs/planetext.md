@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
 import { text } from '../../anu-examples/Text/text.js'
-import singleView  from '../../vue_components/singleView.vue'
+//import singleView  from '../../vue_components/singleView.vue'
 </script>
 
 # Plane Text

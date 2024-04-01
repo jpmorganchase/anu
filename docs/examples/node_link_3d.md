@@ -4,7 +4,7 @@ aside: false
 
 <script setup>
 import { nodelink3d } from '../anu-examples/Networks/NodeLink3D.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 3D Node Link 

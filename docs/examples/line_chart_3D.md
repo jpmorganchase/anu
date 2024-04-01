@@ -4,7 +4,7 @@ aside: false
 
 <script setup>
 import { linechart3D } from '../anu-examples/LineCharts/linechart3D.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 3D Line Chart

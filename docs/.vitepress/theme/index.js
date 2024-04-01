@@ -16,5 +16,11 @@ export default {
     app.component('card', defineAsyncComponent(() =>
       import('../../vue_components/card.vue')
     ))
+    app.component('singleView', defineAsyncComponent(() =>
+    import('../../vue_components/singleView.vue')
+  ))
+  app.component('inlineView', defineAsyncComponent(() =>
+  import('../../vue_components/inlineView.vue')
+))
   }
 }

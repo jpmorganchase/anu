@@ -1,4 +1,5 @@
-import { Engine, Color3, Vector3} from "@babylonjs/core";
+import { Engine, Color3, Vector3 } from "@babylonjs/core";
+import { JSONfn } from 'jsonfn'
 
 let engine = undefined;
 
@@ -11,8 +12,10 @@ self.onmessage = async function (evt) {
 
     self.postMessage("start")
     let canvas = evt.data.canvas;
-    let obj = await import('../anu-examples/BarCharts/barchart3d');
-    let scene = await obj.barchart3D(engine)
+    let obj = await import(`../anu-examples/${evt.data.scene}.js`)
+    let fn = Object.keys(obj)[0]
+    // self.postMessage(JSONfn.stringify(Object.keys(obj)))
+    let scene = await obj[fn](engine)
     let view = engine.registerView(canvas, scene.activeCamera);
     const env = scene.createDefaultEnvironment();
     env.setMainColor(Color3.FromHexString('#0e0e17'));

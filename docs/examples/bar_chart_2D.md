@@ -3,7 +3,7 @@ aside: false
 ---
 <script setup>
 import { barchart2d } from '../anu-examples/BarCharts/barchart2d.js'
-import singleView  from '../vue_components/singleView.vue'
+//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 2D Bar Chart
