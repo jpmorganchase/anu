@@ -7,10 +7,8 @@
 <script setup>
 import { ref, watch, onBeforeUnmount, onBeforeMount, onMounted} from 'vue';
 import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
-import { Inspector } from '@babylonjs/inspector';
+import { inspector } from "@babylonjs/inspector";
 
-
-// let worker = new Worker(new URL('./worker.js', import.meta.url), {type: 'module'});
 let canvas = document.createElement('canvas');
 let engine = new Engine(canvas, true)
 
@@ -28,7 +26,7 @@ async function createScene(e){
   scene.detachControl();
 
   canvas.addEventListener('mouseout', (i) => {
-    scene.detachControl();
+   scene.detachControl();
   })
 
   canvas.addEventListener('mouseover', (i) => {
@@ -36,7 +34,8 @@ async function createScene(e){
     scene.attachControl();
 
     if (e.detail.inspector) {
-      Inspector.Show(scene, {
+      scene.debugLayer.hide()
+      scene.debugLayer.show({
          globalRoot: canvas.parentElement,
          embedMode: true,
          showInspector: false,

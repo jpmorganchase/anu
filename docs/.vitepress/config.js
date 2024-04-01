@@ -1,8 +1,6 @@
 import { defineConfig } from 'vitepress';
 import dsv from '@rollup/plugin-dsv' 
 import dynamicImport from 'vite-plugin-dynamic-import'
-import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -161,9 +159,6 @@ export default defineConfig({
         },
         plugins: [
             dsv(),
-            // dynamicImportVars({
-            //   exclude: ['../node_modules/']
-            // }),
             dynamicImport(),
          
           // {configureServer(server) {

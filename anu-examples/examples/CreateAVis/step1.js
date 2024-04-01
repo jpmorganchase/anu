@@ -2,8 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
-import { Scene, HemisphericLight, ArcRotateCamera, Vector3, MeshBuilder} from "@babylonjs/core";
-import { Inspector } from '@babylonjs/inspector';
+import { Scene, HemisphericLight, ArcRotateCamera, Vector3 } from "@babylonjs/core";
 import iris from '../../data/iris.json' assert {type: 'json'};
 
 //create and export a function that takes a babylon engine and returns a scene
@@ -22,10 +21,10 @@ export const scatterPlot3DStep1 = function(engine){
   let spheres = cot.bind('sphere', {diameter: 1}, iris);
   
 
-  Inspector.Show(scene, {
-    embedMode: true,
-    showInspector: false
-  });
+  // Inspector.Show(scene, {
+  //   embedMode: true,
+  //   showInspector: false
+  // });
 
   return scene;
 }; 
