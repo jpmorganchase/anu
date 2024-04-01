@@ -2,32 +2,15 @@
 aside: false
 ---
 
+<script setup>
+import { linechart3D } from '../anu-examples/linechart3D.js'
+//import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # 3D Line Chart
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=linechart3D">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="linechart3D" />
 
 ::: code-group
-<<< @/../anu-examples/examples/LineCharts/linechart3D.js 
-
-<<< @/../anu-examples/data/yield-curve.csv
+<<< @/./anu-examples/linechart3D.js 
 :::

@@ -2,32 +2,15 @@
 aside: false
 ---
 
+<script setup>
+import { linechart2D } from '../anu-examples/linechart2D.js'
+//import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # 2D Line Chart
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=linechart2D">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="linechart2D" />
 
 ::: code-group
-<<< @/../anu-examples/examples/LineCharts/linechart2D.js 
-
-<<< @/../anu-examples/data/yield-curve.csv
+<<< @/./anu-examples/linechart2D.js 
 :::

@@ -1,53 +1,69 @@
 import {
+  AbstractMesh,
+  Animation,
   AnimationGroup,
+  Axis,
   BaseSixDofDragBehavior,
   ClipboardEventTypes,
   ClipboardInfo,
+  Color3,
+  Color4,
   Constants,
   CreateBox,
   CreatePlane,
+  DecodeBase64ToBinary,
+  DynamicTexture,
+  EffectFallbacks,
+  EngineStore,
+  Epsilon,
   FadeInOutBehavior,
   FollowBehavior,
+  GetClass,
   Gizmo,
   HandConstraintBehavior,
+  HandleFallbacksForShadows,
+  HemisphericLight,
+  IsDocumentAvailable,
+  KeyboardEventTypes,
   Layer,
+  Logger,
+  MaterialDefines,
+  Matrix,
+  Mesh,
+  Observable,
+  PerfCounter,
   PivotTools,
   PointerDragBehavior,
-  SixDofDragBehavior,
-  SurfaceMagnetismBehavior
-} from "./chunk-4TAAHQM4.js";
-import {
-  Animation,
-  DynamicTexture,
-  HemisphericLight,
-  ShaderMaterial,
-  StandardMaterial,
-  UtilityLayerRenderer
-} from "./chunk-OHWPCADU.js";
-import {
-  AbstractMesh,
-  Axis,
-  EffectFallbacks,
-  HandleFallbacksForShadows,
-  MaterialDefines,
-  Mesh,
+  PointerEventTypes,
   PrepareAttributesForInstances,
   PrepareDefinesForAttributes,
   PrepareUniformsAndSamplersList,
   PushMaterial,
+  Quaternion,
+  RandomGUID,
+  RegisterClass,
+  Scalar,
   SceneLoader,
-  Space,
-  Texture,
-  TransformNode,
-  VertexData,
-  Viewport
-} from "./chunk-ITV2C7F3.js";
-import "./chunk-7PMSBYDW.js";
-import {
-  KeyboardEventTypes,
-  PointerEventTypes,
   SerializationHelper,
+  ShaderMaterial,
+  ShaderStore,
+  SixDofDragBehavior,
+  Space,
+  StandardMaterial,
+  SurfaceMagnetismBehavior,
+  Texture,
+  TmpColors,
+  TmpVectors,
+  Tools,
+  TransformNode,
+  UtilityLayerRenderer,
+  Vector2,
+  Vector3,
+  Vector4,
   VertexBuffer,
+  VertexData,
+  Viewport,
+  WebRequest,
   __decorate,
   expandToProperty,
   serialize,
@@ -55,47 +71,8 @@ import {
   serializeAsColor4,
   serializeAsTexture,
   serializeAsVector3
-} from "./chunk-MGIQNXLG.js";
-import {
-  Matrix,
-  Quaternion,
-  TmpVectors,
-  Vector2,
-  Vector3,
-  Vector4
-} from "./chunk-KF2PBIOU.js";
-import {
-  Color3,
-  Color4,
-  Scalar,
-  TmpColors
-} from "./chunk-HW4XGYU2.js";
-import {
-  Epsilon
-} from "./chunk-PQO2DACS.js";
-import {
-  PerfCounter
-} from "./chunk-IISHVUYQ.js";
-import "./chunk-7NS6XXZR.js";
-import {
-  DecodeBase64ToBinary,
-  RandomGUID,
-  Tools,
-  WebRequest
-} from "./chunk-CP55DDXS.js";
-import {
-  GetClass,
-  RegisterClass
-} from "./chunk-AJT353ZC.js";
-import {
-  IsDocumentAvailable,
-  Logger,
-  ShaderStore
-} from "./chunk-TFTPPWZW.js";
-import {
-  EngineStore,
-  Observable
-} from "./chunk-2PRSVFDC.js";
+} from "./chunk-H4T7XHXW.js";
+import "./chunk-Y2F7D3TJ.js";
 
 // node_modules/@babylonjs/gui/2D/valueAndUnit.js
 var ValueAndUnit = class _ValueAndUnit {

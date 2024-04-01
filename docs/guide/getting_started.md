@@ -73,7 +73,7 @@ You can now call anu methods as such
 
 ```js
 //mesh, name, scene
-anu.create('box', 'myBox', scene)
+anu.create('box', 'myBox')
 ```
 
 ### Or Use The Anu-Starter Template

@@ -1,0 +1,1 @@
+import{B as o}from"./anu.BEFiqz5l.js";import{S as r,H as n,V as t,A as c}from"./flowGraphSceneTickEventBlock.jsKt_esu.js";const h=async function(a){const e=new r(a);return new n("light1",new t(0,10,0),e),new c("Camera",-(Math.PI/4)*3,Math.PI/4,10,new t(0,0,0),e).attachControl(!0),o("box","ourBox",{size:2},[{count:2}]),e};export{h as box};

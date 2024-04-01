@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
-
+import dsv from '@rollup/plugin-dsv' 
+import dynamicImport from 'vite-plugin-dynamic-import'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -140,23 +141,33 @@ export default defineConfig({
     ]
   },
       vite: {
-        // rollupOptions: {
-        //   external: ["@babylonjs/core"],
-        // }
-        server: {
-          headers: {
-            'Cross-Origin-Embedder-Policy': 'require-corp',
-            'Cross-Origin-Opener-Policy': 'same-origin',
-          },
+        // worker: {
+        //   format: "es"
+        // },
+        rollupOptions: {
+          external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
         },
+        
+        // server: {
+        //     // watch: {
+        //     //     followSymlinks: false,
+        //     // },
+        //   // headers: {
+        //   //   'Cross-Origin-Embedder-Policy': 'require-corp',
+        //   //   'Cross-Origin-Opener-Policy': 'same-origin',
+        //   // },
+        // },
         plugins: [
-          {configureServer(server) {
-                  server.middlewares.use((_req, res, next) => {
-                      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-                      res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
-                      next();
-                  });
-           }
-      }]
+            dsv(),
+            dynamicImport(),
+         
+          // {configureServer(server) {
+          //         server.middlewares.use((_req, res, next) => {
+          //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+          //             res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
+          //             next();
+          //         });
+          //}
+        ]
       }
 })

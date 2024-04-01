@@ -1,9 +1,13 @@
---- 
+---
 layout: page
 ---
+
 <script setup>
-    import card from './card.vue'
+  //import card from '../vue_components/card.vue'
+  import multiView from '../vue_components/multiView.vue'
 </script>
+
+<multiView>
 
 <div class='container'>
 <h1>Example Gallery</h1>
@@ -13,18 +17,18 @@ layout: page
 <hr>
 <div class="cards">
 
-<card title="3D Scatter Plot" example="scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
-  
-<card title="3D Bar Chart" example="barchart3D" link="/anu/examples/bar_chart_3D"></card>
+<card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
+
+<card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card>
 
 <card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card>
 
-<card title="2D Scatter Plot" example="scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
+<card title="2D Scatter Plot" example="Scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
 
-<card title="2D Bar Chart" example="barchart2D" link="/anu/examples/bar_chart_2D"></card>
+<card title="2D Bar Chart" example="barchart2d" link="/anu/examples/bar_chart_2D"></card>
 
 <card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card>
- 
+
 </div>
 </div>
 
@@ -33,12 +37,12 @@ layout: page
 <hr>
 <div class="cards">
 
-<card title="Texture Map" example="textureMap" link="/anu/examples/texture_map"></card>
+<card title="Texture Map" example="Texture_Map" link="/anu/examples/texture_map"></card>
 
-<card title="Texture Globe" example="textureGlobe" link="/anu/examples/texture_globe"></card>
+<card title="Texture Globe" example="Texture_Globe" link="/anu/examples/texture_globe"></card>
 
-<card title="Mesh Map" example="meshMap" link="/anu/examples/mesh_map"></card>
-  
+<card title="Mesh Map" example="Mesh_Map" link="/anu/examples/mesh_map"></card>
+
 </div>
 </div>
 
@@ -47,29 +51,31 @@ layout: page
 <hr>
 <div class="cards">
 
-<card title="Pointer Hover" example="hover" link="/anu/examples/hover"></card>
+<card title="Pointer Hover" example="Hover" link="/anu/examples/hover"></card>
 
-<card title="Details On Demand" example="details" link="/anu/examples/details"></card>
+<card title="Details On Demand" example="Details" link="/anu/examples/details"></card>
 
-<card title="Facet and Position" example="facetposition" link="/anu/examples/facet_position"></card>
+<card title="Facet and Position" example="FacetPosition" link="/anu/examples/facet_position"></card>
 
 <card title="Layouts" example="layout" link="/anu/examples/layout"></card>
-  
-</div>
-</div>
 
+</div>
+</div>
 
 <div class='section'>
     <h2>Networks</h2>
 <hr>
 <div class="cards">
 
-<card title="Node Link 3D" example="nodelink3d" link="/anu/examples/node_link_3d"></card>
-  
+<card title="Node Link 3D" example="NodeLink3D" link="/anu/examples/node_link_3d"></card>
+
 </div>
 </div>
 
 </div>
+
+</multiView>
+
 
 <style>
 h1,
@@ -118,7 +124,7 @@ h4 {
     flex-direction: row;
     margin-top: 10px;
   }
-  .cards iframe {
+  .cards canvas {
     margin: 5px;
     border: 1px solid #000;
     box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.3); 

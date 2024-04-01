@@ -1,3 +1,14 @@
+import {
+  dispatch_default,
+  interval_default,
+  now,
+  quadtree,
+  timeout_default,
+  timer,
+  timerFlush
+} from "./chunk-IH6SPDTA.js";
+import "./chunk-Y2F7D3TJ.js";
+
 // node_modules/d3-array/src/ascending.js
 function ascending(a4, b) {
   return a4 == null || b == null ? NaN : a4 < b ? -1 : a4 > b ? 1 : a4 >= b ? 0 : NaN;
@@ -1288,9 +1299,9 @@ function difference(values, ...others) {
 
 // node_modules/d3-array/src/disjoint.js
 function disjoint(values, other) {
-  const iterator = other[Symbol.iterator](), set4 = new InternSet();
+  const iterator = other[Symbol.iterator](), set3 = new InternSet();
   for (const v2 of values) {
-    if (set4.has(v2))
+    if (set3.has(v2))
       return false;
     let value, done;
     while ({ value, done } = iterator.next()) {
@@ -1298,7 +1309,7 @@ function disjoint(values, other) {
         break;
       if (Object.is(v2, value))
         return false;
-      set4.add(value);
+      set3.add(value);
     }
   }
   return true;
@@ -1325,17 +1336,17 @@ function set(values) {
 
 // node_modules/d3-array/src/superset.js
 function superset(values, other) {
-  const iterator = values[Symbol.iterator](), set4 = /* @__PURE__ */ new Set();
+  const iterator = values[Symbol.iterator](), set3 = /* @__PURE__ */ new Set();
   for (const o of other) {
     const io = intern(o);
-    if (set4.has(io))
+    if (set3.has(io))
       continue;
     let value, done;
     while ({ value, done } = iterator.next()) {
       if (done)
         return false;
       const ivalue = intern(value);
-      set4.add(ivalue);
+      set3.add(ivalue);
       if (Object.is(io, ivalue))
         break;
     }
@@ -1353,13 +1364,13 @@ function subset(values, other) {
 
 // node_modules/d3-array/src/union.js
 function union(...others) {
-  const set4 = new InternSet();
+  const set3 = new InternSet();
   for (const other of others) {
     for (const o of other) {
-      set4.add(o);
+      set3.add(o);
     }
   }
-  return set4;
+  return set3;
 }
 
 // node_modules/d3-axis/src/identity.js
@@ -1468,93 +1479,6 @@ function axisBottom(scale2) {
 function axisLeft(scale2) {
   return axis(left, scale2);
 }
-
-// node_modules/d3-dispatch/src/dispatch.js
-var noop = { value: () => {
-} };
-function dispatch() {
-  for (var i = 0, n = arguments.length, _ = {}, t; i < n; ++i) {
-    if (!(t = arguments[i] + "") || t in _ || /[\s.]/.test(t))
-      throw new Error("illegal type: " + t);
-    _[t] = [];
-  }
-  return new Dispatch(_);
-}
-function Dispatch(_) {
-  this._ = _;
-}
-function parseTypenames(typenames, types) {
-  return typenames.trim().split(/^|\s+/).map(function(t) {
-    var name = "", i = t.indexOf(".");
-    if (i >= 0)
-      name = t.slice(i + 1), t = t.slice(0, i);
-    if (t && !types.hasOwnProperty(t))
-      throw new Error("unknown type: " + t);
-    return { type: t, name };
-  });
-}
-Dispatch.prototype = dispatch.prototype = {
-  constructor: Dispatch,
-  on: function(typename, callback) {
-    var _ = this._, T = parseTypenames(typename + "", _), t, i = -1, n = T.length;
-    if (arguments.length < 2) {
-      while (++i < n)
-        if ((t = (typename = T[i]).type) && (t = get(_[t], typename.name)))
-          return t;
-      return;
-    }
-    if (callback != null && typeof callback !== "function")
-      throw new Error("invalid callback: " + callback);
-    while (++i < n) {
-      if (t = (typename = T[i]).type)
-        _[t] = set2(_[t], typename.name, callback);
-      else if (callback == null)
-        for (t in _)
-          _[t] = set2(_[t], typename.name, null);
-    }
-    return this;
-  },
-  copy: function() {
-    var copy3 = {}, _ = this._;
-    for (var t in _)
-      copy3[t] = _[t].slice();
-    return new Dispatch(copy3);
-  },
-  call: function(type2, that) {
-    if ((n = arguments.length - 2) > 0)
-      for (var args = new Array(n), i = 0, n, t; i < n; ++i)
-        args[i] = arguments[i + 2];
-    if (!this._.hasOwnProperty(type2))
-      throw new Error("unknown type: " + type2);
-    for (t = this._[type2], i = 0, n = t.length; i < n; ++i)
-      t[i].value.apply(that, args);
-  },
-  apply: function(type2, that, args) {
-    if (!this._.hasOwnProperty(type2))
-      throw new Error("unknown type: " + type2);
-    for (var t = this._[type2], i = 0, n = t.length; i < n; ++i)
-      t[i].value.apply(that, args);
-  }
-};
-function get(type2, name) {
-  for (var i = 0, n = type2.length, c6; i < n; ++i) {
-    if ((c6 = type2[i]).name === name) {
-      return c6.value;
-    }
-  }
-}
-function set2(type2, name, callback) {
-  for (var i = 0, n = type2.length; i < n; ++i) {
-    if (type2[i].name === name) {
-      type2[i] = noop, type2 = type2.slice(0, i).concat(type2.slice(i + 1));
-      break;
-    }
-  }
-  if (callback != null)
-    type2.push({ name, value: callback });
-  return type2;
-}
-var dispatch_default = dispatch;
 
 // node_modules/d3-selection/src/namespaces.js
 var xhtml = "http://www.w3.org/1999/xhtml";
@@ -2229,7 +2153,7 @@ function contextListener(listener) {
     listener.call(this, event, this.__data__);
   };
 }
-function parseTypenames2(typenames) {
+function parseTypenames(typenames) {
   return typenames.trim().split(/^|\s+/).map(function(t) {
     var name = "", i = t.indexOf(".");
     if (i >= 0)
@@ -2276,7 +2200,7 @@ function onAdd(typename, value, options) {
   };
 }
 function on_default(typename, value, options) {
-  var typenames = parseTypenames2(typename + ""), i, n = typenames.length, t;
+  var typenames = parseTypenames(typename + ""), i, n = typenames.length, t;
   if (arguments.length < 2) {
     var on = this.node().__on;
     if (on)
@@ -2519,7 +2443,7 @@ function DragEvent(type2, {
   y: y4,
   dx,
   dy,
-  dispatch: dispatch2
+  dispatch
 }) {
   Object.defineProperties(this, {
     type: { value: type2, enumerable: true, configurable: true },
@@ -2532,7 +2456,7 @@ function DragEvent(type2, {
     y: { value: y4, enumerable: true, configurable: true },
     dx: { value: dx, enumerable: true, configurable: true },
     dy: { value: dy, enumerable: true, configurable: true },
-    _: { value: dispatch2 }
+    _: { value: dispatch }
   });
 }
 DragEvent.prototype.on = function() {
@@ -2621,7 +2545,7 @@ function drag_default() {
     }
   }
   function beforestart(that, container2, event, d, identifier, touch) {
-    var dispatch2 = listeners.copy(), p = pointer_default(touch || event, container2), dx, dy, s2;
+    var dispatch = listeners.copy(), p = pointer_default(touch || event, container2), dx, dy, s2;
     if ((s2 = subject.call(that, new DragEvent("beforestart", {
       sourceEvent: event,
       target: drag,
@@ -2631,7 +2555,7 @@ function drag_default() {
       y: p[1],
       dx: 0,
       dy: 0,
-      dispatch: dispatch2
+      dispatch
     }), d)) == null)
       return;
     dx = s2.x - p[0] || 0;
@@ -2648,7 +2572,7 @@ function drag_default() {
           p = pointer_default(touch2 || event2, container2), n = active;
           break;
       }
-      dispatch2.call(
+      dispatch.call(
         type2,
         that,
         new DragEvent(type2, {
@@ -2661,7 +2585,7 @@ function drag_default() {
           y: p[1] + dy,
           dx: p[0] - p02[0],
           dy: p[1] - p02[1],
-          dispatch: dispatch2
+          dispatch
         }),
         d
       );
@@ -3684,148 +3608,6 @@ function quantize_default(interpolator, n) {
   return samples;
 }
 
-// node_modules/d3-timer/src/timer.js
-var frame = 0;
-var timeout = 0;
-var interval = 0;
-var pokeDelay = 1e3;
-var taskHead;
-var taskTail;
-var clockLast = 0;
-var clockNow = 0;
-var clockSkew = 0;
-var clock = typeof performance === "object" && performance.now ? performance : Date;
-var setFrame = typeof window === "object" && window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : function(f) {
-  setTimeout(f, 17);
-};
-function now() {
-  return clockNow || (setFrame(clearNow), clockNow = clock.now() + clockSkew);
-}
-function clearNow() {
-  clockNow = 0;
-}
-function Timer() {
-  this._call = this._time = this._next = null;
-}
-Timer.prototype = timer.prototype = {
-  constructor: Timer,
-  restart: function(callback, delay, time2) {
-    if (typeof callback !== "function")
-      throw new TypeError("callback is not a function");
-    time2 = (time2 == null ? now() : +time2) + (delay == null ? 0 : +delay);
-    if (!this._next && taskTail !== this) {
-      if (taskTail)
-        taskTail._next = this;
-      else
-        taskHead = this;
-      taskTail = this;
-    }
-    this._call = callback;
-    this._time = time2;
-    sleep();
-  },
-  stop: function() {
-    if (this._call) {
-      this._call = null;
-      this._time = Infinity;
-      sleep();
-    }
-  }
-};
-function timer(callback, delay, time2) {
-  var t = new Timer();
-  t.restart(callback, delay, time2);
-  return t;
-}
-function timerFlush() {
-  now();
-  ++frame;
-  var t = taskHead, e;
-  while (t) {
-    if ((e = clockNow - t._time) >= 0)
-      t._call.call(void 0, e);
-    t = t._next;
-  }
-  --frame;
-}
-function wake() {
-  clockNow = (clockLast = clock.now()) + clockSkew;
-  frame = timeout = 0;
-  try {
-    timerFlush();
-  } finally {
-    frame = 0;
-    nap();
-    clockNow = 0;
-  }
-}
-function poke() {
-  var now2 = clock.now(), delay = now2 - clockLast;
-  if (delay > pokeDelay)
-    clockSkew -= delay, clockLast = now2;
-}
-function nap() {
-  var t03, t13 = taskHead, t22, time2 = Infinity;
-  while (t13) {
-    if (t13._call) {
-      if (time2 > t13._time)
-        time2 = t13._time;
-      t03 = t13, t13 = t13._next;
-    } else {
-      t22 = t13._next, t13._next = null;
-      t13 = t03 ? t03._next = t22 : taskHead = t22;
-    }
-  }
-  taskTail = t03;
-  sleep(time2);
-}
-function sleep(time2) {
-  if (frame)
-    return;
-  if (timeout)
-    timeout = clearTimeout(timeout);
-  var delay = time2 - clockNow;
-  if (delay > 24) {
-    if (time2 < Infinity)
-      timeout = setTimeout(wake, time2 - clock.now() - clockSkew);
-    if (interval)
-      interval = clearInterval(interval);
-  } else {
-    if (!interval)
-      clockLast = clock.now(), interval = setInterval(poke, pokeDelay);
-    frame = 1, setFrame(wake);
-  }
-}
-
-// node_modules/d3-timer/src/timeout.js
-function timeout_default(callback, delay, time2) {
-  var t = new Timer();
-  delay = delay == null ? 0 : +delay;
-  t.restart((elapsed) => {
-    t.stop();
-    callback(elapsed + delay);
-  }, delay, time2);
-  return t;
-}
-
-// node_modules/d3-timer/src/interval.js
-function interval_default(callback, delay, time2) {
-  var t = new Timer(), total = delay;
-  if (delay == null)
-    return t.restart(callback, delay, time2), t;
-  t._restart = t.restart;
-  t.restart = function(callback2, delay2, time3) {
-    delay2 = +delay2, time3 = time3 == null ? now() : +time3;
-    t._restart(function tick(elapsed) {
-      elapsed += total;
-      t._restart(tick, total += delay2, time3);
-      callback2(elapsed);
-    }, delay2, time3);
-  };
-  t.restart(callback, delay, time2);
-  return t;
-}
-
 // node_modules/d3-transition/src/transition/schedule.js
 var emptyOn = dispatch_default("start", "end", "cancel", "interrupt");
 var emptyTween = [];
@@ -3859,18 +3641,18 @@ function schedule_default(node, name, id2, index3, group2, timing) {
   });
 }
 function init(node, id2) {
-  var schedule = get2(node, id2);
+  var schedule = get(node, id2);
   if (schedule.state > CREATED)
     throw new Error("too late; already scheduled");
   return schedule;
 }
-function set3(node, id2) {
-  var schedule = get2(node, id2);
+function set2(node, id2) {
+  var schedule = get(node, id2);
   if (schedule.state > STARTED)
     throw new Error("too late; already running");
   return schedule;
 }
-function get2(node, id2) {
+function get(node, id2) {
   var schedule = node.__transition;
   if (!schedule || !(schedule = schedule[id2]))
     throw new Error("transition not found");
@@ -3980,7 +3762,7 @@ function interrupt_default2(name) {
 function tweenRemove(id2, name) {
   var tween0, tween1;
   return function() {
-    var schedule = set3(this, id2), tween = schedule.tween;
+    var schedule = set2(this, id2), tween = schedule.tween;
     if (tween !== tween0) {
       tween1 = tween0 = tween;
       for (var i = 0, n = tween1.length; i < n; ++i) {
@@ -3999,7 +3781,7 @@ function tweenFunction(id2, name, value) {
   if (typeof value !== "function")
     throw new Error();
   return function() {
-    var schedule = set3(this, id2), tween = schedule.tween;
+    var schedule = set2(this, id2), tween = schedule.tween;
     if (tween !== tween0) {
       tween1 = (tween0 = tween).slice();
       for (var t = { name, value }, i = 0, n = tween1.length; i < n; ++i) {
@@ -4018,7 +3800,7 @@ function tween_default(name, value) {
   var id2 = this._id;
   name += "";
   if (arguments.length < 2) {
-    var tween = get2(this.node(), id2).tween;
+    var tween = get(this.node(), id2).tween;
     for (var i = 0, n = tween.length, t; i < n; ++i) {
       if ((t = tween[i]).name === name) {
         return t.value;
@@ -4031,11 +3813,11 @@ function tween_default(name, value) {
 function tweenValue(transition2, name, value) {
   var id2 = transition2._id;
   transition2.each(function() {
-    var schedule = set3(this, id2);
+    var schedule = set2(this, id2);
     (schedule.value || (schedule.value = {}))[name] = value.apply(this, arguments);
   });
   return function(node) {
-    return get2(node, id2).value[name];
+    return get(node, id2).value[name];
   };
 }
 
@@ -4155,23 +3937,23 @@ function delayConstant(id2, value) {
 }
 function delay_default(value) {
   var id2 = this._id;
-  return arguments.length ? this.each((typeof value === "function" ? delayFunction : delayConstant)(id2, value)) : get2(this.node(), id2).delay;
+  return arguments.length ? this.each((typeof value === "function" ? delayFunction : delayConstant)(id2, value)) : get(this.node(), id2).delay;
 }
 
 // node_modules/d3-transition/src/transition/duration.js
 function durationFunction(id2, value) {
   return function() {
-    set3(this, id2).duration = +value.apply(this, arguments);
+    set2(this, id2).duration = +value.apply(this, arguments);
   };
 }
 function durationConstant(id2, value) {
   return value = +value, function() {
-    set3(this, id2).duration = value;
+    set2(this, id2).duration = value;
   };
 }
 function duration_default(value) {
   var id2 = this._id;
-  return arguments.length ? this.each((typeof value === "function" ? durationFunction : durationConstant)(id2, value)) : get2(this.node(), id2).duration;
+  return arguments.length ? this.each((typeof value === "function" ? durationFunction : durationConstant)(id2, value)) : get(this.node(), id2).duration;
 }
 
 // node_modules/d3-transition/src/transition/ease.js
@@ -4179,12 +3961,12 @@ function easeConstant(id2, value) {
   if (typeof value !== "function")
     throw new Error();
   return function() {
-    set3(this, id2).ease = value;
+    set2(this, id2).ease = value;
   };
 }
 function ease_default(value) {
   var id2 = this._id;
-  return arguments.length ? this.each(easeConstant(id2, value)) : get2(this.node(), id2).ease;
+  return arguments.length ? this.each(easeConstant(id2, value)) : get(this.node(), id2).ease;
 }
 
 // node_modules/d3-transition/src/transition/easeVarying.js
@@ -4193,7 +3975,7 @@ function easeVarying(id2, value) {
     var v2 = value.apply(this, arguments);
     if (typeof v2 !== "function")
       throw new Error();
-    set3(this, id2).ease = v2;
+    set2(this, id2).ease = v2;
   };
 }
 function easeVarying_default(value) {
@@ -4243,7 +4025,7 @@ function start(name) {
   });
 }
 function onFunction(id2, name, listener) {
-  var on0, on1, sit = start(name) ? init : set3;
+  var on0, on1, sit = start(name) ? init : set2;
   return function() {
     var schedule = sit(this, id2), on = schedule.on;
     if (on !== on0)
@@ -4253,7 +4035,7 @@ function onFunction(id2, name, listener) {
 }
 function on_default2(name, listener) {
   var id2 = this._id;
-  return arguments.length < 2 ? get2(this.node(), id2).on.on(name) : this.each(onFunction(id2, name, listener));
+  return arguments.length < 2 ? get(this.node(), id2).on.on(name) : this.each(onFunction(id2, name, listener));
 }
 
 // node_modules/d3-transition/src/transition/remove.js
@@ -4282,7 +4064,7 @@ function select_default3(select) {
         if ("__data__" in node)
           subnode.__data__ = node.__data__;
         subgroup[i] = subnode;
-        schedule_default(subgroup[i], name, id2, i, subgroup, get2(node, id2));
+        schedule_default(subgroup[i], name, id2, i, subgroup, get(node, id2));
       }
     }
   }
@@ -4297,7 +4079,7 @@ function selectAll_default3(select) {
   for (var groups2 = this._groups, m3 = groups2.length, subgroups = [], parents = [], j = 0; j < m3; ++j) {
     for (var group2 = groups2[j], n = group2.length, node, i = 0; i < n; ++i) {
       if (node = group2[i]) {
-        for (var children2 = select.call(node, node.__data__, i, group2), child, inherit2 = get2(node, id2), k2 = 0, l = children2.length; k2 < l; ++k2) {
+        for (var children2 = select.call(node, node.__data__, i, group2), child, inherit2 = get(node, id2), k2 = 0, l = children2.length; k2 < l; ++k2) {
           if (child = children2[k2]) {
             schedule_default(child, name, id2, k2, children2, inherit2);
           }
@@ -4348,7 +4130,7 @@ function styleFunction2(name, interpolate, value) {
 function styleMaybeRemove(id2, name) {
   var on0, on1, listener0, key = "style." + name, event = "end." + key, remove2;
   return function() {
-    var schedule = set3(this, id2), on = schedule.on, listener = schedule.value[key] == null ? remove2 || (remove2 = styleRemove2(name)) : void 0;
+    var schedule = set2(this, id2), on = schedule.on, listener = schedule.value[key] == null ? remove2 || (remove2 = styleRemove2(name)) : void 0;
     if (on !== on0 || listener0 !== listener)
       (on1 = (on0 = on).copy()).on(event, listener0 = listener);
     schedule.on = on1;
@@ -4437,7 +4219,7 @@ function transition_default() {
   for (var groups2 = this._groups, m3 = groups2.length, j = 0; j < m3; ++j) {
     for (var group2 = groups2[j], n = group2.length, node, i = 0; i < n; ++i) {
       if (node = group2[i]) {
-        var inherit2 = get2(node, id0);
+        var inherit2 = get(node, id0);
         schedule_default(node, name, id1, i, group2, {
           time: inherit2.time + inherit2.delay + inherit2.duration,
           delay: 0,
@@ -4459,7 +4241,7 @@ function end_default() {
         resolve();
     } };
     that.each(function() {
-      var schedule = set3(this, id2), on = schedule.on;
+      var schedule = set2(this, id2), on = schedule.on;
       if (on !== on0) {
         on1 = (on0 = on).copy();
         on1._.cancel.push(cancel);
@@ -4767,7 +4549,7 @@ function BrushEvent(type2, {
   target,
   selection: selection2,
   mode: mode2,
-  dispatch: dispatch2
+  dispatch
 }) {
   Object.defineProperties(this, {
     type: { value: type2, enumerable: true, configurable: true },
@@ -4775,7 +4557,7 @@ function BrushEvent(type2, {
     target: { value: target, enumerable: true, configurable: true },
     selection: { value: selection2, enumerable: true, configurable: true },
     mode: { value: mode2, enumerable: true, configurable: true },
-    _: { value: dispatch2 }
+    _: { value: dispatch }
   });
 }
 
@@ -6356,7 +6138,7 @@ var Delaunator = class _Delaunator {
     this._hullPrev = new Uint32Array(n);
     this._hullNext = new Uint32Array(n);
     this._hullTri = new Uint32Array(n);
-    this._hullHash = new Int32Array(this._hashSize).fill(-1);
+    this._hullHash = new Int32Array(this._hashSize);
     this._ids = new Uint32Array(n);
     this._dists = new Float64Array(n);
     this.update();
@@ -6383,9 +6165,8 @@ var Delaunator = class _Delaunator {
     }
     const cx = (minX + maxX) / 2;
     const cy = (minY + maxY2) / 2;
-    let minDist = Infinity;
     let i0, i1, i2;
-    for (let i = 0; i < n; i++) {
+    for (let i = 0, minDist = Infinity; i < n; i++) {
       const d = dist(cx, cy, coords[2 * i], coords[2 * i + 1]);
       if (d < minDist) {
         i0 = i;
@@ -6394,8 +6175,7 @@ var Delaunator = class _Delaunator {
     }
     const i0x = coords[2 * i0];
     const i0y = coords[2 * i0 + 1];
-    minDist = Infinity;
-    for (let i = 0; i < n; i++) {
+    for (let i = 0, minDist = Infinity; i < n; i++) {
       if (i === i0)
         continue;
       const d = dist(i0x, i0y, coords[2 * i], coords[2 * i + 1]);
@@ -6427,9 +6207,10 @@ var Delaunator = class _Delaunator {
       let j = 0;
       for (let i = 0, d0 = -Infinity; i < n; i++) {
         const id2 = this._ids[i];
-        if (this._dists[id2] > d0) {
+        const d = this._dists[id2];
+        if (d > d0) {
           hull[j++] = id2;
-          d0 = this._dists[id2];
+          d0 = d;
         }
       }
       this.hull = hull.subarray(0, j);
@@ -7377,7 +7158,7 @@ function* flatIterable(points, fx, fy, that) {
   }
 }
 
-// node_modules/d3-dsv/src/dsv.js
+// node_modules/d3/node_modules/d3-dsv/src/dsv.js
 var EOL = {};
 var EOF = {};
 var QUOTE = 34;
@@ -7513,7 +7294,7 @@ function dsv_default(delimiter) {
   };
 }
 
-// node_modules/d3-dsv/src/csv.js
+// node_modules/d3/node_modules/d3-dsv/src/csv.js
 var csv = dsv_default(",");
 var csvParse = csv.parse;
 var csvParseRows = csv.parseRows;
@@ -7523,7 +7304,7 @@ var csvFormatRows = csv.formatRows;
 var csvFormatRow = csv.formatRow;
 var csvFormatValue = csv.formatValue;
 
-// node_modules/d3-dsv/src/tsv.js
+// node_modules/d3/node_modules/d3-dsv/src/tsv.js
 var tsv = dsv_default("	");
 var tsvParse = tsv.parse;
 var tsvParseRows = tsv.parseRows;
@@ -7533,7 +7314,7 @@ var tsvFormatRows = tsv.formatRows;
 var tsvFormatRow = tsv.formatRow;
 var tsvFormatValue = tsv.formatValue;
 
-// node_modules/d3-dsv/src/autoType.js
+// node_modules/d3/node_modules/d3-dsv/src/autoType.js
 function autoType(object2) {
   for (var key in object2) {
     var value = object2[key].trim(), number5, m3;
@@ -7579,6 +7360,165 @@ function buffer_default(input, init2) {
   return fetch(input, init2).then(responseArrayBuffer);
 }
 
+// node_modules/d3-dsv/src/dsv.js
+var EOL2 = {};
+var EOF2 = {};
+var QUOTE2 = 34;
+var NEWLINE2 = 10;
+var RETURN2 = 13;
+function objectConverter2(columns) {
+  return new Function("d", "return {" + columns.map(function(name, i) {
+    return JSON.stringify(name) + ": d[" + i + '] || ""';
+  }).join(",") + "}");
+}
+function customConverter2(columns, f) {
+  var object2 = objectConverter2(columns);
+  return function(row, i) {
+    return f(object2(row), i, columns);
+  };
+}
+function inferColumns2(rows) {
+  var columnSet = /* @__PURE__ */ Object.create(null), columns = [];
+  rows.forEach(function(row) {
+    for (var column in row) {
+      if (!(column in columnSet)) {
+        columns.push(columnSet[column] = column);
+      }
+    }
+  });
+  return columns;
+}
+function pad2(value, width) {
+  var s2 = value + "", length3 = s2.length;
+  return length3 < width ? new Array(width - length3 + 1).join(0) + s2 : s2;
+}
+function formatYear2(year) {
+  return year < 0 ? "-" + pad2(-year, 6) : year > 9999 ? "+" + pad2(year, 6) : pad2(year, 4);
+}
+function formatDate2(date2) {
+  var hours = date2.getUTCHours(), minutes = date2.getUTCMinutes(), seconds2 = date2.getUTCSeconds(), milliseconds2 = date2.getUTCMilliseconds();
+  return isNaN(date2) ? "Invalid Date" : formatYear2(date2.getUTCFullYear(), 4) + "-" + pad2(date2.getUTCMonth() + 1, 2) + "-" + pad2(date2.getUTCDate(), 2) + (milliseconds2 ? "T" + pad2(hours, 2) + ":" + pad2(minutes, 2) + ":" + pad2(seconds2, 2) + "." + pad2(milliseconds2, 3) + "Z" : seconds2 ? "T" + pad2(hours, 2) + ":" + pad2(minutes, 2) + ":" + pad2(seconds2, 2) + "Z" : minutes || hours ? "T" + pad2(hours, 2) + ":" + pad2(minutes, 2) + "Z" : "");
+}
+function dsv_default2(delimiter) {
+  var reFormat = new RegExp('["' + delimiter + "\n\r]"), DELIMITER = delimiter.charCodeAt(0);
+  function parse(text, f) {
+    var convert, columns, rows = parseRows(text, function(row, i) {
+      if (convert)
+        return convert(row, i - 1);
+      columns = row, convert = f ? customConverter2(row, f) : objectConverter2(row);
+    });
+    rows.columns = columns || [];
+    return rows;
+  }
+  function parseRows(text, f) {
+    var rows = [], N = text.length, I = 0, n = 0, t, eof = N <= 0, eol = false;
+    if (text.charCodeAt(N - 1) === NEWLINE2)
+      --N;
+    if (text.charCodeAt(N - 1) === RETURN2)
+      --N;
+    function token() {
+      if (eof)
+        return EOF2;
+      if (eol)
+        return eol = false, EOL2;
+      var i, j = I, c6;
+      if (text.charCodeAt(j) === QUOTE2) {
+        while (I++ < N && text.charCodeAt(I) !== QUOTE2 || text.charCodeAt(++I) === QUOTE2)
+          ;
+        if ((i = I) >= N)
+          eof = true;
+        else if ((c6 = text.charCodeAt(I++)) === NEWLINE2)
+          eol = true;
+        else if (c6 === RETURN2) {
+          eol = true;
+          if (text.charCodeAt(I) === NEWLINE2)
+            ++I;
+        }
+        return text.slice(j + 1, i - 1).replace(/""/g, '"');
+      }
+      while (I < N) {
+        if ((c6 = text.charCodeAt(i = I++)) === NEWLINE2)
+          eol = true;
+        else if (c6 === RETURN2) {
+          eol = true;
+          if (text.charCodeAt(I) === NEWLINE2)
+            ++I;
+        } else if (c6 !== DELIMITER)
+          continue;
+        return text.slice(j, i);
+      }
+      return eof = true, text.slice(j, N);
+    }
+    while ((t = token()) !== EOF2) {
+      var row = [];
+      while (t !== EOL2 && t !== EOF2)
+        row.push(t), t = token();
+      if (f && (row = f(row, n++)) == null)
+        continue;
+      rows.push(row);
+    }
+    return rows;
+  }
+  function preformatBody(rows, columns) {
+    return rows.map(function(row) {
+      return columns.map(function(column) {
+        return formatValue(row[column]);
+      }).join(delimiter);
+    });
+  }
+  function format2(rows, columns) {
+    if (columns == null)
+      columns = inferColumns2(rows);
+    return [columns.map(formatValue).join(delimiter)].concat(preformatBody(rows, columns)).join("\n");
+  }
+  function formatBody(rows, columns) {
+    if (columns == null)
+      columns = inferColumns2(rows);
+    return preformatBody(rows, columns).join("\n");
+  }
+  function formatRows(rows) {
+    return rows.map(formatRow).join("\n");
+  }
+  function formatRow(row) {
+    return row.map(formatValue).join(delimiter);
+  }
+  function formatValue(value) {
+    return value == null ? "" : value instanceof Date ? formatDate2(value) : reFormat.test(value += "") ? '"' + value.replace(/"/g, '""') + '"' : value;
+  }
+  return {
+    parse,
+    parseRows,
+    format: format2,
+    formatBody,
+    formatRows,
+    formatRow,
+    formatValue
+  };
+}
+
+// node_modules/d3-dsv/src/csv.js
+var csv2 = dsv_default2(",");
+var csvParse2 = csv2.parse;
+var csvParseRows2 = csv2.parseRows;
+var csvFormat2 = csv2.format;
+var csvFormatBody2 = csv2.formatBody;
+var csvFormatRows2 = csv2.formatRows;
+var csvFormatRow2 = csv2.formatRow;
+var csvFormatValue2 = csv2.formatValue;
+
+// node_modules/d3-dsv/src/tsv.js
+var tsv2 = dsv_default2("	");
+var tsvParse2 = tsv2.parse;
+var tsvParseRows2 = tsv2.parseRows;
+var tsvFormat2 = tsv2.format;
+var tsvFormatBody2 = tsv2.formatBody;
+var tsvFormatRows2 = tsv2.formatRows;
+var tsvFormatRow2 = tsv2.formatRow;
+var tsvFormatValue2 = tsv2.formatValue;
+
+// node_modules/d3-dsv/src/autoType.js
+var fixtz2 = (/* @__PURE__ */ new Date("2019-01-01T00:00")).getHours() || (/* @__PURE__ */ new Date("2019-07-01T00:00")).getHours();
+
 // node_modules/d3-fetch/src/text.js
 function responseText(response) {
   if (!response.ok)
@@ -7602,13 +7542,13 @@ function dsvParse(parse) {
 function dsv(delimiter, input, init2, row) {
   if (arguments.length === 3 && typeof init2 === "function")
     row = init2, init2 = void 0;
-  var format2 = dsv_default(delimiter);
+  var format2 = dsv_default2(delimiter);
   return text_default3(input, init2).then(function(response) {
     return format2.parse(response, row);
   });
 }
-var csv2 = dsvParse(csvParse);
-var tsv2 = dsvParse(tsvParse);
+var csv3 = dsvParse(csvParse2);
+var tsv3 = dsvParse(tsvParse2);
 
 // node_modules/d3-fetch/src/image.js
 function image_default(input, init2) {
@@ -7674,359 +7614,6 @@ function center_default(x4, y4) {
   };
   return force;
 }
-
-// node_modules/d3-quadtree/src/add.js
-function add_default(d) {
-  const x4 = +this._x.call(null, d), y4 = +this._y.call(null, d);
-  return add(this.cover(x4, y4), x4, y4, d);
-}
-function add(tree, x4, y4, d) {
-  if (isNaN(x4) || isNaN(y4))
-    return tree;
-  var parent, node = tree._root, leaf = { data: d }, x06 = tree._x0, y06 = tree._y0, x12 = tree._x1, y12 = tree._y1, xm, ym, xp, yp, right2, bottom2, i, j;
-  if (!node)
-    return tree._root = leaf, tree;
-  while (node.length) {
-    if (right2 = x4 >= (xm = (x06 + x12) / 2))
-      x06 = xm;
-    else
-      x12 = xm;
-    if (bottom2 = y4 >= (ym = (y06 + y12) / 2))
-      y06 = ym;
-    else
-      y12 = ym;
-    if (parent = node, !(node = node[i = bottom2 << 1 | right2]))
-      return parent[i] = leaf, tree;
-  }
-  xp = +tree._x.call(null, node.data);
-  yp = +tree._y.call(null, node.data);
-  if (x4 === xp && y4 === yp)
-    return leaf.next = node, parent ? parent[i] = leaf : tree._root = leaf, tree;
-  do {
-    parent = parent ? parent[i] = new Array(4) : tree._root = new Array(4);
-    if (right2 = x4 >= (xm = (x06 + x12) / 2))
-      x06 = xm;
-    else
-      x12 = xm;
-    if (bottom2 = y4 >= (ym = (y06 + y12) / 2))
-      y06 = ym;
-    else
-      y12 = ym;
-  } while ((i = bottom2 << 1 | right2) === (j = (yp >= ym) << 1 | xp >= xm));
-  return parent[j] = node, parent[i] = leaf, tree;
-}
-function addAll(data) {
-  var d, i, n = data.length, x4, y4, xz = new Array(n), yz = new Array(n), x06 = Infinity, y06 = Infinity, x12 = -Infinity, y12 = -Infinity;
-  for (i = 0; i < n; ++i) {
-    if (isNaN(x4 = +this._x.call(null, d = data[i])) || isNaN(y4 = +this._y.call(null, d)))
-      continue;
-    xz[i] = x4;
-    yz[i] = y4;
-    if (x4 < x06)
-      x06 = x4;
-    if (x4 > x12)
-      x12 = x4;
-    if (y4 < y06)
-      y06 = y4;
-    if (y4 > y12)
-      y12 = y4;
-  }
-  if (x06 > x12 || y06 > y12)
-    return this;
-  this.cover(x06, y06).cover(x12, y12);
-  for (i = 0; i < n; ++i) {
-    add(this, xz[i], yz[i], data[i]);
-  }
-  return this;
-}
-
-// node_modules/d3-quadtree/src/cover.js
-function cover_default(x4, y4) {
-  if (isNaN(x4 = +x4) || isNaN(y4 = +y4))
-    return this;
-  var x06 = this._x0, y06 = this._y0, x12 = this._x1, y12 = this._y1;
-  if (isNaN(x06)) {
-    x12 = (x06 = Math.floor(x4)) + 1;
-    y12 = (y06 = Math.floor(y4)) + 1;
-  } else {
-    var z = x12 - x06 || 1, node = this._root, parent, i;
-    while (x06 > x4 || x4 >= x12 || y06 > y4 || y4 >= y12) {
-      i = (y4 < y06) << 1 | x4 < x06;
-      parent = new Array(4), parent[i] = node, node = parent, z *= 2;
-      switch (i) {
-        case 0:
-          x12 = x06 + z, y12 = y06 + z;
-          break;
-        case 1:
-          x06 = x12 - z, y12 = y06 + z;
-          break;
-        case 2:
-          x12 = x06 + z, y06 = y12 - z;
-          break;
-        case 3:
-          x06 = x12 - z, y06 = y12 - z;
-          break;
-      }
-    }
-    if (this._root && this._root.length)
-      this._root = node;
-  }
-  this._x0 = x06;
-  this._y0 = y06;
-  this._x1 = x12;
-  this._y1 = y12;
-  return this;
-}
-
-// node_modules/d3-quadtree/src/data.js
-function data_default2() {
-  var data = [];
-  this.visit(function(node) {
-    if (!node.length)
-      do
-        data.push(node.data);
-      while (node = node.next);
-  });
-  return data;
-}
-
-// node_modules/d3-quadtree/src/extent.js
-function extent_default(_) {
-  return arguments.length ? this.cover(+_[0][0], +_[0][1]).cover(+_[1][0], +_[1][1]) : isNaN(this._x0) ? void 0 : [[this._x0, this._y0], [this._x1, this._y1]];
-}
-
-// node_modules/d3-quadtree/src/quad.js
-function quad_default(node, x06, y06, x12, y12) {
-  this.node = node;
-  this.x0 = x06;
-  this.y0 = y06;
-  this.x1 = x12;
-  this.y1 = y12;
-}
-
-// node_modules/d3-quadtree/src/find.js
-function find_default(x4, y4, radius) {
-  var data, x06 = this._x0, y06 = this._y0, x12, y12, x22, y22, x32 = this._x1, y32 = this._y1, quads = [], node = this._root, q, i;
-  if (node)
-    quads.push(new quad_default(node, x06, y06, x32, y32));
-  if (radius == null)
-    radius = Infinity;
-  else {
-    x06 = x4 - radius, y06 = y4 - radius;
-    x32 = x4 + radius, y32 = y4 + radius;
-    radius *= radius;
-  }
-  while (q = quads.pop()) {
-    if (!(node = q.node) || (x12 = q.x0) > x32 || (y12 = q.y0) > y32 || (x22 = q.x1) < x06 || (y22 = q.y1) < y06)
-      continue;
-    if (node.length) {
-      var xm = (x12 + x22) / 2, ym = (y12 + y22) / 2;
-      quads.push(
-        new quad_default(node[3], xm, ym, x22, y22),
-        new quad_default(node[2], x12, ym, xm, y22),
-        new quad_default(node[1], xm, y12, x22, ym),
-        new quad_default(node[0], x12, y12, xm, ym)
-      );
-      if (i = (y4 >= ym) << 1 | x4 >= xm) {
-        q = quads[quads.length - 1];
-        quads[quads.length - 1] = quads[quads.length - 1 - i];
-        quads[quads.length - 1 - i] = q;
-      }
-    } else {
-      var dx = x4 - +this._x.call(null, node.data), dy = y4 - +this._y.call(null, node.data), d2 = dx * dx + dy * dy;
-      if (d2 < radius) {
-        var d = Math.sqrt(radius = d2);
-        x06 = x4 - d, y06 = y4 - d;
-        x32 = x4 + d, y32 = y4 + d;
-        data = node.data;
-      }
-    }
-  }
-  return data;
-}
-
-// node_modules/d3-quadtree/src/remove.js
-function remove_default3(d) {
-  if (isNaN(x4 = +this._x.call(null, d)) || isNaN(y4 = +this._y.call(null, d)))
-    return this;
-  var parent, node = this._root, retainer, previous, next, x06 = this._x0, y06 = this._y0, x12 = this._x1, y12 = this._y1, x4, y4, xm, ym, right2, bottom2, i, j;
-  if (!node)
-    return this;
-  if (node.length)
-    while (true) {
-      if (right2 = x4 >= (xm = (x06 + x12) / 2))
-        x06 = xm;
-      else
-        x12 = xm;
-      if (bottom2 = y4 >= (ym = (y06 + y12) / 2))
-        y06 = ym;
-      else
-        y12 = ym;
-      if (!(parent = node, node = node[i = bottom2 << 1 | right2]))
-        return this;
-      if (!node.length)
-        break;
-      if (parent[i + 1 & 3] || parent[i + 2 & 3] || parent[i + 3 & 3])
-        retainer = parent, j = i;
-    }
-  while (node.data !== d)
-    if (!(previous = node, node = node.next))
-      return this;
-  if (next = node.next)
-    delete node.next;
-  if (previous)
-    return next ? previous.next = next : delete previous.next, this;
-  if (!parent)
-    return this._root = next, this;
-  next ? parent[i] = next : delete parent[i];
-  if ((node = parent[0] || parent[1] || parent[2] || parent[3]) && node === (parent[3] || parent[2] || parent[1] || parent[0]) && !node.length) {
-    if (retainer)
-      retainer[j] = node;
-    else
-      this._root = node;
-  }
-  return this;
-}
-function removeAll(data) {
-  for (var i = 0, n = data.length; i < n; ++i)
-    this.remove(data[i]);
-  return this;
-}
-
-// node_modules/d3-quadtree/src/root.js
-function root_default() {
-  return this._root;
-}
-
-// node_modules/d3-quadtree/src/size.js
-function size_default2() {
-  var size = 0;
-  this.visit(function(node) {
-    if (!node.length)
-      do
-        ++size;
-      while (node = node.next);
-  });
-  return size;
-}
-
-// node_modules/d3-quadtree/src/visit.js
-function visit_default(callback) {
-  var quads = [], q, node = this._root, child, x06, y06, x12, y12;
-  if (node)
-    quads.push(new quad_default(node, this._x0, this._y0, this._x1, this._y1));
-  while (q = quads.pop()) {
-    if (!callback(node = q.node, x06 = q.x0, y06 = q.y0, x12 = q.x1, y12 = q.y1) && node.length) {
-      var xm = (x06 + x12) / 2, ym = (y06 + y12) / 2;
-      if (child = node[3])
-        quads.push(new quad_default(child, xm, ym, x12, y12));
-      if (child = node[2])
-        quads.push(new quad_default(child, x06, ym, xm, y12));
-      if (child = node[1])
-        quads.push(new quad_default(child, xm, y06, x12, ym));
-      if (child = node[0])
-        quads.push(new quad_default(child, x06, y06, xm, ym));
-    }
-  }
-  return this;
-}
-
-// node_modules/d3-quadtree/src/visitAfter.js
-function visitAfter_default(callback) {
-  var quads = [], next = [], q;
-  if (this._root)
-    quads.push(new quad_default(this._root, this._x0, this._y0, this._x1, this._y1));
-  while (q = quads.pop()) {
-    var node = q.node;
-    if (node.length) {
-      var child, x06 = q.x0, y06 = q.y0, x12 = q.x1, y12 = q.y1, xm = (x06 + x12) / 2, ym = (y06 + y12) / 2;
-      if (child = node[0])
-        quads.push(new quad_default(child, x06, y06, xm, ym));
-      if (child = node[1])
-        quads.push(new quad_default(child, xm, y06, x12, ym));
-      if (child = node[2])
-        quads.push(new quad_default(child, x06, ym, xm, y12));
-      if (child = node[3])
-        quads.push(new quad_default(child, xm, ym, x12, y12));
-    }
-    next.push(q);
-  }
-  while (q = next.pop()) {
-    callback(q.node, q.x0, q.y0, q.x1, q.y1);
-  }
-  return this;
-}
-
-// node_modules/d3-quadtree/src/x.js
-function defaultX2(d) {
-  return d[0];
-}
-function x_default(_) {
-  return arguments.length ? (this._x = _, this) : this._x;
-}
-
-// node_modules/d3-quadtree/src/y.js
-function defaultY2(d) {
-  return d[1];
-}
-function y_default(_) {
-  return arguments.length ? (this._y = _, this) : this._y;
-}
-
-// node_modules/d3-quadtree/src/quadtree.js
-function quadtree(nodes, x4, y4) {
-  var tree = new Quadtree(x4 == null ? defaultX2 : x4, y4 == null ? defaultY2 : y4, NaN, NaN, NaN, NaN);
-  return nodes == null ? tree : tree.addAll(nodes);
-}
-function Quadtree(x4, y4, x06, y06, x12, y12) {
-  this._x = x4;
-  this._y = y4;
-  this._x0 = x06;
-  this._y0 = y06;
-  this._x1 = x12;
-  this._y1 = y12;
-  this._root = void 0;
-}
-function leaf_copy(leaf) {
-  var copy3 = { data: leaf.data }, next = copy3;
-  while (leaf = leaf.next)
-    next = next.next = { data: leaf.data };
-  return copy3;
-}
-var treeProto = quadtree.prototype = Quadtree.prototype;
-treeProto.copy = function() {
-  var copy3 = new Quadtree(this._x, this._y, this._x0, this._y0, this._x1, this._y1), node = this._root, nodes, child;
-  if (!node)
-    return copy3;
-  if (!node.length)
-    return copy3._root = leaf_copy(node), copy3;
-  nodes = [{ source: node, target: copy3._root = new Array(4) }];
-  while (node = nodes.pop()) {
-    for (var i = 0; i < 4; ++i) {
-      if (child = node.source[i]) {
-        if (child.length)
-          nodes.push({ source: child, target: node.target[i] = new Array(4) });
-        else
-          node.target[i] = leaf_copy(child);
-      }
-    }
-  }
-  return copy3;
-};
-treeProto.add = add_default;
-treeProto.addAll = addAll;
-treeProto.cover = cover_default;
-treeProto.data = data_default2;
-treeProto.extent = extent_default;
-treeProto.find = find_default;
-treeProto.remove = remove_default3;
-treeProto.removeAll = removeAll;
-treeProto.root = root_default;
-treeProto.size = size_default2;
-treeProto.visit = visit_default;
-treeProto.visitAfter = visitAfter_default;
-treeProto.x = x_default;
-treeProto.y = y_default;
 
 // node_modules/d3-force/src/constant.js
 function constant_default7(x4) {
@@ -8474,7 +8061,7 @@ function radial_default(radius, x4, y4) {
 }
 
 // node_modules/d3-force/src/x.js
-function x_default2(x4) {
+function x_default(x4) {
   var strength = constant_default7(0.1), nodes, strengths, xz;
   if (typeof x4 !== "function")
     x4 = constant_default7(x4 == null ? 0 : +x4);
@@ -8507,7 +8094,7 @@ function x_default2(x4) {
 }
 
 // node_modules/d3-force/src/y.js
-function y_default2(y4) {
+function y_default(y4) {
   var strength = constant_default7(0.1), nodes, strengths, yz;
   if (typeof y4 !== "function")
     y4 = constant_default7(y4 == null ? 0 : +y4);
@@ -8832,7 +8419,7 @@ function haversin(x4) {
 }
 
 // node_modules/d3-geo/src/noop.js
-function noop2() {
+function noop() {
 }
 
 // node_modules/d3-geo/src/stream.js
@@ -8917,9 +8504,9 @@ var lambda0;
 var cosPhi0;
 var sinPhi0;
 var areaStream = {
-  point: noop2,
-  lineStart: noop2,
-  lineEnd: noop2,
+  point: noop,
+  lineStart: noop,
+  lineEnd: noop,
   polygonStart: function() {
     areaRingSum = new Adder();
     areaStream.lineStart = areaRingStart;
@@ -8928,7 +8515,7 @@ var areaStream = {
   polygonEnd: function() {
     var areaRing = +areaRingSum;
     areaSum.add(areaRing < 0 ? tau5 + areaRing : areaRing);
-    this.lineStart = this.lineEnd = this.point = noop2;
+    this.lineStart = this.lineEnd = this.point = noop;
   },
   sphere: function() {
     areaSum.add(tau5);
@@ -9169,7 +8756,7 @@ var x0;
 var y0;
 var z0;
 var centroidStream = {
-  sphere: noop2,
+  sphere: noop,
   point: centroidPoint,
   lineStart: centroidLineStart,
   lineEnd: centroidLineEnd,
@@ -9363,7 +8950,7 @@ function circleRadius(cosRadius, point6) {
   return ((-point6[2] < 0 ? -radius : radius) + tau5 - epsilon7) % tau5;
 }
 function circle_default() {
-  var center2 = constant_default8([0, 0]), radius = constant_default8(90), precision = constant_default8(6), ring, rotate, stream = { point: point6 };
+  var center2 = constant_default8([0, 0]), radius = constant_default8(90), precision = constant_default8(2), ring, rotate, stream = { point: point6 };
   function point6(x4, y4) {
     ring.push(x4 = rotate(x4, y4));
     x4[0] *= degrees3, x4[1] *= degrees3;
@@ -9399,7 +8986,7 @@ function buffer_default2() {
     lineStart: function() {
       lines.push(line = []);
     },
-    lineEnd: noop2,
+    lineEnd: noop,
     rejoin: function() {
       if (lines.length > 1)
         lines.push(lines.pop().concat(lines.shift()));
@@ -9720,7 +9307,7 @@ function clipAntimeridianInterpolate(from, to, direction, stream) {
 
 // node_modules/d3-geo/src/clip/circle.js
 function circle_default2(radius) {
-  var cr = cos2(radius), delta = 6 * radians2, smallRadius = cr > 0, notHemisphere = abs3(cr) > epsilon7;
+  var cr = cos2(radius), delta = 2 * radians2, smallRadius = cr > 0, notHemisphere = abs3(cr) > epsilon7;
   function interpolate(from, to, direction, stream) {
     circleStream(stream, radius, delta, direction, from, to);
   }
@@ -10034,7 +9621,7 @@ function clipRectangle(x06, y06, x12, y12) {
 }
 
 // node_modules/d3-geo/src/clip/extent.js
-function extent_default2() {
+function extent_default() {
   var x06 = 0, y06 = 0, x12 = 960, y12 = 500, cache, cacheStream, clip;
   return clip = {
     stream: function(stream) {
@@ -10052,19 +9639,19 @@ var lambda03;
 var sinPhi02;
 var cosPhi02;
 var lengthStream = {
-  sphere: noop2,
-  point: noop2,
+  sphere: noop,
+  point: noop,
   lineStart: lengthLineStart,
-  lineEnd: noop2,
-  polygonStart: noop2,
-  polygonEnd: noop2
+  lineEnd: noop,
+  polygonStart: noop,
+  polygonEnd: noop
 };
 function lengthLineStart() {
   lengthStream.point = lengthPointFirst;
   lengthStream.lineEnd = lengthLineEnd;
 }
 function lengthLineEnd() {
-  lengthStream.point = lengthStream.lineEnd = noop2;
+  lengthStream.point = lengthStream.lineEnd = noop;
 }
 function lengthPointFirst(lambda, phi2) {
   lambda *= radians2, phi2 *= radians2;
@@ -10314,15 +9901,15 @@ var y00;
 var x02;
 var y02;
 var areaStream2 = {
-  point: noop2,
-  lineStart: noop2,
-  lineEnd: noop2,
+  point: noop,
+  lineStart: noop,
+  lineEnd: noop,
   polygonStart: function() {
     areaStream2.lineStart = areaRingStart2;
     areaStream2.lineEnd = areaRingEnd2;
   },
   polygonEnd: function() {
-    areaStream2.lineStart = areaStream2.lineEnd = areaStream2.point = noop2;
+    areaStream2.lineStart = areaStream2.lineEnd = areaStream2.point = noop;
     areaSum2.add(abs3(areaRingSum2));
     areaRingSum2 = new Adder();
   },
@@ -10355,10 +9942,10 @@ var x1 = -x03;
 var y1 = x1;
 var boundsStream2 = {
   point: boundsPoint2,
-  lineStart: noop2,
-  lineEnd: noop2,
-  polygonStart: noop2,
-  polygonEnd: noop2,
+  lineStart: noop,
+  lineEnd: noop,
+  polygonStart: noop,
+  polygonEnd: noop,
   result: function() {
     var bounds = [[x03, y03], [x1, y1]];
     x1 = y1 = -(y03 = x03 = Infinity);
@@ -10496,7 +10083,7 @@ PathContext.prototype = {
       }
     }
   },
-  result: noop2
+  result: noop
 };
 
 // node_modules/d3-geo/src/path/measure.js
@@ -10507,14 +10094,14 @@ var y003;
 var x05;
 var y05;
 var lengthStream2 = {
-  point: noop2,
+  point: noop,
   lineStart: function() {
     lengthStream2.point = lengthPointFirst2;
   },
   lineEnd: function() {
     if (lengthRing)
       lengthPoint2(x003, y003);
-    lengthStream2.point = noop2;
+    lengthStream2.point = noop;
   },
   polygonStart: function() {
     lengthRing = true;
@@ -11536,7 +11123,7 @@ function eachAfter_default(callback, that) {
 }
 
 // node_modules/d3-hierarchy/src/hierarchy/find.js
-function find_default2(callback, that) {
+function find_default(callback, that) {
   let index3 = -1;
   for (const node of this) {
     if (callback.call(that, node, ++index3, this)) {
@@ -11697,7 +11284,7 @@ Node.prototype = hierarchy.prototype = {
   each: each_default2,
   eachAfter: eachAfter_default,
   eachBefore: eachBefore_default,
-  find: find_default2,
+  find: find_default,
   sum: sum_default,
   sort: sort_default2,
   path: path_default2,
@@ -13254,15 +12841,15 @@ function identity4(domain) {
 }
 
 // node_modules/d3-scale/src/nice.js
-function nice2(domain, interval2) {
+function nice2(domain, interval) {
   domain = domain.slice();
   var i0 = 0, i1 = domain.length - 1, x06 = domain[i0], x12 = domain[i1], t;
   if (x12 < x06) {
     t = i0, i0 = i1, i1 = t;
     t = x06, x06 = x12, x12 = t;
   }
-  domain[i0] = interval2.floor(x06);
-  domain[i1] = interval2.ceil(x12);
+  domain[i0] = interval.floor(x06);
+  domain[i1] = interval.ceil(x12);
   return domain;
 }
 
@@ -13602,25 +13189,25 @@ function threshold() {
 var t02 = /* @__PURE__ */ new Date();
 var t12 = /* @__PURE__ */ new Date();
 function timeInterval(floori, offseti, count3, field) {
-  function interval2(date2) {
+  function interval(date2) {
     return floori(date2 = arguments.length === 0 ? /* @__PURE__ */ new Date() : /* @__PURE__ */ new Date(+date2)), date2;
   }
-  interval2.floor = (date2) => {
+  interval.floor = (date2) => {
     return floori(date2 = /* @__PURE__ */ new Date(+date2)), date2;
   };
-  interval2.ceil = (date2) => {
+  interval.ceil = (date2) => {
     return floori(date2 = new Date(date2 - 1)), offseti(date2, 1), floori(date2), date2;
   };
-  interval2.round = (date2) => {
-    const d0 = interval2(date2), d1 = interval2.ceil(date2);
+  interval.round = (date2) => {
+    const d0 = interval(date2), d1 = interval.ceil(date2);
     return date2 - d0 < d1 - date2 ? d0 : d1;
   };
-  interval2.offset = (date2, step) => {
+  interval.offset = (date2, step) => {
     return offseti(date2 = /* @__PURE__ */ new Date(+date2), step == null ? 1 : Math.floor(step)), date2;
   };
-  interval2.range = (start2, stop, step) => {
+  interval.range = (start2, stop, step) => {
     const range4 = [];
-    start2 = interval2.ceil(start2);
+    start2 = interval.ceil(start2);
     step = step == null ? 1 : Math.floor(step);
     if (!(start2 < stop) || !(step > 0))
       return range4;
@@ -13630,7 +13217,7 @@ function timeInterval(floori, offseti, count3, field) {
     while (previous < start2 && start2 < stop);
     return range4;
   };
-  interval2.filter = (test) => {
+  interval.filter = (test) => {
     return timeInterval((date2) => {
       if (date2 >= date2)
         while (floori(date2), !test(date2))
@@ -13651,17 +13238,17 @@ function timeInterval(floori, offseti, count3, field) {
     });
   };
   if (count3) {
-    interval2.count = (start2, end) => {
+    interval.count = (start2, end) => {
       t02.setTime(+start2), t12.setTime(+end);
       floori(t02), floori(t12);
       return Math.floor(count3(t02, t12));
     };
-    interval2.every = (step) => {
+    interval.every = (step) => {
       step = Math.floor(step);
-      return !isFinite(step) || !(step > 0) ? null : !(step > 1) ? interval2 : interval2.filter(field ? (d) => field(d) % step === 0 : (d) => interval2.count(0, d) % step === 0);
+      return !isFinite(step) || !(step > 0) ? null : !(step > 1) ? interval : interval.filter(field ? (d) => field(d) % step === 0 : (d) => interval.count(0, d) % step === 0);
     };
   }
-  return interval2;
+  return interval;
 }
 
 // node_modules/d3-time/src/millisecond.js
@@ -13923,8 +13510,8 @@ function ticker(year, month, week, day, hour, minute) {
     const reverse2 = stop < start2;
     if (reverse2)
       [start2, stop] = [stop, start2];
-    const interval2 = count3 && typeof count3.range === "function" ? count3 : tickInterval(start2, stop, count3);
-    const ticks3 = interval2 ? interval2.range(start2, +stop + 1) : [];
+    const interval = count3 && typeof count3.range === "function" ? count3 : tickInterval(start2, stop, count3);
+    const ticks3 = interval ? interval.range(start2, +stop + 1) : [];
     return reverse2 ? ticks3.reverse() : ticks3;
   }
   function tickInterval(start2, stop, count3) {
@@ -13994,7 +13581,7 @@ function formatLocale(locale3) {
     "W": formatWeekNumberMonday,
     "x": null,
     "X": null,
-    "y": formatYear2,
+    "y": formatYear3,
     "Y": formatFullYear,
     "Z": formatZone,
     "%": formatLiteralPercent
@@ -14075,18 +13662,18 @@ function formatLocale(locale3) {
   utcFormats.c = newFormat(locale_dateTime, utcFormats);
   function newFormat(specifier, formats2) {
     return function(date2) {
-      var string = [], i = -1, j = 0, n = specifier.length, c6, pad3, format2;
+      var string = [], i = -1, j = 0, n = specifier.length, c6, pad4, format2;
       if (!(date2 instanceof Date))
         date2 = /* @__PURE__ */ new Date(+date2);
       while (++i < n) {
         if (specifier.charCodeAt(i) === 37) {
           string.push(specifier.slice(j, i));
-          if ((pad3 = pads[c6 = specifier.charAt(++i)]) != null)
+          if ((pad4 = pads[c6 = specifier.charAt(++i)]) != null)
             c6 = specifier.charAt(++i);
           else
-            pad3 = c6 === "e" ? " " : "0";
+            pad4 = c6 === "e" ? " " : "0";
           if (format2 = formats2[c6])
-            c6 = format2(date2, pad3);
+            c6 = format2(date2, pad4);
           string.push(c6);
           j = i + 1;
         }
@@ -14262,7 +13849,7 @@ var pads = { "-": "", "_": " ", "0": "0" };
 var numberRe = /^\s*\d+/;
 var percentRe = /^%/;
 var requoteRe = /[\\^$*+?|[\]().{}]/g;
-function pad2(value, fill, width) {
+function pad3(value, fill, width) {
   var sign3 = value < 0 ? "-" : "", string = (sign3 ? -value : value) + "", length3 = string.length;
   return sign3 + (length3 < width ? new Array(width - length3 + 1).join(fill) + string : string);
 }
@@ -14356,38 +13943,38 @@ function parseUnixTimestampSeconds(d, string, i) {
   return n ? (d.s = +n[0], i + n[0].length) : -1;
 }
 function formatDayOfMonth(d, p) {
-  return pad2(d.getDate(), p, 2);
+  return pad3(d.getDate(), p, 2);
 }
 function formatHour24(d, p) {
-  return pad2(d.getHours(), p, 2);
+  return pad3(d.getHours(), p, 2);
 }
 function formatHour12(d, p) {
-  return pad2(d.getHours() % 12 || 12, p, 2);
+  return pad3(d.getHours() % 12 || 12, p, 2);
 }
 function formatDayOfYear(d, p) {
-  return pad2(1 + timeDay.count(timeYear(d), d), p, 3);
+  return pad3(1 + timeDay.count(timeYear(d), d), p, 3);
 }
 function formatMilliseconds(d, p) {
-  return pad2(d.getMilliseconds(), p, 3);
+  return pad3(d.getMilliseconds(), p, 3);
 }
 function formatMicroseconds(d, p) {
   return formatMilliseconds(d, p) + "000";
 }
 function formatMonthNumber(d, p) {
-  return pad2(d.getMonth() + 1, p, 2);
+  return pad3(d.getMonth() + 1, p, 2);
 }
 function formatMinutes(d, p) {
-  return pad2(d.getMinutes(), p, 2);
+  return pad3(d.getMinutes(), p, 2);
 }
 function formatSeconds(d, p) {
-  return pad2(d.getSeconds(), p, 2);
+  return pad3(d.getSeconds(), p, 2);
 }
 function formatWeekdayNumberMonday(d) {
   var day = d.getDay();
   return day === 0 ? 7 : day;
 }
 function formatWeekNumberSunday(d, p) {
-  return pad2(timeSunday.count(timeYear(d) - 1, d), p, 2);
+  return pad3(timeSunday.count(timeYear(d) - 1, d), p, 2);
 }
 function dISO(d) {
   var day = d.getDay();
@@ -14395,66 +13982,66 @@ function dISO(d) {
 }
 function formatWeekNumberISO(d, p) {
   d = dISO(d);
-  return pad2(timeThursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4), p, 2);
+  return pad3(timeThursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4), p, 2);
 }
 function formatWeekdayNumberSunday(d) {
   return d.getDay();
 }
 function formatWeekNumberMonday(d, p) {
-  return pad2(timeMonday.count(timeYear(d) - 1, d), p, 2);
+  return pad3(timeMonday.count(timeYear(d) - 1, d), p, 2);
 }
-function formatYear2(d, p) {
-  return pad2(d.getFullYear() % 100, p, 2);
+function formatYear3(d, p) {
+  return pad3(d.getFullYear() % 100, p, 2);
 }
 function formatYearISO(d, p) {
   d = dISO(d);
-  return pad2(d.getFullYear() % 100, p, 2);
+  return pad3(d.getFullYear() % 100, p, 2);
 }
 function formatFullYear(d, p) {
-  return pad2(d.getFullYear() % 1e4, p, 4);
+  return pad3(d.getFullYear() % 1e4, p, 4);
 }
 function formatFullYearISO(d, p) {
   var day = d.getDay();
   d = day >= 4 || day === 0 ? timeThursday(d) : timeThursday.ceil(d);
-  return pad2(d.getFullYear() % 1e4, p, 4);
+  return pad3(d.getFullYear() % 1e4, p, 4);
 }
 function formatZone(d) {
   var z = d.getTimezoneOffset();
-  return (z > 0 ? "-" : (z *= -1, "+")) + pad2(z / 60 | 0, "0", 2) + pad2(z % 60, "0", 2);
+  return (z > 0 ? "-" : (z *= -1, "+")) + pad3(z / 60 | 0, "0", 2) + pad3(z % 60, "0", 2);
 }
 function formatUTCDayOfMonth(d, p) {
-  return pad2(d.getUTCDate(), p, 2);
+  return pad3(d.getUTCDate(), p, 2);
 }
 function formatUTCHour24(d, p) {
-  return pad2(d.getUTCHours(), p, 2);
+  return pad3(d.getUTCHours(), p, 2);
 }
 function formatUTCHour12(d, p) {
-  return pad2(d.getUTCHours() % 12 || 12, p, 2);
+  return pad3(d.getUTCHours() % 12 || 12, p, 2);
 }
 function formatUTCDayOfYear(d, p) {
-  return pad2(1 + utcDay.count(utcYear(d), d), p, 3);
+  return pad3(1 + utcDay.count(utcYear(d), d), p, 3);
 }
 function formatUTCMilliseconds(d, p) {
-  return pad2(d.getUTCMilliseconds(), p, 3);
+  return pad3(d.getUTCMilliseconds(), p, 3);
 }
 function formatUTCMicroseconds(d, p) {
   return formatUTCMilliseconds(d, p) + "000";
 }
 function formatUTCMonthNumber(d, p) {
-  return pad2(d.getUTCMonth() + 1, p, 2);
+  return pad3(d.getUTCMonth() + 1, p, 2);
 }
 function formatUTCMinutes(d, p) {
-  return pad2(d.getUTCMinutes(), p, 2);
+  return pad3(d.getUTCMinutes(), p, 2);
 }
 function formatUTCSeconds(d, p) {
-  return pad2(d.getUTCSeconds(), p, 2);
+  return pad3(d.getUTCSeconds(), p, 2);
 }
 function formatUTCWeekdayNumberMonday(d) {
   var dow = d.getUTCDay();
   return dow === 0 ? 7 : dow;
 }
 function formatUTCWeekNumberSunday(d, p) {
-  return pad2(utcSunday.count(utcYear(d) - 1, d), p, 2);
+  return pad3(utcSunday.count(utcYear(d) - 1, d), p, 2);
 }
 function UTCdISO(d) {
   var day = d.getUTCDay();
@@ -14462,28 +14049,28 @@ function UTCdISO(d) {
 }
 function formatUTCWeekNumberISO(d, p) {
   d = UTCdISO(d);
-  return pad2(utcThursday.count(utcYear(d), d) + (utcYear(d).getUTCDay() === 4), p, 2);
+  return pad3(utcThursday.count(utcYear(d), d) + (utcYear(d).getUTCDay() === 4), p, 2);
 }
 function formatUTCWeekdayNumberSunday(d) {
   return d.getUTCDay();
 }
 function formatUTCWeekNumberMonday(d, p) {
-  return pad2(utcMonday.count(utcYear(d) - 1, d), p, 2);
+  return pad3(utcMonday.count(utcYear(d) - 1, d), p, 2);
 }
 function formatUTCYear(d, p) {
-  return pad2(d.getUTCFullYear() % 100, p, 2);
+  return pad3(d.getUTCFullYear() % 100, p, 2);
 }
 function formatUTCYearISO(d, p) {
   d = UTCdISO(d);
-  return pad2(d.getUTCFullYear() % 100, p, 2);
+  return pad3(d.getUTCFullYear() % 100, p, 2);
 }
 function formatUTCFullYear(d, p) {
-  return pad2(d.getUTCFullYear() % 1e4, p, 4);
+  return pad3(d.getUTCFullYear() % 1e4, p, 4);
 }
 function formatUTCFullYearISO(d, p) {
   var day = d.getUTCDay();
   d = day >= 4 || day === 0 ? utcThursday(d) : utcThursday.ceil(d);
-  return pad2(d.getUTCFullYear() % 1e4, p, 4);
+  return pad3(d.getUTCFullYear() % 1e4, p, 4);
 }
 function formatUTCZone() {
   return "+0000";
@@ -14548,9 +14135,9 @@ function number4(t) {
 }
 function calendar(ticks2, tickInterval, year, month, week, day, hour, minute, second2, format2) {
   var scale2 = continuous(), invert = scale2.invert, domain = scale2.domain;
-  var formatMillisecond = format2(".%L"), formatSecond = format2(":%S"), formatMinute = format2("%I:%M"), formatHour = format2("%I %p"), formatDay = format2("%a %d"), formatWeek = format2("%b %d"), formatMonth = format2("%B"), formatYear3 = format2("%Y");
+  var formatMillisecond = format2(".%L"), formatSecond = format2(":%S"), formatMinute = format2("%I:%M"), formatHour = format2("%I %p"), formatDay = format2("%a %d"), formatWeek = format2("%b %d"), formatMonth = format2("%B"), formatYear4 = format2("%Y");
   function tickFormat2(date2) {
-    return (second2(date2) < date2 ? formatMillisecond : minute(date2) < date2 ? formatSecond : hour(date2) < date2 ? formatMinute : day(date2) < date2 ? formatHour : month(date2) < date2 ? week(date2) < date2 ? formatDay : formatWeek : year(date2) < date2 ? formatMonth : formatYear3)(date2);
+    return (second2(date2) < date2 ? formatMillisecond : minute(date2) < date2 ? formatSecond : hour(date2) < date2 ? formatMinute : day(date2) < date2 ? formatHour : month(date2) < date2 ? week(date2) < date2 ? formatDay : formatWeek : year(date2) < date2 ? formatMonth : formatYear4)(date2);
   }
   scale2.invert = function(y4) {
     return new Date(invert(y4));
@@ -14558,18 +14145,18 @@ function calendar(ticks2, tickInterval, year, month, week, day, hour, minute, se
   scale2.domain = function(_) {
     return arguments.length ? domain(Array.from(_, number4)) : domain().map(date);
   };
-  scale2.ticks = function(interval2) {
+  scale2.ticks = function(interval) {
     var d = domain();
-    return ticks2(d[0], d[d.length - 1], interval2 == null ? 10 : interval2);
+    return ticks2(d[0], d[d.length - 1], interval == null ? 10 : interval);
   };
   scale2.tickFormat = function(count3, specifier) {
     return specifier == null ? tickFormat2 : format2(specifier);
   };
-  scale2.nice = function(interval2) {
+  scale2.nice = function(interval) {
     var d = domain();
-    if (!interval2 || typeof interval2.range !== "function")
-      interval2 = tickInterval(d[0], d[d.length - 1], interval2 == null ? 10 : interval2);
-    return interval2 ? domain(nice2(d, interval2)) : scale2;
+    if (!interval || typeof interval.range !== "function")
+      interval = tickInterval(d[0], d[d.length - 1], interval == null ? 10 : interval);
+    return interval ? domain(nice2(d, interval)) : scale2;
   };
   scale2.copy = function() {
     return copy(scale2, calendar(ticks2, tickInterval, year, month, week, day, hour, minute, second2, format2));
@@ -14762,6 +14349,9 @@ var Accent_default = colors_default("7fc97fbeaed4fdc086ffff99386cb0f0027fbf5b176
 
 // node_modules/d3-scale-chromatic/src/categorical/Dark2.js
 var Dark2_default = colors_default("1b9e77d95f027570b3e7298a66a61ee6ab02a6761d666666");
+
+// node_modules/d3-scale-chromatic/src/categorical/observable10.js
+var observable10_default = colors_default("4269d0efb118ff725c6cc5b03ca951ff8ab7a463f297bbf59c6b4e9498a0");
 
 // node_modules/d3-scale-chromatic/src/categorical/Paired.js
 var Paired_default = colors_default("a6cee31f78b4b2df8a33a02cfb9a99e31a1cfdbf6fff7f00cab2d66a3d9affff99b15928");
@@ -17082,14 +16672,14 @@ function ZoomEvent(type2, {
   sourceEvent,
   target,
   transform: transform2,
-  dispatch: dispatch2
+  dispatch
 }) {
   Object.defineProperties(this, {
     type: { value: type2, enumerable: true, configurable: true },
     sourceEvent: { value: sourceEvent, enumerable: true, configurable: true },
     target: { value: target, enumerable: true, configurable: true },
     transform: { value: transform2, enumerable: true, configurable: true },
-    _: { value: dispatch2 }
+    _: { value: dispatch }
   });
 }
 
@@ -17541,7 +17131,7 @@ export {
   create_default as create,
   creator_default as creator,
   cross,
-  csv2 as csv,
+  csv3 as csv,
   csvFormat,
   csvFormatBody,
   csvFormatRow,
@@ -17630,8 +17220,8 @@ export {
   manyBody_default as forceManyBody,
   radial_default as forceRadial,
   simulation_default as forceSimulation,
-  x_default2 as forceX,
-  y_default2 as forceY,
+  x_default as forceX,
+  y_default as forceY,
   format,
   defaultLocale as formatDefaultLocale,
   locale_default as formatLocale,
@@ -17650,7 +17240,7 @@ export {
   circle_default as geoCircle,
   antimeridian_default as geoClipAntimeridian,
   circle_default2 as geoClipCircle,
-  extent_default2 as geoClipExtent,
+  extent_default as geoClipExtent,
   clipRectangle as geoClipRectangle,
   conicConformal_default as geoConicConformal,
   conicConformalRaw as geoConicConformalRaw,
@@ -17890,6 +17480,7 @@ export {
   scheme12 as schemeGnBu,
   scheme23 as schemeGreens,
   scheme24 as schemeGreys,
+  observable10_default as schemeObservable10,
   scheme13 as schemeOrRd,
   scheme27 as schemeOranges,
   scheme2 as schemePRGn,
@@ -18020,7 +17611,7 @@ export {
   slice_default as treemapSlice,
   sliceDice_default as treemapSliceDice,
   squarify_default as treemapSquarify,
-  tsv2 as tsv,
+  tsv3 as tsv,
   tsvFormat,
   tsvFormatBody,
   tsvFormatRow,

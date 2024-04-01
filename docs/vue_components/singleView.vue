@@ -1,29 +1,28 @@
 <template>
   <div class="singleView-container">
-    <canvas class="singleView-canvas" id="singleView-canvas"></canvas>
+    <canvas ref="canvas" class="singleView-canvas" id="singleView-canvas"></canvas>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { Engine } from '@babylonjs/core/Engines/engine';
-import { Scene } from '@babylonjs/core/scene';
-import { Color3 } from '@babylonjs/core/Maths/math.color';
-import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { WebXRFeatureName } from '@babylonjs/core/XR/webXRFeaturesManager.js';
-import { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience.js';
-import { WebXRHandTracking } from '@babylonjs/core/XR/features/WebXRHandTracking';
+import { ref, watch, onMounted, onUnmounted, onBeforeUnmount } from 'vue';
+import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
 
 const props = defineProps({
   scene: Function,
 });
 
+let canvas = ref();
+
 let babylonEngine;
 
-onMounted(async () => {
-  const canvas = document.querySelector('#singleView-canvas');
+ function resize() {
+    babylonEngine?.resize();
+  }
 
-  babylonEngine = new Engine(canvas, true);
+onMounted(async () => {
+
+  babylonEngine = new Engine(canvas.value, true);
 
   let scene = props.scene(babylonEngine);
 
@@ -58,12 +57,11 @@ onMounted(async () => {
     scene.render();
   });
 
-  window.addEventListener('resize', function () {
-    babylonEngine.resize();
-  });
+  window.addEventListener('resize', resize);
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resize);
   babylonEngine?.dispose();
 });
 </script>
@@ -72,14 +70,10 @@ onUnmounted(() => {
 .singleView-container {
   margin-bottom: 2px;
   width: 100%;
-  height: 50vh;
 }
 
 .singleView-canvas {
   width: 100%;
   height: 50vh;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>

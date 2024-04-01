@@ -1,33 +1,15 @@
 ---
 aside: false
 ---
-
+<script setup>
+import { barchart3D } from '../anu-examples/barchart3d.js'
+//import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # 3D Bar Chart
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-        allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=barchart3D">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="barchart3D" />
 
 ::: code-group
-<<< @/../anu-examples/examples/BarCharts/barchart3d.js 
-
-<<< @/../anu-examples/data/cars.json
+<<< @/./anu-examples/barchart3d.js 
 :::

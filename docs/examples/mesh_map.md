@@ -2,33 +2,15 @@
 aside: false
 ---
 
+<script setup>
+import { meshMap } from '../anu-examples/Mesh_Map.js'
+//import singleView  from '../vue_components/singleView.vue'
+</script>
 
 # Mesh Map
 
-
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=meshMap">
-    </iframe>
-</div>
-
-
-<style>
-    iframe {
-        width: 100%;
-        height: 50vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
+<singleView :scene="meshMap" />
 
 ::: code-group
-<<< @/../anu-examples/examples/Geographic/Mesh_Map.js 
-
-<<< @/../anu-examples/data/airports.csv
-
+<<< @/./anu-examples/Mesh_Map.js 
 :::
