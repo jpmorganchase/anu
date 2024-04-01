@@ -3,7 +3,7 @@ aside: false
 ---
 
 <script setup>
-import { nodelink3d } from '../anu-examples/Networks/NodeLink3D.js'
+import { nodelink3d } from '../anu-examples/NodeLink3D.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -14,7 +14,5 @@ This example shows how to make a force direct node link visualization using [d3-
 <singleView :scene="nodelink3d"/>
 
 ::: code-group
-<<< @/./anu-examples/Networks/NodeLink3D.js 
-
-<<< @/./anu-examples/data/miserables.json
+<<< @/./anu-examples/NodeLink3D.js 
 :::

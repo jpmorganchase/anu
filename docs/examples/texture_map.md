@@ -3,7 +3,7 @@ aside: false
 ---
 
 <script setup>
-import { textureMap } from '../anu-examples/Geographic/Texture_Map.js'
+import { textureMap } from '../anu-examples/Texture_Map.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -12,7 +12,5 @@ import { textureMap } from '../anu-examples/Geographic/Texture_Map.js'
 <singleView :scene="textureMap" />
 
 ::: code-group
-<<< @/./anu-examples/Geographic/Texture_Map.js 
-
-<<< @/./anu-examples/data/airports.csv
+<<< @/./anu-examples/Texture_Map.js 
 :::

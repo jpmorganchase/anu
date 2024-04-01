@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { facetPosition } from  "../../anu-examples/Interactions/FacetPosition.js"
+  import { facetPosition } from  "../../anu-examples/FacetPosition.js"
 </script>
 
 # Facet & Position UI
@@ -76,6 +76,6 @@ root.positionUI(options?: {})
 <singleView :scene="facetPosition" />
 
 ::: code-group
-<<< @/./anu-examples/Interactions/FacetPosition.js 
+<<< @/./anu-examples/FacetPosition.js 
 :::
 

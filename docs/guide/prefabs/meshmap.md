@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { meshMap } from  "../../anu-examples/Geographic/Mesh_Map.js"
+  import { meshMap } from  "../../anu-examples/Mesh_Map.js"
 </script>
 
 # Mesh Map
@@ -54,8 +54,5 @@ let selection = map.selection
 <singleView :scene="meshMap" />
 
 ::: code-group
-<<< @/./anu-examples/Geographic/Mesh_Map.js 
-
-<<< @/./anu-examples/data/airports.csv
-
+<<< @/./anu-examples/Mesh_Map.js 
 :::

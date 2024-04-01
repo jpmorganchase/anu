@@ -15,7 +15,7 @@ let engine = new Engine(canvas, true)
 async function createScene(e){
   let canvas = e.detail.canvas;
 
-  let module = await import("../anu-examples/" + e.detail.scene + ".js")
+  let module = await import(`../anu-examples/${e.detail.scene}.js`)
   let fn = Object.keys(module)[0];
   let scene = await module[fn](engine)
   let view = engine.registerView(canvas, scene.activeCamera);

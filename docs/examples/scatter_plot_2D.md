@@ -2,7 +2,7 @@
 aside: false
 ---
 <script setup>
-import { scatterplot2D } from '../anu-examples/ScatterPlots/Scatterplot2D.js'
+import { scatterplot2D } from '../anu-examples/Scatterplot2D.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -11,7 +11,5 @@ import { scatterplot2D } from '../anu-examples/ScatterPlots/Scatterplot2D.js'
 <singleView :scene="scatterplot2D" />
 
 ::: code-group
-<<< @/./anu-examples/ScatterPlots/Scatterplot2D.js 
-
-<<< @/./anu-examples/data/iris.json
+<<< @/./anu-examples/Scatterplot2D.js 
 :::

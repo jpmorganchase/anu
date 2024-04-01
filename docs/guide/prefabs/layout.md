@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { layout } from  "../../anu-examples/Layouts/layout.js"
+  import { layout } from  "../../anu-examples/layout.js"
 </script>
 
 # Layouts
@@ -64,5 +64,5 @@ layout.update();
 <singleView :scene="layout" />
 
 ::: code-group
-<<< @/./anu-examples/Layouts/layout.js 
+<<< @/./anu-examples/layout.js 
 :::

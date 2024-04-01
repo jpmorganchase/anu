@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t,a5 as i}from"./chunks/framework.CFfU7An_.js";const b=JSON.parse('{"title":"Anu.js","description":"","frontmatter":{},"headers":[],"relativePath":"guide/index.md","filePath":"guide/index.md"}'),n={name:"guide/index.md"},r=i("",13),o=[r];function s(h,l,d,c,u,p){return t(),a("div",null,o)}const g=e(n,[["render",s]]);export{b as __pageData,g as default};

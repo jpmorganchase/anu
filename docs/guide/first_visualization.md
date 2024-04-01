@@ -32,7 +32,7 @@ let spheres = cot.bind('sphere', {diameter: 0.5}, iris); // [!code focus]
 :::
 
 
-<inlineView scene="CreateAVis/step1" :inspector="true" />
+<inlineView scene="step1" :inspector="true" />
 
 
 <div class="tip custom-block" style="padding-top: 8px">
@@ -58,9 +58,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
 ```
 
 
-<inlineView scene="CreateAVis/step2" />
-
-
+<inlineView scene="step2" />
 
 However, there are some issues with this approach and indeed returning the raw data value as the node position is poor practice. For one, our spheres are overlapping, We could fix this by scaling our spheres down but this approach is limited as we can only make them so small before they are no longer visible. Furthermore, imagine our data values were much larger or very small, our spheres could end up being positioned way too far apart or close together. We don't want to conflate our data dimensions with our global and local rendering dimensions. Instead, we should interpolate the values from our data to our rendering coordinates. While Anu does not provide these methods directly, Anu was designed to work with the fantastic scale methods from D3. 
 
@@ -83,7 +81,7 @@ spheres.positionX((d,n,i) => scaleX(d.sepalLength)) // [!code focus]
        .positionZ((d,n,i) => scaleZ(d.sepalWidth)); // [!code focus]
 ```
 
-<inlineView scene="CreateAVis/step3" />
+<inlineView scene="step3" />
 
 That is looking better! Above we are using linear scales from d3 to transform our data values to render space values. The domain is the extent, the minimum and maximum values, of our data keys and the range is the min and max values output by our function. For example, the smallest sepal length with output -10 and the largest 10. The nice() method simply adds some padding to make things look nicer. 
 We then use these functions directly in our position x,y,z calls, passing in the raw data values and returning the transformed values between -10 and 10.
@@ -114,7 +112,7 @@ anu.createAxes('axes', scene, { parent: cot, // [!code focus]
                                 }); // [!code focus]
 ```
 
-<inlineView scene="CreateAVis/step5" />
+<inlineView scene="step5" />
 
 ## Step 4: Adding Color
 
@@ -147,7 +145,7 @@ anu.createAxes('axes', scene, { parent: cot,
                                 }); 
 ```
 
-<inlineView scene="CreateAVis/step6" />
+<inlineView scene="step6" />
 
 
 </multiView>

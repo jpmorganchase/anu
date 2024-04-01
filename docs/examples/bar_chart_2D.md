@@ -2,7 +2,7 @@
 aside: false
 ---
 <script setup>
-import { barchart2d } from '../anu-examples/BarCharts/barchart2d.js'
+import { barchart2d } from '../anu-examples/barchart2d.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -11,7 +11,5 @@ import { barchart2d } from '../anu-examples/BarCharts/barchart2d.js'
 <singleView :scene="barchart2d" />
 
 ::: code-group
-<<< @/./anu-examples/BarCharts/barchart2d.js 
-
-<<< @/./anu-examples/data/cars.json
+<<< @/./anu-examples/barchart2d.js 
 :::

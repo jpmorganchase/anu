@@ -4,7 +4,7 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { axesTest } from  "../../anu-examples/Axes/axesTest.js"
+  import { axesTest } from  "../../anu-examples/axesTest.js"
 </script>
 
 # Axes

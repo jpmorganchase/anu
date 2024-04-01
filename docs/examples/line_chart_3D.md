@@ -3,7 +3,7 @@ aside: false
 ---
 
 <script setup>
-import { linechart3D } from '../anu-examples/LineCharts/linechart3D.js'
+import { linechart3D } from '../anu-examples/linechart3D.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -12,7 +12,5 @@ import { linechart3D } from '../anu-examples/LineCharts/linechart3D.js'
 <singleView :scene="linechart3D" />
 
 ::: code-group
-<<< @/./anu-examples/LineCharts/linechart3D.js 
-
-<<< @/./anu-examples/data/yield-curve.csv
+<<< @/./anu-examples/linechart3D.js 
 :::

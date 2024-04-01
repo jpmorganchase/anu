@@ -2,7 +2,7 @@
 aside: false
 ---
 <script setup>
-import { hover } from '../anu-examples/Interactions/Hover.js'
+import { hover } from '../anu-examples/Hover.js'
 //import singleView  from '../vue_components/singleView.vue'
 </script>
 
@@ -15,7 +15,5 @@ Example demonstrating how to use the .action() method to add [Babylon pointer ac
 <singleView :scene="hover" />
 
 ::: code-group
-<<< @/./anu-examples/Interactions/Hover.js 
-
-<<< @/./anu-examples/data/penguins.json
+<<< @/./anu-examples/Hover.js 
 :::
