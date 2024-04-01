@@ -7,7 +7,7 @@
 <script setup>
 import { ref, watch, onBeforeUnmount, onBeforeMount, onMounted} from 'vue';
 import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
-import { inspector } from "@babylonjs/inspector";
+// import { Inspector } from "@babylonjs/inspector";
 
 let canvas = document.createElement('canvas');
 let engine = new Engine(canvas, true)
@@ -33,14 +33,14 @@ async function createScene(e){
     engine.inputElement = canvas
     scene.attachControl();
 
-    if (e.detail.inspector) {
-      scene.debugLayer.hide()
-      scene.debugLayer.show({
-         globalRoot: canvas.parentElement,
-         embedMode: true,
-         showInspector: false,
-       });
-    }
+  //   if (e.detail.inspector) {
+  //     Inspector.hide()
+  //     Inspector.show(scene, {
+  //        globalRoot: canvas.parentElement,
+  //        embedMode: true,
+  //        showInspector: false,
+  //      });
+  //   }
   });
 
   engine.activeView = view;

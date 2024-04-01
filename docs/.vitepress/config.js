@@ -141,22 +141,22 @@ export default defineConfig({
     ]
   },
       vite: {
-        worker: {
-          format: "es"
-        },
-        rollupOptions: {
-          external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
-        },
+        // worker: {
+        //   format: "es"
+        // },
+        // rollupOptions: {
+        //   external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
+        // },
         
-        server: {
-            // watch: {
-            //     followSymlinks: false,
-            // },
-          // headers: {
-          //   'Cross-Origin-Embedder-Policy': 'require-corp',
-          //   'Cross-Origin-Opener-Policy': 'same-origin',
-          // },
-        },
+        // server: {
+        //     // watch: {
+        //     //     followSymlinks: false,
+        //     // },
+        //   // headers: {
+        //   //   'Cross-Origin-Embedder-Policy': 'require-corp',
+        //   //   'Cross-Origin-Opener-Policy': 'same-origin',
+        //   // },
+        // },
         plugins: [
             dsv(),
             dynamicImport(),
