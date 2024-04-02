@@ -21,7 +21,7 @@ export const box_data = function(engine){
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,
-                        depth: (d) => d.points
+                        depth: (d) => d.points,
                       }, 
                       {goals: 5, assits: 10, points: 2})
 

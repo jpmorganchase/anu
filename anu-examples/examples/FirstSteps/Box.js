@@ -15,5 +15,6 @@ export const box = function(engine){
   camera.attachControl(true)
 
   let box = anu.create('box', 'ourBox', {size: 2}, [{count: 2}]);
+  
   return scene;
 }; 
