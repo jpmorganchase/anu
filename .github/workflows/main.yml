@@ -21,7 +21,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@jpmorganchase'
       - run: |
-          npm install
+          npm ci
           npm run build
           npm publish --access public
         env:
