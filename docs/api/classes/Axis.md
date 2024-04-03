@@ -33,7 +33,7 @@
 
 ### constructor
 
-• **new Axis**(`name`, `scene`, `options?`)
+• **new Axis**(`name`, `scene`, `options?`): [`Axis`](Axis.md)
 
 #### Parameters
 
@@ -43,9 +43,13 @@
 | `scene` | `Scene` |
 | `options` | `AxisOptions` |
 
+#### Returns
+
+[`Axis`](Axis.md)
+
 #### Defined in
 
-[prefabs/Axis/Axis.ts:56](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L56)
+[prefabs/Axis/Axis.ts:48](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L48)
 
 ## Properties
 
@@ -55,7 +59,7 @@
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:42](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L42)
+[prefabs/Axis/Axis.ts:41](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L41)
 
 ___
 
@@ -73,7 +77,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:45](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L45)
+[prefabs/Axis/Axis.ts:44](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L44)
 
 ___
 
@@ -83,7 +87,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:44](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L44)
+[prefabs/Axis/Axis.ts:43](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L43)
 
 ___
 
@@ -93,7 +97,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:46](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L46)
+[prefabs/Axis/Axis.ts:45](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L45)
 
 ___
 
@@ -111,7 +115,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:47](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L47)
+[prefabs/Axis/Axis.ts:46](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L46)
 
 ___
 
@@ -121,7 +125,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L39)
+[prefabs/Axis/Axis.ts:38](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L38)
 
 ___
 
@@ -131,7 +135,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:40](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L40)
+[prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L39)
 
 ___
 
@@ -141,7 +145,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:43](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L43)
+[prefabs/Axis/Axis.ts:42](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L42)
 
 ___
 
@@ -151,13 +155,13 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:41](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L41)
+[prefabs/Axis/Axis.ts:40](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L40)
 
 ___
 
 ### setBackground
 
-• `Private` **setBackground**: (`this`: [`Axis`](Axis.md)) => { `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `backgroundAlt`
+• `Private` **setBackground**: (`this`: [`Axis`](Axis.md)) => \{ `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `backgroundAlt`
 
 #### Type declaration
 
@@ -181,7 +185,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:130](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L130)
+[prefabs/Axis/Axis.ts:120](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L120)
 
 ___
 
@@ -205,7 +209,7 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:129](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L129)
+[prefabs/Axis/Axis.ts:119](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L119)
 
 ___
 
@@ -229,13 +233,13 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:131](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L131)
+[prefabs/Axis/Axis.ts:121](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L121)
 
 ___
 
 ### setLabel
 
-• `Private` **setLabel**: (`this`: [`Axis`](Axis.md)) => { `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `labelAlt`
+• `Private` **setLabel**: (`this`: [`Axis`](Axis.md)) => \{ `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `labelAlt`
 
 #### Type declaration
 
@@ -259,13 +263,13 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:132](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L132)
+[prefabs/Axis/Axis.ts:122](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L122)
 
 ## Methods
 
 ### setCoT
 
-▸ `Private` **setCoT**(): [`Selection`](Selection.md)
+▸ **setCoT**(): [`Selection`](Selection.md)
 
 #### Returns
 
@@ -273,13 +277,13 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:70](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L70)
+[prefabs/Axis/Axis.ts:60](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L60)
 
 ___
 
 ### setScales
 
-▸ `Private` **setScales**(): `Object`
+▸ **setScales**(): `Object`
 
 #### Returns
 
@@ -288,19 +292,19 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `size` | `number` |
-| `x` | { `domain`: `any` = domainX; `range`: `number`[] = rangeX; `scale`: `any` = scaleX } |
+| `x` | \{ `domain`: `any` = domainX; `range`: `number`[] = rangeX; `scale`: `any` = scaleX } |
 | `x.domain` | `any` |
 | `x.range` | `number`[] |
 | `x.scale` | `any` |
-| `y` | { `domain`: `any` = domainY; `range`: `number`[] = rangeY; `scale`: `any` = scaleY } |
+| `y` | \{ `domain`: `any` = domainY; `range`: `number`[] = rangeY; `scale`: `any` = scaleY } |
 | `y.domain` | `any` |
 | `y.range` | `number`[] |
 | `y.scale` | `any` |
-| `z` | { `domain`: `any` = domainZ; `range`: `number`[] = rangeZ; `scale`: `any` = scaleZ } |
+| `z` | \{ `domain`: `any` = domainZ; `range`: `number`[] = rangeZ; `scale`: `any` = scaleZ } |
 | `z.domain` | `any` |
 | `z.range` | `number`[] |
 | `z.scale` | `any` |
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:81](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L81)
+[prefabs/Axis/Axis.ts:71](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L71)

@@ -32,6 +32,7 @@
 - [metadata](Selection.md#metadata)
 - [name](Selection.md#name)
 - [position](Selection.md#position)
+- [positionUI](Selection.md#positionui)
 - [positionX](Selection.md#positionx)
 - [positionY](Selection.md#positiony)
 - [positionZ](Selection.md#positionz)
@@ -39,6 +40,7 @@
 - [props](Selection.md#props)
 - [registerInstancedBuffer](Selection.md#registerinstancedbuffer)
 - [removeTags](Selection.md#removetags)
+- [rotateUI](Selection.md#rotateui)
 - [rotation](Selection.md#rotation)
 - [rotationX](Selection.md#rotationx)
 - [rotationY](Selection.md#rotationy)
@@ -46,6 +48,7 @@
 - [run](Selection.md#run)
 - [scaleDT](Selection.md#scaledt)
 - [scaleToDT](Selection.md#scaletodt)
+- [scaleUI](Selection.md#scaleui)
 - [scaling](Selection.md#scaling)
 - [scalingX](Selection.md#scalingx)
 - [scalingY](Selection.md#scalingy)
@@ -65,24 +68,28 @@
 
 ### constructor
 
-• **new Selection**(`nodes`, `scene`)
+• **new Selection**(`nodes`, `scene?`): [`Selection`](Selection.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `nodes` | `Node`[] |
-| `scene` | `Scene` |
+| `nodes` | `Mesh`[] \| `Node`[] \| `TransformNode`[] |
+| `scene?` | `Scene` |
+
+#### Returns
+
+[`Selection`](Selection.md)
 
 #### Defined in
 
-[selection/index.ts:45](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L45)
+[selection/index.ts:46](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L46)
 
 ## Properties
 
 ### action
 
-• **action**: (`this`: [`Selection`](Selection.md), `action`: `Action` \| (`d`: `any`) => `Action`) => [`Selection`](Selection.md) = `action`
+• **action**: (`this`: [`Selection`](Selection.md), `action`: `Action` \| (`d`: `any`, `n`: `AbstractMesh`, `i`: `number`) => `Action`) => [`Selection`](Selection.md) = `action`
 
 #### Type declaration
 
@@ -93,7 +100,7 @@
 | Name | Type |
 | :------ | :------ |
 | `this` | [`Selection`](Selection.md) |
-| `action` | `Action` \| (`d`: `any`) => `Action` |
+| `action` | `Action` \| (`d`: `any`, `n`: `AbstractMesh`, `i`: `number`) => `Action` |
 
 ##### Returns
 
@@ -101,7 +108,7 @@
 
 #### Defined in
 
-[selection/index.ts:75](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L75)
+[selection/index.ts:76](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L76)
 
 ___
 
@@ -126,7 +133,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:72](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L72)
+[selection/index.ts:73](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L73)
 
 ___
 
@@ -155,7 +162,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:80](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L80)
+[selection/index.ts:81](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L81)
 
 ___
 
@@ -184,7 +191,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:87](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L87)
+[selection/index.ts:88](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L88)
 
 ___
 
@@ -214,28 +221,34 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:71](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L71)
+[selection/index.ts:72](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L72)
 
 ___
 
 ### bind
 
-• **bind**: (`this`: [`Selection`](Selection.md), `shape`: `string`, `options`: `object`, `data`: `object`[]) => [`Selection`](Selection.md) = `bind`
+• **bind**: \<MeshType\>(`this`: [`Selection`](Selection.md), `shape`: `MeshType`, `options`: `Property`\<`MeshTypes`, `MeshType`\>, `data`: `object`[]) => [`Selection`](Selection.md) = `bind`
 
 #### Type declaration
 
-▸ (`this`, `shape`, `options?`, `data?`): [`Selection`](Selection.md)
+▸ \<`MeshType`\>(`this`, `shape`, `options?`, `data?`): [`Selection`](Selection.md)
 
 Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parent.
 The data index of the mesh is also attached to the mesh node object under the metadata property.
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `MeshType` | extends keyof `MeshTypes` |
 
 ##### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `this` | [`Selection`](Selection.md) | - |
-| `shape` | `string` | A string of the type of the mesh geometry being created. |
-| `options` | `object` | A object containing the initial mesh parameters for the selected geometry, can be either values or functions. |
+| `shape` | `MeshType` | A string of the type of the mesh geometry being created. |
+| `options` | `Property`\<`MeshTypes`, `MeshType`\> | A object containing the initial mesh parameters for the selected geometry, can be either values or functions. |
 | `data` | `object`[] | The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data. |
 
 ##### Returns
@@ -247,7 +260,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[selection/index.ts:54](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L54)
+[selection/index.ts:55](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L55)
 
 ___
 
@@ -279,25 +292,26 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[selection/index.ts:56](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L56)
+[selection/index.ts:57](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L57)
 
 ___
 
 ### boundingBox
 
-• **boundingBox**: (`this`: [`Selection`](Selection.md)) => `BoundingInfo` = `boundingBox`
+• **boundingBox**: (`this`: [`Selection`](Selection.md), `exclude`: `string`) => `BoundingInfo` = `boundingBox`
 
 #### Type declaration
 
-▸ (`this`): `BoundingInfo`
+▸ (`this`, `exclude?`): `BoundingInfo`
 
-Calculates the cumalitive bounding box of the current selection.
+Calculates the cumulative bounding box of the current selection.
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Selection`](Selection.md) |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | `undefined` |
+| `exclude` | `string` | `""` |
 
 ##### Returns
 
@@ -307,7 +321,7 @@ instance of BoundingInfo class, an object containing all bounding box values.
 
 #### Defined in
 
-[selection/index.ts:91](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L91)
+[selection/index.ts:92](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L92)
 
 ___
 
@@ -336,7 +350,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:77](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L77)
+[selection/index.ts:78](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L78)
 
 ___
 
@@ -365,7 +379,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:84](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L84)
+[selection/index.ts:85](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L85)
 
 ___
 
@@ -390,7 +404,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:83](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L83)
+[selection/index.ts:84](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L84)
 
 ___
 
@@ -420,7 +434,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:90](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L90)
+[selection/index.ts:91](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L91)
 
 ___
 
@@ -449,7 +463,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:79](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L79)
+[selection/index.ts:80](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L80)
 
 ___
 
@@ -478,13 +492,13 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:86](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L86)
+[selection/index.ts:87](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L87)
 
 ___
 
 ### filter
 
-• **filter**: (`this`: [`Selection`](Selection.md), `method`: (`d`: `any`, `i`: `number`) => `boolean`) => [`Selection`](Selection.md) = `filter`
+• **filter**: (`this`: [`Selection`](Selection.md), `method`: (`d`: `any`, `n`: `Node`, `i`: `number`) => `boolean`) => [`Selection`](Selection.md) = `filter`
 
 #### Type declaration
 
@@ -497,7 +511,7 @@ Filters a seclection based on the function provided
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `this` | [`Selection`](Selection.md) | - |
-| `method` | (`d`: `any`, `i`: `number`) => `boolean` | A function with two parameters d (the binded data) and i (the index) that returns a boolean. |
+| `method` | (`d`: `any`, `n`: `Node`, `i`: `number`) => `boolean` | A function with two parameters d (the binded data) and i (the index) that returns a boolean. |
 
 ##### Returns
 
@@ -507,7 +521,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:92](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L92)
+[selection/index.ts:93](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L93)
 
 ___
 
@@ -532,7 +546,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:70](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L70)
+[selection/index.ts:71](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L71)
 
 ___
 
@@ -557,7 +571,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:74](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L74)
+[selection/index.ts:75](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L75)
 
 ___
 
@@ -586,7 +600,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:96](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L96)
+[selection/index.ts:97](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L97)
 
 ___
 
@@ -615,7 +629,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:76](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L76)
+[selection/index.ts:77](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L77)
 
 ___
 
@@ -645,7 +659,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:97](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L97)
+[selection/index.ts:98](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L98)
 
 ___
 
@@ -674,7 +688,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:95](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L95)
+[selection/index.ts:96](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L96)
 
 ___
 
@@ -703,7 +717,37 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:57](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L57)
+[selection/index.ts:58](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L58)
+
+___
+
+### positionUI
+
+• **positionUI**: (`this`: [`Selection`](Selection.md), `options`: `positionUIOptions`) => [`Selection`](Selection.md) = `positionUI`
+
+#### Type declaration
+
+▸ (`this`, `options?`): [`Selection`](Selection.md)
+
+Take a selection, for each node in the selection attach UI elements that provide positioning behavior
+
+##### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](Selection.md) | - |
+| `options` | `positionUIOptions` | The associated options for this prefab. |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
+#### Defined in
+
+[selection/index.ts:99](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L99)
 
 ___
 
@@ -732,7 +776,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:58](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L58)
+[selection/index.ts:59](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L59)
 
 ___
 
@@ -761,7 +805,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:59](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L59)
+[selection/index.ts:60](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L60)
 
 ___
 
@@ -790,7 +834,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:60](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L60)
+[selection/index.ts:61](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L61)
 
 ___
 
@@ -820,7 +864,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:94](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L94)
+[selection/index.ts:95](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L95)
 
 ___
 
@@ -850,7 +894,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:93](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L93)
+[selection/index.ts:94](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L94)
 
 ___
 
@@ -876,7 +920,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:81](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L81)
+[selection/index.ts:82](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L82)
 
 ___
 
@@ -901,7 +945,32 @@ ___
 
 #### Defined in
 
-[selection/index.ts:73](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L73)
+[selection/index.ts:74](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L74)
+
+___
+
+### rotateUI
+
+• **rotateUI**: (`this`: [`Selection`](Selection.md), `options`: `rotateUIOptions`) => [`Selection`](Selection.md) = `rotateUI`
+
+#### Type declaration
+
+▸ (`this`, `options?`): [`Selection`](Selection.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Selection`](Selection.md) |
+| `options` | `rotateUIOptions` |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+#### Defined in
+
+[selection/index.ts:101](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L101)
 
 ___
 
@@ -930,7 +999,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:62](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L62)
+[selection/index.ts:63](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L63)
 
 ___
 
@@ -959,7 +1028,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:63](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L63)
+[selection/index.ts:64](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L64)
 
 ___
 
@@ -988,7 +1057,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:64](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L64)
+[selection/index.ts:65](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L65)
 
 ___
 
@@ -1017,13 +1086,13 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:65](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L65)
+[selection/index.ts:66](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L66)
 
 ___
 
 ### run
 
-• **run**: (`this`: [`Selection`](Selection.md), `method`: (`mesh`: `Mesh`, `d`: `any`, `i`: `number`) => `any`) => [`Selection`](Selection.md) = `run`
+• **run**: (`this`: [`Selection`](Selection.md), `method`: (`d`: `any`, `node`: `Node`, `i`: `number`) => `any`) => [`Selection`](Selection.md) = `run`
 
 #### Type declaration
 
@@ -1034,7 +1103,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`Selection`](Selection.md) |
-| `method` | (`mesh`: `Mesh`, `d`: `any`, `i`: `number`) => `any` |
+| `method` | (`d`: `any`, `node`: `Node`, `i`: `number`) => `any` |
 
 ##### Returns
 
@@ -1042,7 +1111,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:55](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L55)
+[selection/index.ts:56](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L56)
 
 ___
 
@@ -1067,7 +1136,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:88](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L88)
+[selection/index.ts:89](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L89)
 
 ___
 
@@ -1092,7 +1161,32 @@ ___
 
 #### Defined in
 
-[selection/index.ts:89](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L89)
+[selection/index.ts:90](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L90)
+
+___
+
+### scaleUI
+
+• **scaleUI**: (`this`: [`Selection`](Selection.md), `options`: `scaleUIOptions`) => [`Selection`](Selection.md) = `scaleUI`
+
+#### Type declaration
+
+▸ (`this`, `options?`): [`Selection`](Selection.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Selection`](Selection.md) |
+| `options` | `scaleUIOptions` |
+
+##### Returns
+
+[`Selection`](Selection.md)
+
+#### Defined in
+
+[selection/index.ts:100](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L100)
 
 ___
 
@@ -1121,7 +1215,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:66](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L66)
+[selection/index.ts:67](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L67)
 
 ___
 
@@ -1150,7 +1244,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:67](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L67)
+[selection/index.ts:68](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L68)
 
 ___
 
@@ -1179,7 +1273,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:68](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L68)
+[selection/index.ts:69](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L69)
 
 ___
 
@@ -1208,17 +1302,17 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:69](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L69)
+[selection/index.ts:70](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L70)
 
 ___
 
 ### scene
 
-• **scene**: `Scene`
+• `Optional` **scene**: `Scene`
 
 #### Defined in
 
-[selection/index.ts:43](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L43)
+[selection/index.ts:44](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L44)
 
 ___
 
@@ -1251,7 +1345,7 @@ $\<Tags> : select by tags
 
 #### Defined in
 
-[selection/index.ts:50](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L50)
+[selection/index.ts:51](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L51)
 
 ___
 
@@ -1280,7 +1374,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:52](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L52)
+[selection/index.ts:53](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L53)
 
 ___
 
@@ -1309,7 +1403,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:51](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L51)
+[selection/index.ts:52](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L52)
 
 ___
 
@@ -1338,17 +1432,17 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:53](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L53)
+[selection/index.ts:54](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L54)
 
 ___
 
 ### selected
 
-• **selected**: `Node`[]
+• **selected**: `Mesh`[] \| `Node`[] \| `TransformNode`[]
 
 #### Defined in
 
-[selection/index.ts:42](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L42)
+[selection/index.ts:43](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L43)
 
 ___
 
@@ -1374,7 +1468,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:82](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L82)
+[selection/index.ts:83](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L83)
 
 ___
 
@@ -1403,7 +1497,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:78](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L78)
+[selection/index.ts:79](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L79)
 
 ___
 
@@ -1432,7 +1526,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:85](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L85)
+[selection/index.ts:86](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L86)
 
 ___
 
@@ -1459,4 +1553,4 @@ ___
 
 #### Defined in
 
-[selection/index.ts:61](https://github.com/jpmorganchase/anu/blob/12e6f77/src/selection/index.ts#L61)
+[selection/index.ts:62](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L62)

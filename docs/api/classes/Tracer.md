@@ -22,7 +22,7 @@
 
 ### constructor
 
-• **new Tracer**(`selection`, `name`, `path`)
+• **new Tracer**(`selection`, `name`, `path`): [`Tracer`](Tracer.md)
 
 #### Parameters
 
@@ -32,9 +32,13 @@
 | `name` | `string` |
 | `path` | `any` |
 
+#### Returns
+
+[`Tracer`](Tracer.md)
+
 #### Defined in
 
-[prefabs/Tracer.ts:21](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Tracer.ts#L21)
+[prefabs/Tracer.ts:21](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Tracer.ts#L21)
 
 ## Properties
 
@@ -44,7 +48,7 @@
 
 #### Defined in
 
-[prefabs/Tracer.ts:18](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Tracer.ts#L18)
+[prefabs/Tracer.ts:18](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Tracer.ts#L18)
 
 ___
 
@@ -54,7 +58,7 @@ ___
 
 #### Defined in
 
-[prefabs/Tracer.ts:19](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Tracer.ts#L19)
+[prefabs/Tracer.ts:19](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Tracer.ts#L19)
 
 ___
 
@@ -64,7 +68,7 @@ ___
 
 #### Defined in
 
-[prefabs/Tracer.ts:17](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Tracer.ts#L17)
+[prefabs/Tracer.ts:17](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Tracer.ts#L17)
 
 ## Methods
 
@@ -78,4 +82,4 @@ ___
 
 #### Defined in
 
-[prefabs/Tracer.ts:30](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Tracer.ts#L30)
+[prefabs/Tracer.ts:30](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Tracer.ts#L30)

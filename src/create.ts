@@ -88,7 +88,7 @@ export interface MeshTypes {
   "container": Parameters<typeof createContainer>[1],
 }
 
-type Property<T, K extends keyof T> = T[K];
+type Property<T, MeshType extends keyof T> = T[MeshType];
 
 /**
  * Helper function to build meshes of a specified type with options optionally set with functions and data.
@@ -100,10 +100,10 @@ type Property<T, K extends keyof T> = T[K];
  * @param scene The scene to create the mesh in.
  * @returns A mesh object created with the passed parameters.
  */
-export function create<K extends keyof MeshTypes>(
-  shape: K,
+export function create<MeshType extends keyof MeshTypes>(
+  shape: MeshType,
   name: string,
-  options: Property<MeshTypes, K> = {},
+  options: Property<MeshTypes, MeshType> = {},
   data: object = {},
   scene?: Scene
 ): Mesh {

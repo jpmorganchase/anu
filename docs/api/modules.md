@@ -10,11 +10,16 @@
 - [Selection](classes/Selection.md)
 - [Tracer](classes/Tracer.md)
 
+### Variables
+
+- [schemes](modules.md#schemes)
+
 ### Functions
 
 - [bind](modules.md#bind)
 - [create](modules.md#create)
 - [createAxes](modules.md#createaxes)
+- [createMeshMap](modules.md#createmeshmap)
 - [createPlaneText](modules.md#createplanetext)
 - [createTextureGlobe](modules.md#createtextureglobe)
 - [createTextureMap](modules.md#createtexturemap)
@@ -28,21 +33,37 @@
 - [selectTag](modules.md#selecttag)
 - [sequentialChromatic](modules.md#sequentialchromatic)
 
+## Variables
+
+### schemes
+
+• **schemes**: `StringByAny`
+
+#### Defined in
+
+[prefabs/Chromatic/Chromatic.ts:81](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L81)
+
 ## Functions
 
 ### bind
 
-▸ **bind**(`shape`, `options?`, `data?`, `scene?`): [`Selection`](classes/Selection.md)
+▸ **bind**\<`MeshType`\>(`shape`, `options?`, `data?`, `scene?`): [`Selection`](classes/Selection.md)
 
 Take a shape type, a scene, and data. For each index in the data create a new mesh for each node in the selection as the parent.
 The data index of the mesh is also attached to the mesh node object under the metadata property.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `MeshType` | extends keyof `MeshTypes` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shape` | `string` | A string of the type of the mesh geometry being created. |
-| `options?` | `object` | A object containing the initial mesh parameters for the selected geometry, can be either values or functions. |
+| `shape` | `MeshType` | A string of the type of the mesh geometry being created. |
+| `options?` | `Property`\<`MeshTypes`, `MeshType`\> | A object containing the initial mesh parameters for the selected geometry, can be either values or functions. |
 | `data` | `object`[] | The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data. |
 | `scene?` | `Scene` | The Babylon scene you are targeting. |
 
@@ -55,23 +76,29 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[bind.ts:19](https://github.com/jpmorganchase/anu/blob/12e6f77/src/bind.ts#L19)
+[bind.ts:21](https://github.com/jpmorganchase/anu/blob/596907d/src/bind.ts#L21)
 
 ___
 
 ### create
 
-▸ **create**(`shape`, `name`, `options?`, `data?`, `scene?`): `Mesh`
+▸ **create**\<`MeshType`\>(`shape`, `name`, `options?`, `data?`, `scene?`): `Mesh`
 
 Helper function to build meshes of a specified type with options optionally set with functions and data.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `MeshType` | extends keyof `MeshTypes` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shape` | `string` | The name of the mesh type you want to create. |
+| `shape` | `MeshType` | The name of the mesh type you want to create. |
 | `name` | `string` | The string that will be used as the inital mesh ID and name. |
-| `options` | `object` | An object containg the mesh parametetrs as either absolutle values or functions. |
+| `options` | `Property`\<`MeshTypes`, `MeshType`\> | An object containg the mesh parametetrs as either absolutle values or functions. |
 | `data` | `object` | An object containg the data that may be used to execute any functions passed in options. |
 | `scene?` | `Scene` | The scene to create the mesh in. |
 
@@ -83,7 +110,7 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[create.ts:65](https://github.com/jpmorganchase/anu/blob/12e6f77/src/create.ts#L65)
+[create.ts:103](https://github.com/jpmorganchase/anu/blob/596907d/src/create.ts#L103)
 
 ___
 
@@ -105,7 +132,36 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:141](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Axis/Axis.ts#L141)
+[prefabs/Axis/Axis.ts:127](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L127)
+
+___
+
+### createMeshMap
+
+▸ **createMeshMap**(`name`, `options`, `scene?`): `meshMap`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `options` | `Object` |
+| `options.cot?` | `Node` \| `Mesh` \| `TransformNode` |
+| `options.depth?` | `number` |
+| `options.geoJson` | `GeoGeometryObjects` |
+| `options.projection?` | `GeoProjection` |
+| `options.simplification?` | `number` |
+| `options.size?` | [`number`, `number`] |
+| `options.transform?` | [`number`, `number`] |
+| `scene?` | `Scene` |
+
+#### Returns
+
+`meshMap`
+
+#### Defined in
+
+[prefabs/Mapping/MeshMap.ts:86](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/MeshMap.ts#L86)
 
 ___
 
@@ -127,13 +183,13 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:122](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Text/planeText.ts#L122)
+[prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Text/planeText.ts#L65)
 
 ___
 
 ### createTextureGlobe
 
-▸ **createTextureGlobe**(`name`, `options`, `scene`): `textureGlobe`
+▸ **createTextureGlobe**(`name`, `options?`, `scene?`): `textureGlobe`
 
 #### Parameters
 
@@ -141,11 +197,11 @@ ___
 | :------ | :------ |
 | `name` | `string` |
 | `options` | `Object` |
-| `options.diameter` | `number` |
-| `options.layers?` | `TileLayer`<`any`\>[] |
+| `options.diameter?` | `number` |
+| `options.layers?` | `TileLayer`\<`any`\>[] |
 | `options.resolution?` | `Vector2` |
 | `options.view?` | `View` |
-| `scene` | `Scene` |
+| `scene?` | `Scene` |
 
 #### Returns
 
@@ -153,13 +209,13 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Mapping/textureGlobe.ts#L123)
+[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/textureGlobe.ts#L123)
 
 ___
 
 ### createTextureMap
 
-▸ **createTextureMap**(`name`, `options`, `scene`): `Map2D`
+▸ **createTextureMap**(`name`, `options?`, `scene?`): `Map2D`
 
 #### Parameters
 
@@ -167,12 +223,12 @@ ___
 | :------ | :------ |
 | `name` | `string` |
 | `options` | `Object` |
-| `options.layers?` | `TileLayer`<`any`\>[] |
+| `options.layers?` | `TileLayer`\<`any`\>[] |
 | `options.mapHeight?` | `number` |
 | `options.mapWidth?` | `number` |
 | `options.meshSize?` | `number` |
 | `options.view?` | `View` |
-| `scene` | `Scene` |
+| `scene?` | `Scene` |
 
 #### Returns
 
@@ -180,7 +236,7 @@ ___
 
 #### Defined in
 
-[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Mapping/textureMap.ts#L191)
+[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/textureMap.ts#L191)
 
 ___
 
@@ -202,7 +258,7 @@ ___
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:260](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Layout/Layout.ts#L260)
+[prefabs/Layout/Layout.ts:258](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Layout/Layout.ts#L258)
 
 ___
 
@@ -222,7 +278,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:68](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Chromatic/Chromatic.ts#L68)
+[prefabs/Chromatic/Chromatic.ts:68](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L68)
 
 ___
 
@@ -244,7 +300,7 @@ ___
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:245](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Layout/Layout.ts#L245)
+[prefabs/Layout/Layout.ts:244](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Layout/Layout.ts#L244)
 
 ___
 
@@ -271,7 +327,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:17](https://github.com/jpmorganchase/anu/blob/12e6f77/src/select.ts#L17)
+[select.ts:17](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L17)
 
 ___
 
@@ -299,7 +355,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:98](https://github.com/jpmorganchase/anu/blob/12e6f77/src/select.ts#L98)
+[select.ts:98](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L98)
 
 ___
 
@@ -326,7 +382,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:61](https://github.com/jpmorganchase/anu/blob/12e6f77/src/select.ts#L61)
+[select.ts:61](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L61)
 
 ___
 
@@ -353,7 +409,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:44](https://github.com/jpmorganchase/anu/blob/12e6f77/src/select.ts#L44)
+[select.ts:44](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L44)
 
 ___
 
@@ -380,7 +436,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:78](https://github.com/jpmorganchase/anu/blob/12e6f77/src/select.ts#L78)
+[select.ts:78](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L78)
 
 ___
 
@@ -400,4 +456,4 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:72](https://github.com/jpmorganchase/anu/blob/12e6f77/src/prefabs/Chromatic/Chromatic.ts#L72)
+[prefabs/Chromatic/Chromatic.ts:72](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L72)
