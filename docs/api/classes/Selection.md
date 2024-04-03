@@ -83,7 +83,7 @@
 
 #### Defined in
 
-[selection/index.ts:46](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L46)
+[selection/index.ts:46](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L46)
 
 ## Properties
 
@@ -108,7 +108,7 @@
 
 #### Defined in
 
-[selection/index.ts:76](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L76)
+[selection/index.ts:76](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L76)
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:73](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L73)
+[selection/index.ts:73](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L73)
 
 ___
 
@@ -162,7 +162,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:81](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L81)
+[selection/index.ts:81](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L81)
 
 ___
 
@@ -191,7 +191,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:88](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L88)
+[selection/index.ts:88](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L88)
 
 ___
 
@@ -221,7 +221,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:72](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L72)
+[selection/index.ts:72](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L72)
 
 ___
 
@@ -260,7 +260,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[selection/index.ts:55](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L55)
+[selection/index.ts:55](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L55)
 
 ___
 
@@ -292,7 +292,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[selection/index.ts:57](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L57)
+[selection/index.ts:57](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L57)
 
 ___
 
@@ -321,7 +321,7 @@ instance of BoundingInfo class, an object containing all bounding box values.
 
 #### Defined in
 
-[selection/index.ts:92](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L92)
+[selection/index.ts:92](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L92)
 
 ___
 
@@ -350,7 +350,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:78](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L78)
+[selection/index.ts:78](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L78)
 
 ___
 
@@ -379,7 +379,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:85](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L85)
+[selection/index.ts:85](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L85)
 
 ___
 
@@ -404,7 +404,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:84](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L84)
+[selection/index.ts:84](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L84)
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:91](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L91)
+[selection/index.ts:91](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L91)
 
 ___
 
@@ -463,7 +463,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:80](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L80)
+[selection/index.ts:80](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L80)
 
 ___
 
@@ -492,7 +492,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:87](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L87)
+[selection/index.ts:87](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L87)
 
 ___
 
@@ -521,7 +521,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:93](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L93)
+[selection/index.ts:93](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L93)
 
 ___
 
@@ -546,7 +546,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:71](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L71)
+[selection/index.ts:71](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L71)
 
 ___
 
@@ -571,7 +571,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:75](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L75)
+[selection/index.ts:75](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L75)
 
 ___
 
@@ -600,7 +600,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:97](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L97)
+[selection/index.ts:97](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L97)
 
 ___
 
@@ -629,7 +629,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:77](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L77)
+[selection/index.ts:77](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L77)
 
 ___
 
@@ -659,7 +659,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:98](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L98)
+[selection/index.ts:98](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L98)
 
 ___
 
@@ -688,7 +688,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:96](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L96)
+[selection/index.ts:96](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L96)
 
 ___
 
@@ -717,7 +717,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:58](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L58)
+[selection/index.ts:58](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L58)
 
 ___
 
@@ -747,7 +747,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[selection/index.ts:99](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L99)
+[selection/index.ts:99](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L99)
 
 ___
 
@@ -776,7 +776,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:59](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L59)
+[selection/index.ts:59](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L59)
 
 ___
 
@@ -805,7 +805,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:60](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L60)
+[selection/index.ts:60](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L60)
 
 ___
 
@@ -834,7 +834,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:61](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L61)
+[selection/index.ts:61](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L61)
 
 ___
 
@@ -864,7 +864,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:95](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L95)
+[selection/index.ts:95](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L95)
 
 ___
 
@@ -894,7 +894,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:94](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L94)
+[selection/index.ts:94](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L94)
 
 ___
 
@@ -920,7 +920,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:82](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L82)
+[selection/index.ts:82](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L82)
 
 ___
 
@@ -945,7 +945,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:74](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L74)
+[selection/index.ts:74](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L74)
 
 ___
 
@@ -970,7 +970,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:101](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L101)
+[selection/index.ts:101](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L101)
 
 ___
 
@@ -999,7 +999,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:63](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L63)
+[selection/index.ts:63](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L63)
 
 ___
 
@@ -1028,7 +1028,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:64](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L64)
+[selection/index.ts:64](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L64)
 
 ___
 
@@ -1057,7 +1057,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:65](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L65)
+[selection/index.ts:65](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L65)
 
 ___
 
@@ -1086,7 +1086,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:66](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L66)
+[selection/index.ts:66](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L66)
 
 ___
 
@@ -1111,7 +1111,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:56](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L56)
+[selection/index.ts:56](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L56)
 
 ___
 
@@ -1136,7 +1136,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:89](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L89)
+[selection/index.ts:89](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L89)
 
 ___
 
@@ -1161,7 +1161,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:90](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L90)
+[selection/index.ts:90](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L90)
 
 ___
 
@@ -1186,7 +1186,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:100](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L100)
+[selection/index.ts:100](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L100)
 
 ___
 
@@ -1215,7 +1215,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:67](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L67)
+[selection/index.ts:67](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L67)
 
 ___
 
@@ -1244,7 +1244,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:68](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L68)
+[selection/index.ts:68](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L68)
 
 ___
 
@@ -1273,7 +1273,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:69](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L69)
+[selection/index.ts:69](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L69)
 
 ___
 
@@ -1302,7 +1302,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:70](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L70)
+[selection/index.ts:70](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L70)
 
 ___
 
@@ -1312,7 +1312,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:44](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L44)
+[selection/index.ts:44](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L44)
 
 ___
 
@@ -1345,7 +1345,7 @@ $\<Tags> : select by tags
 
 #### Defined in
 
-[selection/index.ts:51](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L51)
+[selection/index.ts:51](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L51)
 
 ___
 
@@ -1374,7 +1374,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:53](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L53)
+[selection/index.ts:53](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L53)
 
 ___
 
@@ -1403,7 +1403,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:52](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L52)
+[selection/index.ts:52](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L52)
 
 ___
 
@@ -1432,7 +1432,7 @@ A new instance of Selection with the selected nodes.
 
 #### Defined in
 
-[selection/index.ts:54](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L54)
+[selection/index.ts:54](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L54)
 
 ___
 
@@ -1442,7 +1442,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:43](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L43)
+[selection/index.ts:43](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L43)
 
 ___
 
@@ -1468,7 +1468,7 @@ ___
 
 #### Defined in
 
-[selection/index.ts:83](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L83)
+[selection/index.ts:83](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L83)
 
 ___
 
@@ -1497,7 +1497,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:79](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L79)
+[selection/index.ts:79](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L79)
 
 ___
 
@@ -1526,7 +1526,7 @@ The modified selection
 
 #### Defined in
 
-[selection/index.ts:86](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L86)
+[selection/index.ts:86](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L86)
 
 ___
 
@@ -1553,4 +1553,4 @@ ___
 
 #### Defined in
 
-[selection/index.ts:62](https://github.com/jpmorganchase/anu/blob/596907d/src/selection/index.ts#L62)
+[selection/index.ts:62](https://github.com/jpmorganchase/anu/blob/4a68614/src/selection/index.ts#L62)

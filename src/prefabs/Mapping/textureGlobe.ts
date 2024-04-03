@@ -21,7 +21,7 @@ import {
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
 
-export class textureGlobe {
+export class TextureGlobe {
   name: string;
   scene?: Scene;
   layers: TileLayer<OSM>[];
@@ -145,7 +145,7 @@ export function createTextureGlobe(
   const resolution: Vector2 = options.resolution || new Vector2(1000, 500);
   const diameter: number = options.diameter || 1;
 
-  let map = new textureGlobe(name, layers, view, resolution, diameter, scene);
+  let map = new TextureGlobe(name, layers, view, resolution, diameter, scene);
 
   return map;
 }

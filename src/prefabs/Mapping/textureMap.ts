@@ -20,7 +20,7 @@ import {
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
 
-export class Map2D {
+export class TextureMap {
   name: string;
   scene?: Scene;
   layers: TileLayer<OSM>[];
@@ -205,7 +205,7 @@ export function createTextureMap(
   const mapHeight: number = options.mapHeight || 1000;
   const meshSize: number = options.meshSize || 50;
 
-  let map = new Map2D(name, layers, view, { width: mapWidth, height: mapHeight }, meshSize, scene);
+  let map = new TextureMap(name, layers, view, { width: mapWidth, height: mapHeight }, meshSize, scene);
 
   return map;
 }

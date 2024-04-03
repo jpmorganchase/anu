@@ -7,8 +7,14 @@
 ### Classes
 
 - [Axis](classes/Axis.md)
+- [Layout](classes/Layout.md)
+- [MeshMap](classes/MeshMap.md)
+- [OrdinalChromatic](classes/OrdinalChromatic.md)
+- [PlaneText](classes/PlaneText.md)
 - [Selection](classes/Selection.md)
-- [Tracer](classes/Tracer.md)
+- [SequentialChromatic](classes/SequentialChromatic.md)
+- [TextureGlobe](classes/TextureGlobe.md)
+- [TextureMap](classes/TextureMap.md)
 
 ### Variables
 
@@ -41,7 +47,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:81](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L81)
+[prefabs/Chromatic/Chromatic.ts:81](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L81)
 
 ## Functions
 
@@ -76,7 +82,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[bind.ts:21](https://github.com/jpmorganchase/anu/blob/596907d/src/bind.ts#L21)
+[bind.ts:21](https://github.com/jpmorganchase/anu/blob/4a68614/src/bind.ts#L21)
 
 ___
 
@@ -110,7 +116,7 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[create.ts:103](https://github.com/jpmorganchase/anu/blob/596907d/src/create.ts#L103)
+[create.ts:103](https://github.com/jpmorganchase/anu/blob/4a68614/src/create.ts#L103)
 
 ___
 
@@ -132,13 +138,13 @@ ___
 
 #### Defined in
 
-[prefabs/Axis/Axis.ts:127](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Axis/Axis.ts#L127)
+[prefabs/Axis/Axis.ts:127](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Axis/Axis.ts#L127)
 
 ___
 
 ### createMeshMap
 
-▸ **createMeshMap**(`name`, `options`, `scene?`): `meshMap`
+▸ **createMeshMap**(`name`, `options`, `scene?`): [`MeshMap`](classes/MeshMap.md)
 
 #### Parameters
 
@@ -157,11 +163,11 @@ ___
 
 #### Returns
 
-`meshMap`
+[`MeshMap`](classes/MeshMap.md)
 
 #### Defined in
 
-[prefabs/Mapping/MeshMap.ts:86](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/MeshMap.ts#L86)
+[prefabs/Mapping/MeshMap.ts:86](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Mapping/MeshMap.ts#L86)
 
 ___
 
@@ -183,13 +189,13 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Text/planeText.ts#L65)
+[prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L65)
 
 ___
 
 ### createTextureGlobe
 
-▸ **createTextureGlobe**(`name`, `options?`, `scene?`): `textureGlobe`
+▸ **createTextureGlobe**(`name`, `options?`, `scene?`): [`TextureGlobe`](classes/TextureGlobe.md)
 
 #### Parameters
 
@@ -205,17 +211,17 @@ ___
 
 #### Returns
 
-`textureGlobe`
+[`TextureGlobe`](classes/TextureGlobe.md)
 
 #### Defined in
 
-[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/textureGlobe.ts#L123)
+[prefabs/Mapping/textureGlobe.ts:123](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Mapping/textureGlobe.ts#L123)
 
 ___
 
 ### createTextureMap
 
-▸ **createTextureMap**(`name`, `options?`, `scene?`): `Map2D`
+▸ **createTextureMap**(`name`, `options?`, `scene?`): [`TextureMap`](classes/TextureMap.md)
 
 #### Parameters
 
@@ -232,17 +238,17 @@ ___
 
 #### Returns
 
-`Map2D`
+[`TextureMap`](classes/TextureMap.md)
 
 #### Defined in
 
-[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Mapping/textureMap.ts#L191)
+[prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Mapping/textureMap.ts#L191)
 
 ___
 
 ### cylinderLayout
 
-▸ **cylinderLayout**(`name`, `options`, `scene`): `Layout`
+▸ **cylinderLayout**(`name`, `options`, `scene`): [`Layout`](classes/Layout.md)
 
 #### Parameters
 
@@ -254,17 +260,17 @@ ___
 
 #### Returns
 
-`Layout`
+[`Layout`](classes/Layout.md)
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:258](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Layout/Layout.ts#L258)
+[prefabs/Layout/Layout.ts:258](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Layout/Layout.ts#L258)
 
 ___
 
 ### ordinalChromatic
 
-▸ **ordinalChromatic**(`scheme`): `OrdinalChromatic`
+▸ **ordinalChromatic**(`scheme`): [`OrdinalChromatic`](classes/OrdinalChromatic.md)
 
 #### Parameters
 
@@ -274,17 +280,17 @@ ___
 
 #### Returns
 
-`OrdinalChromatic`
+[`OrdinalChromatic`](classes/OrdinalChromatic.md)
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:68](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L68)
+[prefabs/Chromatic/Chromatic.ts:68](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L68)
 
 ___
 
 ### planeLayout
 
-▸ **planeLayout**(`name`, `options`, `scene`): `Layout`
+▸ **planeLayout**(`name`, `options`, `scene`): [`Layout`](classes/Layout.md)
 
 #### Parameters
 
@@ -296,11 +302,11 @@ ___
 
 #### Returns
 
-`Layout`
+[`Layout`](classes/Layout.md)
 
 #### Defined in
 
-[prefabs/Layout/Layout.ts:244](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Layout/Layout.ts#L244)
+[prefabs/Layout/Layout.ts:244](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Layout/Layout.ts#L244)
 
 ___
 
@@ -327,7 +333,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:17](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L17)
+[select.ts:17](https://github.com/jpmorganchase/anu/blob/4a68614/src/select.ts#L17)
 
 ___
 
@@ -355,7 +361,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:98](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L98)
+[select.ts:98](https://github.com/jpmorganchase/anu/blob/4a68614/src/select.ts#L98)
 
 ___
 
@@ -382,7 +388,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:61](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L61)
+[select.ts:61](https://github.com/jpmorganchase/anu/blob/4a68614/src/select.ts#L61)
 
 ___
 
@@ -409,7 +415,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:44](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L44)
+[select.ts:44](https://github.com/jpmorganchase/anu/blob/4a68614/src/select.ts#L44)
 
 ___
 
@@ -436,13 +442,13 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[select.ts:78](https://github.com/jpmorganchase/anu/blob/596907d/src/select.ts#L78)
+[select.ts:78](https://github.com/jpmorganchase/anu/blob/4a68614/src/select.ts#L78)
 
 ___
 
 ### sequentialChromatic
 
-▸ **sequentialChromatic**(`scheme`): `SequentialChromatic`
+▸ **sequentialChromatic**(`scheme`): [`SequentialChromatic`](classes/SequentialChromatic.md)
 
 #### Parameters
 
@@ -452,8 +458,8 @@ ___
 
 #### Returns
 
-`SequentialChromatic`
+[`SequentialChromatic`](classes/SequentialChromatic.md)
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:72](https://github.com/jpmorganchase/anu/blob/596907d/src/prefabs/Chromatic/Chromatic.ts#L72)
+[prefabs/Chromatic/Chromatic.ts:72](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L72)

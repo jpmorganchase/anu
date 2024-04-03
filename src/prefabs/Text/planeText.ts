@@ -16,7 +16,7 @@ interface planeTextOptions {
   color: Color3;
 }
 
-class PlaneText {
+export class PlaneText {
   name: string;
   options: planeTextOptions;
   scene: Scene;
