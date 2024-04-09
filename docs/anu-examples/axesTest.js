@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from './data/iris.json' assert {type: 'json'}; //Our data
-import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
+import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode } from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
 
 //import { Mesh } from 'anu';
@@ -38,33 +38,8 @@ export const axesTest = function(engine){
 
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
-
  
-  //This series of chained methods will create our visualization 
-  //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
-  // let spheres = chart.bind('sphere', {diameter: 0.5}, iris) 
-  //   .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
-  //   .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
-  //   .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int
-  //   .material((d, i) => new StandardMaterial("myMaterial", scene)) //We need to create a material for our mesh before we can change its color
-  //   .diffuseColor((d) => Color3.FromHexString(scaleC(d.species))) //change the diffuse color of our material using our color scale function.
-  //   //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped. 
-  //   .action((d) => new InterpolateValueAction( 
-  //         ActionManager.OnPointerOverTrigger,
-  //         d,
-  //         'scaling',
-  //         new Vector3(1.2, 1.2, 1.2),
-  //         100
-  //     ))
-  //     .action((d) => new InterpolateValueAction(
-  //       ActionManager.OnPointerOutTrigger,
-  //       d,
-  //       'scaling',
-  //       new Vector3(1, 1, 1),
-  //       100));
-
- 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+  anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
     
 

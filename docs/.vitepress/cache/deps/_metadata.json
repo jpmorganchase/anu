@@ -1,76 +1,76 @@
 {
-  "hash": "ca810562",
+  "hash": "fb0a178b",
   "configHash": "6daf2d15",
-  "lockfileHash": "aa0ba7e7",
-  "browserHash": "60db57c0",
+  "lockfileHash": "c627af27",
+  "browserHash": "5acb7264",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "356297dd",
+      "fileHash": "0e18bad4",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "6af0308d",
+      "fileHash": "695c8c73",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "27ed221d",
+      "fileHash": "64b3e66b",
       "needsInterop": false
     },
     "@babylonjs/core": {
       "src": "../../../node_modules/@babylonjs/core/index.js",
       "file": "@babylonjs_core.js",
-      "fileHash": "b75c7ee6",
+      "fileHash": "f42f1808",
       "needsInterop": false
     },
     "@jpmorganchase/anu": {
       "src": "../../../node_modules/@jpmorganchase/anu/dist/anu.js",
       "file": "@jpmorganchase_anu.js",
-      "fileHash": "683b8182",
+      "fileHash": "fa254463",
       "needsInterop": false
     },
     "d3": {
       "src": "../../../node_modules/d3/src/index.js",
       "file": "d3.js",
-      "fileHash": "7f733c69",
+      "fileHash": "9fb48b37",
       "needsInterop": false
     },
     "@babylonjs/gui": {
       "src": "../../../node_modules/@babylonjs/gui/index.js",
       "file": "@babylonjs_gui.js",
-      "fileHash": "a2a00042",
+      "fileHash": "b497a774",
       "needsInterop": false
     },
     "chroma-js": {
       "src": "../../../node_modules/chroma-js/chroma.js",
       "file": "chroma-js.js",
-      "fileHash": "2c48244a",
+      "fileHash": "1089af10",
       "needsInterop": true
     },
     "d3-force-3d": {
       "src": "../../../node_modules/d3-force-3d/src/index.js",
       "file": "d3-force-3d.js",
-      "fileHash": "7ddf223f",
+      "fileHash": "eca27821",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-7VPL5VM6": {
-      "file": "chunk-7VPL5VM6.js"
+    "chunk-EXUDKIXA": {
+      "file": "chunk-EXUDKIXA.js"
     },
     "chunk-Z6B2QTD3": {
       "file": "chunk-Z6B2QTD3.js"
     },
-    "chunk-IH6SPDTA": {
-      "file": "chunk-IH6SPDTA.js"
+    "chunk-AT2PKA3F": {
+      "file": "chunk-AT2PKA3F.js"
     },
-    "chunk-H4T7XHXW": {
-      "file": "chunk-H4T7XHXW.js"
+    "chunk-A56RIS75": {
+      "file": "chunk-A56RIS75.js"
     },
     "chunk-Y2F7D3TJ": {
       "file": "chunk-Y2F7D3TJ.js"

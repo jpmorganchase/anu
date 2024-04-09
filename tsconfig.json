@@ -6,7 +6,7 @@
     "declarationMap": true,
     "declaration": true,
     "outDir": "./lib",
-    "strict": false,
+    "strict": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "allowJs": true,

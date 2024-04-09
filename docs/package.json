@@ -10,10 +10,10 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "@babylonjs/gui": "^7.0.0",
-    "@babylonjs/inspector": "^7.0.0",
-    "@babylonjs/loaders": "^7.0.0",
-    "@jpmorganchase/anu": "^0.0.5",
+    "@babylonjs/gui": "^7.1.0",
+    "@babylonjs/inspector": "^7.1.0",
+    "@babylonjs/loaders": "^7.1.0",
+    "@jpmorganchase/anu": "^0.0.52",
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",
     "vite-plugin-dynamic-import": "^1.5.0",

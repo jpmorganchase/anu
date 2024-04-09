@@ -1021,7 +1021,7 @@ import {
   setStereoscopicAnaglyphRigMode,
   setStereoscopicRigMode,
   setVRRigMode
-} from "./chunk-7VPL5VM6.js";
+} from "./chunk-AT2PKA3F.js";
 import {
   AbstractActionManager,
   AbstractMesh,
@@ -1374,7 +1374,7 @@ import {
   serializeAsTexture,
   serializeAsVector2,
   serializeAsVector3
-} from "./chunk-H4T7XHXW.js";
+} from "./chunk-A56RIS75.js";
 import "./chunk-Y2F7D3TJ.js";
 export {
   AbstractActionManager,
