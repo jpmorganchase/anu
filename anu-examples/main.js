@@ -4,6 +4,7 @@
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
 import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking, Vector3} from '@babylonjs/core';
+import { Inspector } from '@babylonjs/inspector';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -43,6 +44,7 @@ import { facetPosition } from './examples/Interactions/FacetPosition';
 import { hover } from './examples/Interactions/Hover';
 import { details } from './examples/Interactions/Details';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
+import { benchmark } from './examples/Benchmarks/benchmark';
 
 
 const queryString = window.location.search;
@@ -95,7 +97,8 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
-  'nodelink3d': nodelink3d
+  'nodelink3d': nodelink3d,
+  'benchmark': benchmark
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
@@ -151,7 +154,7 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-//scene.debugLayer.show();
+scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
