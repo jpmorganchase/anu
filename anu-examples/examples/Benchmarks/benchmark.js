@@ -24,37 +24,30 @@ export const benchmark = function(engine){
 
   let center = anu.create('cot', 'cot')
 
-  // let observer = scene.onBeforeRenderObservable.add(() => {
-  //   anu.selectName('sphere', scene).rotationY((d,n,i) => n.rotation.y += Math.log(d) * 0.01)
-  // });
 
   // setInterval(() => {
-  //   let data = Array.from({length: 100}, () => Math.floor(Math.random() * 100));
-  //   var m = anu.bind('sphere', {diameter: 0.1}, data);
-  //   m.position((d) => new Vector3(Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5)))
-  //   m.run((d, n, i) => n.setPivotPoint(center.position.subtract(n.position)))
-  //   //meshes = anu.selectName('sphere', scene);
+  //   let data = Array.from({length: 1000}, () => Math.floor(Math.random() * 100));
+  //   var m = cot.bind('sphere', {diameter: 0.1}, data);
+  // m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
   // }, 5000)
 
   let sphere = anu.create('sphere', 'sphere', {diameter: 0.1})
   
   let cot = anu.selectName('cot', scene);
 
-  //anu.bindInstance('sphere', [{}], scene)
+  anu.bindInstance(sphere, [{}])
 
   let m;
   
   let n = 0;
 
-  setInterval(() => {
-
- 
-    let data = Array.from({length: n += 1000}, () => Math.floor(Math.random() * 100));
-    m?.dispose();
-    m = cot.bindInstance(sphere, data);
-    m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
-    //m.run((d, n, i) => n.setPivotPoint(center.position.subtract(n.position)))
-  }, 5000)
+  // setInterval(() => {
+  //   let data = Array.from({length: n += 1000}, () => Math.floor(Math.random() * 100));
+  //   m?.dispose();
+  //   m = cot.bindInstance(sphere, data);
+  //   m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
+  //   //m.run((d, n, i) => n.setPivotPoint(center.position.subtract(n.position)))
+  // }, 5000)
 
 
   //  let observer = scene.onBeforeRenderObservable.add(() => {
