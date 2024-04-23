@@ -6,14 +6,16 @@ import { HemisphericLight,
          Vector3,
          Scene,
          ArcRotateCamera, 
-         TransformNode, 
          StandardMaterial, 
-         Color3
+         Color3,
+         MeshBuilder,
+         Mesh,
+         FollowBehavior
         } from '@babylonjs/core';
 // clean the import only the needed ones
 import * as d3 from 'd3';
 import * as anu from '@jpmorganchase/anu';
-import * as gui from '@babylonjs/gui'
+import {RadioGroup, SliderGroup, AdvancedDynamicTexture, SelectionPanel, Control, Button} from '@babylonjs/gui'
 
 
 export function layout(babylonEngine){
@@ -23,6 +25,26 @@ export function layout(babylonEngine){
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.attachControl(true)
     camera.position = new Vector3(10.5,7,-10.5);
+
+    let picked = false;
+    var rot_state;
+    scene.onPointerDown = function() {
+        const pick = scene.pick(scene.pointerX, scene.pointerY);
+        if (pick.pickedMesh.name == "menuPanel") {
+            picked = true;
+            rot_state = {x:camera.alpha , y:camera.beta};
+        }
+    }
+    scene.onPointerUp = function() {
+        picked = false;
+    }
+
+    scene.registerBeforeRender(function(){
+        if(picked) {
+            camera.alpha = rot_state.x;
+            camera.beta = rot_state.y;
+        }
+    })
 
     let allcharts = [];
 
@@ -40,15 +62,15 @@ export function layout(babylonEngine){
     let charts = anu.selectName('cot', scene);
 
     console.log(charts);
-    charts.scalingX((d) => Math.max(Math.random(), .5) * 2)
-    charts.scalingY((d) => Math.max(Math.random(), .5) * 2)
-    charts.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+    charts.scalingX((d) => Math.max(Math.random() * .2, .1) * 2)
+    charts.scalingY((d) => Math.max(Math.random() * .2, .1) * 2)
+    charts.scalingZ((d) => Math.max(Math.random() * .2, .1) * 2)
 
     var rows = 3;
-    var curve = 20;
-    var margin = new Vector2(20, 5);
+    var margin = new Vector2(0, 0);
+    var radius = 5;
 
-    let layout = new anu.cylinderLayout('Layout', {selection: charts, rows: rows, margin: new Vector2(20, 5), radius: 20}, scene)
+    let layout = new anu.cylinderLayout('Layout', {selection: charts, rows: rows, margin: margin, radius: radius}, scene)
         .attr("row", 2)    
 
     var changeRow = function(rownum) {
@@ -57,8 +79,8 @@ export function layout(babylonEngine){
     }
 
     var changeCurve = function(radius) {
-        curve = radius;
-        layout.attr("radius", curve);
+        radius = radius;
+        layout.attr("radius", radius);
     }
 
     var updateMarginX = function(val) {
@@ -77,9 +99,9 @@ export function layout(babylonEngine){
 
     var addChart = function() {
         let chartnew = make3Dchart(scene, 0);
-        chartnew.scalingX((d) => Math.max(Math.random(), .5) * 2)
-        chartnew.scalingY((d) => Math.max(Math.random(), .5) * 2)
-        chartnew.scalingZ((d) => Math.max(Math.random(), .4) * 2)
+        chartnew.scalingX((d) => Math.max(Math.random() * .2, .1) * 2);
+        chartnew.scalingY((d) => Math.max(Math.random() * .2, .1) * 2);
+        chartnew.scalingZ((d) => Math.max(Math.random() * .2, .1) * 2);
         allcharts.push(chartnew);
         charts = anu.selectName('cot', scene);
         layout.options.selection = charts;
@@ -115,37 +137,46 @@ export function layout(babylonEngine){
 	}
 
     //Code for making the UIs to change the layout
-    var layoutGroup = new gui.RadioGroup("Layout");
+    var layoutGroup = new RadioGroup("Layout");
 	layoutGroup.addRadio("Plane", setLayout);
     layoutGroup.addRadio("Cylinder", setLayout, true);
     layoutGroup.addRadio("Sphere", setLayout);
 
-    var rotateGroup = new gui.SliderGroup("Config", "S");
+    var rotateGroup = new SliderGroup("Config", "S");
 	rotateGroup.addSlider("row", changeRow, "rows", 1, 6, 3, displayValue);
 
-    var curvature = new gui.SliderGroup("Curvature", "S");
-	curvature.addSlider("curvature", changeCurve, "units", 0, 80, 20, displayValue);
+    var curvature = new SliderGroup("Curvature", "S");
+	curvature.addSlider("curvature", changeCurve, "units", 0, 12, 5, displayValue);
 
-    var marginx = new gui.SliderGroup("MarginX", "S");
-	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 20, displayValue);
+    var marginx = new SliderGroup("MarginX", "S");
+	marginx.addSlider("marginx", updateMarginX, "unit", 0, 60, 0, displayValue);
 
-    var marginy = new gui.SliderGroup("MarginY", "S");
-	marginy.addSlider("marginy", updateMarginY, "unit", 0, 20, 5, displayValue);
+    var marginy = new SliderGroup("MarginY", "S");
+	marginy.addSlider("marginy", updateMarginY, "unit", 0, 20, 0, displayValue);
 
-    var advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    var menuPanel = MeshBuilder.CreatePlane("menuPanel", {height:1, width: 1, sideOrientation: Mesh.DOUBLESIDE}, scene);
 
-    var selectBox = new gui.SelectionPanel("sp", [rotateGroup, curvature, marginx, marginy, layoutGroup]);
+    var advancedTexture = AdvancedDynamicTexture.CreateForMesh(menuPanel, 1024, 1024);
+
+    const followBehavior = new FollowBehavior();
+    followBehavior.defaultDistance = 1.5;
+    followBehavior.minimumDistance = 10;
+    followBehavior.maxViewVerticalDegrees = -10;
+    followBehavior.maxViewHorizontalDegrees = -10
+    followBehavior.attach(menuPanel);
+
+    var selectBox = new SelectionPanel("sp", [rotateGroup, curvature, marginx, marginy, layoutGroup]);
     selectBox.width = 0.2;
-    selectBox.height = .9;
+    selectBox.height = 0.6;
     selectBox.background = "#FFFFFF";
-    selectBox.horizontalAlignment = gui.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    selectBox.verticalAlignment = gui.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    selectBox.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    selectBox.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
     
     /* Change Font  */
     selectBox.fontFamily = "times new roman";
     selectBox.fontSize = "20pt";
 
-    var rect2 = gui.Button.CreateSimpleButton("button1", "add chart");
+    var rect2 = Button.CreateSimpleButton("button1", "add chart");
     rect2.width = 0.2; // 0.2 = 20%
     rect2.height = "40px";
     rect2.cornerRadius = 20;
@@ -154,12 +185,12 @@ export function layout(babylonEngine){
     rect2.background = "blue";
 
     rect2.top = 200; //200 px
-    rect2.left = "10%";
+    rect2.left = "-20%";
     rect2.onPointerClickObservable.add(() => {
         addChart();
     });
 
-    var rect1 = gui.Button.CreateSimpleButton("button2", "remove chart");
+    var rect1 = Button.CreateSimpleButton("button2", "remove chart");
     rect1.width = 0.2; // 0.2 = 20%
     rect1.height = "40px";
     rect1.cornerRadius = 20;
@@ -168,7 +199,7 @@ export function layout(babylonEngine){
     rect1.background = "blue";
 
     rect1.top = 250; //200 px
-    rect1.left = "10%";
+    rect1.left = "-20%";
     rect1.onPointerClickObservable.add(() => {
         removeChart();
     });
