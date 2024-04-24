@@ -4,7 +4,6 @@ import cars from '../../data/cars.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core';
 import { extent, scaleOrdinal, scaleLinear, map, flatGroup, } from "d3";
 import { AdvancedDynamicTexture, Rectangle, TextBlock} from '@babylonjs/gui'
-import { lab } from 'chroma-js';
 
 export const details = function (engine) {
 

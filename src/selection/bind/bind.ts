@@ -3,7 +3,9 @@
 
 import { Node, ActionManager, Tags, Mesh, InstancedMesh } from '@babylonjs/core';
 import { Selection } from '../index';
-import { create } from '../../create';
+import { create, MeshTypes } from '../../create';
+
+type Property<T, MeshType extends keyof T> = T[MeshType];
 
 /**
  * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parent.
@@ -15,7 +17,7 @@ import { create } from '../../create';
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind(this: Selection, shape: string, options: object = {}, data: Array<object> = [{}]): Selection {
+export function bind<MeshType extends keyof MeshTypes>(this: Selection, shape: MeshType, options: Property<MeshTypes, MeshType> = {}, data: Array<object> = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {

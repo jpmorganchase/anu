@@ -1,0 +1,1 @@
+import{z as a}from"./anu.BEFiqz5l.js";import{S as o,H as c,V as e,A as n}from"./flowGraphSceneTickEventBlock.jsKt_esu.js";import{i}from"./iris.BAQHmt8h.js";const f=function(r){const t=new o(r);return new c("light1",new e(0,10,0),t),new n("Camera",-(Math.PI/4)*3,Math.PI/4,10,new e(0,0,0),t).attachControl(!0),a("cot").bind("sphere",{diameter:1},i),t};export{f as cotBind};

@@ -1,3 +1,10 @@
+<script setup>
+  import multiView from "../vue_components/multiView.vue"
+  //import inlineView from "../vue_components/inlineView.vue"
+</script>
+
+<multiView>
+
 # Using Selections
 
 Selections are the core of the anu workflow. A [Selection](../api/classes/Selection.md) is a javascript object that is comprised of a list of nodes in the Babylon scene-graph, the Scene object containing those nodes, and several methods for selecting, creating, manipulating, or retrieving values and properties from nodes in the Babylon scene-graph. 
@@ -34,12 +41,8 @@ sphere.position = new Vector3(1,0,0)
 
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=select">
-</iframe>
+
+<inlineView scene="select" />
 
 ### Select by Name and ID
 
@@ -63,12 +66,8 @@ let sphere_selection = anu.selectId('sphere-ID', scene)
 
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=select_name_tag">
-</iframe>
+
+<inlineView scene="select_name_tag" />
 
 ### Select by Tags
 
@@ -140,13 +139,8 @@ Inspector.Show(scene, {
 
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=cot_bind">
-</iframe>
 
+<inlineView scene="cot_bind" :inspector="true" />
 
 If we call bind on a selection with more than one node it will repeat the method for each node in the selection. Note, this is how the majority of Selection methods function. Here we call bind on our Selection of spheres. This will create a box mesh as a child node of each sphere.
 
@@ -169,13 +163,8 @@ Inspector.Show(scene, {
 });
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=spheres_bind">
-</iframe>
 
+<inlineView scene="spheres_bind" :inspector="true" />
 
 
 ## Manipulating Nodes with Selections
@@ -195,12 +184,8 @@ boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
     .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=boxes_transform">
-</iframe>
+
+<inlineView scene="boxes_transform" />
 
 In contrast, if we change the transform properties of the parent node instead (in our case the cot selection), the result is much less dramatic. This is because we are changing the transform of only one node, and because the boxes are children of that node they are all being transformed in the same way. This can be useful when we want to move, scale, or rotate a group of meshes at once. For example, if we create a scatter plot and all the meshes are children of a single transform node, we can change the position, scale, and rotation of the whole scatter plot by changing the properties of the root parent node, but more on that later.
 
@@ -218,12 +203,8 @@ cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
     .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=cot_transform">
-</iframe>
+
+<inlineView scene="cot_transform" />
 
 ## Nested Selections
 
@@ -254,12 +235,8 @@ Inspector.Show(scene, {
 });
 ```
 ::: 
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="100%"
-    height="400"
-    src="/anu/examples.html?example=select_boxes">
-</iframe>
+
+<inlineView scene="select_boxes" :inspector="true" />
 
 <!-- ## Getting Selection Values
 We can retrieve values of properties from nodes in a [Selection](../api/classes/Selection.md) object.  -->
@@ -277,8 +254,8 @@ let setosa = spheres.filter((d) => d.species == "setosa")
 ```
 ::: 
 
-
-
 ## Manipulating Selection Nodes
 In the previous examples, we have already shown how we can modify the properties of nodes in our [Selection](../api/classes/Selection.html) object.
 However, this goes way beyond just changing nodes' position and color we can modify any property of nodes in a selection using Anu. In the next section, we will cover this in-depth.
+
+</multiView>

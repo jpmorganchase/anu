@@ -1,6 +1,12 @@
 ---
 outline: deep
 ---
+
+<script setup>
+  //import singleView from  "../../vue_components/singleView.vue"
+  import { meshMap } from  "../../anu-examples/Mesh_Map.js"
+</script>
+
 # Mesh Map
 
 ## Overview 
@@ -45,18 +51,8 @@ let selection = map.selection
 
 ## Examples
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=meshMap">
-    </iframe>
-</div>
+<singleView :scene="meshMap" />
 
 ::: code-group
-<<< @/../anu-examples/examples/Geographic/Mesh_Map.js 
-
-<<< @/../anu-examples/data/airports.csv
-
+<<< @/./anu-examples/Mesh_Map.js 
 :::

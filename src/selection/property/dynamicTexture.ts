@@ -3,7 +3,6 @@
 
 import { Mesh, StandardMaterial, DynamicTexture } from '@babylonjs/core';
 import { Selection } from '../index';
-import { fromPairs } from 'lodash-es';
 
 export function scaleDT(this: Selection, value: number | ((d: any, i: number) => number)) {
   this.selected.forEach((node, i) => {

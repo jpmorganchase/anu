@@ -1,1 +1,0 @@
-import{_ as e,o as a,c as t,O as i}from"./chunks/framework.ccd7224a.js";const b=JSON.parse('{"title":"Anu.js","description":"","frontmatter":{},"headers":[],"relativePath":"guide/index.md","filePath":"guide/index.md"}'),n={name:"guide/index.md"},r=i("",13),o=[r];function s(h,l,d,c,u,p){return a(),t("div",null,o)}const g=e(n,[["render",s]]);export{b as __pageData,g as default};

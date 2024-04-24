@@ -3,7 +3,9 @@
 
 import { Node, ActionManager, Tags, Mesh, Scene, InstancedMesh } from '@babylonjs/core';
 import { Selection } from './index';
-import { create } from './create';
+import { create, MeshTypes } from './create';
+
+type Property<T, MeshType extends keyof T> = T[MeshType];
 
 /**
  * Take a shape type, a scene, and data. For each index in the data create a new mesh for each node in the selection as the parent.
@@ -16,7 +18,7 @@ import { create } from './create';
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind(shape: string, options?: object, data: Array<object> = [{}], scene?: Scene): Selection {
+export function bind<MeshType extends keyof MeshTypes>(shape: MeshType, options?: Property<MeshTypes, MeshType>, data: Array<object> = [{}], scene?: Scene): Selection {
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var mesh = create(shape, shape, options, element, scene);
@@ -35,12 +37,12 @@ export function bind(shape: string, options?: object, data: Array<object> = [{}]
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindInstance(mesh: Mesh, scene?: Scene, data: Array<object> = [{}]): Selection {
+export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
   scene = (scene != undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var instance = mesh.createInstance(mesh.name + '_' + i);
-    if (mesh instanceof InstancedMesh) mesh.actionManager = new ActionManager(mesh.getScene());
+    if (mesh instanceof InstancedMesh) mesh.actionManager = new ActionManager(scene);
     Tags.EnableFor(instance);
     instance.metadata = { ...mesh.metadata, data: element };
     meshes.push(instance as InstancedMesh);

@@ -1,6 +1,12 @@
 ---
 outline: deep
 ---
+
+<script setup>
+import { text } from '../../anu-examples/text.js'
+//import singleView  from '../../vue_components/singleView.vue'
+</script>
+
 # Plane Text
 
 ## Overview
@@ -46,9 +52,6 @@ let options = {
 anu.createPlaneText('text2d', options, scene);
 ```
 
- <iframe id="inlineFrameExample"
-      title="Inline Frame Example"
-      width="100%"
-      height="400"
-      src="/anu/examples.html?example=text">
-  </iframe>
+<singleView :scene="text" />
+
+

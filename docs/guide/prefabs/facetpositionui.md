@@ -1,6 +1,12 @@
 ---
 outline: deep
 ---
+
+<script setup>
+  //import singleView from  "../../vue_components/singleView.vue"
+  import { facetPosition } from  "../../anu-examples/FacetPosition.js"
+</script>
+
 # Facet & Position UI
 
 ## Overview 
@@ -13,7 +19,7 @@ The Facet & Position UI prefab allows you to quickly attach position, rotation, 
 let root = anu.bind("cot") // returns selections of one transform node
 
 root.positionUI(options?: {})
-    .rotationUI(options?: {})
+    .rotateUI(options?: {})
     .scaleUI(options?: {})
 ```
 
@@ -67,16 +73,9 @@ root.positionUI(options?: {})
 
 ## Examples
 
-<div style="width: 100%;">
-    <iframe id="inlineFrameExample"
-     allow="xr-spatial-tracking; camera"
-        allowfullscreen=""
-        title="Inline Frame Example"
-        src="/anu/examples.html?example=facetposition">
-    </iframe>
-</div>
+<singleView :scene="facetPosition" />
 
 ::: code-group
-<<< @/../anu-examples/examples/Interactions/FacetPosition.js 
+<<< @/./anu-examples/FacetPosition.js 
 :::
 

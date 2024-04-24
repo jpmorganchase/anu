@@ -3,7 +3,8 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking, Vector3} from '@babylonjs/core';
+import { Engine, Color3, WebXRFeatureName, Scene, WebXRHandTracking, Vector3, ReflectiveShadowMap, GIRSMManager} from '@babylonjs/core';
+import { Inspector } from '@babylonjs/inspector';
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -43,6 +44,9 @@ import { facetPosition } from './examples/Interactions/FacetPosition';
 import { hover } from './examples/Interactions/Hover';
 import { details } from './examples/Interactions/Details';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
+import { benchmark } from './examples/Benchmarks/benchmark';
+import { fig1 } from './examples/Figures/fig1';
+import { fig2 } from './examples/Figures/fig2';
 
 
 const queryString = window.location.search;
@@ -95,17 +99,24 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
-  'nodelink3d': nodelink3d
+  'nodelink3d': nodelink3d,
+  'benchmark': benchmark, 
+  'fig1': fig1,
+  'fig2': fig2
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
 
 let screenshot = urlParams.get('thumbnail') || false;
-//scene.clearColor = new BABYLON.Color3(30/256,30/256,32/256)
+// scene.clearColor = new Color3(30/256,30/256,32/256)
 
-const env = scene.createDefaultEnvironment();
-env.setMainColor(Color3.FromHexString('#0e0e17'));
-env.ground.position = new Vector3(0,-2,0);
+let env = scene.createDefaultEnvironment();
+//let sky = scene.createDefaultSkybox(scene.environmentTexture, true, (scene.activeCamera.maxZ - scene.activeCamera.minZ)/2, 0.3, false);
+
+env.setMainColor(Color3.FromHexString('#14161a'))
+env.ground.position = new Vector3(0,-0.3,0)
+
+
 
 
 if (screenshot == true){
@@ -151,7 +162,7 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-//scene.debugLayer.show();
+scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I

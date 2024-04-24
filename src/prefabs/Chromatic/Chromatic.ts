@@ -1,7 +1,7 @@
 import { Color3, Color4, PBRMetallicRoughnessMaterial, PBRSpecularGlossinessMaterial, StandardMaterial, float, int } from "@babylonjs/core";
 import chroma from "chroma-js";
 
-class OrdinalChromatic{
+export class OrdinalChromatic{
     scheme: string[];
 
     constructor(scheme: string | string[]){
@@ -30,7 +30,7 @@ class OrdinalChromatic{
 
 }
 
-class SequentialChromatic{
+export class SequentialChromatic{
     scheme: string[];
 
     constructor(scheme: string | string[]){

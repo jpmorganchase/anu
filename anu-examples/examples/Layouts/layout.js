@@ -51,10 +51,10 @@ export function layout(babylonEngine){
     for (let i = 0; i < 15; i++) {
         let n = Math.random();
         if(n > 0.5){
-            let chart = makechart(scene, Math.random() * 1000);
+            let chart = make2Dchart(scene, Math.random() * 100);
             allcharts.push(chart);
         } else {
-            let chart = make3Dchart(scene, Math.random() * 1000);
+            let chart = make3Dchart(scene, Math.random() * 100);
             allcharts.push(chart);
         }
     }
@@ -70,9 +70,15 @@ export function layout(babylonEngine){
     var margin = new Vector2(0, 0);
     var radius = 5;
 
+
     let layout = new anu.cylinderLayout('Layout', {selection: charts, rows: rows, margin: margin, radius: radius}, scene)
+
         .attr("row", 2)    
 
+    layout.root.normalizeToUnitCube()
+    camera.setTarget(layout.root)
+
+    //Example functions to update the configurations of the layout, such as curvature, row number, margins
     var changeRow = function(rownum) {
         rows = rownum;
         layout.attr("row", rows);
@@ -116,7 +122,6 @@ export function layout(babylonEngine){
         allcharts.pop();
         charts = anu.selectName('cot', scene);
         layout.options.selection = charts;
-        //let layout = new anu.planeLayout('PlaneLayout1', {selection: charts, rows: rows, radius: 20}, scene)
         layout.update();    
     }
 
@@ -211,7 +216,7 @@ export function layout(babylonEngine){
     return scene;
 }
 
-function makechart(scene, id){
+function make2Dchart(scene, id){
          
     //Get unique values for our categorical and ordinal scales
     const origin = [...new Set(cars.map(item => item.Origin))];

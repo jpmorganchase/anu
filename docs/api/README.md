@@ -9,7 +9,7 @@ See our docs for more the details: https://jpmorganchase.github.io/anu/
 
 ## Version
 
-Anu is currently in alpha, version 0.0.1, and development of the library remains fluid. Please see the road map to learn what features are finished or planned. Alpha release may have changes that break backwards compatibility as syntax, properties, methods, and functions will change as the library is developed further and improved. This also means that now is the best time to contribute codes, suggestions, and bug reports. See the contributing section to learn how you can contribute. 
+Anu is currently in alpha, and development of the library remains fluid. Please see the road map to learn what features are finished or planned. Alpha release may have changes that break backwards compatibility as syntax, properties, methods, and functions will change as the library is developed further and improved. This also means that now is the best time to contribute codes, suggestions, and bug reports. See the contributing section to learn how you can contribute. 
 
 ## Install
 
@@ -34,6 +34,10 @@ cd my_project
 npm install 
 npm run dev
 ```
+
+## Questions, Comments, or Suggestions?
+
+### If you have any questions, comments or suggestions please feel free to drop by the [discussion forum](https://github.com/jpmorganchase/anu/discussions)!
 
 ## Contributing 
 
@@ -61,4 +65,4 @@ Below is a list of select completed and planned features
 - [ ] Network visualizations (in progress)
 - [ ] Data based animation tools 
 - [ ] Common data visualization interactions
-- [ ] Color scale materials / shaders
+- [x] Color scale materials / shaders
