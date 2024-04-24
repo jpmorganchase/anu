@@ -43,7 +43,7 @@ export class Layout{
         this.options.selection.selected.forEach((node, i) => {
             //(node.parent as Mesh).showBoundingBox = showBox;
             node.parent = this.root;
-            this.animatePosition((node as TransformNode), new Vector3(i % colnum * (widthX + margin.x), Math.floor(i / colnum) * (widthY + margin.y), 0));
+            this.animatePosition((node as TransformNode), new Vector3((i % colnum - ((colnum-1) / 2.0)) * (widthX + margin.x), Math.floor(i / colnum) * (widthY + margin.y), 0));
             this.animateRotation((node as TransformNode), new Vector3(0, 0, 0))
         })
         
@@ -63,7 +63,7 @@ export class Layout{
 
         colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
 
-        let angle = Math.atan(widthX / 2 / radius) * 2;
+        let angle = Math.atan(widthX / 2 / radius) * 2 / Math.PI * 180;
 
         let forward = new Vector3(0, 0, 1);
         let up = new Vector3(0, 1, 0);
