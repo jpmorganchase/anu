@@ -1,4 +1,4 @@
-import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2 } from '@babylonjs/core';
+import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2, TransformNode, Quaternion, Space } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import data from 'anu/../../data/obesity.json'
 import pop from 'anu/../../data/population_engineers_hurricanes.csv'
@@ -17,6 +17,8 @@ export function fig2(babylonEngine){
   camera.attachControl(true)
   camera.position = new Vector3(0, 2.5, -2)
 
+  let ParentObj = new TransformNode("ParentObj");
+  
   let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.01, projection: d3.geoAlbers().reflectY(true), size: [6,6], simplification: 0.00001});
 
   let states = map.selection;
@@ -59,10 +61,58 @@ export function fig2(babylonEngine){
                     .material((d,n,i) => {
                         let stateData = data.find(x => x.id == d["id"]) ?? {rate: 0}
                         return scaleC(stateData.rate);
-                      })
+                      });
                    
-        
-    anu.createAxes('test', scene, {parent: chart, scale: {x: barScaleX}, labelOptions: {size: 0.009} , labelFormat: {x: (d) => d.slice(0,2)}});
+
+    for (const tm of scene.transformNodes) {
+      if (tm.name == 'meshMapCOT') {
+        tm.parent = ParentObj
+        tm.position = new Vector3(0, 0, .85);
+      }
+      if (tm.name == 'cot') {
+        tm.parent = ParentObj
+      }
+  }
+
+  var Objs = ParentObj.getChildTransformNodes(true);
+  Objs[0].setEnabled(false);
+  Objs[1].setEnabled(false);
+  Objs[2].setEnabled(true);
+  //Objs[2].rotation = new Vector3(90 * Math.PI / 180, 0, 0);
+
+  ParentObj.rotate(new Vector3(0, 0, 0), 0, Space.World);
+  let root = anu.selectName("ParentObj", scene);
+
+  root.rotateUI({axis: {x: true}, position: new Vector3(0, 0, 0), billboard: 2});
+  
+  ParentObj.onAfterWorldMatrixUpdateObservable.add(() => {
+    console.log("interacting");
+
+    var angle = ParentObj.rotationQuaternion.toEulerAngles();
+    console.log(angle);
+    let newAngX = angle.x * 180 / Math.PI;
+    if(newAngX > -10){
+      console.log("flat");
+      Objs[0].setEnabled(false);
+      Objs[1].setEnabled(false);
+      Objs[2].setEnabled(true);
+    }
+    if(newAngX < -10 && newAngX > -75){
+      console.log("tilted");
+      Objs[0].setEnabled(true);
+      Objs[1].setEnabled(false);
+      Objs[2].setEnabled(false);
+    }
+    if(newAngX < -75){
+      console.log("vertical");
+      Objs[0].setEnabled(false);
+      Objs[1].setEnabled(true);
+      Objs[2].setEnabled(false);
+    }
+  })
+  //ParentObj.rotationQuaternion = Quaternion.Identity;
+
+  anu.createAxes('test', scene, {parent: chart, scale: {x: barScaleX}, labelOptions: {size: 0.009} , labelFormat: {x: (d) => d.slice(0,2)}});
 
   //camera.setTarget(mapCot.selected[0]);
 
