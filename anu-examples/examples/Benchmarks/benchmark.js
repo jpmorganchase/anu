@@ -3,8 +3,7 @@
 
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
-import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction } from '@babylonjs/core'; 
-import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, Mesh, Matrix, SolidParticleSystem} from '@babylonjs/core'; 
 
 //import { Mesh } from 'anu';
 
@@ -24,31 +23,59 @@ export const benchmark = function(engine){
 
   let center = anu.create('cot', 'cot')
 
-
-  // setInterval(() => {
-  //   let data = Array.from({length: 1000}, () => Math.floor(Math.random() * 100));
-  //   var m = cot.bind('sphere', {diameter: 0.1}, data);
-  // m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
-  // }, 5000)
-
-  let sphere = anu.create('sphere', 'sphere', {diameter: 0.1})
-  
   let cot = anu.selectName('cot', scene);
 
-  anu.bindInstance(sphere, [{}])
-
-  let m;
-  
   let n = 0;
 
+  let m;
+
   // setInterval(() => {
-  //   let data = Array.from({length: n += 1000}, () => Math.floor(Math.random() * 100));
+  //   let data = Array.from({length: 500}, () => Math.floor(Math.random() * 100));
+  //   m = cot.bind('sphere', {diameter: 0.1}, data);
+  //   m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
+  // }, 5000)
+
+  //let sphere = anu.create('sphere', 'sphere', {diameter: 0.1})
+  
+  //let cot = anu.selectName('cot', scene);
+
+  // anu.bindInstance(sphere, [{}])
+
+  
+
+  // setInterval(() => {
+  //   let data = Array.from({length: n += 500}, () => Math.floor(Math.random() * 100));
   //   m?.dispose();
   //   m = cot.bindInstance(sphere, data);
   //   m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
-  //   //m.run((d, n, i) => n.setPivotPoint(center.position.subtract(n.position)))
   // }, 5000)
 
+  let SPS;
+  SPS = new SolidParticleSystem("SPS", scene, { expandable: true }); // scene is required
+  let sphere = anu.create("box", "sphere", {size: 0.1})
+  setInterval(() => {
+    
+
+    SPS.addShape(sphere, 10000); // 20 spheres
+  
+     //free memory
+    
+    const mesh = SPS.buildMesh(); 
+
+    for (let p = 0; p < SPS.nbParticles; p++) {
+        const particle = SPS.particles[p];
+        //Place particles at random positions with a cube
+        particle.position = new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5)
+    }
+
+     
+
+
+  SPS.initParticles();
+  SPS.setParticles();
+
+    //m.position((d) => new Vector3(Math.random() * 5, Math.random() * 5, Math.random() * 5))
+  }, 5000)
 
   //  let observer = scene.onBeforeRenderObservable.add(() => {
   //   m?.rotationY((d,n,i) => n.rotation.y += Math.log(d) * 0.01)
