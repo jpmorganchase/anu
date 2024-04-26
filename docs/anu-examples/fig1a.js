@@ -1,10 +1,10 @@
 import * as anu from '@jpmorganchase/anu' 
-import iris from '../../data/iris.json' assert {type: 'json'}; 
+import iris from './data/iris.json' assert {type: 'json'}; 
 import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 import { AdvancedDynamicTexture, Rectangle, TextBlock} from '@babylonjs/gui'
 
-export const fig1 = function(engine){
+export const fig1a = function(engine){
   const scene = new Scene(engine)
   let light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene)
   light.intensity = 1.2

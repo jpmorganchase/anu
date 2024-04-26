@@ -1,12 +1,12 @@
-import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera, Vector2, TransformNode, Quaternion, Space } from '@babylonjs/core';
+import { Vector3, Scene,  HemisphericLight, ArcRotateCamera, TransformNode, Space } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
-import data from 'anu/../../data/obesity.json'
-import pop from 'anu/../../data/population_engineers_hurricanes.csv'
-import geoJ from "anu/../../data/gz_2010_us_040_00_5m.json"
+import data from './data/obesity.json'
+import pop from './data/population_engineers_hurricanes.csv'
+import geoJ from "./data/gz_2010_us_040_00_5m.json"
 import * as d3 from 'd3';
 
 
-export function fig2(babylonEngine){
+export function fig1b(babylonEngine){
   const scene = new Scene(babylonEngine);
   //Add some lighting
   let light = new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
@@ -109,11 +109,8 @@ export function fig2(babylonEngine){
       Objs[2].setEnabled(false);
     }
   })
-  //ParentObj.rotationQuaternion = Quaternion.Identity;
 
   anu.createAxes('test', scene, {parent: chart, scale: {x: barScaleX}, labelOptions: {size: 0.009} , labelFormat: {x: (d) => d.slice(0,2)}});
-
-  //camera.setTarget(mapCot.selected[0]);
 
   return scene;
 }
