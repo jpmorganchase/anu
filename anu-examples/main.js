@@ -22,6 +22,7 @@ import { linechart2D } from './examples/LineCharts/linechart2D';
 import { textureMap } from './examples/Geographic/Texture_Map';
 import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
+import { smallMultiples } from './examples/Layouts/smallMultiples';
 import { cotBind } from './examples/Selections/cot_bind';
 import { spheresBind } from './examples/Selections/spheres_bind';
 import { cotTransform } from './examples/Selections/cot_transform';
@@ -78,6 +79,7 @@ const scenes = {
   'textureMap': textureMap,
   'textureGlobe': textureGlobe,
   'layout': layout,
+  'smallMultiples': smallMultiples,
   'cot_bind': cotBind,
   'spheres_bind': spheresBind,
   'cot_transform': cotTransform,
