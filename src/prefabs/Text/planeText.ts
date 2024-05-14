@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh, Matrix, PlaneBlock } from '@babylonjs/core';
 import fnt from "../../assets/roboto-regular.json";
 import png from "../../assets/roboto-regular.png";
 import { createTextMesh } from "babylon-msdf-text";
@@ -41,19 +41,24 @@ export class PlaneText {
     font: this.options.font,
     scene: cot.getScene(),
     atlas: this.options.atlas,
+    lineHeight: 1,
   });
 
-  plane.computeWorldMatrix(true)
-  let extent = 1 / plane.getBoundingInfo().boundingBox.extendSize._y ;
-  plane.scaling = new Vector3(extent,extent,extent);
-  plane.computeWorldMatrix(true);
+  let alignment = (this.options.align == "left")? 0 :
+                  (this.options.align == "center")? 1 : 
+                  (this.options.align == "right")? 2 : null
+
+
+
+  plane.scaling = new Vector3(0.015, 0.015, 1);
+  plane.rotation.x = 180 * Math.PI / 180;
   plane.bakeCurrentTransformIntoVertices();
-  plane.scaling = new Vector3(this.options.size,this.options.size,this.options.size);
   plane.computeWorldMatrix(true);
-  plane.bakeCurrentTransformIntoVertices();
   let size = plane.getBoundingInfo().boundingBox;
-  cot.position = new Vector3(size.center.x, size.center.y, 0);
+  const translation = plane.position.subtract(new Vector3(size.center.x * alignment , size.center.y, 0))
+  plane.setPivotMatrix(Matrix.Translation(translation.x, 0, 0), false);
   plane.setParent(cot);
+  cot.scaling = new Vector3(this.options.size,this.options.size,1);
 
   return cot;
 
