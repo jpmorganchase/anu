@@ -23,10 +23,13 @@ export function labelAlt(
 
   let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
 
-  //scale label size to 2% selection height
-  let bounds = this.CoT.boundingBox().boundingBox;
-  //let bounds = new BoundingInfo(min, max).boundingBox;
-  let scaleMultiplier = bounds.extendSize.y * 0.02;
+  //scale label size to 2.5% selection height + width
+  let {min, max} = this.CoT.selected[0].getHierarchyBoundingVectors();
+  let bounds = new BoundingInfo(min, max).boundingBox;
+  let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
+  let textHeight = scaleMultiplier * 0.025
+
+  console.log(scaleMultiplier,  bounds);
 
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
@@ -43,14 +46,13 @@ export function labelAlt(
     
 
     let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-    let textHeight = this.scales.size * scaleMultiplier
     textPosition = (d) => new Vector3(scaleX(d.text), rangeY[0], rangeZ[0]);
 
     let default_options;
     if (this.options.labelFormat?.x != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: this.scales.size * scaleMultiplier, atlas: this.options.atlas};
+      default_options = { text: (d: any) => this.options.labelFormat?.x(d.text), size: textHeight, atlas: this.options.atlas};
     } else {
-      default_options = { text: (d: any) => d.text, size: this.scales.size * scaleMultiplier, atlas: this.options.atlas};
+      default_options = { text: (d: any) => d.text, size: textHeight, atlas: this.options.atlas};
     }
 
     let default_properties = { };
@@ -85,15 +87,15 @@ export function labelAlt(
     
 
     let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-    let textHeight = this.scales.size * scaleMultiplier
+ 
 
     textPosition = (d) => new Vector3(rangeX[0], scaleY(d.text), rangeZ[0]);
 
     let default_options;
     if (this.options.labelFormat?.y != undefined){
-      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), align: "right", size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
+      default_options = { text: (d: any) => this.options.labelFormat?.y(d.text), align: "right", size: textHeight,  atlas: this.options.atlas};
     } else {
-      default_options = { text: (d: any) => d.text, align: "right", size: this.scales.size * scaleMultiplier,  atlas: this.options.atlas};
+      default_options = { text: (d: any) => d.text, align: "right", size: textHeight,  atlas: this.options.atlas};
     }
 
     let default_properties = { };
@@ -131,7 +133,6 @@ export function labelAlt(
 
     textPosition = (d) => new Vector3(rangeX[1], rangeY[0], scaleZ(d.text));
 
-    let textHeight = this.scales.size * scaleMultiplier
 
     let default_options;
     if (this.options.labelFormat?.z != undefined){

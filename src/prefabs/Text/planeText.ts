@@ -48,7 +48,7 @@ export class PlaneText {
                   (this.options.align == "center")? 1 : 
                   (this.options.align == "right")? 2 : null
 
-                  console.log(alignment)
+
 
   plane.scaling = new Vector3(0.015, 0.015, 1);
   plane.rotation.x = 180 * Math.PI / 180;
