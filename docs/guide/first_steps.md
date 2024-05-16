@@ -107,13 +107,13 @@ When you need to render many identical meshes using [instances](https://doc.baby
 ::: code-group
 ```js [anu]
 //create a sphere to be used in our instance and register a color buffer
-let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.003})
+let rootSphere = anu.create('sphere', 'mySphere', {diameter: 0.003})
 rootSphere.isVisible = false;
 rootSphere.registerInstancedBuffer("color", 4);
 rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
 
 
-//bindInstance(mesh: Mesh, options?: {}, data?: {}, scene?: Scene,)
+//bindInstance(mesh: Mesh, data?: {}, scene?: Scene,)
 let spheres =  anu.bindInstance(rootSphere, data)
   .positionX((d) => Math.Random())
   .positionZ((d) => Math.Random())
