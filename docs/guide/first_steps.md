@@ -30,16 +30,17 @@ Anu's core philosophy is enabling you to manipulate the scene-graph and its mesh
 
 ::: code-group
 ```js [anu]
-//create(mesh: string, name: string, scene: Scene, options?: {}, data?: {})
+//create(mesh: string, name: string, options?: {}, data?: {}, scene?: Scene,)
 let box = anu.create('box', 
                       'ourBox', 
-                      scene, 
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,
                         depth: (d) => d.points
                       }, 
-                      {goals: 5, assits: 10, points: 2})
+                      {goals: 5, assits: 10, points: 2},
+                      scene
+                      )
 ```
 :::
 
@@ -50,9 +51,8 @@ Instead of using [create()](../api/modules.html#create) to create and return a s
 
 ::: code-group
 ```js [anu]
-//bind(mesh: string, scene: Scene, options?: {}, data?: {})
+//bind(mesh: string, options?: {}, data?: {}, scene?: Scene)
  let boxes = anu.bind('box', 
-                      scene, 
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,
@@ -62,7 +62,10 @@ Instead of using [create()](../api/modules.html#create) to create and return a s
                         {goals: 10, assits: 5, points: 2},
                         {goals: 3, assits: 15, points: 8},
                         {goals: 1, assits: 8, points: 15}
-                      ])
+                      ],
+                      scene
+                      )
+                    
 ```
 :::
 
@@ -74,9 +77,8 @@ We will cover [Selection](../api/classes/Selection.md) in more detail later on, 
 
 ::: code-group
 ```js [anu]
-//bind(mesh: string, scene: Scene, options?: {}, data?: {})
+//bind(mesh: string, options?: {}, data?: {}, scene: Scene,)
   let boxes = anu.bind('box', 
-                      scene, 
                       {
                         height: (d) => d.goals,
                         width: (d) => d.assits,
@@ -86,7 +88,8 @@ We will cover [Selection](../api/classes/Selection.md) in more detail later on, 
                         {goals: 10, assits: 5, points: 2},
                         {goals: 3, assits: 15, points: 8},
                         {goals: 1, assits: 8, points: 15}
-                      ]
+                      ],
+                      scene
                       )
 
   boxes.positionX((d) => d.goals)
@@ -97,7 +100,29 @@ We will cover [Selection](../api/classes/Selection.md) in more detail later on, 
 
 <inlineView scene="Box_Selection" />
 
-  ## Whats Next
-  By this point, you should hopefully see how we can scale up these techniques to create and manipulate Babylon meshes to create data visualizations. In the following sections, we will work toward these goals more concretely. First by learning more about selections and how to use them, and then by building a 3D visualization from the ground up. 
+
+## Binding Instances
+When you need to render many identical meshes using [instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances) is significantly more performant that rendering each mesh individually. Instances will render all meshes in an instance using a single draw call, however this approach comes with some caveats around the flexibility of modifying properties. We can create instances using Anu with the [bindInstance()](../api/modules.html#bindInstance) method. Some properties we can change directly for each mesh in an instance, but for shared properties such as material color we need to us instance buffers. Anu provides wrapper functions for bot registering and setting instance buffers. To create a instance the bindInstance method expects a mesh object to be passed to it instead of a string.
+
+::: code-group
+```js [anu]
+//create a sphere to be used in our instance and register a color buffer
+let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.003})
+rootSphere.isVisible = false;
+rootSphere.registerInstancedBuffer("color", 4);
+rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
+
+
+//bindInstance(mesh: Mesh, options?: {}, data?: {}, scene?: Scene,)
+let spheres =  anu.bindInstance(rootSphere, data)
+  .positionX((d) => Math.Random())
+  .positionZ((d) => Math.Random())
+  .setInstancedBuffer("color", new Color4(0,0,0,1))
+```
+:::
+
+
+## Whats Next
+By this point, you should hopefully see how we can scale up these techniques to create and manipulate Babylon meshes to create data visualizations. In the following sections, we will work toward these goals more concretely. First by learning more about selections and how to use them, and then by building a 3D visualization from the ground up. 
 
 </multiView>

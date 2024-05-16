@@ -13,7 +13,7 @@ Every method of [Selection](../api/classes/Selection.html) that modifies the pro
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.position(new Vector3(1,1,1)) // type vector3(x,y,z)
@@ -39,7 +39,7 @@ These parameters are passed into the function in order, and while they can be na
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
@@ -80,7 +80,7 @@ We are not limited to only modifying the properties with wrapper methods. We can
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
@@ -99,7 +99,7 @@ We may want to modify many properties of nodes in a selection at once. When we c
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth),

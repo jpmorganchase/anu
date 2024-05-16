@@ -15,7 +15,7 @@ A selection object can simply be created by declaring a new [Selection](../api/c
 
 ::: code-group
 ```js [js]
-let sphere = anu.create("sphere", scene)
+let sphere = anu.create("sphere", "mySphere")
 
 let selection = new anu.Selection([sphere], scene)
 ```
@@ -31,11 +31,11 @@ These methods return an instance of [Selection](../api/classes/Selection.md) con
 ::: code-group
 ```js [js]
 //anu create returns a mesh object we can modify the babylon way
-let box = anu.create("box", scene)
+let box = anu.create("box", "myBox")
 box.name = "box-name";
 box.position = new Vector3(-1,0,0)
 
-let sphere = anu.create("sphere", scene)
+let sphere = anu.create("sphere", "mySphere")
 sphere.id = "sphere-ID";
 sphere.position = new Vector3(1,0,0)
 
@@ -125,7 +125,7 @@ We can also call the [bind()](../api/classes/Selection.html#bind) method from a 
 //a single TransformNode 'cot' aka Center of Transform.
 //By default the name and ID of a node will be the mesh type
 //In this case "cot"
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 
 //Create a sphere for each row of data in the iris data set.
 //These spheres will be the childern of our cot node.
@@ -146,7 +146,7 @@ If we call bind on a selection with more than one node it will repeat the method
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
@@ -172,7 +172,7 @@ We can update these new nodes in two ways. Either directly changing the returned
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 
 let boxes = cot.bind('box', {size: 1}, iris);
 
@@ -191,7 +191,7 @@ In contrast, if we change the transform properties of the parent node instead (i
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 
 let boxes = cot.bind('box', {size: 1}, iris);
 
@@ -212,7 +212,7 @@ Up to this point, we have only selected nodes from the top level of the scene gr
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 
 //Create a sphere for each row of data in the iris data set.
 //These spheres will be the childern of our cot node.
@@ -246,7 +246,7 @@ We can filter existing selections by values of properties from nodes in a [Selec
 
 ::: code-group
 ```js [js]
-let cot = anu.bind('cot', scene);
+let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 let setosa = spheres.filter((d) => d.species == "setosa")
