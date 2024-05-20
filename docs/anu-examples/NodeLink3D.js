@@ -21,13 +21,6 @@ export function nodelink3d (engine) {
     camera.position = new Vector3(1,1,0.17);
     camera.attachControl(true);
 
-    //Make the camera spin
-    camera.lowerRadiusLimit = 2;
-    camera.upperRadiusLimit = 10;
-    camera.speed = 10;
-    camera.useBouncingBehavior = true;
-    camera.useAutoRotationBehavior = true;
-    camera.radius = 30;
 
     //Visualization Code Start
 
