@@ -21,7 +21,7 @@ let babylonEngine;
   }
 
 onMounted(async () => {
-
+  canvas.value.addEventListener('wheel', evt => evt.preventDefault());
   babylonEngine = new Engine(canvas.value, true);
 
   let scene = props.scene(babylonEngine);

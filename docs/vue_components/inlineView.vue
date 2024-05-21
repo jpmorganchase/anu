@@ -15,6 +15,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
+  canvas.value.addEventListener('wheel', evt => evt.preventDefault());
   window.dispatchEvent(new CustomEvent('test', { detail: {canvas: canvas.value, scene: props.scene, inspector: props.inspector}}))
 });
 
