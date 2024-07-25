@@ -32,6 +32,7 @@ import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
+import { thinInstanceSetBuffer } from './property/thin';
 
 /*
     The core class of anujs. All functions should return 
@@ -99,5 +100,6 @@ export class Selection {
   public positionUI = positionUI;
   public scaleUI = scaleUI;
   public rotateUI = rotateUI;
+  public thinInstanceSetBuffer = thinInstanceSetBuffer;
 
 }

@@ -48,6 +48,7 @@ import { nodelink3d } from './examples/Networks/NodeLink3D';
 import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
 import { fig2 } from './examples/Figures/fig2';
+import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 
 
 const queryString = window.location.search;
@@ -104,7 +105,8 @@ const scenes = {
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
   'fig1': fig1,
-  'fig2': fig2
+  'fig2': fig2,
+  'scatterplotThinInstance': scatterplotThinInstance,
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

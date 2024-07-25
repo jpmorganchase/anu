@@ -71,7 +71,7 @@ import {
   serializeAsColor4,
   serializeAsTexture,
   serializeAsVector3
-} from "./chunk-A56RIS75.js";
+} from "./chunk-F43E4K3S.js";
 import "./chunk-Y2F7D3TJ.js";
 
 // node_modules/@babylonjs/gui/2D/valueAndUnit.js

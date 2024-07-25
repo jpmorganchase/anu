@@ -57,7 +57,11 @@ export function barchart3D(babylonEngine){
                     .material((d, i) => scaleC(d.Miles_per_Gallon)) 
                     //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    anu.createAxes('test', scene, {parent: chart,
+         scale: {x: scaleX, y: scaleY, z: scaleZ},
+        //  labelOptions: {size: 1}
+        }
+         );
 
 
     chart.run((d,n,i) => {
