@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, Matrix } from '@babylonjs/core'; 
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, Matrix , SceneLoader} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 
 //import { Mesh } from 'anu';
@@ -39,6 +39,7 @@ export const scatterplotThinInstance = function(engine){
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
 
+  SceneLoader.Append('./', "test.obj", scene);
   
   // let spheres = chart.bind('sphere', {diameter: 0.05}, iris) 
   //   .positionX((d) => scaleX(d.sepalLength)) 
@@ -46,30 +47,35 @@ export const scatterplotThinInstance = function(engine){
   //   .positionZ((d) => scaleZ(d.sepalWidth)) 
   //   .material((d) => scaleC(d.species))
 
-  let root = anu.create('sphere', 'root', {diameter: 1});
+  let root = anu.create('box', 'root', {size: 1});
   //root.scaling = new Vector3(0.1,0.1,0.1);
 
+  // let thinInstance = anu.bindThinInstance(root, iris)
+  //                       .thinInstanceSetBuffer('matrix', (d,n,i) => {
+  //                         var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
+  //                         d.forEach((e, i) => {
+  //                          let matrix = Matrix.Scaling(0.1,0.1,0.1)
+  //                          matrix.copyToArray(bufferMatrices, i * 16);
+  //                         });
+  //                         return bufferMatrices;
+
+  //                       })
+  //                       .thinInstanceSetBuffer('matrix', (d,n,i) => {
+  //                         var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
+  //                         let matricies = n.thinInstanceGetWorldMatrices();
+  //                         d.forEach((e, i) => {
+  //                          let matrix = matricies[i].multiply( Matrix.Translation(scaleX(e.sepalLength), scaleY(e.petalLength), scaleZ(e.sepalWidth)))
+  //                          matrix.copyToArray(bufferMatrices, i * 16);
+  //                         });
+  //                         return bufferMatrices;
+  //                       })
+
+  
   let thinInstance = anu.bindThinInstance(root, iris)
-                        .thinInstanceSetBuffer('matrix', (d,n,i) => {
-                          var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
-                          d.forEach((e, i) => {
-                           let matrix = Matrix.Scaling(0.1,0.1,0.1)
-                           matrix.copyToArray(bufferMatrices, i * 16);
-                          });
-                          return bufferMatrices;
-
-                        })
-                        .thinInstanceSetBuffer('matrix', (d,n,i) => {
-                          var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
-                          let matricies = n.thinInstanceGetWorldMatrices();
-                          d.forEach((e, i) => {
-                           let matrix = matricies[i].multiply( Matrix.Translation(scaleX(e.sepalLength), scaleY(e.petalLength), scaleZ(e.sepalWidth)))
-                           matrix.copyToArray(bufferMatrices, i * 16);
-                          });
-                          return bufferMatrices;
-                        })
-                       
-
+      //.thinInstanceScaling(new Vector3(0.2,0.2,0.2))
+      .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
+      .thinInstanceScaling(new Vector3(0.1,0.1,0.1))
+      .thinInstanceRotation(() => Vector3.Random());
 
                         
   //root.scaling = new Vector3(0.1,0.1,0.1);
@@ -77,7 +83,7 @@ export const scatterplotThinInstance = function(engine){
 
    console.log(thinInstance.selected[0])
         
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    //anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
  
 
     return scene;
