@@ -4,7 +4,7 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, Matrix , SceneLoader} from '@babylonjs/core'; 
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, Matrix , SceneLoader, Color4} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 
 //import { Mesh } from 'anu';
@@ -31,7 +31,7 @@ export const scatterplotThinInstance = function(engine){
 
   //This is a function that will create a color scale for our three types of flowers in our data
   //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
-  var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
+  var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toColor4())
   
   //Create a transform node to use as the parent node for all our meshes
   let CoT = anu.create("cot", "cot");
@@ -72,18 +72,18 @@ export const scatterplotThinInstance = function(engine){
 
   
   let thinInstance = anu.bindThinInstance(root, iris)
-      //.thinInstanceScaling(new Vector3(0.2,0.2,0.2))
       .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
-      .thinInstanceScaling(new Vector3(0.1,0.1,0.1))
-      .thinInstanceRotation(() => Vector3.Random());
+      .thinInstanceScaling(new Vector3(0.05,0.05,0.05))
+      .thinInstanceRotation(() => Vector3.Random())
+      .thinInstanceColor((d,n,i) => scaleC(d.species))
 
                         
   //root.scaling = new Vector3(0.1,0.1,0.1);
    
 
-   console.log(thinInstance.selected[0])
+   //console.log(thinInstance.selected[0])
         
-    //anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
  
 
     return scene;

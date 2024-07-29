@@ -64,7 +64,8 @@ export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?:
     matrix.copyToArray(matrices, i * 16);
   });
 
-  mesh.thinInstanceSetBuffer("matrix", matrices);
+  mesh.thinInstanceSetBuffer("matrix", matrices, 16);
 
   return new Selection([mesh], scene);
 }
+
