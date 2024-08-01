@@ -76,7 +76,18 @@ export const scatterplotThinInstance = function(engine){
       .thinInstanceScaling(new Vector3(0.05,0.05,0.05))
       .thinInstanceRotation(() => Vector3.Random())
       .thinInstanceColor((d,n,i) => scaleC(d.species))
+      .thinInstanceRegisterAttribute("color", 4)
+      //.thinInstanceSetAttribute("color", [0,0,0,1])
+      //.thinInstanceSetMatrixAt(0, Matrix.Translation(-1,-1,-1))
+      .thinInstanceSetMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
 
+      
+
+
+  //     public thinInstanceSetAttribute = thinInstanceSetAttribute;
+  // public thinInstanceSetAttributeAt = thinInstanceSetAttributeAt
+  // public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
+  // public thinInstanceSetMatrixAt = thinInstanceSetMatrixAt;
                         
   //root.scaling = new Vector3(0.1,0.1,0.1);
    
