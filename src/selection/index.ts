@@ -32,7 +32,10 @@ import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
-import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinInstanceRotation, thinInstanceColor, thinInstanceRegisterAttribute, thinInstanceSetAttribute, thinInstanceSetAttributeAt, thinInstanceSetMatrixAt, thinInstanceSetMatrixFor} from './property/thin';
+import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinInstanceRotation, thinInstanceColor, 
+  thinInstanceRegisterAttribute, thinInstanceSetAttribute, thinInstanceAttributeAt, thinInstanceMatrixAt, thinInstanceMatrixFor,
+  thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt
+} from './property/thin';
 
 /*
     The core class of anujs. All functions should return 
@@ -106,9 +109,12 @@ export class Selection {
   public thinInstanceRotation = thinInstanceRotation;
   public thinInstanceColor = thinInstanceColor;
   public thinInstanceSetAttribute = thinInstanceSetAttribute;
-  public thinInstanceSetAttributeAt = thinInstanceSetAttributeAt
+  public thinInstanceAttributeAt = thinInstanceAttributeAt
   public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
-  public thinInstanceSetMatrixAt = thinInstanceSetMatrixAt;
-  public thinInstanceSetMatrixFor = thinInstanceSetMatrixFor;
-
+  public thinInstanceMatrixAt = thinInstanceMatrixAt;
+  public thinInstanceMatrixFor = thinInstanceMatrixFor;
+  public thinInstancePositionAt = thinInstancePositionAt;
+  public thinInstanceScalingAt = thinInstanceScalingAt;
+  public thinInstanceRotationAt = thinInstanceRotationAt;
+  public thinInstanceColorAt = thinInstanceColorAt;
 }
