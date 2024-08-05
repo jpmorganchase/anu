@@ -4,7 +4,7 @@
 import { Node, Mesh, TransformNode, InstancedMesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag } from './utility/select';
-import { bind, bindInstance } from './bind/bind';
+import { bind, bindInstance, bindThinInstance } from './bind/bind';
 import { position, positionX, positionY, positionZ } from './property/position';
 import { translate } from './bind/translate';
 import { rotation, rotationX, rotationY, rotationZ } from './property/rotation';
@@ -32,6 +32,11 @@ import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
+import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinInstanceRotation, thinInstanceColor, 
+  thinInstanceRegisterAttribute, thinInstanceSetAttribute, thinInstanceAttributeAt, thinInstanceMatrixAt, thinInstanceMatrixFor,
+  thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
+  thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
+} from './property/thin';
 
 /*
     The core class of anujs. All functions should return 
@@ -99,5 +104,24 @@ export class Selection {
   public positionUI = positionUI;
   public scaleUI = scaleUI;
   public rotateUI = rotateUI;
+  public thinInstanceSetBuffer = thinInstanceSetBuffer;
+  public thinInstancePosition = thinInstancePosition;
+  public thinInstanceScaling = thinInstanceScaling;
+  public thinInstanceRotation = thinInstanceRotation;
+  public thinInstanceColor = thinInstanceColor;
+  public thinInstanceSetAttribute = thinInstanceSetAttribute;
+  public thinInstanceAttributeAt = thinInstanceAttributeAt
+  public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
+  public thinInstanceMatrixAt = thinInstanceMatrixAt;
+  public thinInstanceMatrixFor = thinInstanceMatrixFor;
+  public thinInstancePositionAt = thinInstancePositionAt;
+  public thinInstanceScalingAt = thinInstanceScalingAt;
+  public thinInstanceRotationAt = thinInstanceRotationAt;
+  public thinInstanceColorAt = thinInstanceColorAt;
+  public thinInstancePositionFor = thinInstancePositionFor;
+  public thinInstanceScalingFor = thinInstanceScalingFor;
+  public thinInstanceRotationFor = thinInstanceRotationFor;
+  public thinInstanceColorFor = thinInstanceColorFor;
+  public bindThinInstance = bindThinInstance;
 
 }

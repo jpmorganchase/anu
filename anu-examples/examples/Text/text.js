@@ -32,32 +32,27 @@ export const text = function(engine){
   const randomizeThreshold = (threshold) => Math.random() * threshold * 2 - threshold
   const randmizeVector = (threshold = 50) => new Vector3(randomizeThreshold(threshold), randomizeThreshold(threshold), randomizeThreshold(threshold))
   
-  // let mesh = createTextMesh({
-  //   text: `Test`,
-  //   font: fnt,
-  //   scene,
-  //   atlas: png,
-  //   engine,
-  // });
-
- 
-  // let instanceMesh = mesh.createInstance('test');
-
-  // instanceMesh.position = randmizeVector();
-
   for (let i = 0; i <  1; i++){
    data.push({})
     
   }
   
-   //anu.bind('text2d', scene, {text: 'Hello World', color: Color3.Green()}, data);
 
     let options = {
-      text: 'Hello World',
+      text: 'USA',
       color: Color3.Green()
     }
 
-    anu.createPlaneText('myText', options, scene).position.x = -1;
+    let options2 = {
+      text: 'Europe',
+      color: Color3.Green()
+    }
+
+    anu.createPlaneText('myText', options, scene)
+
+    anu.createPlaneText('myText2', options2, scene)
+
+    //anu.create('box', 'box')
 
     return scene;
   

@@ -12,7 +12,7 @@ export { Layout } from './prefabs/Layout/Layout';
 
 export { select, selectName, selectId, selectTag, selectData } from './select';
 export { create } from './create';
-export { bind, bindInstance } from './bind';
+export { bind, bindInstance, bindThinInstance} from './bind';
 export { createPlaneText } from './prefabs/Text/planeText';
 export { createTextureMap } from './prefabs/Mapping/textureMap';
 export { createTextureGlobe } from './prefabs/Mapping/textureGlobe';

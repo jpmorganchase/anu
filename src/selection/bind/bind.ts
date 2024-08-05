@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, ActionManager, Tags, Mesh, InstancedMesh } from '@babylonjs/core';
+import { Node, ActionManager, Tags, Mesh, InstancedMesh, Matrix } from '@babylonjs/core';
 import { Selection } from '../index';
 import { create, MeshTypes } from '../../create';
 
@@ -31,12 +31,12 @@ export function bind<MeshType extends keyof MeshTypes>(this: Selection, shape: M
 }
 
 /**
- * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parrent.
- * The data index of the mesh is also attached to the mesh node object under the metadate property.
+ * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parent.
+ * The data index of the mesh is also attached to the mesh node object under the metadata property.
  *
  * @param mesh The mesh to create instances from.
  * @param data The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data.
- * @returns An instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
+ * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
 export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
@@ -52,5 +52,32 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
     });
   });
 
+  return new Selection(meshes, this.scene);
+}
+
+/**
+ * Take a selection, a mesh, and data. For each index in the data create a new mesh for each node in the selection as the parent.
+ * The data index of the mesh is also attached to the mesh node object under the metadata property.
+ *
+ * @param mesh The mesh to create instances from.
+ * @param data The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data.
+ * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+ * or undefined if a selection could not be made.
+ */
+export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+  let meshes: Node[] = [];
+  this.selected.forEach((node) => {
+    Tags.EnableFor(mesh);
+    mesh.actionManager = new ActionManager(this.scene);
+    mesh.metadata = { ...mesh.metadata, data: data };
+    mesh.setParent(node);
+    let matrices = new Float32Array(16 * data.length * 3);
+    data.forEach((element, i) => {
+      let matrix = Matrix.Identity();
+      matrix.copyToArray(matrices, i * 16);
+    });
+    mesh.thinInstanceSetBuffer("matrix", matrices, 16, false);
+    meshes.push(mesh)
+  });
   return new Selection(meshes, this.scene);
 }
