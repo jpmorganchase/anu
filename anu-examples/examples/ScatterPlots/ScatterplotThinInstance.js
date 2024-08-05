@@ -71,31 +71,29 @@ export const scatterplotThinInstance = function(engine){
   //                       })
 
   
-  let thinInstance = anu.bindThinInstance(root, iris)
-  .thinInstanceScaling(new Vector3(0.05,0.05,0.05))    
+  let thinInstance = chart.bindThinInstance(root, iris)
+      .thinInstanceScaling(new Vector3(0.05,0.05,0.05))    
       .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
       .thinInstanceRotation(() => Vector3.Random())
       //.thinInstanceColor((d,n,i) => scaleC(d.species))
       .thinInstanceRegisterAttribute("color", 4)
-      //.thinInstanceSetAttribute("color", [0,0,0,1])
-      //.thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
-      //.thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
+      .thinInstanceSetAttribute("color", [0.5,0.5,0.5,1])
+      .thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
+      .thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
+      .thinInstancePositionFor((d,n,i) => d.species == "setosa", new Vector3(1,1,1))
+      .thinInstanceScalingFor((d,n,i) => d.species == "setosa", new Vector3(0.1,0.1,0.1))
+      .thinInstanceRotationFor((d,n,i) => d.species == "setosa", new Vector3(0,0,0))
+      .thinInstanceColorFor((d,n,i) => d.species == "virginica", new Color4(0,0,0, 1))
       .thinInstancePositionAt(0, new Vector3(-1,-1,-1))
       .thinInstanceScalingAt(0, new Vector3(1,1,1))
       .thinInstanceRotationAt(0, new Vector3(0,0,0))
       .thinInstanceColorAt(0, new Color4(0,0,0,1))
-      
 
-
-  //     public thinInstanceSetAttribute = thinInstanceSetAttribute;
-  // public thinInstanceSetAttributeAt = thinInstanceSetAttributeAt
-  // public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
-  // public thinInstanceSetMatrixAt = thinInstanceSetMatrixAt;
-                        
+         
   //root.scaling = new Vector3(0.1,0.1,0.1);
    
 
-   //console.log(thinInstance.selected[0])
+   console.log(thinInstance.selected)
         
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
  

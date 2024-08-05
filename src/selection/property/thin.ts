@@ -21,11 +21,11 @@ export function thinInstancePosition(this: Selection, value: Vector3 | ((d: any,
         ? node.hasThinInstances 
             ?  (() => {
                 let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
-                let matricies = node.thinInstanceGetWorldMatrices();
+                let matrices = node.thinInstanceGetWorldMatrices();
                 let data = node.metadata.data ??={}
                 data.forEach((e, j) => {
                     let evaluated = value instanceof Function ? value(e, node, j) : value
-                    let matrix = matricies[j].setTranslation(evaluated)
+                    let matrix = matrices[j].setTranslation(evaluated)
                     matrix.copyToArray(bufferMatrices, j * 16);
                 });
                 node.thinInstanceSetBuffer("matrix", bufferMatrices, 16, staticBuffer)
@@ -259,7 +259,6 @@ export function thinInstanceColorAt(this: Selection, index: number, value: Color
 export function thinInstanceMatrixFor(this: Selection, method: (d: any, n: Node, i: number) => boolean, value: Matrix | ((d: any, n: Node, i: number) => Matrix)): Selection{
 
     this.selected.forEach((node, i) => {
-        node instanceof Mesh
         if (node instanceof Mesh && node.hasThinInstances){
             let data = node.metadata.data ??= {};
             (data).forEach((d, k) => {
@@ -271,6 +270,99 @@ export function thinInstanceMatrixFor(this: Selection, method: (d: any, n: Node,
         }
         else  console.warn(node + "is not a mesh or has no thin instances, skipping");
     
+    })
+
+    return this;
+}
+
+export function thinInstancePositionFor(this: Selection, method: (d: any, n: Node, i: number) => boolean, value: Vector3| ((d: any, n: Node, i: number) => Vector3)): Selection{
+
+    this.selected.forEach((node, i) => {
+        if (node instanceof Mesh && node.hasThinInstances){
+            let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
+            let matrices = node.thinInstanceGetWorldMatrices();
+            let data = node.metadata.data ??={}
+            data.forEach((e, j) => {
+                if (method(e, node, j)) {
+                    let evaluated = value instanceof Function ? value(e, node, j) : value
+                    let previousMatrix = node.thinInstanceGetWorldMatrices()[j];
+                    let matrix = previousMatrix.setTranslation(evaluated);
+                    node.thinInstanceSetMatrixAt(j, matrix, false)
+                }
+            });
+           node.thinInstanceSetMatrixAt(0, node.thinInstanceGetWorldMatrices()[0], true);
+        }
+            else  console.warn(node + "is not a mesh or has no thin instances, skipping");
+    })
+
+    return this;
+}
+
+export function thinInstanceRotationFor(this: Selection, method: (d: any, n: Node, i: number) => boolean, value: Vector3| ((d: any, n: Node, i: number) => Vector3)): Selection{
+
+    this.selected.forEach((node, i) => {
+        if (node instanceof Mesh && node.hasThinInstances){
+            let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
+            let matrices = node.thinInstanceGetWorldMatrices();
+            let data = node.metadata.data ??={}
+            data.forEach((e, j) => {
+                if (method(e, node, j)) {
+                    let evaluated = value instanceof Function ? value(e, node, j) : value
+                    let previousMatrix = node.thinInstanceGetWorldMatrices()[j];
+                    let previousScale = new Vector3;
+                    previousMatrix.decompose(previousScale)
+                    let matrix =  Matrix.ComposeToRef(previousScale, Quaternion.FromEulerVector(evaluated), previousMatrix.getTranslation(), previousMatrix)
+                    node.thinInstanceSetMatrixAt(j, matrix, false)
+                }
+            });
+           node.thinInstanceSetMatrixAt(0, node.thinInstanceGetWorldMatrices()[0], true);
+        }
+            else  console.warn(node + "is not a mesh or has no thin instances, skipping");
+    })
+
+    return this;
+}
+
+export function thinInstanceScalingFor(this: Selection, method: (d: any, n: Node, i: number) => boolean, value: Vector3| ((d: any, n: Node, i: number) => Vector3)): Selection{
+
+    this.selected.forEach((node, i) => {
+        if (node instanceof Mesh && node.hasThinInstances){
+            let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
+            let matrices = node.thinInstanceGetWorldMatrices();
+            let data = node.metadata.data ??={}
+            data.forEach((e, j) => {
+                if (method(e, node, j)) {
+                    console.log('hello')
+                    let evaluated = value instanceof Function ? value(e, node, j) : value
+                    let previousMatrix = node.thinInstanceGetWorldMatrices()[j];
+                    let matrix =  Matrix.ComposeToRef(evaluated, Quaternion.FromRotationMatrix(previousMatrix.getRotationMatrix()), previousMatrix.getTranslation(), previousMatrix)    
+                    node.thinInstanceSetMatrixAt(j, matrix, true)
+                }
+            });
+           //node.thinInstanceSetMatrixAt(0, node.thinInstanceGetWorldMatrices()[0], true);
+        }
+            else  console.warn(node + "is not a mesh or has no thin instances, skipping");
+    })
+
+    return this;
+}
+
+export function thinInstanceColorFor(this: Selection, method: (d: any, n: Node, i: number) => boolean, value: Color4 | ((d: any, n: Node, i: number) => Color4)): Selection{
+
+    this.selected.forEach((node, i) => {
+        if (node instanceof Mesh && node.hasThinInstances){
+            let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
+            let matrices = node.thinInstanceGetWorldMatrices();
+            let data = node.metadata.data ??={}
+            data.forEach((e, j) => {
+                if (method(e, node, j)) {
+                    let evaluated = value instanceof Function ? value(e, node, j) : value
+                    node.thinInstanceSetAttributeAt("color", j, [evaluated.r, evaluated.g, evaluated.b, evaluated.a])
+                }
+            });
+           node.thinInstanceSetMatrixAt(0, node.thinInstanceGetWorldMatrices()[0], true);
+        }
+            else  console.warn(node + "is not a mesh or has no thin instances, skipping");
     })
 
     return this;

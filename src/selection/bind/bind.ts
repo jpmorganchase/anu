@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, ActionManager, Tags, Mesh, InstancedMesh } from '@babylonjs/core';
+import { Node, ActionManager, Tags, Mesh, InstancedMesh, Matrix } from '@babylonjs/core';
 import { Selection } from '../index';
 import { create, MeshTypes } from '../../create';
 
@@ -52,5 +52,23 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
     });
   });
 
+  return new Selection(meshes, this.scene);
+}
+
+export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+  let meshes: Node[] = [];
+  this.selected.forEach((node) => {
+    Tags.EnableFor(mesh);
+    mesh.actionManager = new ActionManager(this.scene);
+    mesh.metadata = { ...mesh.metadata, data: data };
+    mesh.setParent(node);
+    let matrices = new Float32Array(16 * data.length * 3);
+    data.forEach((element, i) => {
+      let matrix = Matrix.Identity();
+      matrix.copyToArray(matrices, i * 16);
+    });
+    mesh.thinInstanceSetBuffer("matrix", matrices, 16, false);
+    meshes.push(mesh)
+  });
   return new Selection(meshes, this.scene);
 }
