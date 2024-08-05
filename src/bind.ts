@@ -51,6 +51,15 @@ export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Sce
   return new Selection(meshes, scene);
 }
 
+/**
+ * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parent.
+ * The data index of the mesh is also attached to the mesh node object under the metadata property.
+ *
+ * @param mesh The mesh to create instances from.
+ * @param data The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data.
+ * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+ * or undefined if a selection could not be made.
+ */
 export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
   console.log('hello')
   scene = (scene != undefined) ? scene : mesh.getScene();
