@@ -61,7 +61,6 @@ export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Sce
  * or undefined if a selection could not be made.
  */
 export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
-  console.log('hello')
   scene = (scene != undefined) ? scene : mesh.getScene();
   Tags.EnableFor(mesh);
   mesh.actionManager = new ActionManager(scene);
