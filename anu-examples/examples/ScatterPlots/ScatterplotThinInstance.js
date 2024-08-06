@@ -71,31 +71,76 @@ export const scatterplotThinInstance = function(engine){
   //                       })
 
   
-  let thinInstance = chart.bindThinInstance(root, iris)
-      .thinInstanceScaling(new Vector3(0.05,0.05,0.05))    
-      .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
-      .thinInstanceRotation(() => Vector3.Random())
-      //.thinInstanceColor((d,n,i) => scaleC(d.species))
-      .thinInstanceRegisterAttribute("color", 4)
-      .thinInstanceSetAttribute("color", [0.5,0.5,0.5,1])
-      .thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
-      .thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
-      .thinInstancePositionFor((d,n,i) => d.species == "setosa", new Vector3(1,1,1))
-      .thinInstanceScalingFor((d,n,i) => d.species == "setosa", new Vector3(0.1,0.1,0.1))
-      .thinInstanceRotationFor((d,n,i) => d.species == "setosa", new Vector3(0,0,0))
-      .thinInstanceColorFor((d,n,i) => d.species == "virginica", new Color4(0,0,0, 1))
-      .thinInstancePositionAt(0, new Vector3(-1,-1,-1))
-      .thinInstanceScalingAt(0, new Vector3(1,1,1))
-      .thinInstanceRotationAt(0, new Vector3(0,0,0))
-      .thinInstanceColorAt(0, new Color4(0,0,0,1))
+  // let thinInstance = chart.bindThinInstance(root, iris)
+  //     .thinInstanceScaling(new Vector3(0.05,0.05,0.05))    
+  //     .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
+  //     .thinInstanceRotation(() => Vector3.Random())
+  //     //.thinInstanceColor((d,n,i) => scaleC(d.species))
+  //     .thinInstanceRegisterAttribute("color", 4)
+  //     .thinInstanceSetAttribute("color", [0.5,0.5,0.5,1])
+  //     .thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
+  //     .thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
+  //     .thinInstancePositionFor((d,n,i) => d.species == "setosa", new Vector3(1,1,1))
+  //     .thinInstanceScalingFor((d,n,i) => d.species == "setosa", new Vector3(0.1,0.1,0.1))
+  //     .thinInstanceRotationFor((d,n,i) => d.species == "setosa", new Vector3(0,0,0))
+  //     .thinInstanceColorFor((d,n,i) => d.species == "virginica", new Color4(0,0,0, 1))
+  //     .thinInstancePositionAt(0, new Vector3(-1,-1,-1))
+  //     .thinInstanceScalingAt(0, new Vector3(1,1,1))
+  //     .thinInstanceRotationAt(0, new Vector3(0,0,0))
+  //     .thinInstanceColorAt(0, new Color4(0,0,0,1))
 
-         
+  let data = [{id:"a"},{id:"b"},{id:"c"},{id:"d"},{id:"e"}]
+
+  let cots = anu.bind('cot', {}, data);
+
+  cots.position((d,n,i) => new Vector3(i*40, i*40, i*40))
+
+  let thinInstance = cots.bindThinInstance(root.clone(), data)
+                        .thinInstanceSetBuffer('matrix', (d,n,i) => {
+                          var numPerSide = 40, size = 100, ofst = size / (numPerSide - 1);
+
+                          var m = Matrix.Identity();
+                          var col = 0, index = 0;
+
+                          let instanceCount = numPerSide * numPerSide * numPerSide;
+
+                          let matricesData = new Float32Array(16 * instanceCount);
+                          let colorData = new Float32Array(4 * instanceCount);
+                      
+                          for (var x = 0; x < numPerSide; x++) {
+                              m.m[12] = -size / 2 + ofst * x;
+                              for (var y = 0; y < numPerSide; y++) {
+                                  m.m[13] = -size / 2 + ofst * y;
+                                  for (var z = 0; z < numPerSide; z++) {
+                                      m.m[14] = -size / 2 + ofst * z;
+                      
+                                      m.copyToArray(matricesData, index * 16);
+                      
+                                      var coli = Math.floor(col);
+                      
+                                      colorData[index * 4 + 0] = ((coli & 0xff0000) >> 16) / 255;
+                                      colorData[index * 4 + 1] = ((coli & 0x00ff00) >>  8) / 255;
+                                      colorData[index * 4 + 2] = ((coli & 0x0000ff) >>  0) / 255;
+                                      colorData[index * 4 + 3] = 1.0;
+                      
+                                      index++;
+                                      col += 0xffffff / instanceCount;
+                                  }
+                              }
+                          }
+                          
+                          return matricesData;
+  
+                          })
+                          //.thinInstancePosition((d,n,i) => new Vector3(i,i,i))
+
+      
   //root.scaling = new Vector3(0.1,0.1,0.1);
    
 
-   console.log(thinInstance.selected)
+   //console.log(thinInstance.selected)
         
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+   // anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
  
 
     return scene;
