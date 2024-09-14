@@ -15,6 +15,7 @@
     "@babylonjs/core": "^7.17.0",
     "@babylonjs/gui": "^7.0.0",
     "@babylonjs/inspector": "^7.17.0",
+    "babylonwebxrstarter": "file:",
     "d3": "^7.6.1",
     "d3-force-3d": "^3.0.5",
     "simplify-3d": "^1.0.0",
