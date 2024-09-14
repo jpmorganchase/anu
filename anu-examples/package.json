@@ -1,0 +1,23 @@
+{
+  "name": "babylonwebxrstarter",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@rollup/plugin-dsv": "^3.0.4",
+    "vite": "^3.2.7"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.17.0",
+    "@babylonjs/gui": "^7.0.0",
+    "@babylonjs/inspector": "^7.17.0",
+    "d3": "^7.6.1",
+    "d3-force-3d": "^3.0.5",
+    "simplify-3d": "^1.0.0",
+    "topojson-simplify": "^3.0.3"
+  }
+}
