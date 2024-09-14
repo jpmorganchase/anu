@@ -1,0 +1,13 @@
+/node_modules
+/lib
+/dist
+/docs/node_modules
+/docs/dist
+/anu-examples/node_modules
+/anu-examples/anu-examples.code-workspace
+/docs/docs.code-workspace
+anu.code-workspace
+anu-examples/package-lock.json
+anu-examples/package.json
+anu-examples/vite.config.js
+.vscode
