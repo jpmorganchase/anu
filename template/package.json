@@ -12,7 +12,10 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@babylonjs/inspector": "^7.0.0",
-    "@jpmorganchase/anu": "^0.0.54"
+    "@babylonjs/core": "^7.1.0",
+    "@babylonjs/inspector": "^7.1.0",
+    "@babylonjs/gui": "^7.1.0",
+    "@jpmorganchase/anu": "latest",
+    "d3": "latest"
   }
 }
