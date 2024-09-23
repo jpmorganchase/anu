@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Texture, TransformNode } from '@babylonjs/core';
+import { Texture, TransformNode, Node } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { Selection } from '../../selection';
 import { labelAlt } from './label';
@@ -9,9 +9,10 @@ import { backgroundAlt } from './background';
 import { grid } from './grid';
 import { domain } from './domain';
 import png from '../../assets/roboto-regular.png';
+import { Prefab } from '../Prefab';
 
 interface AxisOptions {
-  parent?: Selection;
+  parent?: Node | Selection;
   xScale?: any;
   yScale?: any;
   zScale?: any;
@@ -34,10 +35,8 @@ interface AxisOptions {
   atlas?: Texture
 }
 
-export class Axes {
-  name: string;
+export class Axes extends Prefab {
   options: AxisOptions;
-  scene: Scene;
   CoT: Selection;
   scales: any;
   domain: Selection;
@@ -46,10 +45,12 @@ export class Axes {
   label: {x?: Selection, y?: Selection, z?: Selection};
 
   constructor(name: string, scene: Scene, options: AxisOptions = {}) {
+    super(name, scene)
     this.name = name;
     this.options = options;
+    this.parent = this.options.parent
     this.scene = scene;
-    this.CoT = this.setCoT();
+    this.CoT = new Selection([this.cot], scene);
     this.scales = this.setScales();
     this.domain = this.options.domain ? this.setDomain() : new Selection([], scene);
     this.background = this.options.background ? this.setBackground() : {};
@@ -57,16 +58,16 @@ export class Axes {
     this.label = this.options.label ? this.setLabel() : {};
   }
 
-  private setCoT(): Selection {
-    let CoT;
-    if (this.options.parent === undefined) {
-      let node = new TransformNode(this.name + 'CoT', this.scene);
-      CoT = new Selection([node], this.scene);
-    } else {
-      CoT = this.options.parent.bind('cot').prop('name', this.name + 'CoT');
-    }
-    return CoT;
-  }
+  // private setCoT(): Selection {
+  //   let CoT;
+  //   if (this.options.parent === undefined) {
+  //     let node = new TransformNode(this.name + 'CoT', this.scene);
+  //     CoT = new Selection([node], this.scene);
+  //   } else {
+  //     CoT = this.options.parent.bind('cot').prop('name', this.name + 'CoT');
+  //   }
+  //   return CoT;
+  // }
 
   private setScales() {
     let scaleX: any;
@@ -120,6 +121,7 @@ export class Axes {
   private setBackground = backgroundAlt;
   private setGrid = grid;
   private setLabel = labelAlt;
+
 }
 
 
