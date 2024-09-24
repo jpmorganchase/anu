@@ -65,6 +65,8 @@ export interface MeshTypes {
   "plane": Parameters<typeof MeshBuilder.CreatePlane>[1],
   "tiledPlane": Parameters<typeof MeshBuilder.CreateTiledPlane>[1],
   "disc": Parameters<typeof MeshBuilder.CreateDisc>[1],
+  //You need to modify/add this function in the node_modules/@babylonjs/core/Meshes/Builders/"CreateDottedDisc"
+  "dottedDisc": Parameters<typeof MeshBuilder.CreateDottedDisc>[1], 
   "torus": Parameters<typeof MeshBuilder.CreateTorus>[1],
   "torusKnot": Parameters<typeof MeshBuilder.CreateTorusKnot>[1],
   "ground": Parameters<typeof MeshBuilder.CreateGround>[1],
