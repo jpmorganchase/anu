@@ -51,7 +51,7 @@
     "vite-plugin-dts": "^2.3.0"
   },
   "dependencies": {
-    "@babylonjs/core": "^7.1.0",
+    "@babylonjs/core": "^7.26.2",
     "babylon-msdf-text": "^0.0.4",
     "chroma-js": "^2.4.2",
     "d3-geo": "^3.1.1",

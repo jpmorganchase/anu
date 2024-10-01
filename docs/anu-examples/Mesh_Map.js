@@ -4,7 +4,6 @@ import data from './data/airports.csv'
 import geoJ from "./data/gz_2010_us_040_00_5m.json"
 import * as d3 from 'd3';
 
-
 export function meshMap(babylonEngine){
   const scene = new Scene(babylonEngine);
   //Add some lighting
@@ -16,7 +15,7 @@ export function meshMap(babylonEngine){
 
 
 
-  let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.05, projection: d3.geoAlbers().reflectY(true), size: [2,2], simplification: 0.00001});
+  let map = anu.createMeshMap('meshMap', {geoJson: geoJ, depth: 0.05, projection: d3.geoAlbers().reflectY(true), size: [2,2], simplification: 0.00001});
 
 
   let projection = map.projection;
@@ -30,7 +29,7 @@ export function meshMap(babylonEngine){
         .prop("isPickable", false); //complex geometry has performance impact when pickable 
                                     //if you need to select it wrap it in a empty mesh with bounding box set
 
-  let mapCot = anu.selectName('meshMapCOT', scene);
+  let mapCot = anu.selectName('meshMap', scene);
 
   let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.003})
     rootSphere.isVisible = false;

@@ -40,7 +40,7 @@ export function backgroundAlt(this: Axes) {
     let backgroundMeshX = this.CoT.bind('plane', assign({}, default_options, this.options.backgroundOptions))
       .attr('name', this.name + '_backgroundX')
       .position(planePosition)
-      .material(new StandardMaterial(this.name + '_backgroundX_material', this.scene))
+      .material(new StandardMaterial(this.name + '_backgroundX_material', this._scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
 
     selections.x = backgroundMeshX;
@@ -65,7 +65,7 @@ export function backgroundAlt(this: Axes) {
       .attr('name', this.name + '_backgroundY')
       .position(planePosition)
       .rotation(planeRotation)
-      .material(new StandardMaterial(this.name + '_backgroundY_material', this.scene))
+      .material(new StandardMaterial(this.name + '_backgroundY_material', this._scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
 
       selections.y = backgroundMeshY;
@@ -90,7 +90,7 @@ export function backgroundAlt(this: Axes) {
       .attr('name', this.name + '_backgroundZ')
       .position(planePosition)
       .rotation(planeRotation)
-      .material(new StandardMaterial(this.name + '_backgroundZ_material', this.scene))
+      .material(new StandardMaterial(this.name + '_backgroundZ_material', this._scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
 
       selections.z = backgroundMeshZ;

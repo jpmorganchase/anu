@@ -43,7 +43,7 @@ export function shapeAlt(
   let shapeMeshX = this.CoT.bind('tube', assign({}, default_options, options))
     .attr('name', this.name + '_shape')
     //.position(tubePositionX)
-    .material(new StandardMaterial(this.name + '_shape_material', this.scene))
+    .material(new StandardMaterial(this.name + '_shape_material', this._scene))
     .props(assign({}, default_properties, properties))
     .run((n) => n.forceSharedVertices());
 

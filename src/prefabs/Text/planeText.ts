@@ -31,7 +31,7 @@ export class PlaneText {
 
   run() {
 
-  let cot = new Mesh('cot');
+  let cot = new Mesh(this.name);
 
   let plane = createTextMesh({
     text: this.options.text.toString(),

@@ -51,11 +51,11 @@ export function domain(
   let greasedLine = CreateGreasedLine('greasedLine', 
                                       assign({}, default_options, this.options.domainOptions),
                                       assign({}, default_material, this.options.domainMaterialOptions),
-                                      this.scene);
+                                      this._scene);
 
   greasedLine.parent = this.CoT.selected[0];
 
-  let domain = new Selection([greasedLine], this.scene)
+  let domain = new Selection([greasedLine], this._scene)
 
   domain.prop("name", this.name + "_domain")
 

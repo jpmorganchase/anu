@@ -47,7 +47,8 @@ export const scatterplot3D = function(engine){
     .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int
     .material((d) => scaleC(d.species))
    
-    let axis = anu.createAxes('test', scene, {scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    let axis = anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    //axis.position.x = 1;
     return scene;
   
   };
