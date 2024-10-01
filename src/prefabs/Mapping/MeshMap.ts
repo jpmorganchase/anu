@@ -10,7 +10,7 @@ import earcut from "earcut";
 import { geoProject } from "d3-geo-projection";
 import { Selection } from '../../selection';
 
-export class MeshMap {
+export class MeshMap extends TransformNode {
   name: string;
   scene?: Scene;
   size: [number, number];
@@ -22,15 +22,14 @@ export class MeshMap {
   selection?: Selection;
   depth?: number;
 
-  constructor(name: string, geoJson: GeoGeometryObjects, projection: GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, cot: Nullable<Node>, scene?: Scene) {
-    this.name = name;
-    this.scene = scene;
+  constructor(name: string, geoJson: GeoGeometryObjects, projection: GeoProjection, size: [number, number], transform: [number, number], simplification: number, depth: number, scene?: Scene) {
+    super(name, scene, true)
     this.geoJson = geoJson;
     this.projection = projection;
     this.size = size;
     this.transform = transform;
     this.simplification = simplification;
-    this.cot = cot;
+    this.cot = this;
     this.depth = depth;
     this.selection = this.createMap();
   }
@@ -103,9 +102,8 @@ export function createMeshMap(
     const transform = options.transform || [0,0];
     const simplification = options.simplification || 0;
     const depth = options.depth || 1;
-    const cot = options.cot || new TransformNode('meshMapCOT', scene);
   
-    let map = new  MeshMap(name, geoJson, projection, size, transform, simplification, depth, cot, scene);
+    let map = new  MeshMap(name, geoJson, projection, size, transform, simplification, depth, scene);
 
   return map;
 }

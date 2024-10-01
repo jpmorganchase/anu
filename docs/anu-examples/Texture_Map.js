@@ -23,7 +23,7 @@ export function textureMap(babylonEngine){
     rootSphere.instancedBuffers.color = new Color4(1,1,1,1) 
 
     //Using the texture map prefab we create a plane with a canvas OL map set as the texture 
-    let textureMap = anu.createTextureMap('test');
+    let textureMap = anu.createTextureMap('map');
     //Keyboard controls WASD and -+ can be enabled on the prefab
     textureMap.keyboardControls(scene);
 
@@ -59,14 +59,14 @@ export function textureMap(babylonEngine){
       }
     }
 
-    //Create a cot for our spheres
-    let cot = anu.bind('cot')
+    //Select a cot for our spheres
+    let cot = anu.selectName('map', scene);
 
 
-    cot.run((d,n,i) => {
-      textureMap.mesh.parent = n;
-      n.normalizeToUnitCube();
-    }).positionY(0.5)
+    // cot.run((d,n,i) => {
+    //   textureMap.parent = n;
+    //   n.normalizeToUnitCube();
+    // }).positionY(0.5)
 
     
     //Use binInstace to create an instance of root sphere for each data point

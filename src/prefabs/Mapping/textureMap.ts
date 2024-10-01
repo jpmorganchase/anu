@@ -16,11 +16,12 @@ import {
   Scene,
   Mesh,
   KeyboardEventTypes,
+  TransformNode,
 } from '@babylonjs/core';
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
 
-export class TextureMap {
+export class TextureMap extends TransformNode{
   name: string;
   scene?: Scene;
   layers: TileLayer<OSM>[];
@@ -44,8 +45,7 @@ export class TextureMap {
     size: number,
     scene?: Scene,
   ) {
-    this.name = name;
-    this.scene = scene;
+    super(name, scene, true)
     this.layers = layers;
     this.target = 'map2D';
     this.view = view;
@@ -106,11 +106,11 @@ export class TextureMap {
     let ratio = this.resolution.width / this.resolution.height;
 
     let ground = MeshBuilder.CreateGround(
-      this.name,
+      this.name + "_mesh",
       { width: this.size * ratio, height: this.size, subdivisions: 25 },
       this.scene,
     );
-
+    ground.setParent(this);
     let materialGround = new StandardMaterial(this.name + '_material', (this.scene != undefined) ? this.scene : undefined);
 
     materialGround.diffuseTexture = this.texture;

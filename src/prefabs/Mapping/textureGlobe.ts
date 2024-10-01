@@ -16,12 +16,14 @@ import {
   Vector2,
   Vector3,
   Space,
-  Axis
+  Axis,
+  TransformNode
 } from '@babylonjs/core';
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
 
-export class TextureGlobe {
+
+export class TextureGlobe extends TransformNode {
   name: string;
   scene?: Scene;
   layers: TileLayer<OSM>[];
@@ -37,8 +39,7 @@ export class TextureGlobe {
   lonLatToVector3: Function;
 
   constructor(name: string, layers: TileLayer<OSM>[], view: View, resolution: Vector2, diameter: number, scene?: Scene,) {
-    this.name = name;
-    this.scene = scene;
+    super(name, scene, true)
     this.layers = layers;
     this.target = 'globe';
     this.view = view;
@@ -92,7 +93,8 @@ export class TextureGlobe {
   }
 
   createMesh() {
-    let globe = MeshBuilder.CreateSphere(this.name, { diameter: this.diameter }, this.scene);
+    let globe = MeshBuilder.CreateSphere(this.name + "_mesh", { diameter: this.diameter }, this.scene);
+    globe.setParent(this);
     globe.rotate(Axis.X, Math.PI, Space.WORLD);
     globe.rotate(Axis.Y, Math.PI, Space.WORLD);
     let materialGlobe = new StandardMaterial(this.name + '_material', this.scene);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Texture, TransformNode, Node } from '@babylonjs/core';
+import { Texture, TransformNode, Node, Mesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { Selection } from '../../selection';
 import { labelAlt } from './label';
@@ -35,7 +35,7 @@ interface AxisOptions {
   atlas?: Texture
 }
 
-export class Axes extends Prefab {
+export class Axes extends TransformNode{
   options: AxisOptions;
   CoT: Selection;
   scales: any;
@@ -45,12 +45,11 @@ export class Axes extends Prefab {
   label: {x?: Selection, y?: Selection, z?: Selection};
 
   constructor(name: string, scene: Scene, options: AxisOptions = {}) {
-    super(name, scene)
+    super(name, scene, true)
     this.name = name;
     this.options = options;
-    this.parent = this.options.parent
-    this.scene = scene;
-    this.CoT = new Selection([this.cot], scene);
+    this.parent = (this.options.parent instanceof Selection) ? this.options.parent.selected[0] : this.options.parent;
+    this.CoT = new Selection([this], scene);
     this.scales = this.setScales();
     this.domain = this.options.domain ? this.setDomain() : new Selection([], scene);
     this.background = this.options.background ? this.setBackground() : {};
