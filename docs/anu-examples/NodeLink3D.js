@@ -19,7 +19,9 @@ export function nodelink3d (engine) {
     //Camera Setup
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.position = new Vector3(1,1,0.17);
+    camera.minZ = 0.1;
     camera.attachControl(true);
+
 
 
     //Visualization Code Start
@@ -35,6 +37,8 @@ export function nodelink3d (engine) {
      .force("center", forceCenter(0, 0, 0))
      .on("tick", ticked)
      .on("end", () => simulation.stop());
+
+    
 
     //create a "container" or empty mesh to act as the root node for our network 
     //childObserver true will ensure the bounding box updates to fit the extend of the children nodes

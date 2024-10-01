@@ -63,10 +63,9 @@ export function textureMap(babylonEngine){
     let cot = anu.selectName('map', scene);
 
 
-    // cot.run((d,n,i) => {
-    //   textureMap.parent = n;
-    //   n.normalizeToUnitCube();
-    // }).positionY(0.5)
+  
+    textureMap.scaling = new Vector3(0.05,0.05,0.05)
+   
 
     
     //Use binInstace to create an instance of root sphere for each data point
