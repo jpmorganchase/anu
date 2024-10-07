@@ -3,7 +3,7 @@
 
 import { Node, Mesh, TransformNode, InstancedMesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
-import { select, selectName, selectId, selectTag } from './utility/select';
+import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance } from './bind/bind';
 import { position, positionX, positionY, positionZ } from './property/position';
 import { translate } from './bind/translate';
@@ -57,6 +57,7 @@ export class Selection {
   public selectName = selectName;
   public selectId = selectId;
   public selectTag = selectTag;
+  public selectData = selectData;
   public bind = bind;
   public run = run;
   public bindInstance = bindInstance;

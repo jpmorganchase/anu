@@ -111,6 +111,6 @@ export function selectData(key: string | string[], value: string | number | stri
     : (selected = scene
         .getNodes()
         .filter((node) => node.metadata != null)
-        .filter((node) => node.metadata.data.key == value));
+        .filter((node) => node.metadata.data[key as string] == value));
   return new Selection(selected, scene);
 }
