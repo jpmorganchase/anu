@@ -1,4 +1,4 @@
-//Import everything we need to create our babylon scene and write our visualization code. 
+//Import everything we need to create our babylon scene and write our visualization code.
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import penguins from './data/penguins.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core';
@@ -12,8 +12,10 @@ export function hover(engine) {
     //Add some lighting (name, position, scene)
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
-    //Add a camera that rotates around the origin 
+    //Add a camera that rotates around the origin
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+    camera.wheelPrecision = 20;
+    camera.minZ = 0;
     camera.attachControl(true)
     camera.position = new Vector3(2, 2, -3.5);
 
@@ -36,7 +38,7 @@ export function hover(engine) {
         .positionY((d) => scaleY(d['Beak Length (mm)']))
         .positionZ((d) => scaleZ(d['Flipper Length (mm)']))
         .material((d) => scaleC(d.Species))
-        //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped. 
+        //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped.
         .action((d, n, i) => new InterpolateValueAction( //Type of action
             ActionManager.OnPointerOverTrigger, //Action Trigger
             n, // The Mesh or Node to Change
@@ -56,7 +58,7 @@ export function hover(engine) {
                 highlighter.addMesh(n, Color3.White());
             }
         ))
-        .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse 
+        .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse
             ActionManager.OnPointerOutTrigger,
             () => {
                 highlighter.removeMesh(n);

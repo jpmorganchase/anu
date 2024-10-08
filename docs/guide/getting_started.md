@@ -57,7 +57,7 @@ You'll be able to swim without these, but you can always swim faster :shark:
 ## Installation
 We recommend following the [Babylon + Vite](https://doc.babylonjs.com/guidedLearning/usingVite) guide to set-up your Babylonjs project.
 
-Once your project structure is up and running install Anu.js by building it locally in a different file directory and linking it to your project. 
+Once your project structure is up and running, install Anu.js by building it locally in a different file directory and linking it to your project.
 
 ```bash
 npm install @jpmorganchase/anu
@@ -65,27 +65,27 @@ npm install @jpmorganchase/anu
 
 Then import the anu name space
 
-```js 
-import * as anu from '@jpmorganchase/anu'
+```js
+import * as anu from '@jpmorganchase/anu';
 ```
 
 You can now call anu methods as such
 
 ```js
-//mesh, name, scene
-anu.create('box', 'myBox')
+//shape, name, options, data, scene
+anu.create('box', 'myBox');
 ```
 
 ### Or Use The Anu-Starter Template
 
-```js
-npx @jpmorganchase/anu-starter@latest my_project 
+```bash
+npx @jpmorganchase/anu-starter@latest my_project
 ```
 
-```js
+```bash
 cd my_project
-npm install 
+npm install
 npm run dev
 ```
 
-See and modify main.js to get started. 
+See and modify main.js to get started.

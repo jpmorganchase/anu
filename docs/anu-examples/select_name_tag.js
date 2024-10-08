@@ -6,12 +6,13 @@ import { Scene, HemisphericLight, ArcRotateCamera, Vector3, MeshBuilder, Standar
 
 //create and export a function that takes a babylon engine and returns a scene
 export const select_name_tag = function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  camera.wheelPrecision = 12;
   camera.attachControl(true)
 
   let box = anu.create("box", {})
@@ -30,10 +31,10 @@ export const select_name_tag = function(engine){
 
   let box_selection = anu.selectName('box-name', scene)
                           .material(boxMaterial)
-  
+
 
   let sphere_selection = anu.selectId('sphere-ID', scene)
                             .material(sphereMaterial)
-  
+
   return scene;
-}; 
+};

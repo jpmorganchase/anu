@@ -7,7 +7,7 @@ import * as anu from '@jpmorganchase/anu' //import anu, this project is using a 
 
 //create and export a function that takes a babylon engine and returns a scene
 export const box_selection = async function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
@@ -16,25 +16,25 @@ export const box_selection = async function(engine){
   camera.position = new Vector3(15, 30, 50)
   camera.attachControl(true)
 
-  let boxes = anu.bind('box', 
+  let boxes = anu.bind('box',
                       {
                         height: (d) => d.goals,
-                        width: (d) => d.assits,
+                        width: (d) => d.assists,
                         depth: (d) => d.points
-                      }, 
+                      },
                       [
-                        {goals: 10, assits: 5, points: 2},
-                        {goals: 3, assits: 15, points: 8},
-                        {goals: 1, assits: 8, points: 15}
+                        {goals: 10, assists: 5, points: 2},
+                        {goals: 3, assists: 15, points: 8},
+                        {goals: 1, assists: 8, points: 15}
                       ]
                       )
 
   boxes.positionX((d) => d.goals)
-        .positionY((d) => d.assits)
+        .positionY((d) => d.assists)
         .positionZ((d) => d.points)
 
   return scene;
-  
+
 };
 
 

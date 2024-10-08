@@ -1,11 +1,11 @@
 import cars from './data/cars.json' assert {type: 'json'};
 
-import { HemisphericLight, 
+import { HemisphericLight,
     Vector2,
      Vector3,
      Scene,
-     ArcRotateCamera, 
-     StandardMaterial, 
+     ArcRotateCamera,
+     StandardMaterial,
      Color3
     } from '@babylonjs/core';
 // clean the import only the needed ones
@@ -19,6 +19,8 @@ const scene = new Scene(babylonEngine)
 new HemisphericLight('light1', new Vector3(0, 1, 0), scene)
 
 const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+camera.wheelPrecision = 20;
+camera.minZ = 0;
 camera.attachControl(true)
 camera.position = new Vector3(10.5,7,-10.5);
 
@@ -48,7 +50,7 @@ var margin = new Vector2(20, 5);
 
 //Create the layout, specify the layout type, parent name, and layout configurations
 let layout = new anu.cylinderLayout('Layout', {selection: charts, rows: rows, margin: new Vector2(20, 5), radius: 20}, scene)
-    .attr("row", 2)    
+    .attr("row", 2)
 
 layout.root.normalizeToUnitCube()
 camera.setTarget(layout.root)
@@ -86,7 +88,7 @@ var addChart = function() {
     allcharts.push(chartnew);
     charts = anu.selectName('cot', scene);
     layout.options.selection = charts;
-    layout.update();    
+    layout.update();
 }
 
 var removeChart = function() {
@@ -97,18 +99,18 @@ var removeChart = function() {
     allcharts.pop();
     charts = anu.selectName('cot', scene);
     layout.options.selection = charts;
-    layout.update();    
+    layout.update();
 }
 
-var setLayout = function(val) {   
+var setLayout = function(val) {
     switch(val) {
-        case 0: 
+        case 0:
             layout.planeLayout();
         break
-        case 1: 
+        case 1:
             layout.cylinderLayout();
         break
-        case 2: 
+        case 2:
             layout.sphereLayout();
         break
         default:
@@ -185,14 +187,14 @@ return scene;
 }
 
 function make2Dchart(scene, id){
-     
+
 //Get unique values for our categorical and ordinal scales
 const origin = [...new Set(cars.map(item => item.Origin))];
 const cylinders = [...new Set(cars.map(item => item.Cylinders))].sort();
 
 //Aggregate our data to the mean MPG and HP for two keys, origin and cylinders
 let  carsRollup = d3.flatRollup(cars, (v) => { return {Horsepower: d3.mean(v, d => d.Horsepower),
-                                                        Miles_per_Gallon: d3.mean(v, d => d.Miles_per_Gallon)}}, 
+                                                        Miles_per_Gallon: d3.mean(v, d => d.Miles_per_Gallon)}},
                                                         d => d.Cylinders)
 
 carsRollup = carsRollup.map(([Cylinders, Data]) => ({Cylinders, ...Data }));
@@ -217,12 +219,12 @@ let bars = chart.bind('plane', {height: 1, width: 0.8, sideOrientation:2}, carsR
                 .positionZ(-0.01)
                 .scalingY((d) => scaleY(d.Horsepower))
                 .positionY((d) => scaleY(d.Horsepower) / 2)
-                .material((d, i) => new StandardMaterial("myMaterial", scene)) 
+                .material((d, i) => new StandardMaterial("myMaterial", scene))
                 .diffuseColor((d) => { let rgb = scaleC(d.Miles_per_Gallon)
                                                   .replace(/[^\d,]/g, '')
                                                   .split(',')
                                                   .map((v) => v / 255)
-                                        return new Color3(...rgb)}) 
+                                        return new Color3(...rgb)})
 
 anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
 
@@ -231,14 +233,14 @@ return chart;
 }
 
 function make3Dchart(scene, id){
-  
+
 //Get unique values for our categorical and ordinal scales
 const origin = [...new Set(cars.map(item => item.Origin))];
 const cylinders = [...new Set(cars.map(item => item.Cylinders))].sort().reverse();
 
 //Aggregate our data to the mean MPG and HP for two keys, origin and cylinders
 let  carsRollup = d3.flatRollup(cars, (v) => { return {Horsepower: d3.mean(v, d => d.Horsepower),
-                                                        Miles_per_Gallon: d3.mean(v, d => d.Miles_per_Gallon)}}, 
+                                                        Miles_per_Gallon: d3.mean(v, d => d.Miles_per_Gallon)}},
                                                         d => d.Origin,
                                                         d => d.Cylinders)
 
@@ -264,8 +266,8 @@ let bars = chart.bind('box', {height: 1, width: 0.8, depth: 0.8}, carsRollup)
                 .positionZ((d) => scaleZ(d.Origin))
                 .scalingY((d) => scaleY(d.Horsepower))
                 .positionY((d) => scaleY(d.Horsepower) / 2)
-                .material((d, i) => scaleC(d.Miles_per_Gallon)) 
-                //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
+                .material((d, i) => scaleC(d.Miles_per_Gallon))
+                //.diffuseColor((d) => scaleC(d.Miles_per_Gallon))
 
 anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 

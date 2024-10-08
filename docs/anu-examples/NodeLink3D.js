@@ -19,7 +19,8 @@ export function nodelink3d (engine) {
     //Camera Setup
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
     camera.position = new Vector3(1,1,0.17);
-    camera.minZ = 0.1;
+    camera.wheelPrecision = 100;
+    camera.minZ = 0;
     camera.attachControl(true);
 
 
@@ -38,9 +39,9 @@ export function nodelink3d (engine) {
      .on("tick", ticked)
      .on("end", () => simulation.stop());
 
-    
 
-    //create a "container" or empty mesh to act as the root node for our network 
+
+    //create a "container" or empty mesh to act as the root node for our network
     //childObserver true will ensure the bounding box updates to fit the extend of the children nodes
     let cot = anu.bind('container');
 
@@ -64,8 +65,8 @@ export function nodelink3d (engine) {
 
 
     //We will be using a lineSystem mesh for our edges which takes a two dimension array and draws a line for each sub array.
-    //lineSystems use one draw call for all line meshes and will be the most performant option 
-    //This function helps prepare our data for that data structure format. 
+    //lineSystems use one draw call for all line meshes and will be the most performant option
+    //This function helps prepare our data for that data structure format.
     let updateLines = (data) => {
         let lines = [];
         data.forEach((v, i) => {

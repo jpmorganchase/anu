@@ -7,12 +7,13 @@ import iris from './data/iris.json' assert {type: 'json'};
 
 //create and export a function that takes a babylon engine and returns a scene
 export const boxesTransform = function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  camera.wheelPrecision = 12;
   camera.attachControl(true)
 
   let cot = anu.bind('cot');
@@ -25,7 +26,7 @@ export const boxesTransform = function(engine){
   boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
         .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()))
         .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
- 
+
   return scene;
-  
-}; 
+
+};

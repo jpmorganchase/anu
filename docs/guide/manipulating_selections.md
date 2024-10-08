@@ -6,56 +6,56 @@
 <multiView>
 
 # Manipulating Selections
-Manipulating nodes and meshes with Anu revolves around selecting nodes from the scene graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of nodes in a selection, the current scene, and the methods of Selection. When we invoke one of these methods, the method will be repeated for each node in the selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the nodes of a Selection object to create dynamic and data-driven scenes.  
+Manipulating nodes and meshes with Anu revolves around selecting nodes from the scene graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of nodes in a selection, the current scene, and the methods of Selection. When we invoke one of these methods, the method will be repeated for each node in the selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the nodes of a Selection object to create dynamic and data-driven scenes.
 
 ## Value or Functions
-Every method of [Selection](../api/classes/Selection.html) that modifies the properties of a node can either be given a raw value of the same type of the property, or a function that returns a value of the same type of the property. Let's start with the simple case of passing the value directly. Again we will bind the iris data set to sphere meshes, and we will modify the following properties, position, scalingX, and name. Each of these methods will set the value of all spheres in our selection to input value.
+Every method of [Selection](../api/classes/Selection.html) that modifies the properties of a node can either be given a raw value of the same type of the property, or a function that returns a value of the same type of the property. Let's start with the simple case of passing the value directly. Again we will bind the iris data set to sphere meshes, and we will modify the following properties: position, scalingX, and name. Each of these methods will set the value of all spheres in our selection to input value.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
-spheres.position(new Vector3(1,1,1)) // type vector3(x,y,z)
-       .scalingX(0.2) // type int
-       .name("iris_sphere"); // type string
+spheres.position(new Vector3(1,1,1)) // Vector3
+       .scalingX(0.2) // Number
+       .name("iris_sphere"); // String
 
 Inspector.Show(scene, {
     embedMode: true,
     showInspector: false
 });
 ```
-::: 
+:::
 
 <inlineView scene="mod_value" :inspector="true" />
 
 However, it is often the case that we want to modify each sphere in the selection independently based on some value such as the data, property, or index. We can easily do this by passing an anonymous function to our methods instead of a value. Anu will execute all functions with the following three parameters:
 
 1. d: The data bound to the node when it was created.
-2. n: The node being modified.
+2. n: The [node](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) being modified.
 3. i: The index of the node in the selection.
- 
-These parameters are passed into the function in order, and while they can be named anything the convention is (d, n, i). Your function must return the same type as the property you are trying to modify or else it will have no effect. To demonstrate this we will modify the same parameters as above but with functions instead of values. 
+
+These parameters are passed into the function in order, and while they can be named anything the convention is (d,n,i). Your function must return the same type as the property you are trying to modify or else it will have no effect. To demonstrate this we will modify the same parameters as above but with functions instead of values.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
-spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
-        .scalingX((d,n,i) => n.scaling.x * 0.1) // type int
-        .name((d,n,i) => "iris_sphere:" + i); // type string
+spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // Vector3
+        .scalingX((d,n,i) => n.scaling.x * 0.1) // Number
+        .name((d,n,i) => "iris_sphere:" + i); // String
 ```
-::: 
+:::
 
 <inlineView scene="mod_function" />
 
 
 ## Wrapper Methods
 
-Anu provides wrapper methods for quickly modifying commonly used properties of nodes. These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon functions. We will continue to add wrapper methods as suggestions and needs arise. Here is a list of some of the wrapper functions you will likely be using frequently. Refer to the API documentation of the [Selection](../api/classes/Selection.html) class for a full list of wrapper methods.
+Anu provides wrapper methods for quickly modifying commonly used properties of [nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node). These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon functions. We will continue to add wrapper methods as suggestions and needs arise. Here is a list of some of the wrapper functions you will likely be using frequently. Refer to the API documentation of the [Selection](../api/classes/Selection.html) class for a full list of wrapper methods.
 
-| Wrapper Method | Babylon Property | Type 
+| Wrapper Method | Babylon Property | Type
 | ----------- | ----------- | ----------- |
 | [name()](../api/classes/Selection.html#name)     | [node.name](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#name) | string
 | [id()](../api/classes/Selection.html#id)   | [node.id](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#id) | string
@@ -83,12 +83,12 @@ We are not limited to only modifying the properties with wrapper methods. We can
 let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
-spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // type vector3(x,y,z)
-        .prop('scaling.x', 0.1) // type int
-        .prop('name', (d,n,i) => "iris_sphere:" + i) // type string
-        .prop('renderOutline', true);
+spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // Vector3
+        .prop("scaling.x", 0.1) // Number
+        .prop("name", (d,n,i) => "iris_sphere:" + i) // String
+        .prop("renderOutline", true);
 ```
-::: 
+:::
 
 <inlineView scene="prop" />
 
@@ -103,16 +103,16 @@ let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', {diameter: 1}, iris);
 
 spheres.props({"position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth),
-                'scaling.x': 0.1,
-                'name': (d,n,i) => "iris_sphere:" + i,
-                'renderOutline': true});
+                "scaling.x": 0.1,
+                "name": (d,n,i) => "iris_sphere:" + i,
+                "renderOutline": true});
 ```
-::: 
+:::
 
 <inlineView scene="props" />
 
 ## Putting It All Together
 
-If you have been following this guide in order, you now should know how we can use data and Anu to create, select, and manipulate nodes in the Babylon scene graph. It may not seem like it, but this is all we need to start building immersive data visualizations! In the next section, we will walk through step by step how to make a basic data visualization with Anu. 
+If you have been following this guide in order, you now should know how we can use data and Anu to create, select, and manipulate nodes in the Babylon scene graph. It may not seem like it, but this is all we need to start building immersive data visualizations! In the next section, we will walk through step by step how to make a basic data visualization with Anu.
 
 </multiView>

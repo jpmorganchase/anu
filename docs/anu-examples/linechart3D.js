@@ -18,6 +18,8 @@ export function linechart3D(babylonEngine) {
     new Vector3(0, 0, 0),
     scene
   );
+  camera.wheelPrecision = 20;
+  camera.minZ = 0;
   camera.attachControl(true);
   camera.position = new Vector3(5,0,-6);
 
@@ -28,7 +30,7 @@ export function linechart3D(babylonEngine) {
     var parseTime = d3.timeParse("%m/%d/%Y");
     var dateFormat = d3.timeFormat("%y");
     let dates = data.map((d) => parseTime(d.Date))
-  
+
     var scaleX = d3.scaleTime().domain(d3.extent(dates)).range([-3, 3]);
     var scaleY = d3.scaleLinear().domain([0, 9]).range([-1, 1]).nice();
     var scaleZ = d3.scalePoint().domain(years).range([-2, 2]);
@@ -45,7 +47,7 @@ export function linechart3D(babylonEngine) {
     })
 
     const options = {
-      pathArray: myPaths2, 
+      pathArray: myPaths2,
       updatable: true,
       sideOrientation: Mesh.DOUBLESIDE,
     };
@@ -61,7 +63,7 @@ export function linechart3D(babylonEngine) {
       colors = [];
 
     var positions = ribbon.getVerticesData(VertexBuffer.PositionKind);
-      
+
     for (var p = 0; p < positions.length; p+=3) {
       var color = scaleC(positions[p + 1])
         .substring(4, scaleC(positions[p + 1]).length - 1)
@@ -73,7 +75,7 @@ export function linechart3D(babylonEngine) {
     }
 
     ribbon.setVerticesData(VertexBuffer.ColorKind, colors);
-    ribbon.isPickable = false; //mesh geometry is complex turning off picking is recommended for performance. 
+    ribbon.isPickable = false; //mesh geometry is complex turning off picking is recommended for performance.
 
     anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
                                     scale: {x: scaleX, y: scaleY, z: scaleZ},
@@ -94,12 +96,12 @@ export function linechart3D(babylonEngine) {
       .bind("lineSystem", { lines: myPaths2 })
       .attr("color", new Color3(1, 1, 1))
       .prop("alpha", 0.5);
-  
+
     let  blackOutline = anu
       .select("#cot", scene)
       .bind("lines", { points: myPaths2[0]})
       .attr("color", new Color3(0, 0, 0));
-   
-                                  
+
+
   return scene;
 }

@@ -6,14 +6,15 @@ import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Mesh, TransformNode}
 
 //create and export a function that takes a babylon engine and returns a scene
 export const box = async function(engine){
-    
-  const scene = new Scene(engine)
 
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+  const scene = new Scene(engine);
+
+  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.attachControl(true)
+  camera.wheelPrecision = 12;
+  camera.attachControl(true);
 
   let box = anu.create('box', 'ourBox', {size: 2}, [{count: 2}]);
   return scene;
-}; 
+};

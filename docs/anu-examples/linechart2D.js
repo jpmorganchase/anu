@@ -18,20 +18,22 @@ export function linechart2D(babylonEngine) {
     new Vector3(0, 0, 0),
     scene
   );
+  camera.wheelPrecision = 20;
+  camera.minZ = 0;
   camera.attachControl(true);
   camera.position = new Vector3(3,0,-6);
 
 
   let CoT = new TransformNode("cot");
 
- 
+
 
     let years = ["1 Yr", "2 Yr", "3 Yr", "5 Yr", "7 Yr", "10 Yr"];
 
     var parseTime = timeParse("%m/%d/%Y");
     var dateFormat = timeFormat("%y");
     let dates = data.map((d) => parseTime(d.Date))
-  
+
     var scaleX = scaleTime().domain(extent(dates)).range([-2, 2]);
     var scaleY = scaleLinear().domain([0, 9]).range([-1, 1]).nice();
     var scaleC = scaleSequential(interpolateBlues).domain([1, -1]);
@@ -46,7 +48,7 @@ export function linechart2D(babylonEngine) {
     })
 
     const options = {
-      pathArray: myPaths2, 
+      pathArray: myPaths2,
       updatable: true,
       sideOrientation: Mesh.DOUBLESIDE,
     };
@@ -70,7 +72,7 @@ export function linechart2D(babylonEngine) {
                     }}
                   }
     });
-      
- 
+
+
   return scene;
 }
