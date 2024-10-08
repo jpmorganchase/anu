@@ -10,6 +10,9 @@ export default defineConfig({
   description: "Immersive Visualizations with Data Drive Babylon",
   themeConfig: {
     logo: '/assets/anu.svg',
+    editLink: {
+      pattern: 'https://github.com/jpmorganchase/anu/tree/main/docs/:path'
+    },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/guide/' },
