@@ -7,12 +7,13 @@ import iris from './data/iris.json' assert {type: 'json'};
 
 //create and export a function that takes a babylon engine and returns a scene
 export const props = function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(6, 3, 1), scene);
+  camera.wheelPrecision = 12;
   camera.attachControl(true)
   camera.position = new Vector3(-5,-2,-1)
 
@@ -27,4 +28,4 @@ export const props = function(engine){
                 'renderOutline': true});
 
   return scene;
-}; 
+};

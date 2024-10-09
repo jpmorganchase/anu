@@ -8,7 +8,7 @@ import iris from './data/iris.json' assert {type: 'json'};
 //create and export a function that takes a babylon engine and returns a scene
 
 export const cotBind = function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
@@ -16,7 +16,7 @@ export const cotBind = function(engine){
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
 
-  //Use a top level bind to create a Selection containing 
+  //Use a top level bind to create a Selection containing
   //a single TransformNode 'cot' aka Center of Transform.
   //By default the name and ID of a node will be the mesh type
   //In this case "cot"
@@ -29,9 +29,9 @@ export const cotBind = function(engine){
 
   // Inspector.Show(scene, {
   //   embedMode: true,
-  //   showInspector: false
+  //   showInspector: true
   // });
- 
+
   return scene;
-  
-}; 
+
+};

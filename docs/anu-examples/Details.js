@@ -1,4 +1,4 @@
-//Import everything we need to create our babylon scene and write our visualization code. 
+//Import everything we need to create our babylon scene and write our visualization code.
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import cars from './data/cars.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core';
@@ -14,8 +14,10 @@ export function details(engine) {
     //Add some lighting (name, position, scene)
     new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
-    //Add a camera that rotates around the origin 
+    //Add a camera that rotates around the origin
     const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+    camera.wheelPrecision = 20;
+    camera.minZ = 0;
     camera.attachControl(true)
     camera.position = new Vector3(2, 2, -3.5);
 
@@ -50,7 +52,7 @@ export function details(engine) {
     UIBackground.background = "White";
     advancedTexture.addControl(UIBackground);
 
-    //Create empty text block 
+    //Create empty text block
     let label = new TextBlock();
     label.paddingLeftInPixels = 25;
     label.paddingRightInPixels = 25;
@@ -70,7 +72,7 @@ export function details(engine) {
         .positionY((d) => scaleY(d['Horsepower']))
         .positionZ((d) => scaleZ(d['Acceleration']))
         .material((d) => scaleC(d['Origin']))
-        //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped. 
+        //Babylon use an action system to trigger events form interacting with meshes, this is a simple example to show a hover interaction. grow when hover and shrink when stopped.
         .action((d,n,i) => new ExecuteCodeAction( //A flexible action that executes a function after the trigger
             ActionManager.OnPointerOverTrigger,
             () => {
@@ -80,7 +82,7 @@ export function details(engine) {
                 hoverPlane.isVisible = true; //unhide mesh
             }
         ))
-        .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse 
+        .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse
             ActionManager.OnPointerOutTrigger,
             () => {
                 highlighter.removeMesh(n);
