@@ -1,87 +1,86 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Scene, Color4, HemisphericLight, ArcRotateCamera } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
-import data from './data/airports.csv'
+import * as d3 from "d3";
+import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Color4 } from '@babylonjs/core';
+import data from './data/airports.csv'; //Our data
 
-export function textureMap(babylonEngine){
-  const scene = new Scene(babylonEngine);
+//Create and export a function that takes a Babylon engine and returns a Babylon Scene
+export function textureMap(engine){
+
+  //Create an empty Scene
+  const scene = new Scene(engine);
+
   //Add some lighting
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
-  //Add a camera that rotates around the origin
+  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
+
+  //Add a camera that rotates around the origin and adjust its properties
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.wheelPrecision = 30;
-  camera.minZ = 0;
-  camera.attachControl(true)
-  camera.position = new Vector3(0, 3, -0.25)
+  camera.wheelPrecision = 30; // Adjust the sensitivity of the mouse wheel's zooming
+  camera.minZ = 0;            // Adjust the distance of the camera's near plane
+  camera.attachControl(true); // Allow the camera to respond to user controls
+  camera.position = new Vector3(0, 3, -0.25);
 
-  //Use D3 to read in our csv data
-    //Our data has over 3000 points so we will use mesh instancing for better performance
-    //To do this we must first create a mesh to be our root and register a buffer for color
-    let rootSphere = anu.create('sphere', 'sphere', {diameter: 0.2})
-    rootSphere.isVisible = false;
-    rootSphere.registerInstancedBuffer("color", 4);
-    rootSphere.instancedBuffers.color = new Color4(1,1,1,1)
+  //createTextureMap() is an Anu prefab that easily allows us to create a plane with an OpenLayers map canvas as the texture
+  let textureMap = anu.createTextureMap('map');
 
-    //Using the texture map prefab we create a plane with a canvas OL map set as the texture
-    let textureMap = anu.createTextureMap('map');
-    //Keyboard controls WASD and -+ can be enabled on the prefab
-    textureMap.keyboardControls(scene);
+  //Get the OpenLayers map object from the prefab
+  let map = textureMap.map;
 
+  //Change the view parameters of the map to focus on the US
+  map.getView().setCenter([-100, 40]);
+  map.getView().setZoom(5);
 
+  //Turn on keyboard controls on the TextureMap prefab, uses WASD and -+
+  //Due to a technical quirk, this function must be called *after* setting the center and zoom of the view
+  textureMap.keyboardControls(scene);
 
-    //The prefab generated our scales for us
-    //The take [Lon, Lat] as input and return a x, y pixel coordinate.
-    let scaleLon = textureMap.scaleLon;
-    let scaleLat = textureMap.scaleLat;
+  //The prefab also generates scale functions for us
+  //This allows us to convert longitude and latitude into their respective positions in the plane's local coordinate space in Babylon
+  let scaleLon = textureMap.scaleLon;
+  let scaleLat = textureMap.scaleLat;
 
-    //Grab the open layer map object
-    let map = textureMap.map;
+  //Because our data has over 3000 points, we will use mesh instancing for better performance
+  //Create a mesh to be our root instance, and register a buffer for color
+  let rootSphere = anu.create('sphere', 'sphere', { diameter: 0.25 });
+  rootSphere.isVisible = false;
+  rootSphere.registerInstancedBuffer("color", 4);
+  rootSphere.instancedBuffers.color = new Color4(0, 0, 0, 1);   //Placeholder color, will be overwritten later
 
-    //Change the ciew params of the map
-    map.getView().setCenter([-100, 40]);
-    map.getView().setZoom(5)
+  //Create our D3 color scale to assign colors to each data point depending on the US state they are in
+  let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
 
+  //Our map can be panned using WASD and -+ controls
+  //Therefore, we need a helper function to determine if a data point is visible on the map or not
+  let bounds = function (mesh) {
+    //We use the bounding box of the plane mesh as our boundary for testing if a point is inside or outside of it
+    let parentBoundingBox = textureMap.mesh.getBoundingInfo().boundingBox;
 
-    //Helper function to determine if a mesh will be rendered inside the map plane or not
-    let bounds = function(mesh){
-      let parentBoundingBox = textureMap.mesh.getBoundingInfo().boundingBox;
+    return !(mesh.position.x > parentBoundingBox.maximum.x ||
+             mesh.position.x < parentBoundingBox.minimum.x ||
+             mesh.position.z > parentBoundingBox.maximum.z ||
+             mesh.position.z < parentBoundingBox.minimum.z);
+  }
 
-      if (mesh.position.x > parentBoundingBox.maximum.x ||
-          mesh.position.x < parentBoundingBox.minimum.x ||
-          mesh.position.z > parentBoundingBox.maximum.z ||
-          mesh.position.z < parentBoundingBox.minimum.z)
-      {
-        return false
-      }
-      else
-      {
-        return true
-      }
-    }
+  //Make an Anu selection of our map for it to serve as our CoT
+  let CoT = anu.selectName('map', scene);
 
-    //Select a cot for our spheres
-    let cot = anu.selectName('map', scene);
+  //Create our spheres for our data
+  let spheres = CoT.bindInstance(rootSphere, data)
+    .setInstancedBuffer("color", new Color4(0, 0, 0, 1));
 
+  //We want the spheres to updates whenever the map is panned and zoomed
+  //Therefore we use OpenLayers' events to update our spheres after the map has finished rendering (postrender)
+  map.on("postrender", () => {
+    spheres.positionX((d) => scaleLon([d.longitude, d.latitude]))  //These scale functions need to be pased both the longitude and latitude in an array
+           .positionZ((d) => scaleLat([d.longitude, d.latitude]))  //This is a requirement from the OpenLayers API
+           .setInstancedBuffer("color", (d) => scaleC(d.state))
+           .prop("isVisible", (d,n,i) => bounds(n))   //Our function from before to determine if the point should be visible or not
+  });
 
-
-    textureMap.scaling = new Vector3(0.05,0.05,0.05)
-
-
-
-    //Use binInstace to create an instance of root sphere for each data point
-    //set our color instance buffer Color4 to black
-    let spheres =  cot.bindInstance(rootSphere, data)
-                      .setInstancedBuffer("color", new Color4(0,0,0,1))
-
-    //Using a ol map listener update the sphere position based on the current map position and zoom
-    //Set spheres outside the map plane area to be invisible
-    map.on("postrender", function () {
-        spheres.positionX((d) =>  scaleLon([d.longitude, d.latitude]))
-                .positionZ((d) => scaleLat([d.longitude, d.latitude]))
-                .prop("isVisible", (d,m,i) => bounds(m))
-    });
+  //Rescale the map to make it easier to see
+  textureMap.scaling = new Vector3(0.05, 0.05, 0.05);
 
   return scene;
 }

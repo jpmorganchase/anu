@@ -1,6 +1,9 @@
-import * as anu from '@jpmorganchase/anu' 
-import iris from './data/iris.json' assert {type: 'json'}; 
-import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core'; 
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import * as anu from '@jpmorganchase/anu'
+import iris from './data/iris.json' assert {type: 'json'};
+import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, ExecuteCodeAction, HighlightLayer, Color3} from '@babylonjs/core';
 import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
 import { AdvancedDynamicTexture, Rectangle, TextBlock} from '@babylonjs/gui'
 
@@ -12,12 +15,12 @@ export const fig1a = function(engine){
   camera.attachControl(true)
   camera.position = new Vector3(2,0,-5.5);
 
-  var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice(); 
-  var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice(); 
-  var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-1,1]).nice(); 
+  var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice();
+  var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice();
+  var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-1,1]).nice();
 
   var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
-  
+
   let CoT = anu.create("cot", "center", {}, {});
 
   let chart = anu.selectName('center', scene);
@@ -41,7 +44,7 @@ export const fig1a = function(engine){
   UIBackground.background = "White";
   advancedTexture.addControl(UIBackground);
 
-  //Create empty text block 
+  //Create empty text block
   let label = new TextBlock();
   label.paddingLeftInPixels = 25;
   label.paddingRightInPixels = 25;
@@ -55,10 +58,10 @@ export const fig1a = function(engine){
   //Set billboard mode to always face camera
   hoverPlane.billboardMode = 7;
 
-  let spheres = chart.bind('sphere', {diameter: 0.05}, iris) 
-    .positionX((d) => scaleX(d.sepalLength)) 
-    .positionY((d) => scaleY(d.petalLength)) 
-    .positionZ((d) => scaleZ(d.sepalWidth)) 
+  let spheres = chart.bind('sphere', {diameter: 0.05}, iris)
+    .positionX((d) => scaleX(d.sepalLength))
+    .positionY((d) => scaleY(d.petalLength))
+    .positionZ((d) => scaleZ(d.sepalWidth))
     .material((d,m,i) => scaleC(d.species))
     .action((d,n,i) => new ExecuteCodeAction( //A flexible action that executes a function after the trigger
     ActionManager.OnPointerOverTrigger,
@@ -69,7 +72,7 @@ export const fig1a = function(engine){
         hoverPlane.isVisible = true; //unhide mesh
     }
     ))
-    .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse 
+    .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse
         ActionManager.OnPointerOutTrigger,
         () => {
             highlighter.removeMesh(n);
@@ -77,7 +80,7 @@ export const fig1a = function(engine){
             label.text = " ";
         }
     ))
-        
+
     anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
     chart.positionUI()
@@ -86,8 +89,8 @@ export const fig1a = function(engine){
 
 
     return scene;
-    
+
 };
-  
+
 
 

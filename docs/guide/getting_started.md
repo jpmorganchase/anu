@@ -69,7 +69,7 @@ Then import the anu name space
 import * as anu from '@jpmorganchase/anu';
 ```
 
-You can now call anu methods as such
+You can now call Anu methods as such
 
 ```js
 //shape, name, options, data, scene

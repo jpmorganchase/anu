@@ -1,4 +1,7 @@
-import { Vector3, Scene,  HemisphericLight, ArcRotateCamera, TransformNode, Space } from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, TransformNode, Space } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import data from './data/obesity.json'
 import pop from './data/population_engineers_hurricanes.csv'
@@ -11,13 +14,13 @@ export function fig1b(babylonEngine){
   //Add some lighting
   let light = new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
   light.intensity = 1.3;
-  //Add a camera that rotates around the origin 
+  //Add a camera that rotates around the origin
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
   camera.position = new Vector3(0, 2.5, -2)
 
   let ParentObj = new TransformNode("ParentObj");
-  
+
   let map = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.01, projection: d3.geoAlbers().reflectY(true), size: [6,6], simplification: 0.00001});
 
   let states = map.selection;
@@ -36,7 +39,7 @@ export function fig1b(babylonEngine){
   })
 
   let map2 = anu.createMeshMap('test', {geoJson: geoJ, depth: 0.001, projection: d3.geoAlbers().reflectY(true), size: [6,6], simplification: 0.00001});
-  
+
   let states2 = map2.selection;
 
   states2.material((d,n,i) => {
@@ -48,9 +51,9 @@ export function fig1b(babylonEngine){
     let barScaleY = d3.scaleLinear().domain([0, 50000000]).range([0,1]).nice();
 
     //Create and select a transform node to be our parent
-    
+
     let chart = anu.bind('cot');
-    
+
     //Bind boxes to our rolled-up data, position, scale, and color with our scales
     let bars = chart.bind('plane', {height: 1, width: 0.03, sideOrientation:2}, pop)
                     .positionX((d) => barScaleX(d.state))
@@ -61,7 +64,7 @@ export function fig1b(babylonEngine){
                         let stateData = data.find(x => x.id == d["id"]) ?? {rate: 0}
                         return scaleC(stateData.rate);
                       });
-                   
+
 
     for (const tm of scene.transformNodes) {
       if (tm.name == 'meshMapCOT') {
@@ -83,7 +86,7 @@ export function fig1b(babylonEngine){
   let root = anu.selectName("ParentObj", scene);
 
   root.rotateUI({axis: {x: true}, position: new Vector3(0, 0, 0), billboard: 2});
-  
+
   ParentObj.onAfterWorldMatrixUpdateObservable.add(() => {
     console.log("interacting");
 

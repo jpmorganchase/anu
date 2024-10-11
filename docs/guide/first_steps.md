@@ -9,7 +9,7 @@
 Anu provides several methods for dynamically manipulating the Babylon scene graph by creating meshes, updating properties, and more. Let's start with the absolute basics, adding a box mesh to our scene, and manipulating its properties with some data. Then, we will learn how create and change several meshes at onces with data.
 
 ## Add a Box
-In this example, you can see how anu's create() function adds a mesh to the scene and returns the mesh. While we can use Babylon's MeshBuilder to achieve the same thing, create() is largely meant to be an internal function used for other anu methods. However, notice [create()](../api/modules.html#create) can take an optional argument "data".
+In this example, you can see how Anu's create() function adds a mesh to the scene and returns the mesh. While we can use Babylon's MeshBuilder to achieve the same thing, create() is largely meant to be an internal function used for other Anu methods. However, notice [create()](../api/modules.html#create) can take an optional argument "data".
 When passed, the data object is appended to our mesh's metadata property and allows us to use this data to dynamically manipulate the mesh.
 
 ::: code-group

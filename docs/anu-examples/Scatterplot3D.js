@@ -1,61 +1,56 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-//Import everything we need to create our babylon scene and write our visualization code.
-import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
-import iris from './data/iris.json' assert {type: 'json'}; //Our data
-import {HemisphericLight, Vector3, Scene, ArcRotateCamera, ActionManager, InterpolateValueAction } from '@babylonjs/core';
-import {extent, scaleOrdinal, scaleLinear, map,} from "d3";
+import * as anu from '@jpmorganchase/anu';
+import * as d3 from "d3";
+import { Scene, HemisphericLight, ArcRotateCamera, Vector3 } from '@babylonjs/core';
+import iris from './data/iris.json' assert {type: 'json'};  //Our data
 
-//import { Mesh } from 'anu';
-
-//create and export a function that takes a babylon engine and returns a scene
+//Create and export a function that takes a Babylon engine and returns a Babylon Scene
 export function scatterplot3D(engine){
 
-  //Create an empty scene
-  const scene = new Scene(engine)
+  //Create an empty Scene
+  const scene = new Scene(engine);
 
-  //Add some lighting (name, position, scene)
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+  //Add some lighting
+  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
 
-  //Add a camera that rotates around the origin
+  //Add a camera that rotates around the origin and adjust its properties
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.wheelPrecision = 20;
-  camera.minZ = 0;
-  camera.attachControl(true)
-  camera.position = new Vector3(2,2,-3.5);
+  camera.wheelPrecision = 20; // Adjust the sensitivity of the mouse wheel's zooming
+  camera.minZ = 0;            // Adjust the distance of the camera's near plane
+  camera.attachControl(true); // Allow the camera to respond to user controls
+  camera.position = new Vector3(2, 2, -3.5);
 
-  //Create the functions that we will use to scale our data according to our desired dimensions. In this case we want to scale the position of our points.
-  //These functions will take a number and scale it between -10 and 10. calling .nice() adds some padding at the beginning and end
-  var scaleX = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
-  var scaleY = scaleLinear().domain(extent(map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice(); //
-  var scaleZ = scaleLinear().domain(extent(map(iris, (d) => {return d.sepalWidth}))).range([-1,1]).nice(); //Same as X for our Y and Z dimensions
+  //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
+  //In this case, we create scale functions that correspond to the x, y, and z positions
+  //nice() adds some padding to both ends of the scale
+  let scaleX = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice();
+  let scaleY = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice();
+  let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.sepalWidth}))).range([-1,1]).nice();
 
-  //This is a function that will create a color scale for our three types of flowers in our data
-  //pass in the flower name and it will return the hex of its color coding. schemecategory10 is an array of 10 color hexes
-  var scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
+  //We also create a scale function for the three types of flowers in our iris dataset
+  //ordinalChromatic() is an Anu helper function to create an array of hex colors, 'd310' specifies this to be schemecategory10 from D3
+  //toStandardMaterial() is an Anu helper function to convert an array of hex colors to their respective StandardMaterial from Babylon
+  let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial());
 
-  //Create a transform node to use as the parent node for all our meshes
+  //Create a Center of Transform TransformNode using create() that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create("cot", "cot");
 
-  //Select our center or transform with Anu to give us a selection obj CoT.
-  let chart = anu.selectName('cot', scene);
+  //We need to make an Anu Selection separately, as create() does not return a Section but the created Babylon TransformNode
+  let chart = anu.selectName("cot", scene);
 
-  //This series of chained methods will create our visualization
-  //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
-  let spheres = chart.bind('sphere', {diameter: 0.05}, iris)
-    .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
-    .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
-    .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int
-    .material((d) => scaleC(d.species))
+  //Create sphere meshes for each row of our data and set their visual encodings using method chaining
+  //These spheres are created as children of the CoT due to chart.bind()
+  //Remember that in this case, 'CoT' is the Babylon TransformNode and 'chart' is the Anu Selection
+  let spheres = chart.bind('sphere', { diameter: 0.05 }, iris)
+                     .positionX((d) => scaleX(d.sepalLength))
+                     .positionY((d) => scaleY(d.petalLength))
+                     .positionZ((d) => scaleZ(d.sepalWidth))
+                     .material((d) => scaleC(d.species))   //We set the material to change the spheres' color as our scaleC() was configured to return a StandardMaterial
 
+  //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
+  anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
-
-
-    return scene;
-
-  };
-
-
-
+  return scene;
+};
