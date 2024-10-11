@@ -55,7 +55,7 @@ layout: page
 
 <card title="Details On Demand" example="Details" link="/anu/examples/details"></card>
 
-<card title="Facet and Position" example="FacetPosition" link="/anu/examples/facet_position"></card>
+<card title="Transform Widget UI" example="TransformWidget" link="/anu/examples/transform_widget_ui"></card>
 
 <card title="Layouts" example="layout" link="/anu/examples/layout"></card>
 
@@ -109,11 +109,11 @@ h4 {
     margin-top: 5vh;
     margin-left: 10vw;
     margin-right: 10vw;
-    
+
 }
 
 .section {
-    margin-top: 30px; 
+    margin-top: 30px;
 }
 
  .cards {
@@ -127,7 +127,7 @@ h4 {
   .cards canvas {
     margin: 5px;
     border: 1px solid #000;
-    box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.3); 
+    box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.3);
     width: 10em;
     height: 10em;
   }

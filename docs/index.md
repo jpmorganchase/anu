@@ -20,11 +20,11 @@ hero:
 features:
   - title: Data Binding
     details: Use D3 style data binding patterns to create, select, and manipulate meshes in the Babylon scene graph.
-  - title: Pre-fabs
+  - title: Prefabs
     details: Pre-fabricated 3D elements useful for quickly creating visualizations such as axes, text, maps and globes, etc.
   - title: Interaction
     details: Quickly add XR spatial interactions to create dynamic data visualizations, animations, and more.
---- 
+---
 
 
 

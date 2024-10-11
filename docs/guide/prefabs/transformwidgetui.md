@@ -4,19 +4,18 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { facetPosition } from  "../../anu-examples/FacetPosition.js"
+  import { transformWidget } from  "../../anu-examples/TransformWidget.js"
 </script>
 
-# Facet & Position UI
+# Transform Widget UI
 
-## Overview 
-The Facet & Position UI prefab allows you to quickly attach position, rotation, and scale UI to elements in a selection. These prefabs use pointer down and out events and pointer behaviors to perform the interaction. The mesh based UI and behavior can be customized through the method options, or after creation via selection. We use pointer based interactions as it better supports multiple platforms and one handed interaction for better accessability. These methods are members of the Selection class and will create a UI for each node in a selection. As such, its recommended to call from root node selections
+## Overview
+The Transform Widget UI prefab allows you to quickly attach 3D UI widgets for manipulating position, rotation, and scale to elements in a selection. These prefabs use pointer down and out events and pointer behaviors to perform the interaction. The mesh based UI and behavior can be customized through the method options, or after creation via selection. We use pointer based interactions as it better supports multiple platforms and one handed interaction for better accessability. These methods are members of the Selection class and will create a UI for each node in a selection. As such, it is recommended to call the prefab functions from root node selections.
 
-## Usage 
+## Usage
 
 ```js
-
-let root = anu.bind("cot") // returns selections of one transform node
+let root = anu.bind("cot") //Returns a selection of the single root transform node
 
 root.positionUI(options?: {})
     .rotateUI(options?: {})
@@ -25,7 +24,7 @@ root.positionUI(options?: {})
 
 ## Options
 
-### Position UI
+### Position Widget UI
 
 | Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
@@ -40,12 +39,12 @@ root.positionUI(options?: {})
 | behavior | (SixDofDragBehavior) the behavior attached to the parent node | SixDofDragBehavior forceCameraOnDragStart=true rotateAroundYOnly=true |
 | billboard | (number) the billboard mode setting for the parent mesh | 0 |
 
-### Rotation UI
+### Rotation Widget UI
 
  Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
 | name | (string) name prefix for UI and UI parent | node.name + "RotationUI" |
-| axis | ({x | y | z: boolean}) the axis to generate UI for  | {x: true, y: true, z: true} |
+| axis | ({x | y | z: boolean}) the axis to generate UI for | {x: true, y: true, z: true} |
 | diameter | (number) the diameter of the torus mesh | 5% the width of the parent node bounding box |
 | thickness | (number) the thickness of the torus mesh | half the diameter |
 | position | (Vector3) the starting position of the capsule mesh | bottom front position of the parent node bounding box |
@@ -55,7 +54,7 @@ root.positionUI(options?: {})
 | visibility | (number) the visibility of the torus 0-1 | 1 |
 | billboard | (number) the billboard mode setting for the parent mesh | 0 |
 
-### Scale UI
+### Scale Widget UI
 
  Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
@@ -73,9 +72,9 @@ root.positionUI(options?: {})
 
 ## Examples
 
-<singleView :scene="facetPosition" />
+<singleView :scene="transformWidget" />
 
 ::: code-group
-<<< @/./anu-examples/FacetPosition.js 
+<<< @/./anu-examples/TransformWidget.js
 :::
 

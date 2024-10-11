@@ -7,7 +7,7 @@
 
 # Using Selections
 
-Selections are the core of the anu workflow. A [Selection](../api/classes/Selection.md) is a JavaScript object that is comprised of a list of [nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) in the Babylon scene graph, the Scene object containing those nodes, and several methods for selecting, creating, manipulating, or retrieving values and properties from nodes in the Babylon scene graph.
+Selections are the core of the Anu workflow. A [Selection](../api/classes/Selection.md) is a JavaScript object that is comprised of a list of [nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) in the Babylon scene graph, the Scene object containing those nodes, and several methods for selecting, creating, manipulating, or retrieving values and properties from nodes in the Babylon scene graph.
 
 ## Manually Creating a Selection
 

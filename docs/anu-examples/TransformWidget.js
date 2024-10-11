@@ -6,7 +6,7 @@ import * as d3 from "d3";
 import { Scene, HemisphericLight, ArcRotateCamera, Vector3, ActionManager, InterpolateValueAction } from '@babylonjs/core';
 import iris from './data/iris.json' assert {type: 'json'};  //Our data
 
-export function facetPosition(engine) {
+export function transformWidget(engine) {
 
   //Setup basic Babylon variables
   const scene = new Scene(engine);

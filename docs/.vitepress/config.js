@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress';
-import dsv from '@rollup/plugin-dsv' 
+import dsv from '@rollup/plugin-dsv'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
 // https://vitepress.dev/reference/site-config
@@ -22,7 +22,7 @@ export default defineConfig({
     ],
 
     sidebar: {
-    
+
     "/guide/": [
       {
         text: 'Introduction',
@@ -58,13 +58,13 @@ export default defineConfig({
             { text: 'Color Scales', link: '/guide/prefabs/chromatic.md'},
             { text: 'Texture Maps', link: '/guide/prefabs/texturemaps.md'},
             { text: 'Mesh Map', link: '/guide/prefabs/meshmap.md'},
-            { text: 'Facet & Position UI', link: "/guide/prefabs/facetpositionui.md"},
+            { text: 'Transform Widget UI', link: "/guide/prefabs/transformwidgetui.md"},
             //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
             //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
             { text: 'Layout', link: '/guide/prefabs/layout.md' },
             ]
           },
-         
+
         ]
       },
       // {
@@ -125,7 +125,7 @@ export default defineConfig({
         items: [
           { text: 'Pointer Hover', link: './hover' },
           { text: 'Details on Demand', link: './details' },
-          { text: 'Facet and Position', link: './facet_position' },
+          { text: 'Transform Widget UI', link: './transform_widget_ui' },
           { text: 'Layouts', link: './layout' },
         ]
       },
@@ -150,7 +150,7 @@ export default defineConfig({
         rollupOptions: {
           external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
         },
-        
+
         // server: {
         //     // watch: {
         //     //     followSymlinks: false,
@@ -163,7 +163,7 @@ export default defineConfig({
         plugins: [
             dsv(),
             dynamicImport(),
-         
+
           // {configureServer(server) {
           //         server.middlewares.use((_req, res, next) => {
           //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
