@@ -1,9 +1,19 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
+//import { Mesh, MeshBuilder, TransformNode, Scene, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
+
+import { Scene } from '@babylonjs/core/scene';
+import { Mesh } from '@babylonjs/core/Meshes/mesh';
+import { MeshBuilder } from '@babylonjs/core';
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder';
+import {CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core/Meshes/Builders/greasedLineBuilder';
+import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
+import { ActionManager } from '@babylonjs/core/Actions/actionManager';
+import { Tags } from '@babylonjs/core/Misc/tags';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { createContainer } from './prefabs/Misc/container';
+//import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
 interface StringByFunc {
   [key: string]: Function;
@@ -113,8 +123,12 @@ export function create<MeshType extends keyof MeshTypes>(
     value instanceof Function ? (executedOptions[key] = (value as Function)(data)) : (executedOptions[key] = value);
   }
 
-  let builder: Function = meshList[shape];
-  let mesh = builder(name, executedOptions, scene);
+  console.log(scene)
+
+  //let builder: Function = meshList[shape];
+  let mesh = CreateBox(name, executedOptions, scene);
+  //let mesh = builder(name, executedOptions, scene);
+  console.log(mesh)
   if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(mesh.getScene());
   Tags.EnableFor(mesh);
   mesh.metadata = { ...mesh.metadata, data: data };

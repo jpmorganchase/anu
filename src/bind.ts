@@ -2,6 +2,14 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Node, ActionManager, Tags, Mesh, Scene, InstancedMesh, Matrix } from '@babylonjs/core';
+
+// import { Scene } from '@babylonjs/core/scene';
+// import { Node } from '@babylonjs/core/node';
+// import { Mesh, InstancedMesh } from '@babylonjs/core/Meshes';
+// import { Matrix } from '@babylonjs/core';
+// import { ActionManager } from '@babylonjs/core/Actions/actionManager';
+// import { Tags } from '@babylonjs/core/Misc/tags';
+
 import { Selection } from './index';
 import { create, MeshTypes } from './create';
 
@@ -24,7 +32,7 @@ export function bind<MeshType extends keyof MeshTypes>(shape: MeshType, options?
     var mesh = create(shape, shape, options, element, scene);
     meshes.push(mesh);
   });
-
+  console.log(meshes[0].getScene())
   return new Selection(meshes, meshes[0].getScene());
 }
 
