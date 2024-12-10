@@ -37,6 +37,7 @@ Selection.bind('planeText', options: {}, data: [{}]);
 |   text   | (string) text to be rendered | 'undefined' |
 | size     |   (number) scaling factor to be baked into the vertices    |   1 |
 | opacity |   (number) opacity value between 0 and 1   |    1 |
+| align |    (string) horizontal alignment of the text, either 'left, 'center', or 'right'    |    'center'    |
 | color |   (Color3) color value of the mesh material   |    Color3.White() |
 | font |   (json) json spec of the MSDF text font    |    roboto-standard.json |
 | atlas |   (png) texture atlas of the MSDF text font   |    roboto-standard.png |
