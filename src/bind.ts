@@ -32,7 +32,6 @@ export function bind<MeshType extends keyof MeshTypes>(shape: MeshType, options?
     var mesh = create(shape, shape, options, element, scene);
     meshes.push(mesh);
   });
-  console.log(meshes[0].getScene())
   return new Selection(meshes, meshes[0].getScene());
 }
 

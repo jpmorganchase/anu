@@ -15,6 +15,7 @@
     "@babylonjs/core": "^7.26.2",
     "@babylonjs/gui": "^7.26.2",
     "@babylonjs/inspector": "^7.26.2",
+    "@jpmorganchase/anu": "file:..",
     "d3": "^7.6.1",
     "d3-force-3d": "^3.0.5",
     "simplify-3d": "^1.0.0",

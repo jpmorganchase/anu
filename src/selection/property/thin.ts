@@ -332,7 +332,6 @@ export function thinInstanceScalingFor(this: Selection, method: (d: any, n: Node
             let data = node.metadata.data ??={}
             data.forEach((e, j) => {
                 if (method(e, node, j)) {
-                    console.log('hello')
                     let evaluated = value instanceof Function ? value(e, node, j) : value
                     let previousMatrix = node.thinInstanceGetWorldMatrices()[j];
                     let matrix =  Matrix.ComposeToRef(evaluated, Quaternion.FromRotationMatrix(previousMatrix.getRotationMatrix()), previousMatrix.getTranslation(), previousMatrix)    

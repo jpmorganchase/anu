@@ -1,19 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-//import { Mesh, MeshBuilder, TransformNode, Scene, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
-
-import { Scene } from '@babylonjs/core/scene';
-import { Mesh } from '@babylonjs/core/Meshes/mesh';
-import { MeshBuilder } from '@babylonjs/core';
-import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder';
-import {CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core/Meshes/Builders/greasedLineBuilder';
-import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
-import { ActionManager } from '@babylonjs/core/Actions/actionManager';
-import { Tags } from '@babylonjs/core/Misc/tags';
+import { Mesh, MeshBuilder, TransformNode, Scene, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { createContainer } from './prefabs/Misc/container';
-//import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
 interface StringByFunc {
   [key: string]: Function;
@@ -23,11 +13,11 @@ interface StringByAny {
   [key: string]: any;
 }
 
-function createCOT(name: string, options: object, scene: Scene) {
+function createCOT(name: string, options: object, scene?: Scene) {
   return new TransformNode(name, scene);
 }
 
-function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
+function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene?: Scene){
   return CreateGreasedLine(name, options, {}, scene);
 }
 
@@ -123,12 +113,8 @@ export function create<MeshType extends keyof MeshTypes>(
     value instanceof Function ? (executedOptions[key] = (value as Function)(data)) : (executedOptions[key] = value);
   }
 
-  console.log(scene)
-
-  //let builder: Function = meshList[shape];
-  let mesh = CreateBox(name, executedOptions, scene);
-  //let mesh = builder(name, executedOptions, scene);
-  console.log(mesh)
+  let builder: Function = meshList[shape];
+  let mesh = builder(name, executedOptions, scene);
   if (mesh instanceof Mesh) mesh.actionManager = new ActionManager(mesh.getScene());
   Tags.EnableFor(mesh);
   mesh.metadata = { ...mesh.metadata, data: data };

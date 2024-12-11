@@ -29,7 +29,7 @@ export function labelAlt(
   let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
   let textHeight = scaleMultiplier * 0.025
 
-  console.log(scaleMultiplier,  bounds);
+  //console.log(scaleMultiplier,  bounds);
 
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain

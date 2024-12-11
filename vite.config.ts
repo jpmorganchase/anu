@@ -15,18 +15,17 @@ export default defineConfig({
       fileName: 'anu',
     },
     rollupOptions: {
-      external: ["@babylonjs/core"],
+      external: [
+        "@babylonjs/core",
+        "ol"
+      ],
       output: {
-        globals: (moduleId): any => {
-            moduleId.startsWith("@babylonjs") ? "BABYLON" : undefined;
+        globals: {
+           "@babylonjs/core": "BABYLON",
+           "ol": "ol"
           },
         },
     },
-  },
-  optimizeDeps: {
-    exclude: [
-      "@babylonjs/core"
-    ]
   },
   plugins: [dts({rollupTypes: true}), 
             externalizeDeps(),

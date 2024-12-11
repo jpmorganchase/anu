@@ -27,7 +27,7 @@ export const box_bind = function(engine){
                         {goals: 3, assits: 15, points: 8},
                         {goals: 1, assits: 8, points: 15}
                       ]
-                      ).bind('sphere', )
+                      )
 
   return scene;
   
