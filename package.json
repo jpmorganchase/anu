@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "type": "module",
   "files": [
@@ -30,9 +30,26 @@
     "url": "git@github.com:jpmorganchase/anu.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "David Saffo",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "@babylonjs/core": "5.x || 6.x || 7.x"
+  },
+  "dependencies": {
+    "babylon-msdf-text": "^0.0.4",
+    "chroma-js": "^2.4.2",
+    "d3-geo": "^3.1.1",
+    "d3-geo-projection": "^4.0.0",
+    "d3-scale": "^4.0.2",
+    "earcut": "^2.2.4",
+    "lodash-es": "^4.17.21",
+    "ol": "^7.3.0",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3"
+  },
   "devDependencies": {
+    "@babylonjs/core": "^7.26.2",
     "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
     "@types/earcut": "^2.1.4",
@@ -48,20 +65,7 @@
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.4.3",
     "vite": "^5.2.8",
-    "vite-plugin-dts": "^2.3.0"
-  },
-  "dependencies": {
-    "@babylonjs/core": "^7.26.2",
-    "babylon-msdf-text": "^0.0.4",
-    "chroma-js": "^2.4.2",
-    "d3-geo": "^3.1.1",
-    "d3-geo-projection": "^4.0.0",
-    "d3-scale": "^4.0.2",
-    "earcut": "^2.2.4",
-    "lodash-es": "^4.17.21",
-    "ol": "^7.3.0",
-    "topojson-client": "^3.1.0",
-    "topojson-server": "^3.0.1",
-    "topojson-simplify": "^3.0.3"
+    "vite-plugin-dts": "^2.3.0",
+    "vite-plugin-externalize-deps": "^0.8.0"
   }
 }

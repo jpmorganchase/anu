@@ -1,7 +1,9 @@
 // vite.config.js
+import { rollup } from 'd3';
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts';
+import { externalizeDeps } from "vite-plugin-externalize-deps";
 
 export default defineConfig({
   build: {
@@ -13,15 +15,19 @@ export default defineConfig({
       fileName: 'anu',
     },
     rollupOptions: {
-      external: ["@babylonjs/core"],
+      external: [
+        "@babylonjs/core",
+        "ol"
+      ],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
-          "@babylonjs/core": '@babylonjs/core',
+           "@babylonjs/core": "BABYLON",
+           "ol": "ol"
+          },
         },
     },
   },
-  },
-  plugins: [dts()],
-})
+  plugins: [dts({rollupTypes: true}), 
+            externalizeDeps(),
+          ],
+});

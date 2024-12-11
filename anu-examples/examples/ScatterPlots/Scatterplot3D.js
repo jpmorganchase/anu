@@ -41,7 +41,7 @@ export const scatterplot3D = function(engine){
 
   //This series of chained methods will create our visualization 
   //Using our CoT as a parent we use bind to create sphere meshes for each row of our data
-  let spheres = chart.bind('sphere', {diameter: 0.05}, iris) 
+  let spheres = anu.bind('sphere', {diameter: 0.05}, iris) 
     .positionX((d) => scaleX(d.sepalLength)) //most selection methods can either be passed a raw value, or a function that will return the correct value of the attribute
     .positionY((d) => scaleY(d.petalLength))  //When you pass a function the method will pass the data associated with the mesh as JSON and the index of the data (d,i)
     .positionZ((d) => scaleZ(d.sepalWidth)) //So we create a function that takes param d and since we know the keys of the data can pass d.<key> into our function that returns an int

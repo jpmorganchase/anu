@@ -13,11 +13,11 @@ interface StringByAny {
   [key: string]: any;
 }
 
-function createCOT(name: string, options: object, scene: Scene) {
+function createCOT(name: string, options: object, scene?: Scene) {
   return new TransformNode(name, scene);
 }
 
-function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene: Scene){
+function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene?: Scene){
   return CreateGreasedLine(name, options, {}, scene);
 }
 

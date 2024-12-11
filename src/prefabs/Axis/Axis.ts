@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Texture, TransformNode, Node, Mesh } from '@babylonjs/core';
+import { Texture, TransformNode, Node } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { Selection } from '../../selection';
 import { labelAlt } from './label';
@@ -9,7 +9,6 @@ import { backgroundAlt } from './background';
 import { grid } from './grid';
 import { domain } from './domain';
 import png from '../../assets/roboto-regular.png';
-import { Prefab } from '../Prefab';
 
 interface AxisOptions {
   parent?: Node | Selection;
