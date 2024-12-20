@@ -49,6 +49,7 @@ import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
 import { fig2 } from './examples/Figures/fig2';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
+import { animate } from './examples/Animation/animate';
 
 
 const queryString = window.location.search;
@@ -107,6 +108,7 @@ const scenes = {
   'fig1': fig1,
   'fig2': fig2,
   'scatterplotThinInstance': scatterplotThinInstance,
+  'animate': animate
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

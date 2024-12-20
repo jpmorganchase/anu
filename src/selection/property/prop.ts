@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { TransformNode } from '@babylonjs/core';
+import { TransformNode, Animation } from '@babylonjs/core';
 import { Selection } from '../index';
 import set from 'lodash-es/set';
 import get from 'lodash-es/get';
 import hasIn from 'lodash-es/hasIn';
+import { createTransition } from '../animation/transition';
 
 /**
  * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
@@ -19,7 +20,7 @@ export function attr(this: Selection, accessor: string, value: any) {
   this.selected.forEach((node, i) => {
     node instanceof TransformNode
       ? get(node, accessor) != undefined
-        ? set(node, accessor, value instanceof Function ? value(node.metadata.data, i) : value)
+        ? set(node, accessor, value instanceof Function ? value(node.metadata.data ??= {}, i) : value)
         : console.error(accessor + ' not a property of ' + node)
       : console.warn('Node not a mesh, skipping.');
   });
@@ -34,12 +35,16 @@ export function attr(this: Selection, accessor: string, value: any) {
  * @returns The modified selection
  */
 export function prop(this: Selection, accessor: string, value: any) {
-  this.selected.forEach((node, i) => {
-    hasIn(node, accessor)
-      ? set(node, accessor, value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value)
-      : console.error(accessor + ' not a property of ' + node);
-  });
-  return this;
+  if (this.transition != undefined){
+    createTransition(this, accessor, value);
+  } else {
+    this.selected.forEach((node, i) => {
+      hasIn(node, accessor)
+        ? set(node, accessor, value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value)
+        : console.error(accessor + ' not a property of ' + node);
+    });
+    return this;
+  }
 }
 
 /**

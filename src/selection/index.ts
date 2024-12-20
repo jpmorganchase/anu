@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, Mesh, TransformNode, InstancedMesh } from '@babylonjs/core';
+import { Node, Mesh, TransformNode, InstancedMesh, AbstractMesh, Nullable } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance } from './bind/bind';
@@ -37,6 +37,7 @@ import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinI
   thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
   thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
 } from './property/thin';
+import { TransitionOptions, transition } from './animation/transition';
 
 /*
     The core class of anujs. All functions should return 
@@ -45,12 +46,18 @@ import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinI
     The selection class also exposes all of anus core functions. 
 */
 export class Selection {
-  selected: Node[] | TransformNode[] | Mesh[];
+  selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
+  transitionOptions?: TransitionOptions;
 
-  constructor(nodes: Node[] | TransformNode[] | Mesh[], scene?: Scene) {
+  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene, transitionOptions?: TransitionOptions) {
     this.selected = nodes;
     this.scene = scene;
+    this.transitionOptions = transitionOptions;
+  }
+
+  public setTransitionOptions(options: TransitionOptions){
+    this.transitionOptions = options;
   }
 
   public select = select;
@@ -124,5 +131,6 @@ export class Selection {
   public thinInstanceRotationFor = thinInstanceRotationFor;
   public thinInstanceColorFor = thinInstanceColorFor;
   public bindThinInstance = bindThinInstance;
+  public transition = transition;
 
 }

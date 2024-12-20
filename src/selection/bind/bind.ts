@@ -67,6 +67,7 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
 export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node, i) => {
+    //node.metadata = { ...node.metadata, data: data };
     let instance = mesh.clone(mesh.name + '_' + i, node);
     let matrices = new Float32Array(16 * data.length * 3);
     data.forEach((element, i) => {
