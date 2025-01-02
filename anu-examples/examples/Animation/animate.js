@@ -18,11 +18,12 @@ export const animate = function(engine){
 
   let box = anu.create('box', 'ourBox', {}, [{}]);
 
-  let nodes = anu.bindInstance(box, [...new Array(10)])
+  let nodes = anu.bindInstance(box, [...new Array(1)])
 
-  let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
+  //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
-  boxSelection.positionX((d,n,i) => i)
+  nodes.transition({duration: 10})
+              .positionX((d,n,i) => i + 1)
 
 //let animate = Animation.CreateAndStartAnimation("boxscale", box, "scaling.x", 1, 1, 1.0, 1.5, 0);
 //let animate2 = Animation.CreateAndStartAnimation("boxscale", box, "scaling.y", 1, 1, 1.0, 1.5, 0);

@@ -6,25 +6,16 @@ import hasIn from 'lodash-es/hasIn';
 
 
 export type TransitionOptions = {
-  duration: number;
+  duration?: number;
   delay?: number;
   framePerSecond?: number,
   merge?: Boolean,
   easingFunction?: EasingFunction,
+  loopMode?: number
   onAnimationEnd?: () => void,
   scene?: Scene,
 } 
-| 
-{
-  framePerSecond: number,
-  totalFrame: number,
-  delay?: number;
-  loopMode?: number,
-  merge?: Boolean,
-  easingFunction?: EasingFunction,
-  onAnimationEnd?: () => void,
-  scene?: Scene,
-}
+
 
 
 /**
@@ -35,9 +26,12 @@ export type TransitionOptions = {
  * @returns The modified selection
  */
 export function transition(this: Selection, options: TransitionOptions | ((d: any, n: Node, i: number) => TransitionOptions)){
+  let executedOptions = new Array<TransitionOptions>();
   this.selected.forEach((node, i) => {
-    this.setTransitionOptions(options instanceof Function ? options(node.metadata.data ??= {}, node, i) : options)
+    executedOptions.push(options instanceof Function ? options(node.metadata.data ??= {}, node, i) : options || {})
   });
+  this.setTransitionOptions(executedOptions)
+
 
   return this;
 }
@@ -52,8 +46,14 @@ export function transition(this: Selection, options: TransitionOptions | ((d: an
  */
 export function createTransition(selection: Selection, accessor: string, value: any) {
       selection.selected.forEach((node, i) => {
+        let transitionOptions: TransitionOptions = selection.transitionOptions[i];
+        console.log(transitionOptions)
+        let duration = transitionOptions.duration || 1;
+        let fps: number = transitionOptions.framePerSecond || 30;
+        console.log(fps)
+        let frames: number = fps * duration
         hasIn(node, accessor)
-          ? Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, 1 , 1, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value)
+          ? Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, fps , frames, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value)
           : console.error(accessor + ' not a property of ' + node);
       });
   }

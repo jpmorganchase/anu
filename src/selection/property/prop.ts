@@ -35,7 +35,7 @@ export function attr(this: Selection, accessor: string, value: any) {
  * @returns The modified selection
  */
 export function prop(this: Selection, accessor: string, value: any) {
-  if (this.transition != undefined){
+  if (this.transition !== undefined){
     createTransition(this, accessor, value);
   } else {
     this.selected.forEach((node, i) => {

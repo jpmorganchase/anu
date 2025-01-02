@@ -48,15 +48,15 @@ import { TransitionOptions, transition } from './animation/transition';
 export class Selection {
   selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
-  transitionOptions?: TransitionOptions;
+  transitionOptions?: TransitionOptions[];
 
-  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene, transitionOptions?: TransitionOptions) {
+  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene, transitionOptions?: TransitionOptions[]) {
     this.selected = nodes;
     this.scene = scene;
     this.transitionOptions = transitionOptions;
   }
 
-  public setTransitionOptions(options: TransitionOptions){
+  public setTransitionOptions(options: TransitionOptions[]){
     this.transitionOptions = options;
   }
 
