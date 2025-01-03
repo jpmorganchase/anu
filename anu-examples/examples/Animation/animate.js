@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
-import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Animation, Animatable} from "@babylonjs/core";
+import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Animation, Animatable, CircleEase, BounceEase} from "@babylonjs/core";
 
 //create and export a function that takes a babylon engine and returns a scene
 export const animate = function(engine){
@@ -22,8 +22,12 @@ export const animate = function(engine){
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
-  nodes.transition({duration: 10})
-              .positionX((d,n,i) => i + 1)
+  nodes.transition((d,n,i) => ({duration: 1000, delay: 500, loopMode: 0,  easingFunction: new CircleEase()}))
+              .positionX((d,n,i) => i + 10)
+              .transition()
+              .positionY((d,n,i) => i + 8)
+              
+  console.log(nodes.selected[0].metadata.promise);
 
 //let animate = Animation.CreateAndStartAnimation("boxscale", box, "scaling.x", 1, 1, 1.0, 1.5, 0);
 //let animate2 = Animation.CreateAndStartAnimation("boxscale", box, "scaling.y", 1, 1, 1.0, 1.5, 0);
