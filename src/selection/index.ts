@@ -37,7 +37,7 @@ import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinI
   thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
   thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
 } from './property/thin';
-import { TransitionOptions, transition } from './animation/transition';
+import { TransitionOptions, transition, Transition } from './animation/transition';
 
 /*
     The core class of anujs. All functions should return 
@@ -48,16 +48,17 @@ import { TransitionOptions, transition } from './animation/transition';
 export class Selection {
   selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
-  transitionOptions?: TransitionOptions[];
+  transitions: Transition[];
+ 
 
-  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene, transitionOptions?: TransitionOptions[]) {
+  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
-    this.transitionOptions = transitionOptions;
+    this.transitions = [];
   }
 
-  public setTransitionOptions(options: TransitionOptions[]){
-    this.transitionOptions = options;
+  public updateTransitions(transition: Transition){
+    this.transitions.push(transition);
   }
 
   public select = select;

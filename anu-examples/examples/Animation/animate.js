@@ -22,12 +22,14 @@ export const animate = function(engine){
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
-  nodes.transition((d,n,i) => ({duration: 1000, delay: 500, loopMode: 0,  easingFunction: new CircleEase()}))
+  nodes.transition((d,n,i) => ({duration: 5000, loopMode: 0,  easingFunction: new CircleEase()}))
               .positionX((d,n,i) => i + 10)
               .transition()
-              .positionY((d,n,i) => i + 8)
-              
-  console.log(nodes.selected[0].metadata.promise);
+              .positionY((d, n, i) => i + 10)
+              .transition()
+              .positionZ((d, n, i) => i + 10)
+             
+        
 
 //let animate = Animation.CreateAndStartAnimation("boxscale", box, "scaling.x", 1, 1, 1.0, 1.5, 0);
 //let animate2 = Animation.CreateAndStartAnimation("boxscale", box, "scaling.y", 1, 1, 1.0, 1.5, 0);
