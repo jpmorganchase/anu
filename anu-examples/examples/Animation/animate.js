@@ -22,12 +22,14 @@ export const animate = function(engine){
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
-  nodes.transition((d,n,i) => ({duration: 5000, loopMode: 0,  easingFunction: new CircleEase()}))
+  nodes.transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 2000,  easingFunction: new CircleEase()}))
               .positionX((d,n,i) => i + 10)
               .transition()
               .positionY((d, n, i) => i + 10)
               .transition()
               .positionZ((d, n, i) => i + 10)
+              .transition({sequence: false})
+              .scaling((d, n, i) => new Vector3(4,4,4))
              
         
 

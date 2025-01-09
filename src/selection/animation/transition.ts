@@ -58,7 +58,7 @@ export function transition(this: Selection, options: TransitionOptions | ((d: an
  */
 export function createTransition(selection: Selection, accessor: string, value: any) {
       let sequence = selection.transitions.length - 1; 
-      selection.selected.forEach((node, i) => {
+      selection.selected.forEach(async (node, i) => {
         let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
         let duration = (transitionOptions.duration || 250) / 1000;
         let fps: number = transitionOptions.framePerSecond || 30;
@@ -68,32 +68,13 @@ export function createTransition(selection: Selection, accessor: string, value: 
         let ease: EasingFunction = transitionOptions.easingFunction || undefined;
         let wait: boolean = transitionOptions.sequence ??= true;
         let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
-       
-       
-        if (selection.transitions[Math.max(0, sequence - 1)].animatables.length > 0){
-
-        console.log(accessor, "waiting")
-        selection.transitions[Math.max(0, sequence - 1)].animatables[i].then(() => {
-          console.log(accessor, "start")
-          let animatable = Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, fps , frames, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value, loop, ease, onEnd)
-          let promise: Promise<Animatable> = animatable.waitAsync()
-          selection.transitions[sequence].animatables.push(promise)
-        });
-        } else {
-          console.log(accessor, "no wait")
-          let animatable = Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, fps , frames, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value, loop, ease, onEnd)
-          let promise: Promise<Animatable> = animatable.waitAsync()
-          selection.transitions[sequence].animatables.push(promise)
-        }
-       
-    
-      
-            //console.log(selection.transitions[Math.max(0, sequence - 1)].animatables)
-           
-           
-
-      
-
+        let animatable = Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, fps , frames, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value, loop, ease, onEnd)
+        animatable.pause();
+        let promise: Promise<Animatable> = animatable.waitAsync()
+        selection.transitions[sequence].animatables.push(promise)
+        if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
+        animatable.reset();
+        setTimeout(() => animatable.restart(), delay);
       });
   }
 
