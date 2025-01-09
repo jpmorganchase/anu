@@ -70,10 +70,10 @@ export function createTransition(selection: Selection, accessor: string, value: 
         let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
         let animatable = Animation.CreateAndStartAnimation(node.name + '_animation', node, accessor, fps , frames, get(node, accessor), value instanceof Function ? value(node.metadata.data ??= {}, node, i) : value, loop, ease, onEnd)
         animatable.pause();
+        animatable.reset();
         let promise: Promise<Animatable> = animatable.waitAsync()
         selection.transitions[sequence].animatables.push(promise)
         if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
-        animatable.reset();
         setTimeout(() => animatable.restart(), delay);
       });
   }
