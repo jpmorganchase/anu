@@ -1,7 +1,8 @@
-import { Animation, Scene, EasingFunction, Node, Animatable } from '@babylonjs/core';
+import { Animation, Scene, EasingFunction, Node, Animatable, Tools } from '@babylonjs/core';
 import { Selection } from '../index';
 import get from 'lodash-es/get';
 import hasIn from 'lodash-es/hasIn';
+
 
 export type TransitionOptions = {
   duration?: number; //done
@@ -77,5 +78,63 @@ export function createTransition(selection: Selection, accessor: string, value: 
         setTimeout(() => animatable.restart(), delay);
       });
   }
+
+/**
+ * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
+ *
+ * @param accessor The name of the property to be set (e.g. "renderingGroupId", "material.alpha").
+ * @param value The value to set the property or a function(d, i) returing the value for said property with scope of the binded data "d", mesh "m", and the index "i".
+ * @returns The modified selection
+ */
+export function tween(this: Selection, value: (d,n,i) => (t) => void) {
+  let sequence = this.transitions.length - 1; 
+  let scene = this.scene;
+  this.selected.forEach(async (node, i) => {
+    let transitionOptions: TransitionOptions = this.transitions[sequence].transitionOptions[i];
+    let duration = (transitionOptions.duration || 250);
+    let fps: number = transitionOptions.framePerSecond || 30;
+    let delay: number = transitionOptions.delay || 0;
+    let frames: number = fps * duration;
+    let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT
+    let ease: EasingFunction = transitionOptions.easingFunction || undefined;
+    let wait: boolean = transitionOptions.sequence ??= true;
+    let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
+    let func = value(node.metadata.data ??= {}, node, i);
+   
+
+    // Variables to control the movement
+    let startTime = null;
+
+  
+    // Register a function to be called before each render
+    let transition = scene.onBeforeRenderObservable.add(() => {
+        if (startTime === null) {
+            startTime = performance.now();
+        }
+    
+        // Calculate the elapsed time
+        var elapsedTime = performance.now() - startTime;
+    
+        // Calculate the fraction of the duration that has passed
+        var fraction = Math.min(elapsedTime / duration, 1);
+    
+        // Update the box's position
+        func(fraction)
+    
+        // Stop updating after the duration has passed
+        if (fraction === 1) {
+            scene.onBeforeRenderObservable.remove(transition);
+        }
+    });
+    
+  
+
+  });
+}
+  
+  
+  
+  
+
 
 

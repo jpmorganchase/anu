@@ -37,7 +37,7 @@ import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinI
   thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
   thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
 } from './property/thin';
-import { TransitionOptions, transition, Transition } from './animation/transition';
+import { transition, Transition, tween } from './animation/transition';
 
 /*
     The core class of anujs. All functions should return 
@@ -133,5 +133,6 @@ export class Selection {
   public thinInstanceColorFor = thinInstanceColorFor;
   public bindThinInstance = bindThinInstance;
   public transition = transition;
+  public tween = tween;
 
 }

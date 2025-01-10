@@ -3,6 +3,7 @@
 
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Animation, Animatable, CircleEase, BounceEase} from "@babylonjs/core";
+import { interpolate } from 'd3';
 
 //create and export a function that takes a babylon engine and returns a scene
 export const animate = function(engine){
@@ -22,14 +23,15 @@ export const animate = function(engine){
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
-  nodes.transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 2000,  easingFunction: new CircleEase()}))
-              .positionX((d,n,i) => i + 10)
-              .transition()
-              .positionY((d, n, i) => i + 10)
-              .transition()
-              .positionZ((d, n, i) => i + 10)
-              .transition({sequence: false})
-              .scaling((d, n, i) => new Vector3(4,4,4))
+  nodes.transition((d,n,i) => ({duration: 250, loopMode: 0, delay: 2000,  easingFunction: new CircleEase()}))
+              .tween((d,n,i) => { 
+                let inter = interpolate(0, 10);
+
+                return (t) => {
+                 n.position.x = inter(t);
+                }
+                
+              })
              
         
 
