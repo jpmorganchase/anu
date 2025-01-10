@@ -101,28 +101,20 @@ export function tween(this: Selection, value: (d,n,i) => (t) => void) {
     let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
     let func = value(node.metadata.data ??= {}, node, i);
    
-
-    // Variables to control the movement
     let startTime = null;
 
-  
-    // Register a function to be called before each render
     let transition = scene.onBeforeRenderObservable.add(() => {
         if (startTime === null) {
             startTime = performance.now();
         }
     
-        // Calculate the elapsed time
         var elapsedTime = performance.now() - startTime;
     
-        // Calculate the fraction of the duration that has passed
-        var fraction = Math.min(elapsedTime / duration, 1);
+        var lerpTime = Math.min(elapsedTime / duration, 1);
     
-        // Update the box's position
-        func(fraction)
-    
-        // Stop updating after the duration has passed
-        if (fraction === 1) {
+        func(lerpTime)
+
+        if (lerpTime === 1) {
             scene.onBeforeRenderObservable.remove(transition);
         }
     });
