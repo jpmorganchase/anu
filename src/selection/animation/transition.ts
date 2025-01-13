@@ -92,32 +92,43 @@ export function tween(this: Selection, value: (d,n,i) => (t) => void) {
   this.selected.forEach(async (node, i) => {
     let transitionOptions: TransitionOptions = this.transitions[sequence].transitionOptions[i];
     let duration = (transitionOptions.duration || 250);
-    let fps: number = transitionOptions.framePerSecond || 30;
+    //let fps: number = transitionOptions.framePerSecond || 30;
     let delay: number = transitionOptions.delay || 0;
-    let frames: number = fps * duration;
-    let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT
+    //let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT
     let ease: EasingFunction = transitionOptions.easingFunction || undefined;
     let wait: boolean = transitionOptions.sequence ??= true;
     let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
     let func = value(node.metadata.data ??= {}, node, i);
-   
     let startTime = null;
+    let accumulatedTime = 0;
+    
+    let animatable: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, onEnd);
+    animatable.pause();
+    let promise: Promise<Animatable> = animatable.waitAsync()
+    this.transitions[sequence].animatables.push(promise)
+    if (sequence !== 0 && wait) await this.transitions[Math.max(0, sequence - 1)].animatables[i];
+    setTimeout(() => {
+      let transition = scene.onBeforeRenderObservable.add(() => {
+        if (startTime === null)  startTime = performance.now();
 
-    let transition = scene.onBeforeRenderObservable.add(() => {
-        if (startTime === null) {
-            startTime = performance.now();
-        }
+        let elapsedTime = performance.now() - startTime;
+        let lerpTime = Math.min(elapsedTime / duration, 1);
+
+   
     
-        var elapsedTime = performance.now() - startTime;
-    
-        var lerpTime = Math.min(elapsedTime / duration, 1);
-    
-        func(lerpTime)
+        
+        func((ease) ? ease.ease(lerpTime) : lerpTime);
+  
 
         if (lerpTime === 1) {
-            scene.onBeforeRenderObservable.remove(transition);
-        }
-    });
+          scene.onBeforeRenderObservable.remove(transition);
+          animatable.stop();
+        };
+
+        
+      });
+    }, delay);
+    
     
   
 
