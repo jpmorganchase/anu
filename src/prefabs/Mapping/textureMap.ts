@@ -21,7 +21,7 @@ import {
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
 
-export class TextureMap extends TransformNode{
+export class TextureMap extends TransformNode {
   name: string;
   scene?: Scene;
   layers: TileLayer<OSM>[];
@@ -45,7 +45,7 @@ export class TextureMap extends TransformNode{
     size: number,
     scene?: Scene,
   ) {
-    super(name, scene, true)
+    super(name, scene, true);
     this.layers = layers;
     this.target = 'map2D';
     this.view = view;
@@ -106,12 +106,15 @@ export class TextureMap extends TransformNode{
     let ratio = this.resolution.width / this.resolution.height;
 
     let ground = MeshBuilder.CreateGround(
-      this.name + "_mesh",
+      this.name + '_mesh',
       { width: this.size * ratio, height: this.size, subdivisions: 25 },
       this.scene,
     );
     ground.setParent(this);
-    let materialGround = new StandardMaterial(this.name + '_material', (this.scene != undefined) ? this.scene : undefined);
+    let materialGround = new StandardMaterial(
+      this.name + '_material',
+      this.scene != undefined ? this.scene : undefined,
+    );
 
     materialGround.diffuseTexture = this.texture;
     materialGround.specularColor = new Color3(0, 0, 0);
@@ -137,7 +140,6 @@ export class TextureMap extends TransformNode{
   }
 
   keyboardControls(scene: Scene) {
-   
     scene.onKeyboardObservable.add((kbInfo) => {
       switch (kbInfo.type) {
         case KeyboardEventTypes.KEYDOWN:

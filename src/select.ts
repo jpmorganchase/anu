@@ -91,7 +91,7 @@ export function selectTag(tag: string | string[], scene: Scene) {
  * instance of Selection.
  *
  * @param key the key or list of keys of the nodes to be selected.
- * @param value the value or list of values corresponding to the respective key(s) passed. 
+ * @param value the value or list of values corresponding to the respective key(s) passed.
  * @param scene The babylon scene the to select from.
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.

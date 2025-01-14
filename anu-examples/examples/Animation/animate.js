@@ -17,11 +17,13 @@ export const animate = function(engine){
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
 
-  let box = anu.create('box', 'ourBox', {}, [{}]);
+  //let box = anu.create('box', 'ourBox', {}, [{}]);
+
 
   let nodes = anu.bind("box", [...new Array(1)])
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
+
 
   nodes
     .material(() => new StandardMaterial('mat'))
@@ -31,13 +33,15 @@ export const animate = function(engine){
 
       return (t) => {
         let rgb = color(inter(t)).rgb();
-        console.log(rgb)
         n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
       }
       
     })
     
-        
+
+
+
+
 
 //let animate = Animation.CreateAndStartAnimation("boxscale", box, "scaling.x", 1, 1, 1.0, 1.5, 0);
 //let animate2 = Animation.CreateAndStartAnimation("boxscale", box, "scaling.y", 1, 1, 1.0, 1.5, 0);

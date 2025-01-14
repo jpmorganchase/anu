@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, MeshBuilder, TransformNode, Scene, ActionManager, Tags, CreateGreasedLine, GreasedLineMeshBuilderOptions } from '@babylonjs/core';
+import {
+  Mesh,
+  MeshBuilder,
+  TransformNode,
+  Scene,
+  ActionManager,
+  Tags,
+  CreateGreasedLine,
+  GreasedLineMeshBuilderOptions,
+} from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { createContainer } from './prefabs/Misc/container';
 
@@ -17,10 +26,9 @@ function createCOT(name: string, options: object, scene?: Scene) {
   return new TransformNode(name, scene);
 }
 
-function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene?: Scene){
+function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene?: Scene) {
   return CreateGreasedLine(name, options, {}, scene);
 }
-
 
 const meshList: StringByFunc = {
   cot: createCOT,
@@ -56,36 +64,36 @@ const meshList: StringByFunc = {
 };
 
 export interface MeshTypes {
-  "box": Parameters<typeof MeshBuilder.CreateBox>[1],
-  "cot": any,
-  "sphere": Parameters<typeof MeshBuilder.CreateSphere>[1],
-  "tiledBox": Parameters<typeof MeshBuilder.CreateTiledBox>[1],
-  "cylinder": Parameters<typeof MeshBuilder.CreateCylinder>[1],
-  "capsule":  Parameters<typeof MeshBuilder.CreateCapsule>[1],
-  "plane": Parameters<typeof MeshBuilder.CreatePlane>[1],
-  "tiledPlane": Parameters<typeof MeshBuilder.CreateTiledPlane>[1],
-  "disc": Parameters<typeof MeshBuilder.CreateDisc>[1],
-  "torus": Parameters<typeof MeshBuilder.CreateTorus>[1],
-  "torusKnot": Parameters<typeof MeshBuilder.CreateTorusKnot>[1],
-  "ground": Parameters<typeof MeshBuilder.CreateGround>[1],
-  "tiledGround": Parameters<typeof MeshBuilder.CreateTiledGround>[1],
-  "lines": Parameters<typeof MeshBuilder.CreateLines>[1],
-  "dashedLines": Parameters<typeof MeshBuilder.CreateDashedLines>[1],
-  "lineSystem": Parameters<typeof MeshBuilder.CreateLineSystem>[1],
-  "ribbon": Parameters<typeof MeshBuilder.CreateRibbon>[1],
-  "tube": Parameters<typeof MeshBuilder.CreateTube>[1],
-  "extrude": Parameters<typeof MeshBuilder.ExtrudeShape>[1],
-  "extrudeCustom": Parameters<typeof MeshBuilder.ExtrudeShapeCustom>[1],
-  "lathe": Parameters<typeof MeshBuilder.CreateLathe>[1],
-  "polygon": Parameters<typeof MeshBuilder.CreatePolygon>[1],
-  "extrudePolygon": Parameters<typeof MeshBuilder.ExtrudePolygon>[1],
-  "polyhedra": Parameters<typeof MeshBuilder.CreatePolyhedron>[1],
-  "icosphere": Parameters<typeof MeshBuilder.CreateIcoSphere>[1],
-  "geodesic": Parameters<typeof MeshBuilder.CreateGeodesic>[1],
-  "goldberg": Parameters<typeof MeshBuilder.CreateGoldberg>[1],
-  'planeText': Parameters<typeof createPlaneText>[1],
-  "greasedLine": Parameters<typeof createGL>[1],
-  "container": Parameters<typeof createContainer>[1],
+  box: Parameters<typeof MeshBuilder.CreateBox>[1];
+  cot: any;
+  sphere: Parameters<typeof MeshBuilder.CreateSphere>[1];
+  tiledBox: Parameters<typeof MeshBuilder.CreateTiledBox>[1];
+  cylinder: Parameters<typeof MeshBuilder.CreateCylinder>[1];
+  capsule: Parameters<typeof MeshBuilder.CreateCapsule>[1];
+  plane: Parameters<typeof MeshBuilder.CreatePlane>[1];
+  tiledPlane: Parameters<typeof MeshBuilder.CreateTiledPlane>[1];
+  disc: Parameters<typeof MeshBuilder.CreateDisc>[1];
+  torus: Parameters<typeof MeshBuilder.CreateTorus>[1];
+  torusKnot: Parameters<typeof MeshBuilder.CreateTorusKnot>[1];
+  ground: Parameters<typeof MeshBuilder.CreateGround>[1];
+  tiledGround: Parameters<typeof MeshBuilder.CreateTiledGround>[1];
+  lines: Parameters<typeof MeshBuilder.CreateLines>[1];
+  dashedLines: Parameters<typeof MeshBuilder.CreateDashedLines>[1];
+  lineSystem: Parameters<typeof MeshBuilder.CreateLineSystem>[1];
+  ribbon: Parameters<typeof MeshBuilder.CreateRibbon>[1];
+  tube: Parameters<typeof MeshBuilder.CreateTube>[1];
+  extrude: Parameters<typeof MeshBuilder.ExtrudeShape>[1];
+  extrudeCustom: Parameters<typeof MeshBuilder.ExtrudeShapeCustom>[1];
+  lathe: Parameters<typeof MeshBuilder.CreateLathe>[1];
+  polygon: Parameters<typeof MeshBuilder.CreatePolygon>[1];
+  extrudePolygon: Parameters<typeof MeshBuilder.ExtrudePolygon>[1];
+  polyhedra: Parameters<typeof MeshBuilder.CreatePolyhedron>[1];
+  icosphere: Parameters<typeof MeshBuilder.CreateIcoSphere>[1];
+  geodesic: Parameters<typeof MeshBuilder.CreateGeodesic>[1];
+  goldberg: Parameters<typeof MeshBuilder.CreateGoldberg>[1];
+  planeText: Parameters<typeof createPlaneText>[1];
+  greasedLine: Parameters<typeof createGL>[1];
+  container: Parameters<typeof createContainer>[1];
 }
 
 type Property<T, MeshType extends keyof T> = T[MeshType];
@@ -105,7 +113,7 @@ export function create<MeshType extends keyof MeshTypes>(
   name: string,
   options: Property<MeshTypes, MeshType> = {},
   data: object = {},
-  scene?: Scene
+  scene?: Scene,
 ): Mesh {
   let executedOptions: StringByAny = {};
 

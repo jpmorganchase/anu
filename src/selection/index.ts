@@ -32,10 +32,25 @@ import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
-import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinInstanceRotation, thinInstanceColor, 
-  thinInstanceRegisterAttribute, thinInstanceSetAttribute, thinInstanceAttributeAt, thinInstanceMatrixAt, thinInstanceMatrixFor,
-  thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
-  thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
+import {
+  thinInstanceSetBuffer,
+  thinInstancePosition,
+  thinInstanceScaling,
+  thinInstanceRotation,
+  thinInstanceColor,
+  thinInstanceRegisterAttribute,
+  thinInstanceSetAttribute,
+  thinInstanceAttributeAt,
+  thinInstanceMatrixAt,
+  thinInstanceMatrixFor,
+  thinInstancePositionAt,
+  thinInstanceScalingAt,
+  thinInstanceRotationAt,
+  thinInstanceColorAt,
+  thinInstancePositionFor,
+  thinInstanceScalingFor,
+  thinInstanceRotationFor,
+  thinInstanceColorFor,
 } from './property/thin';
 import { transition, Transition, tween } from './animation/transition';
 
@@ -49,7 +64,6 @@ export class Selection {
   selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
   transitions: Transition[];
- 
 
   constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene) {
     this.selected = nodes;
@@ -57,7 +71,7 @@ export class Selection {
     this.transitions = [];
   }
 
-  public updateTransitions(transition: Transition){
+  public updateTransitions(transition: Transition) {
     this.transitions.push(transition);
   }
 
@@ -119,7 +133,7 @@ export class Selection {
   public thinInstanceRotation = thinInstanceRotation;
   public thinInstanceColor = thinInstanceColor;
   public thinInstanceSetAttribute = thinInstanceSetAttribute;
-  public thinInstanceAttributeAt = thinInstanceAttributeAt
+  public thinInstanceAttributeAt = thinInstanceAttributeAt;
   public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
   public thinInstanceMatrixAt = thinInstanceMatrixAt;
   public thinInstanceMatrixFor = thinInstanceMatrixFor;
@@ -134,5 +148,4 @@ export class Selection {
   public bindThinInstance = bindThinInstance;
   public transition = transition;
   public tween = tween;
-
 }

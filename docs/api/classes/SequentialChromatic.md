@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:36](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L36)
+[src/prefabs/Chromatic/Chromatic.ts:36](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L36)
 
 ## Properties
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:34](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L34)
+[src/prefabs/Chromatic/Chromatic.ts:34](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L34)
 
 ## Methods
 
@@ -60,7 +60,7 @@
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `steps` | `undefined` \| `number` \| `number`[] | `undefined` |
+| `steps` | `number` \| `number`[] | `undefined` |
 
 #### Returns
 
@@ -80,7 +80,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:40](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L40)
+[src/prefabs/Chromatic/Chromatic.ts:40](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L40)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `steps` | `undefined` \| `number` \| `number`[] | `undefined` |
+| `steps` | `number` \| `number`[] | `undefined` |
 
 #### Returns
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:47](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L47)
+[src/prefabs/Chromatic/Chromatic.ts:47](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L47)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `steps` | `undefined` \| `number` \| `number`[] | `undefined` |
+| `steps` | `number` \| `number`[] | `undefined` |
 
 #### Returns
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:62](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L62)
+[src/prefabs/Chromatic/Chromatic.ts:62](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L62)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `steps` | `undefined` \| `number` \| `number`[] | `undefined` |
+| `steps` | `number` \| `number`[] | `undefined` |
 
 #### Returns
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:57](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L57)
+[src/prefabs/Chromatic/Chromatic.ts:57](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L57)
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `steps` | `undefined` \| `number` \| `number`[] | `undefined` |
+| `steps` | `number` \| `number`[] | `undefined` |
 
 #### Returns
 
@@ -208,4 +208,4 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:52](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L52)
+[src/prefabs/Chromatic/Chromatic.ts:52](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L52)

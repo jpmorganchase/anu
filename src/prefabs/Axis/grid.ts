@@ -5,9 +5,7 @@ import { Color3, Vector3 } from '@babylonjs/core';
 import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 
-export function grid(
-  this: Axes,
-  ) {
+export function grid(this: Axes) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
   let domainX = this.scales.x.domain;
@@ -24,8 +22,8 @@ export function grid(
 
   if (this.options.scale?.x != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    
-    if (this.options.gridTicks?.x != undefined){
+
+    if (this.options.gridTicks?.x != undefined) {
       ticks = this.options.gridTicks.x;
     } else {
       try {
@@ -34,7 +32,7 @@ export function grid(
         ticks = domainX;
       }
     }
-   
+
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
     tickPosition = (d) => [
@@ -50,8 +48,8 @@ export function grid(
 
   if (this.options.scale?.y != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    
-    if (this.options.gridTicks?.y != undefined){
+
+    if (this.options.gridTicks?.y != undefined) {
       ticks = this.options.gridTicks.y;
     } else {
       try {
@@ -76,8 +74,8 @@ export function grid(
 
   if (this.options.scale?.z != undefined) {
     let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-    
-    if (this.options.gridTicks?.z != undefined){
+
+    if (this.options.gridTicks?.z != undefined) {
       ticks = this.options.gridTicks.z;
     } else {
       try {
@@ -86,7 +84,7 @@ export function grid(
         ticks = domainZ;
       }
     }
-  
+
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
 
     tickPosition = (d) => [
@@ -100,15 +98,13 @@ export function grid(
     }
   }
 
-  let default_options = { lines: linesArray};
-  
-  let default_properties = {  'name': this.name + "_grid",
-                              'alpha': 0.3,
-                              'color': Color3.White()}
+  let default_options = { lines: linesArray };
 
+  let default_properties = { name: this.name + '_grid', alpha: 0.3, color: Color3.White() };
 
-  let tickMesh = this.CoT.bind('lineSystem', assign({}, default_options, this.options.gridOptions))
-    .props(assign({}, default_properties, this.options.gridProperties))
+  let tickMesh = this.CoT.bind('lineSystem', assign({}, default_options, this.options.gridOptions)).props(
+    assign({}, default_properties, this.options.gridProperties),
+  );
 
   return tickMesh;
 }

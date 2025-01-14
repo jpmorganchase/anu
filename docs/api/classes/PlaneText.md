@@ -39,7 +39,7 @@
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:25](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L25)
+[src/prefabs/Text/planeText.ts:25](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L25)
 
 ## Properties
 
@@ -49,7 +49,7 @@
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L23)
+[src/prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L23)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:20](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L20)
+[src/prefabs/Text/planeText.ts:20](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L20)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:21](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L21)
+[src/prefabs/Text/planeText.ts:21](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L21)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L22)
+[src/prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L22)
 
 ## Methods
 
@@ -93,4 +93,4 @@ ___
 
 #### Defined in
 
-[prefabs/Text/planeText.ts:32](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Text/planeText.ts#L32)
+[src/prefabs/Text/planeText.ts:32](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L32)

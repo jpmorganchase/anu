@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:7](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L7)
+[src/prefabs/Chromatic/Chromatic.ts:7](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L7)
 
 ## Properties
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:5](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L5)
+[src/prefabs/Chromatic/Chromatic.ts:5](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L5)
 
 ## Methods
 
@@ -68,7 +68,7 @@
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:11](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L11)
+[src/prefabs/Chromatic/Chromatic.ts:11](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L11)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:15](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L15)
+[src/prefabs/Chromatic/Chromatic.ts:15](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L15)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:27](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L27)
+[src/prefabs/Chromatic/Chromatic.ts:27](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L27)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:23](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L23)
+[src/prefabs/Chromatic/Chromatic.ts:23](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L23)
 
 ___
 
@@ -148,4 +148,4 @@ ___
 
 #### Defined in
 
-[prefabs/Chromatic/Chromatic.ts:19](https://github.com/jpmorganchase/anu/blob/4a68614/src/prefabs/Chromatic/Chromatic.ts#L19)
+[src/prefabs/Chromatic/Chromatic.ts:19](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L19)
