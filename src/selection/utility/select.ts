@@ -19,14 +19,16 @@ export function select(this: Selection, name: string): Selection {
   let selected: any = [];
 
   if (indicator === '.') {
-      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == text))));
-      return new Selection(selected, this.scene);
+    this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == text))));
+    return new Selection(selected, this.scene);
   } else if (indicator === '#') {
-      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == text))));
-      return new Selection(selected, this.scene);
+    this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == text))));
+    return new Selection(selected, this.scene);
   } else if (indicator === '$') {
-      this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, text) == true))));
-      return new Selection(selected, this.scene);
+    this.selected.forEach(
+      (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, text) == true))),
+    );
+    return new Selection(selected, this.scene);
   }
 
   return new Selection([], this.scene);
@@ -41,8 +43,14 @@ export function select(this: Selection, name: string): Selection {
 export function selectName(this: Selection, name: string | string[]): Selection {
   let selected: Node[] = [];
   Array.isArray(name)
-    ? name.forEach((e, i) => (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == e))))))
-    : (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == name)))));
+    ? name.forEach((e, i) =>
+        this.selected.forEach(
+          (element) => (selected = selected.concat(element?.getChildren((node) => node.name == e))),
+        ),
+      )
+    : this.selected.forEach(
+        (element) => (selected = selected.concat(element?.getChildren((node) => node.name == name))),
+      );
   return new Selection(selected, this.scene);
 }
 
@@ -55,8 +63,10 @@ export function selectName(this: Selection, name: string | string[]): Selection 
 export function selectId(this: Selection, id: string | string[]): Selection {
   let selected: Node[] = [];
   Array.isArray(id)
-    ? id.forEach((e, i) => (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == e))))))
-    : (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == id)))));
+    ? id.forEach((e, i) =>
+        this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == e)))),
+      )
+    : this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == id))));
   return new Selection(selected, this.scene);
 }
 
@@ -69,8 +79,14 @@ export function selectId(this: Selection, id: string | string[]): Selection {
 export function selectTag(this: Selection, tag: string | string[]): Selection {
   let selected: Node[] = [];
   Array.isArray(tag)
-    ? tag.forEach((e, i) => (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, e) == true))))))
-    : (this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, tag) == true)))));
+    ? tag.forEach((e, i) =>
+        this.selected.forEach(
+          (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, e) == true))),
+        ),
+      )
+    : this.selected.forEach(
+        (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, tag) == true))),
+      );
   return new Selection(selected, this.scene);
 }
 
@@ -88,19 +104,19 @@ export function selectData(
 ): Selection {
   let selected: Node[] = [];
   Array.isArray(key) && Array.isArray(value)
-    ? key.forEach(
-        (e, i) =>
-          (this.selected.forEach((element) => selected = [
-            ...selected,
-            ...element.getChildren()
-          ].filter((node) => node.metadata != null)
-          .filter((node) => node.metadata.data[e] == value[i]),
-          )),
+    ? key.forEach((e, i) =>
+        this.selected.forEach(
+          (element) =>
+            (selected = [...selected, ...element.getChildren()]
+              .filter((node) => node.metadata != null)
+              .filter((node) => node.metadata.data[e] == value[i])),
+        ),
       )
-    : (this.selected.forEach((element) => selected = [
-      ...selected,
-      ...element.getChildren()
-    ].filter((node) => node.metadata != null)
-    .filter((node) => node.metadata.data[key as string] == value),));
+    : this.selected.forEach(
+        (element) =>
+          (selected = [...selected, ...element.getChildren()]
+            .filter((node) => node.metadata != null)
+            .filter((node) => node.metadata.data[key as string] == value)),
+      );
   return new Selection(selected, this.scene);
 }

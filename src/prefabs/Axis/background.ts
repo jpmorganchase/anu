@@ -6,7 +6,6 @@ import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { Selection } from '../../selection';
 
-
 export function backgroundAlt(this: Axes) {
   let scaleX = this.scales.x.scale;
   let rangeX = this.scales.x.range;
@@ -20,7 +19,7 @@ export function backgroundAlt(this: Axes) {
   let rangeZ = this.scales.z.range;
   let domainZ = this.scales.z.domain;
 
-  let selections: {x?: Selection, y?: Selection, z?: Selection} = {};
+  let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
 
   if (this.options.scale?.x != undefined && this.options.scale?.y != undefined) {
     let planePosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
@@ -68,7 +67,7 @@ export function backgroundAlt(this: Axes) {
       .material(new StandardMaterial(this.name + '_backgroundY_material', this._scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
 
-      selections.y = backgroundMeshY;
+    selections.y = backgroundMeshY;
   }
 
   if (this.options.scale?.z != undefined && this.options.scale?.x != undefined) {
@@ -93,10 +92,8 @@ export function backgroundAlt(this: Axes) {
       .material(new StandardMaterial(this.name + '_backgroundZ_material', this._scene))
       .props(assign({}, default_properties, this.options.backgroundProperties));
 
-      selections.z = backgroundMeshZ;
+    selections.z = backgroundMeshZ;
   }
-
-
 
   return selections;
 }

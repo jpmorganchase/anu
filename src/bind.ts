@@ -26,7 +26,12 @@ type Property<T, MeshType extends keyof T> = T[MeshType];
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind<MeshType extends keyof MeshTypes>(shape: MeshType, options?: Property<MeshTypes, MeshType>, data: Array<object> = [{}], scene?: Scene): Selection {
+export function bind<MeshType extends keyof MeshTypes>(
+  shape: MeshType,
+  options?: Property<MeshTypes, MeshType>,
+  data: Array<object> = [{}],
+  scene?: Scene,
+): Selection {
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var mesh = create(shape, shape, options, element, scene);
@@ -45,7 +50,7 @@ export function bind<MeshType extends keyof MeshTypes>(shape: MeshType, options?
  * or undefined if a selection could not be made.
  */
 export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
-  scene = (scene != undefined) ? scene : mesh.getScene();
+  scene = scene != undefined ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var instance = mesh.createInstance(mesh.name + '_' + i);
@@ -54,7 +59,7 @@ export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Sce
     instance.metadata = { ...mesh.metadata, data: element };
     meshes.push(instance as InstancedMesh);
   });
-  
+
   return new Selection(meshes, scene);
 }
 
@@ -68,11 +73,11 @@ export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Sce
  * or undefined if a selection could not be made.
  */
 export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
-  scene = (scene != undefined) ? scene : mesh.getScene();
+  scene = scene != undefined ? scene : mesh.getScene();
   Tags.EnableFor(mesh);
   mesh.actionManager = new ActionManager(scene);
   mesh.metadata = { ...mesh.metadata, data: data };
- 
+
   let matrices = new Float32Array(16 * data.length * 3);
 
   data.forEach((element, i) => {
@@ -80,8 +85,7 @@ export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?:
     matrix.copyToArray(matrices, i * 16);
   });
 
-  mesh.thinInstanceSetBuffer("matrix", matrices, 16, false);
+  mesh.thinInstanceSetBuffer('matrix', matrices, 16, false);
 
   return new Selection([mesh], scene);
 }
-

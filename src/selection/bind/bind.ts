@@ -17,7 +17,12 @@ type Property<T, MeshType extends keyof T> = T[MeshType];
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bind<MeshType extends keyof MeshTypes>(this: Selection, shape: MeshType, options: Property<MeshTypes, MeshType> = {}, data: Array<object> = [{}]): Selection {
+export function bind<MeshType extends keyof MeshTypes>(
+  this: Selection,
+  shape: MeshType,
+  options: Property<MeshTypes, MeshType> = {},
+  data: Array<object> = [{}],
+): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
@@ -67,14 +72,15 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
 export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node, i) => {
+    //node.metadata = { ...node.metadata, data: data };
     let instance = mesh.clone(mesh.name + '_' + i, node);
     let matrices = new Float32Array(16 * data.length * 3);
     data.forEach((element, i) => {
       let matrix = Matrix.Identity();
       matrix.copyToArray(matrices, i * 16);
     });
-    instance.thinInstanceSetBuffer("matrix", matrices, 16, false);
-    meshes.push(instance)
+    instance.thinInstanceSetBuffer('matrix', matrices, 16, false);
+    meshes.push(instance);
   });
   return new Selection(meshes, this.scene);
 }

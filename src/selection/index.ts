@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, Mesh, TransformNode, InstancedMesh } from '@babylonjs/core';
+import { Node, Mesh, TransformNode, InstancedMesh, AbstractMesh, Nullable } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance } from './bind/bind';
@@ -32,11 +32,27 @@ import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
 import { name, id, metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
-import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinInstanceRotation, thinInstanceColor, 
-  thinInstanceRegisterAttribute, thinInstanceSetAttribute, thinInstanceAttributeAt, thinInstanceMatrixAt, thinInstanceMatrixFor,
-  thinInstancePositionAt, thinInstanceScalingAt, thinInstanceRotationAt, thinInstanceColorAt,
-  thinInstancePositionFor, thinInstanceScalingFor, thinInstanceRotationFor, thinInstanceColorFor
+import {
+  thinInstanceSetBuffer,
+  thinInstancePosition,
+  thinInstanceScaling,
+  thinInstanceRotation,
+  thinInstanceColor,
+  thinInstanceRegisterAttribute,
+  thinInstanceSetAttribute,
+  thinInstanceAttributeAt,
+  thinInstanceMatrixAt,
+  thinInstanceMatrixFor,
+  thinInstancePositionAt,
+  thinInstanceScalingAt,
+  thinInstanceRotationAt,
+  thinInstanceColorAt,
+  thinInstancePositionFor,
+  thinInstanceScalingFor,
+  thinInstanceRotationFor,
+  thinInstanceColorFor,
 } from './property/thin';
+import { transition, Transition, tween } from './animation/transition';
 
 /*
     The core class of anujs. All functions should return 
@@ -45,12 +61,18 @@ import { thinInstanceSetBuffer, thinInstancePosition, thinInstanceScaling, thinI
     The selection class also exposes all of anus core functions. 
 */
 export class Selection {
-  selected: Node[] | TransformNode[] | Mesh[];
+  selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
+  transitions: Transition[];
 
-  constructor(nodes: Node[] | TransformNode[] | Mesh[], scene?: Scene) {
+  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
+    this.transitions = [];
+  }
+
+  public updateTransitions(transition: Transition) {
+    this.transitions.push(transition);
   }
 
   public select = select;
@@ -111,7 +133,7 @@ export class Selection {
   public thinInstanceRotation = thinInstanceRotation;
   public thinInstanceColor = thinInstanceColor;
   public thinInstanceSetAttribute = thinInstanceSetAttribute;
-  public thinInstanceAttributeAt = thinInstanceAttributeAt
+  public thinInstanceAttributeAt = thinInstanceAttributeAt;
   public thinInstanceRegisterAttribute = thinInstanceRegisterAttribute;
   public thinInstanceMatrixAt = thinInstanceMatrixAt;
   public thinInstanceMatrixFor = thinInstanceMatrixFor;
@@ -124,5 +146,6 @@ export class Selection {
   public thinInstanceRotationFor = thinInstanceRotationFor;
   public thinInstanceColorFor = thinInstanceColorFor;
   public bindThinInstance = bindThinInstance;
-
+  public transition = transition;
+  public tween = tween;
 }

@@ -15,7 +15,7 @@ interface AxisOptions {
   xScale?: any;
   yScale?: any;
   zScale?: any;
-  scale?: {x?: any, y?: any, z?: any},
+  scale?: { x?: any; y?: any; z?: any };
   domain?: boolean;
   domainOptions?: any;
   domainMaterialOptions?: any;
@@ -25,34 +25,34 @@ interface AxisOptions {
   grid?: boolean;
   gridOptions?: any;
   gridProperties?: any;
-  gridTicks?: {x?: any, y?: any, z?: any};
+  gridTicks?: { x?: any; y?: any; z?: any };
   label?: boolean;
   labelOptions?: any;
   labelProperties?: any;
-  labelTicks?: {x?: any, y?: any, z?: any};
-  labelFormat?: {x? : any, y?: any, z?: any};
-  atlas?: Texture
+  labelTicks?: { x?: any; y?: any; z?: any };
+  labelFormat?: { x?: any; y?: any; z?: any };
+  atlas?: Texture;
 }
 
-export class Axes extends TransformNode{
+export class Axes extends TransformNode {
   options: AxisOptions;
   CoT: Selection;
   scales: any;
   domain: Selection;
-  background: {x?: Selection, y?: Selection, z?: Selection};;
+  background: { x?: Selection; y?: Selection; z?: Selection };
   grid: Selection;
-  label: {x?: Selection, y?: Selection, z?: Selection};
+  label: { x?: Selection; y?: Selection; z?: Selection };
 
   constructor(name: string, scene: Scene, options: AxisOptions = {}) {
-    super(name, scene, true)
+    super(name, scene, true);
     this.name = name;
     this.options = options;
-    this.parent = (this.options.parent instanceof Selection) ? this.options.parent.selected[0] : this.options.parent;
+    this.parent = this.options.parent instanceof Selection ? this.options.parent.selected[0] : this.options.parent;
     this.CoT = new Selection([this], scene);
     this.scales = this.setScales();
     this.domain = this.options.domain ? this.setDomain() : new Selection([], scene);
     this.background = this.options.background ? this.setBackground() : {};
-    this.grid = this.options.grid ? this.setGrid() : new Selection([], scene); 
+    this.grid = this.options.grid ? this.setGrid() : new Selection([], scene);
     this.label = this.options.label ? this.setLabel() : {};
   }
 
@@ -85,7 +85,6 @@ export class Axes extends TransformNode{
       domainX = scaleX.domain();
       let range = scaleX.range();
       rangeX = [range[0], range.slice(-1)[0]];
-    
     }
 
     if (this.options.scale?.y != undefined) {
@@ -104,9 +103,9 @@ export class Axes extends TransformNode{
     }
 
     let sizes = [rangeX, rangeY, rangeZ].flat().sort();
- 
+
     let size = Math.abs(sizes.slice(-1)[0] - sizes[0]);
-    
+
     return {
       size: size,
       x: { scale: scaleX, range: rangeX, domain: domainX },
@@ -119,13 +118,9 @@ export class Axes extends TransformNode{
   private setBackground = backgroundAlt;
   private setGrid = grid;
   private setLabel = labelAlt;
-
 }
 
-
-
-export function createAxes(name: string, scene: Scene, options: AxisOptions){
-
+export function createAxes(name: string, scene: Scene, options: AxisOptions) {
   const Options: AxisOptions = {
     scale: options.scale,
     parent: options.parent || undefined,
@@ -144,10 +139,10 @@ export function createAxes(name: string, scene: Scene, options: AxisOptions){
     labelProperties: options.labelProperties || {},
     labelTicks: options.labelTicks || {},
     labelFormat: options.labelFormat || {},
-    atlas: options.atlas || new Texture(png, scene)
-  }
+    atlas: options.atlas || new Texture(png, scene),
+  };
 
-  let axes = new Axes(name, scene, Options)
+  let axes = new Axes(name, scene, Options);
 
   return axes;
 }

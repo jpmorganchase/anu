@@ -17,11 +17,10 @@ import {
   Vector3,
   Space,
   Axis,
-  TransformNode
+  TransformNode,
 } from '@babylonjs/core';
 import { Context } from 'vm';
 import { Coordinate } from 'ol/coordinate';
-
 
 export class TextureGlobe extends TransformNode {
   name: string;
@@ -38,8 +37,15 @@ export class TextureGlobe extends TransformNode {
   diameter: number;
   lonLatToVector3: Function;
 
-  constructor(name: string, layers: TileLayer<OSM>[], view: View, resolution: Vector2, diameter: number, scene?: Scene,) {
-    super(name, scene, true)
+  constructor(
+    name: string,
+    layers: TileLayer<OSM>[],
+    view: View,
+    resolution: Vector2,
+    diameter: number,
+    scene?: Scene,
+  ) {
+    super(name, scene, true);
     this.layers = layers;
     this.target = 'globe';
     this.view = view;
@@ -93,13 +99,13 @@ export class TextureGlobe extends TransformNode {
   }
 
   createMesh() {
-    let globe = MeshBuilder.CreateSphere(this.name + "_mesh", { diameter: this.diameter }, this.scene);
+    let globe = MeshBuilder.CreateSphere(this.name + '_mesh', { diameter: this.diameter }, this.scene);
     globe.setParent(this);
     globe.rotate(Axis.X, Math.PI, Space.WORLD);
     globe.rotate(Axis.Y, Math.PI, Space.WORLD);
     let materialGlobe = new StandardMaterial(this.name + '_material', this.scene);
 
-    globe.bakeCurrentTransformIntoVertices()
+    globe.bakeCurrentTransformIntoVertices();
 
     materialGlobe.diffuseTexture = this.texture;
     materialGlobe.specularColor = new Color3(0, 0, 0);
@@ -109,10 +115,10 @@ export class TextureGlobe extends TransformNode {
   }
 
   createScales(c: Coordinate) {
-    let lon = (c[0]) * Math.PI / 180; 
-    let lat = (c[1]) * Math.PI / 180; 
+    let lon = (c[0] * Math.PI) / 180;
+    let lat = (c[1] * Math.PI) / 180;
 
-    let r = (this.diameter / 2);
+    let r = this.diameter / 2;
 
     let x = r * Math.cos(lat) * Math.cos(lon);
     let y = r * Math.cos(lat) * Math.sin(lon);
@@ -133,7 +139,7 @@ export function createTextureGlobe(
   scene?: Scene,
 ) {
   const layers: TileLayer<any>[] = options.layers || [
-    new TileLayer({ source: new OSM(), extent: [-180, -90, 180, 90] })
+    new TileLayer({ source: new OSM(), extent: [-180, -90, 180, 90] }),
   ];
   const view: View =
     options.view ||
@@ -141,7 +147,7 @@ export function createTextureGlobe(
       projection: 'EPSG:4326',
       extent: [-180, -90, 180, 90],
       center: [0, 0],
-      zoom: 0
+      zoom: 0,
     });
 
   const resolution: Vector2 = options.resolution || new Vector2(1000, 500);
