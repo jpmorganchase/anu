@@ -151,7 +151,79 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		
+		"tutorial": {
+"1-basics/1-introduction/1-welcome/content.md": {
+	id: "1-basics/1-introduction/1-welcome/content.md";
+  slug: "/:partSlug/:chapterSlug/1-welcome.html/";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"1-basics/1-introduction/meta.md": {
+	id: "1-basics/1-introduction/meta.md";
+  slug: "1-basics/1-introduction/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"1-basics/2-setup/1-quick-setup/content.md": {
+	id: "1-basics/2-setup/1-quick-setup/content.md";
+  slug: "/:partSlug/:chapterSlug/2-quick-setup.html/";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"1-basics/2-setup/2-running-dev/content.md": {
+	id: "1-basics/2-setup/2-running-dev/content.md";
+  slug: "/:partSlug/:chapterSlug/2-running-dev.html/";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"1-basics/2-setup/meta.md": {
+	id: "1-basics/2-setup/meta.md";
+  slug: "1-basics/2-setup/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"1-basics/meta.md": {
+	id: "1-basics/meta.md";
+  slug: "1-basics/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md": {
+	id: "2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md";
+  slug: "/:partSlug/:chapterSlug/1-creating-meshes.html/";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Creating-Meshes/meta.md": {
+	id: "2-Anu-Fundamentals/2-Creating-Meshes/meta.md";
+  slug: "2-anu-fundamentals/2-creating-meshes/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/meta.md": {
+	id: "2-Anu-Fundamentals/meta.md";
+  slug: "2-anu-fundamentals/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"meta.md": {
+	id: "meta.md";
+  slug: "meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+};
+
 	};
 
 	type DataEntryMap = {
@@ -160,5 +232,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }
