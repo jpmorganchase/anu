@@ -28,6 +28,13 @@ export const animate = function(engine){
   nodes
     .material(() => new StandardMaterial('mat'))
     .transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } }))
+    .positionX(2)
+    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } })
+    .positionX(-2)
+    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
+    .positionX(2)
+    .positionY(2)
+    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
     .tween((d,n,i) => { 
       let inter = interpolateBrBG
 
@@ -37,14 +44,6 @@ export const animate = function(engine){
       }
       
     })
-    
-
-
-
-
-
-//let animate = Animation.CreateAndStartAnimation("boxscale", box, "scaling.x", 1, 1, 1.0, 1.5, 0);
-//let animate2 = Animation.CreateAndStartAnimation("boxscale", box, "scaling.y", 1, 1, 1.0, 1.5, 0);
 
   return scene;
 }; 

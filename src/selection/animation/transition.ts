@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Animation, EasingFunction, Node, Animatable } from '@babylonjs/core';
 import { Selection } from '../index';
 import get from 'lodash-es/get';
@@ -80,24 +83,28 @@ export function createTransition(selection: Selection, accessor: string, value: 
     let ease: EasingFunction = transitionOptions.easingFunction || undefined;
     let wait: boolean = (transitionOptions.sequence ??= true);
     let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
-    let animatable = Animation.CreateAndStartAnimation(
-      node.name + '_animation',
-      node,
-      accessor,
-      fps,
-      frames,
-      get(node, accessor),
-      value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
-      loop,
-      ease,
-      onEnd,
-    );
+
+    let animatable: Animatable = new Animatable(node.getScene(), node);
     animatable.pause();
-    animatable.reset();
     let promise: Promise<Animatable> = animatable.waitAsync();
     selection.transitions[sequence].animatables.push(promise);
     if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
-    setTimeout(() => animatable.restart(), delay);
+
+    setTimeout(() => {
+      let animation = Animation.CreateAndStartAnimation(
+        node.name + '_animation',
+        node,
+        accessor,
+        fps,
+        frames,
+        get(node, accessor),
+        value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+        loop,
+        ease,
+        onEnd,
+      );
+      animation.onAnimationEndObservable.addOnce(() => animatable.stop());
+    }, delay);
   });
 }
 
