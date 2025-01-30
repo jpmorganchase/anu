@@ -196,7 +196,7 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 "2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md": {
 	id: "2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md";
-  slug: "/:partSlug/:chapterSlug/1-creating-meshes.html/";
+  slug: "2-anu-fundamentals/2-creating-meshes/2-make-a-mesh/content";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">

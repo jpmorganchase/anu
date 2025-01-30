@@ -1,8 +1,21 @@
 ---
 type: lesson
 title: Babylon MeshBuilder(s)
-focus: /counter.js
-slug: /:partSlug/:chapterSlug/1-creating-meshes.html/
+template: example
+terminal:
+  open: true
+  activePanel: 1
+  panels:
+    - type: terminal
+      id: 'cmds'
+      title: 'Command Line'
+      allowRedirects: true
+      allowCommands:
+        - ls
+        - echo
+        - cd
+        - npx
+        - npm
 ---
 
 # Welcome to TutorialKit

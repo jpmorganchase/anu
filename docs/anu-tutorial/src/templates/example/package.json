@@ -1,0 +1,20 @@
+{
+  "name": "anu_starter",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  },
+  "dependencies": {
+    "@babylonjs/core": "latest",
+    "@babylonjs/inspector": "latest",
+    "@jpmorganchase/anu": "latest",
+    "d3": "latest"
+  }
+}
