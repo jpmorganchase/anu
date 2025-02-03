@@ -42,6 +42,7 @@ export const text = function(engine){
   }
   let text1 = anu.createPlaneText('myText1', options1, scene)
 
+
   let options2 = {
     text: 'Europe',
     color: Color3.Blue()
@@ -49,13 +50,18 @@ export const text = function(engine){
   let text2 = anu.createPlaneText('myText2', options2, scene);
   text2.position = new Vector3(0, -2, 0);
 
+
   options2.text = "Asia";
   options2.color = Color3.Green();
-
   setTimeout(() => text2.updatePlaneText(options2), 1000);
-  
-  anu.bind('planeText', {}, [{text: "hello"}, {text: "world"}])
-      .run((d,n,i) => n.updatePlaneText({text: d.text}))
+  setTimeout(() => text2.updatePlaneText({ color: Color3.Black(), size: 1.5 }), 2000);
+
+
+  anu.bind('planeText', { color: Color3.Yellow() }, [{ text: "hello", value: 0}, { text: "world", value: 4 }])
+      .position((d,n,i) => new Vector3(d.value, -5, 0))
+      .run((d,n,i) => {
+        n.updatePlaneText({ text: d.text });
+      })
 
   return scene;
 };
