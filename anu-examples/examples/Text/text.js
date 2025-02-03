@@ -33,30 +33,29 @@ export const text = function(engine){
   const randmizeVector = (threshold = 50) => new Vector3(randomizeThreshold(threshold), randomizeThreshold(threshold), randomizeThreshold(threshold))
   
   for (let i = 0; i <  1; i++){
-   data.push({})
-    
+    data.push({});
   }
   
+  let options1 = {
+    text: 'USA',
+    color: Color3.Red()
+  }
+  let text1 = anu.createPlaneText('myText1', options1, scene)
 
-    let options = {
-      text: 'USA',
-      color: Color3.Green()
-    }
+  let options2 = {
+    text: 'Europe',
+    color: Color3.Blue()
+  }
+  let text2 = anu.createPlaneText('myText2', options2, scene);
+  text2.position = new Vector3(0, -2, 0);
 
-    let options2 = {
-      text: 'Europe',
-      color: Color3.Green()
-    }
+  options2.text = "Asia";
+  options2.color = Color3.Green();
 
-    anu.createPlaneText('myText', options, scene)
-
-    anu.createPlaneText('myText2', options2, scene)
-
-    //anu.create('box', 'box')
-
-    return scene;
+  setTimeout(() => text2.updatePlaneText(options2), 1000);
   
-  };
-  
+  anu.bind('planeText', {}, [{text: "hello"}, {text: "world"}])
+      .run((d,n,i) => n.updatePlaneText({text: d.text}))
 
-
+  return scene;
+};
