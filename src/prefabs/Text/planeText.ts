@@ -5,6 +5,7 @@ import { Scene, Vector3, Color3, Mesh, Matrix, PlaneBlock, TransformNode } from 
 import fnt from '../../assets/roboto-regular.json';
 import png from '../../assets/roboto-regular.png';
 import { createTextMesh } from 'babylon-msdf-text';
+import assign from 'lodash-es/assign';
 
 interface planeTextOptions {
   text: string;
@@ -59,16 +60,7 @@ export class PlaneText extends TransformNode {
   }
 
   public updatePlaneText(options: planeTextOptions) {
-    const ops = {
-      text: options.text || "undefined",
-      size: options.size || 1,
-      opacity: options.opacity || 1,
-      align: options.align || 'center',
-      color: options.color || Color3.White(),
-      font: options.font || fnt,
-      atlas: options.atlas || png,
-    };
-    
+    const ops = assign({}, this.options, options);
     this.options = ops;
     this.text.dispose();
     this.text = this.run();
