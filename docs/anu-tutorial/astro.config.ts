@@ -6,4 +6,11 @@ export default defineConfig({
     enabled: false,
   },
   integrations: [tutorialkit()],
+  base: '/anu/tutorial/',
+  build: {
+    format: 'file'
+  },
+  vite: {
+    plugins: []
+  }
 });

@@ -1,21 +1,21 @@
 ---
 type: lesson
 title: Babylon MeshBuilder(s)
-template: example
-terminal:
-  open: true
-  activePanel: 1
-  panels:
-    - type: terminal
-      id: 'cmds'
-      title: 'Command Line'
-      allowRedirects: true
-      allowCommands:
-        - ls
-        - echo
-        - cd
-        - npx
-        - npm
+# template: example
+# terminal:
+#   open: true
+#   activePanel: 1
+#   panels:
+#     - type: terminal
+#       id: 'cmds'
+#       title: 'Command Line'
+#       allowRedirects: true
+#       allowCommands:
+#         - ls
+#         - echo
+#         - cd
+#         - npx
+#         - npm
 ---
 
 # Welcome to TutorialKit

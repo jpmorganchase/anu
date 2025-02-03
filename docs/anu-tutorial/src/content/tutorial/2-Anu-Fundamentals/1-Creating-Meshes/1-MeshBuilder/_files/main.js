@@ -38,7 +38,7 @@ window.addEventListener("resize", function () {
 });
 
 
-scene.debugLayer.show({showExplorer: true, showInspector: false});
+scene.debugLayer.show({embedMode: true});
 
 
 // hide/show the Inspector with i
@@ -48,8 +48,7 @@ window.addEventListener("keydown", (ev) => {
         if (scene.debugLayer.isVisible()) {
             scene.debugLayer.hide();
         } else {
-            scene.debugLayer.show({showExplorer: true, showInspector: false});
+            scene.debugLayer.show({embedMode: true});
         }
     }
 });
-

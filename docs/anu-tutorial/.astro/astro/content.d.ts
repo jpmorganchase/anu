@@ -194,16 +194,23 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
-"2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md": {
-	id: "2-Anu-Fundamentals/2-Creating-Meshes/2-Make-A-Mesh/content.md";
-  slug: "2-anu-fundamentals/2-creating-meshes/2-make-a-mesh/content";
+"2-Anu-Fundamentals/1-Creating-Meshes/1-MeshBuilder/content.md": {
+	id: "2-Anu-Fundamentals/1-Creating-Meshes/1-MeshBuilder/content.md";
+  slug: "2-anu-fundamentals/1-creating-meshes/1-meshbuilder/content";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
-"2-Anu-Fundamentals/2-Creating-Meshes/meta.md": {
-	id: "2-Anu-Fundamentals/2-Creating-Meshes/meta.md";
-  slug: "2-anu-fundamentals/2-creating-meshes/meta";
+"2-Anu-Fundamentals/1-Creating-Meshes/2-Create/content.md": {
+	id: "2-Anu-Fundamentals/1-Creating-Meshes/2-Create/content.md";
+  slug: "2-anu-fundamentals/1-creating-meshes/2-create/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/1-Creating-Meshes/meta.md": {
+	id: "2-Anu-Fundamentals/1-Creating-Meshes/meta.md";
+  slug: "2-anu-fundamentals/1-creating-meshes/meta";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">

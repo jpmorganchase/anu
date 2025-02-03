@@ -1,7 +1,9 @@
 ---
 type: part
 title: Fundamentals
-# template: example_base
-# prepareCommands: 
-#     - ['npm install', 'Installing Dependencies']
+template: example
+focus: /lesson.js
+mainCommand: ['npm run dev', 'Running Local Dev Server']
+prepareCommands: 
+    - ['npm install', 'Installing Dependencies']
 ---
