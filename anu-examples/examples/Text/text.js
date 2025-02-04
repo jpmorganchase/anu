@@ -27,41 +27,56 @@ export const text = function(engine){
   camera.attachControl(true)
   camera.position = new Vector3(25,0,-15);
 
-  let data = []
-  
-  const randomizeThreshold = (threshold) => Math.random() * threshold * 2 - threshold
-  const randmizeVector = (threshold = 50) => new Vector3(randomizeThreshold(threshold), randomizeThreshold(threshold), randomizeThreshold(threshold))
-  
-  for (let i = 0; i <  1; i++){
-    data.push({});
-  }
-  
+  //Basic function
   let options1 = {
     text: 'USA',
     color: Color3.Red()
   }
   let text1 = anu.createPlaneText('myText1', options1, scene)
 
+  //------------
 
+  //Update
   let options2 = {
-    text: 'Europe',
-    color: Color3.Blue()
+    text: 'Australia',
+    color: Color3.Blue(),
+    size: 1
   }
   let text2 = anu.createPlaneText('myText2', options2, scene);
-  text2.position = new Vector3(0, -2, 0);
-
+  text2.position = new Vector3(0, 1, 0);
 
   options2.text = "Asia";
   options2.color = Color3.Green();
-  setTimeout(() => text2.updatePlaneText(options2), 1000);
-  setTimeout(() => text2.updatePlaneText({ color: Color3.Black(), size: 1.5 }), 2000);
+  options2.size = 1;
+  setTimeout(() => text2.updatePlaneText(options2), 2000);
+  setTimeout(() => text2.updatePlaneText({ text: "Europe", color: Color3.Black(), size: 1.5 }), 3000);
 
+  //------------
 
-  anu.bind('planeText', { color: Color3.Yellow() }, [{ text: "hello", value: 0}, { text: "world", value: 4 }])
-      .position((d,n,i) => new Vector3(d.value, -5, 0))
-      .run((d,n,i) => {
-        n.updatePlaneText({ text: d.text });
+  //Bind
+  anu.bind('planeText', { color: Color3.Yellow() }, [{ text: "hello", value: -2}, { text: "world", value: -4 }, { text: "!!!", value: -6}])
+      .positionY((d,n,i) => d.value)
+      .transition((d,n,i) => ({
+        duration: 20000
+      }))
+      .tween((d,n,i) =>
+      {
+        return (t) => {
+          if ((t * 1000) % 2 == 0) {
+            n.updatePlaneText({ text: Math.random(), color: Color3.Random(), size: Math.random() * 10 });
+            n.rotation = Vector3.Random();
+          }
+        }
       })
+    
+  //Align
+  let leftText = anu.createPlaneText("leftAlign", { text: "Left Align", align: "left" }, scene);
+  let centerText = anu.createPlaneText("centerAlign", { text: "Center Align", align: "center" }, scene);
+  let rightText = anu.createPlaneText("rightAlign", { text: "Right Align", align: "right" }, scene);
+
+  leftText.position.y = 5;
+  centerText.position.y = 4;
+  rightText.position.y = 3;
 
   return scene;
 };
