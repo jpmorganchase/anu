@@ -25,7 +25,7 @@ export function labelAlt(this: Axes) {
   let { min, max } = this.CoT.selected[0].getHierarchyBoundingVectors();
   let bounds = new BoundingInfo(min, max).boundingBox;
   let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
-  let textHeight = scaleMultiplier * 0.025;
+  let textHeight = scaleMultiplier * 0.04;
 
   //console.log(scaleMultiplier,  bounds);
 
@@ -111,7 +111,7 @@ export function labelAlt(this: Axes) {
       }),
     )
       .prop('name', this.name + '_labelY')
-      .position((d, n, i) => new Vector3(rangeX[0] - 0.05, scaleY(d.text) - textHeight / 2, rangeZ[0]))
+      .position((d, n, i) => new Vector3(rangeX[0] - 0.05, scaleY(d.text), rangeZ[0]))
       .props(assign({}, default_properties, this.options.labelProperties));
 
     selections.y = labelMesh;
