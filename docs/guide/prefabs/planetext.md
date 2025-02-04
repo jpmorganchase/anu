@@ -18,16 +18,22 @@ Plane Text can be created by calling [createPlaneText()](/api/modules.html#creat
 
 ``` js
 //With createPlaneText() returns Mesh
-anu.createPlaneText(name: string, options: {}, scene: Scene);
+let planeText = anu.createPlaneText(name: string, options: {}, scene: Scene);
+
+//updatePlaneText() will update the Mesh with the specified options
+planeText.updatePlaneText(options: {});
 
 //With create() returns Mesh
-anu.create('planeText', name: string, scene: Scene, options: {}, data: {});
+let mesh = anu.create('planeText', name: string, scene: Scene, options: {}, data: {});
 
 //With bind() returns Selection
 anu.bind('planeText', scene: Scene, options: {}, data: [{}]);
 
 //With bind() from a Selection returns a new Selection
 Selection.bind('planeText', options: {}, data: [{}]);
+
+//Combine run() and updatePlaneText() to update a Selection
+Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 ```
 
 ## Options
@@ -41,6 +47,14 @@ Selection.bind('planeText', options: {}, data: [{}]);
 | color |   (Color3) color value of the mesh material   |    Color3.White() |
 | font |   (json) json spec of the MSDF text font    |    roboto-standard.json |
 | atlas |   (png) texture atlas of the MSDF text font   |    roboto-standard.png |
+| fontHeight    |   (number) max height of all chars in the json spec of the MSDF text font. Do not change if using default font. If using custom font, either calculate the max height value from the font's json spec or leave undefined to automatically calculate at runtime |   undefined   |
+
+## Methods and Properties 
+
+
+| Property / Method      |      Description     |  
+| ------------- | ------------- | 
+|   updatePlaneText(options)  |  updates the plane text with the specified options, undeclared options will not be modified  |
 
 ## Examples
 
@@ -50,7 +64,13 @@ let options = {
     color: Color3.Green()
 }
 
-anu.createPlaneText('text2d', options, scene);
+let myText = anu.createPlaneText('myText', options, scene);
+
+options.text = "Goodbye World";
+options.color = Color3.Red();
+options.size = 1.5;
+
+scene.onPointerDown = (pointer) => myText.updatePlaneText(options);
 ```
 
 <singleView :scene="text" />

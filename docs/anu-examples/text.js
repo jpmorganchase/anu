@@ -24,7 +24,13 @@ export const text = function(engine){
       color: Color3.Green()
     }
 
-    anu.createPlaneText('myText', options, scene).position.x = -1;
+    let myText = anu.createPlaneText('myText', options, scene);
+
+    options.text = "Goodbye World";
+    options.color = Color3.Red();
+    options.size = 1.5;
+    
+    scene.onPointerDown = (pointer) => myText.updatePlaneText(options);
 
     return scene;
   
