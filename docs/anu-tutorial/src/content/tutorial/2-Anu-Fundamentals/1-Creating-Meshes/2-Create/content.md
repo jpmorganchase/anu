@@ -1,52 +1,44 @@
 ---
 type: lesson
-title: Babylon MeshBuilder(s)
-# template: example
-# terminal:
-#   open: true
-#   activePanel: 1
-#   panels:
-#     - type: terminal
-#       id: 'cmds'
-#       title: 'Command Line'
-#       allowRedirects: true
-#       allowCommands:
-#         - ls
-#         - echo
-#         - cd
-#         - npx
-#         - npm
+title: Anu Create() a Mesh
 ---
 
-# Welcome to TutorialKit
+# Create a Mesh with Anu
 
-Hey there, and welcome to TutorialKit 👋!
+In this lesson, we will see how Anu's create() function adds and returns a mesh to the scene.
+Create() wraps Babylon's MeshBuilder methods in one place and extends its functionality to except data to dynamically set mesh settings. 
+While we can use Babylon's MeshBuilder to achieve the same thing, create() is largely meant to be an internal function used for other Anu methods.
+However, it can be useful on its own to quickly add just a single mesh to you scene in a manner consistent with the rest of Anu. 
 
-To kick things off, we have prepared a small demo lesson for you, where we'll dive into the concept of event handling in JavaScript. Our task is to resuscitate a lifeless counter app by introducing the crucial element of interactivity: **event listeners**.
 
-Let's look at the preview on the right for a moment and try to click on the button that says `counter is 0`. We'll notice that it doesn't work.
+#### Step 1: Create a box
 
-In the code for `counter.js`, which you can find on the right, we have a `setupCounter` function responsible for initializing our counter app. However, a crucial component is missing: an event listener for the button.
+Lets get started by calling anu.create() to add a box to our scene. The first parameter is a string indicating the Mesh type we want to create. Create supports all the Babylon MeshBuilders as well as a couple of extra Mesh types provided by Anu such as planeText.  
 
-Event listeners are essential in web development as they enable our applications to respond to user actions. In this case, we need to listen for clicks on the button to increment the counter.
-
-To address this, we'll call the `addEventListener` to attach a `click` event listener to the button element. When a click is detected, we'll execute a callback function that increments the counter and updates the `innerHTML` accordingly.
-
-```ts add={9}
-export function setupCounter(element) {
-  let counter = 0;
-
-  const setCounter = (count) => {
-    counter = count;
-    element.innerHTML = `count is ${counter}`;
-  };
-
-  element.addEventListener('click', () => setCounter(counter + 1));
-
-  setCounter(0);
-}
+```js
+//create(mesh: string, name: string, options?: {}, data?: {}, scene?: Scene) : Mesh
+let box = anu.create('box', 'ourBox', {size: 2}, data);
 ```
 
-This gives you a sneak peak of the TutorialKit experience, demonstrating what it's capable of.
+Once you have the box in the scene try selecting it from the scene graph in the inspector (found under nodes). 
+Scroll down the properties panel until you see the "metadata" drop-down and expand it. 
+Notice how the metadata property (box.metadata) now contains a data key that contains our data, this will be used later. 
 
-Happy writing!
+#### Step 2: Set Mesh Options Dynamically
+
+We passed some example data into our create function. We can now use this data to dynamically set the initializing properties of our box mesh. Instead of passing raw values in our options object, we can pass anonymous functions instead. These functions will be passed the variables "d" which is the data object we passed into this method. We can now return the value of the data we want to use by indexing our data object by key. 
+
+Lets set the width, height, and depth of our box to "goals", "assists", "points" from our data object.
+
+```js
+ anu.create('box', 'ourBox',
+                      {
+                        height: (d) => d.goals,
+                        width: (d) => d.assists,
+                        depth: (d) => d.points
+                      },
+                      data,
+                      );
+```
+
+The create() method will execute all functions passed in the options object with our data before creating the mesh. This way we can easily set mesh parameters dynamically. In addition to this create() will also initialize several mesh setting that will be helpful for data visualization use cases, such as <a href="https://doc.babylonjs.com/features/featuresDeepDive/events/actions" target="_blank">Action Manger</a> and <a href="https://doc.babylonjs.com/features/featuresDeepDive/tags/" target="_blank">tags</a> . 

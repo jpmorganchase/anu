@@ -43,7 +43,6 @@ scene.debugLayer.show({embedMode: true});
 
 // hide/show the Inspector with i
 window.addEventListener("keydown", (ev) => {
-    // Shift+Ctrl+Alt+I
     if (ev.key == 'I') {
         if (scene.debugLayer.isVisible()) {
             scene.debugLayer.hide();

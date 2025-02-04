@@ -208,9 +208,37 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
+"2-Anu-Fundamentals/1-Creating-Meshes/3-Bind/content.md": {
+	id: "2-Anu-Fundamentals/1-Creating-Meshes/3-Bind/content.md";
+  slug: "2-anu-fundamentals/1-creating-meshes/3-bind/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/1-Creating-Meshes/4-Nesting/content.md": {
+	id: "2-Anu-Fundamentals/1-Creating-Meshes/4-Nesting/content.md";
+  slug: "2-anu-fundamentals/1-creating-meshes/4-nesting/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
 "2-Anu-Fundamentals/1-Creating-Meshes/meta.md": {
 	id: "2-Anu-Fundamentals/1-Creating-Meshes/meta.md";
   slug: "2-anu-fundamentals/1-creating-meshes/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/1-Manipulating-Selections/content.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/1-Manipulating-Selections/content.md";
+  slug: "2-anu-fundamentals/2-using-selections/1-manipulating-selections/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/meta.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/meta.md";
+  slug: "2-anu-fundamentals/2-using-selections/meta";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
