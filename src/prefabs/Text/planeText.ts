@@ -50,17 +50,19 @@ export class PlaneText extends Mesh {
   }
 
   run() {
-    //If there is a texture atlas for this font, retrieve it
-    if (PlaneText.textures[this.options.font.pages[0]]) {
-      this.options.atlas = PlaneText.textures[this.options.font.pages[0]];
+    if (!(this.options.atlas instanceof Texture)) {
+      //If there is a texture atlas for this font, retrieve it
+      if (PlaneText.textures[this.options.font.pages[0]]) {
+        this.options.atlas = PlaneText.textures[this.options.font.pages[0]];
+      }
+      //Otherwise create a new one and store it
+      else {
+        const texture = new Texture(this.options.atlas);
+        this.options.atlas = texture
+        PlaneText.textures[this.options.font.pages[0]] = texture;
+      }
     }
-    //Otherwise create a new one and store it
-    else {
-      const texture = new Texture(this.options.atlas);
-      this.options.atlas = texture
-      PlaneText.textures[this.options.font.pages[0]] = texture;
-    }
-
+    
     let textMesh = createTextMesh({
       text: this.options.text.toString(),
       color: this.options.color,
