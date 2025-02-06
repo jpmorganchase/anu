@@ -11,6 +11,8 @@ export default (scene) => {
     let boxes = anu.bind('box', {size: 1}, data);
 
     boxes.positionX(10)
+         .positionY((d, n, i) => d.goals)
+         .positionZ((d, n, i) => i)
 
     return scene
 }

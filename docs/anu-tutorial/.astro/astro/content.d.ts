@@ -236,6 +236,13 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/2-Materials-and-Colors/content.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/2-Materials-and-Colors/content.md";
+  slug: "2-anu-fundamentals/2-using-selections/2-materials-and-colors/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
 "2-Anu-Fundamentals/2-Using-Selections/meta.md": {
 	id: "2-Anu-Fundamentals/2-Using-Selections/meta.md";
   slug: "2-anu-fundamentals/2-using-selections/meta";
