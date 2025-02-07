@@ -10,67 +10,54 @@ layout: page
 <multiView>
 
 <div class='container'>
-<h1>Example Gallery</h1>
-
-<div class='section'>
-    <h2>The Classics</h2>
-<hr>
-<div class="cards">
-
-<card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
-
-<card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card>
-
-<card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card>
-
-<card title="2D Scatter Plot" example="Scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
-
-<card title="2D Bar Chart" example="barchart2d" link="/anu/examples/bar_chart_2D"></card>
-
-<card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card>
-
-</div>
-</div>
-
-<div class='section'>
-    <h2>Geographic</h2>
-<hr>
-<div class="cards">
-
-<card title="Texture Map" example="Texture_Map" link="/anu/examples/texture_map"></card>
-
-<card title="Texture Globe" example="Texture_Globe" link="/anu/examples/texture_globe"></card>
-
-<card title="Mesh Map" example="Mesh_Map" link="/anu/examples/mesh_map"></card>
-
-</div>
-</div>
-
-<div class='section'>
-    <h2>Interaction and UI</h2>
-<hr>
-<div class="cards">
-
-<card title="Pointer Hover" example="Hover" link="/anu/examples/hover"></card>
-
-<card title="Details On Demand" example="Details" link="/anu/examples/details"></card>
-
-<card title="Transform Widget UI" example="TransformWidget" link="/anu/examples/transform_widget_ui"></card>
-
-<card title="Layouts" example="layout" link="/anu/examples/layout"></card>
-
-</div>
-</div>
-
-<div class='section'>
-    <h2>Networks</h2>
-<hr>
-<div class="cards">
-
-<card title="Node Link 3D" example="NodeLink3D" link="/anu/examples/node_link_3d"></card>
-
-</div>
-</div>
+    <h1>Example Gallery</h1>
+    <div class='section'>
+        <h2>The Classics</h2>
+        <hr>
+        <div class="cards">
+            <card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
+            <card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card>
+            <card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card>
+            <card title="2D Scatter Plot" example="Scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
+            <card title="2D Bar Chart" example="barchart2d" link="/anu/examples/bar_chart_2D"></card>
+            <card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card>
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Geographic</h2>
+        <hr>
+        <div class="cards">
+            <card title="Texture Map" example="Texture_Map" link="/anu/examples/texture_map"></card>
+            <card title="Texture Globe" example="Texture_Globe" link="/anu/examples/texture_globe"></card>
+            <card title="Mesh Map" example="Mesh_Map" link="/anu/examples/mesh_map"></card>
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Interaction and UI</h2>
+        <hr>
+        <div class="cards">
+            <card title="Pointer Hover" example="Hover" link="/anu/examples/hover"></card>
+            <card title="Details On Demand" example="Details" link="/anu/examples/details"></card>  
+            <card title="Transform Widget UI" example="TransformWidget" link="/anu/examples/transform_widget_ui"></card>
+            <card title="Layouts" example="layout" link="/anu/examples/layout"></card>
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Networks</h2>
+        <hr>
+        <div class="cards">
+            <card title="Node Link 3D" example="NodeLink3D" link="/anu/examples/node_link_3d"></card>
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Animation</h2>
+        <hr>
+        <div class="cards">
+            <card title="Basic Animation" example="animationBarChart" link="/anu/examples/animation_Bar_Chart"></card>
+            <card title="Data Dimension Change" example="animationScatterPlot" link="/anu/examples/animation_Scatter_Plot"></card>
+            <card title="Bar Chart Race" example="animationBarChartRace" link="/anu/examples/animation_Bar_Chart_Race"></card>
+        </div>
+    </div>
 
 </div>
 

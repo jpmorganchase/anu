@@ -135,6 +135,15 @@ export default defineConfig({
         items: [
           { text: 'Node Link 3D', link: './node_link_3d' },
         ]
+      },
+      {
+        text: 'Animation',
+        collapsed: false,
+        items: [
+          { text: 'Basic Animation', link: './animation_bar_chart' },
+          { text: 'Data Dimension Change', link: './animation_scatter_plot' },
+          { text: 'Bar Chart Race', link: './animation_bar_chart_race' },
+        ]
       }
     ]
   },
