@@ -53,9 +53,9 @@ layout: page
         <h2>Animation</h2>
         <hr>
         <div class="cards">
-            <card title="Basic Animation" example="animationBarChart" link="/anu/examples/animation_Bar_Chart"></card>
-            <card title="Data Dimension Change" example="animationScatterPlot" link="/anu/examples/animation_Scatter_Plot"></card>
-            <card title="Bar Chart Race" example="animationBarChartRace" link="/anu/examples/animation_Bar_Chart_Race"></card>
+            <card title="Basic Animation" example="animationBarChart" link="/anu/examples/animation_bar_chart"></card>
+            <card title="Data Dimension Change" example="animationScatterPlot" link="/anu/examples/animation_scatter_plot"></card>
+            <card title="Bar Chart Race" example="animationBarChartRace" link="/anu/examples/animation_bar_chart_race"></card>
         </div>
     </div>
 
