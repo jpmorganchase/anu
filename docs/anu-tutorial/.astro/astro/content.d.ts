@@ -243,6 +243,27 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/3-Prop-and-Props/content.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/3-Prop-and-Props/content.md";
+  slug: "2-anu-fundamentals/2-using-selections/3-prop-and-props/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/4-Selecting-Meshes/content.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/4-Selecting-Meshes/content.md";
+  slug: "2-anu-fundamentals/2-using-selections/4-selecting-meshes/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/2-Using-Selections/5-Actions/content.md": {
+	id: "2-Anu-Fundamentals/2-Using-Selections/5-Actions/content.md";
+  slug: "2-anu-fundamentals/2-using-selections/5-actions/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
 "2-Anu-Fundamentals/2-Using-Selections/meta.md": {
 	id: "2-Anu-Fundamentals/2-Using-Selections/meta.md";
   slug: "2-anu-fundamentals/2-using-selections/meta";

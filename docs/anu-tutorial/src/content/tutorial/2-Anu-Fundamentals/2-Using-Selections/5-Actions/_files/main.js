@@ -20,7 +20,7 @@ const scene = new Scene(babylonEngine)
 //Add lights and a camera
 new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-camera.position = new Vector3(-5, 10, -40)
+camera.position = new Vector3(-10, 10, -20)
 camera.attachControl(true)
 
 //Call your function executing our lesson code from lesson.js passing our scene for support 
