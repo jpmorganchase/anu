@@ -22,7 +22,6 @@ export class PlaneText extends Mesh {
   name: string;
   options: planeTextOptions;
   scene: Scene;
-  static textures: {} = {};
 
   constructor(name: string, options: planeTextOptions, scene: Scene) {
     super(name, scene);
@@ -34,7 +33,7 @@ export class PlaneText extends Mesh {
 
     this.name = name;
     this.options = options;
-    this.scene = scene || this.getScene();
+    this.scene = scene ??= this.getScene();
     this.run();
   }
 
@@ -50,19 +49,16 @@ export class PlaneText extends Mesh {
   }
 
   run() {
-    if (!(this.options.atlas instanceof Texture)) {
-      //If there is a texture atlas for this font, retrieve it
-      if (PlaneText.textures[this.options.font.pages[0]]) {
-        this.options.atlas = PlaneText.textures[this.options.font.pages[0]];
-      }
-      //Otherwise create a new one and store it
-      else {
-        const texture = new Texture(this.options.atlas);
-        this.options.atlas = texture
-        PlaneText.textures[this.options.font.pages[0]] = texture;
-      }
+    //Try to get the texture atlas for this font from the scene
+    let texture = this.scene.getTextureByName(this.options.font.pages[0]);
+    //If no texture was found with the specified name...
+    if (!texture) {
+      //Rename the passed in texture or create a new texture if only a URL was given
+      texture = (this.options.atlas instanceof Texture) ? this.options.atlas : new Texture(this.options.atlas);
+      texture.name = this.options.font.pages[0];
     }
-    
+    this.options.atlas = texture;
+
     let textMesh = createTextMesh({
       text: this.options.text.toString(),
       color: this.options.color,
@@ -78,7 +74,6 @@ export class PlaneText extends Mesh {
     this.transferFromMesh(textMesh);
   }
 
-
   transferFromMesh(sourceMesh: Mesh) {
     //Store the start position and rotation so that the PlaneText stays where it is
     const startPos = this.position;
@@ -90,6 +85,9 @@ export class PlaneText extends Mesh {
     this.rotation = sourceMesh.rotation;
     this.scaling = sourceMesh.scaling;
     this.computeWorldMatrix(true);
+
+    //Because TextMesh creates a new texture each time, we destroy the (soon to be previous) texture
+    this.material?.dispose(true, false);
 
     //Declare variables which store the source mesh's data
     let arrayPos, arrayNormal, arrayIndice, arrayUv, arrayUv2, arrayColor, arrayMatricesIndices, arrayMatricesWeights;
@@ -117,7 +115,7 @@ export class PlaneText extends Mesh {
     this.material = sourceMesh.material;
 
     //Destroy the source mesh
-    sourceMesh.dispose();
+    sourceMesh.dispose(false, false);
 
     //Correct the scale and pivot point of the PlaneText so that it is easier to handle
     this.fixScaleAndPivot();
@@ -145,6 +143,12 @@ export class PlaneText extends Mesh {
 
     this.scaling = new Vector3(this.options.size, this.options.size, this.options.size);
   }
+
+  override dispose(doNotRecurse?: boolean, disposeMaterialAndTextures?: boolean): void {
+    //Override the dispose function so that we can destroy the material as well
+    this.material?.dispose(true, false);
+    super.dispose(false, false);
+  }
 }
 
 /**
@@ -156,16 +160,16 @@ export class PlaneText extends Mesh {
  */
 export function createPlaneText(name: string, options: planeTextOptions, scene: Scene) {
   const ops = {
-    text: options.text || "undefined",
-    size: options.size || 1,
-    opacity: options.opacity || 1,
-    align: options.align || 'center',
-    color: options.color || Color3.White(),
-    font: options.font || fnt,
-    atlas: options.atlas || png,
-    fontHeight: options.fontHeight || undefined
+    text: options.text ??= "undefined",
+    size: options.size ??= 1,
+    opacity: options.opacity ??= 1,
+    align: options.align ??= 'center',
+    color: options.color ??= Color3.White(),
+    font: options.font ??= fnt,
+    atlas: options.atlas ??= png,
+    fontHeight: options.fontHeight ??= undefined
   };
-  
+
   let plane = new PlaneText(name, ops, scene);
   return plane;
 }
