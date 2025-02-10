@@ -1,7 +1,7 @@
 
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine, DefaultLoadingScreen} from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine} from '@babylonjs/core';
 import lesson from "./lesson";
 
 
@@ -13,8 +13,6 @@ app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
 const babylonEngine = new Engine(canvas, true)
-
-const loadingScreen = new DefaultLoadingScreen(canvas);
 
 //create a scene object using our engine
 const scene = new Scene(babylonEngine)

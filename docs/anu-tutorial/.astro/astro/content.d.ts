@@ -271,6 +271,48 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/1-Step1/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/1-Step1/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/1-step1/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/2-Step2/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/2-Step2/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/2-step2/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/3-Step3/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/3-Step3/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/3-step3/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/4-Step4/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/4-Step4/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/4-step4/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/5-Step5/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/5-Step5/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/5-step5/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/meta.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/meta.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
 "2-Anu-Fundamentals/meta.md": {
 	id: "2-Anu-Fundamentals/meta.md";
   slug: "2-anu-fundamentals/meta";
