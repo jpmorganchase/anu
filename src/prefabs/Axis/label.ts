@@ -25,7 +25,7 @@ export function labelAlt(this: Axes) {
   let { min, max } = this.CoT.selected[0].getHierarchyBoundingVectors();
   let bounds = new BoundingInfo(min, max).boundingBox;
   let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
-  let textHeight = scaleMultiplier * 0.04;
+  let textHeight = scaleMultiplier * 0.05;
 
   //console.log(scaleMultiplier,  bounds);
 
