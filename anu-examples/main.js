@@ -15,6 +15,7 @@ import { box_bind } from './examples/FirstSteps/Box_Bind';
 import { box_selection } from './examples/FirstSteps/Box_Selection';
 import { select } from './examples/Selections/select';
 import { select_name_tag } from './examples/Selections/select_name_tag';
+import { select_data } from './examples/Selections/select_data';
 import { linechart3D } from './examples/LineCharts/linechart3D';
 import { scatterplot2D } from './examples/ScatterPlots/Scatterplot2D';
 import { barchart2d } from './examples/BarCharts/barchart2d';
@@ -72,6 +73,7 @@ const scenes = {
   'box_selection': box_selection,
   'select': select,
   'select_name_tag': select_name_tag,
+  'select_data': select_data,
   'scatterplot3D': scatterplot3D, 
   'barchart3D': barchart3D, 
   'linechart3D': linechart3D,
