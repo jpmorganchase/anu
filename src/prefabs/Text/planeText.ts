@@ -33,7 +33,7 @@ export class PlaneText extends Mesh {
 
     this.name = name;
     this.options = options;
-    this.scene = scene ??= this.getScene();
+    this.scene = scene ?? this.getScene();
     this.run();
   }
 
@@ -120,7 +120,7 @@ export class PlaneText extends Mesh {
     //Correct the scale and pivot point of the PlaneText so that it is easier to handle
     this.fixScaleAndPivot();
 
-    //Reset the PlaneText to its starting positiojn
+    //Reset the PlaneText to its starting position
     this.position = startPos;
     this.rotation = startRot;
   }
@@ -160,14 +160,14 @@ export class PlaneText extends Mesh {
  */
 export function createPlaneText(name: string, options: planeTextOptions, scene: Scene) {
   const ops = {
-    text: options.text ??= "undefined",
-    size: options.size ??= 1,
-    opacity: options.opacity ??= 1,
-    align: options.align ??= 'center',
-    color: options.color ??= Color3.White(),
-    font: options.font ??= fnt,
-    atlas: options.atlas ??= png,
-    fontHeight: options.fontHeight ??= undefined
+    text: options.text ?? "undefined",
+    size: options.size ?? 1,
+    opacity: options.opacity ?? 1,
+    align: options.align ?? 'center',
+    color: options.color ?? Color3.White(),
+    font: options.font ?? fnt,
+    atlas: options.atlas ?? png,
+    fontHeight: options.fontHeight ?? undefined
   };
 
   let plane = new PlaneText(name, ops, scene);
