@@ -15,9 +15,8 @@ export const text = function(engine){
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
   //Add a camera that rotates around the origin 
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.attachControl(true)
-  camera.position = new Vector3(25,0,-15);
+  const camera = new ArcRotateCamera("Camera", -(Math.PI / 3) , Math.PI / 2, 7, new Vector3(0, 0, 0), scene);
+  camera.attachControl(true);
 
     let options = {
       text: 'Hello World',
@@ -31,6 +30,8 @@ export const text = function(engine){
     options.size = 1.5;
     
     scene.onPointerDown = (pointer) => myText.updatePlaneText(options);
+
+    scene.onPointerUp = (pointer) => myText.text = "Hello Again";
 
     return scene;
   
