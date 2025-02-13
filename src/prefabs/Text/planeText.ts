@@ -20,8 +20,8 @@ interface planeTextOptions {
 
 export class PlaneText extends Mesh {
   name: string;
-  options: planeTextOptions;
   scene: Scene;
+  private options: planeTextOptions;
 
   constructor(name: string, options: planeTextOptions, scene: Scene) {
     super(name, scene);
@@ -37,6 +37,62 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
+  public get text() {
+    return this.options.text;
+  }
+  public set text(newText: string) {
+    this.options.text = newText;
+    this.run();
+  }
+
+  public get size() {
+    return this.options.size;
+  }
+  public set size(newSize: number) {
+    this.options.size = newSize;
+    this.run();
+  }
+
+  public get font() {
+    return this.options.font;
+  }
+  public set font(newFont: any) {
+    this.options.font = newFont;
+    this.run();
+  }
+
+  public get atlas() {
+    return this.options.atlas;
+  }
+  public set atlas(newAtlas: any) {
+    this.options.atlas = newAtlas;
+    this.run();
+  }
+
+  public get opacity() {
+    return this.options.opacity;
+  }
+  public set opacity(newOpacity: number) {
+    this.options.opacity = newOpacity;
+    this.run();
+  }
+
+  public get align() {
+    return this.options.align;
+  }
+  public set align(newAlign: 'left' | 'right' | 'center') {
+    this.options.align = newAlign;
+    this.run();
+  }
+
+  public get fontHeight() {
+    return this.options.fontHeight;
+  }
+  public set fontHeight(newFontHeight: number) {
+    this.options.fontHeight = newFontHeight;
+    this.run();
+  }
+
   /**
    * Updates the PlaneText with new options.
    *
@@ -48,7 +104,7 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
-  run() {
+  private run() {
     //Try to get the texture atlas for this font from the scene
     let texture = this.scene.getTextureByName(this.options.font.pages[0]);
     //If no texture was found with the specified name...
@@ -74,7 +130,7 @@ export class PlaneText extends Mesh {
     this.transferFromMesh(textMesh);
   }
 
-  transferFromMesh(sourceMesh: Mesh) {
+  private transferFromMesh(sourceMesh: Mesh) {
     //Store the start position and rotation so that the PlaneText stays where it is
     const startPos = this.position;
     const startRot = this.rotation;
@@ -125,7 +181,7 @@ export class PlaneText extends Mesh {
     this.rotation = startRot;
   }
 
-  fixScaleAndPivot() {
+  private fixScaleAndPivot() {
     this.computeWorldMatrix(true);
 
     //Scale is based on the fontHeight declared in the fonts json file
