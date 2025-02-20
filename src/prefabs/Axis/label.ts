@@ -31,10 +31,10 @@ export function labelAlt(this: Axes) {
       selections.x = labelBuilder(labelXDefaults(this, textHeight), ticks.x);
     }
     if (createBackground.y && this.options.scale?.y != undefined && this.options.scale?.z != undefined){
-      //selections.y = backgroundBuilder(backgroundYDefaults(this))
+      selections.y = labelBuilder(labelYDefaults(this, textHeight), ticks.y)
     }
     if (createBackground.z && this.options.scale?.z != undefined && this.options.scale?.x != undefined){
-      //selections.z = backgroundBuilder(backgroundZDefaults(this))
+      selections.z = labelBuilder(labelZDefaults(this, textHeight), ticks.z)
     }
 
   return selections;
@@ -50,24 +50,49 @@ type labelConfig = {
   properties: {}
 }
 
-const labelPropertiesDefaults = { 'material.diffuseColor': Color3.White(), 'material.alpha': 0.2 }
+const labelPropertiesDefaults = {}
 
 const labelOptionsDefaults = {};
 
 const labelXDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
-    name: axes.name + "_background_plane_x",
+    name: axes.name + "_label_x",
     cot: axes.CoT,
     rotation: new Vector3(0, 0, 0),
     position: {
-      0: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - textHeight, axes.scales.range.z[0]),
-      1: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - textHeight, axes.scales.range.z[1]),
-    }[axes.options.backgroundPosition.x ?? 0],
+      0: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['x']), axes.scales.range.z[0]),
+      1: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['x']), axes.scales.range.z[1]),
+    }[0],
     options: assign({}, { text: (d: any) => axes.options.labelFormat?.x?.(d.text) ?? d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['x'] ?? axes.options.labelOptions),
     properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['x'] ?? axes.options.labelProperties)
   })
 
-function labelBuilder(config: labelConfig, ticks: any[]): Selection {
+  const labelYDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
+    name: axes.name + "_label_y",
+    cot: axes.CoT,
+    rotation: new Vector3(0, 0, 0),
+    position: {
+      0: (d) => new Vector3(axes.scales.range.x[0] - (axes.options.labelMargin['y']), axes.scales.scale.y(d.text), axes.scales.range.z[0]),
+      1: (d) => new Vector3(axes.scales.range.x[1] + (axes.options.labelMargin['y']), axes.scales.scale.y(d.text), axes.scales.range.z[0]),
+    }[0],
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.y?.(d.text) ?? d.text, align: 'right', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['y'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['y'] ?? axes.options.labelProperties)
+  })
 
+  const labelZDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
+    name: axes.name + "_label_z",
+    cot: axes.CoT,
+    rotation: new Vector3(0, -1.5708, 0),
+    position: {
+      0: (d) => new Vector3(axes.scales.range.x[1], axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['z']), axes.scales.scale.z(d.text)),
+      1: (d) => new Vector3(axes.scales.range.x[0], axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['z']), axes.scales.scale.z(d.text)),
+    }[0],
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.z?.(d.text) ?? d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['z'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['z'] ?? axes.options.labelProperties)
+  })
+
+
+
+function labelBuilder(config: labelConfig, ticks: any[]): Selection {
 
   let labelMesh = config.cot.bind(
     'planeText',

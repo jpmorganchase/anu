@@ -29,7 +29,7 @@ const backgroundXDefaults = (axes: Axes): backgroundConfig => ({
       1: new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, axes.scales.range.z[0])
     }[axes.options.backgroundPosition.x ?? 0],
     options: assign({}, planeOptionsDefaults(axes.scales.range.y, axes.scales.range.x), axes.options.backgroundOptions['x'] ?? axes.options.backgroundOptions),
-    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['x'] ?? axes.options.backgroundProperties)
+    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['x'] ?? axes.options.backgroundOptions)
   })
 
   const backgroundYDefaults = (axes: Axes): backgroundConfig => ({ 
@@ -41,7 +41,7 @@ const backgroundXDefaults = (axes: Axes): backgroundConfig => ({
       1: new Vector3(axes.scales.range.x[1], (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, (axes.scales.range.z[0] + axes.scales.range.z[1]) / 2)
     }[axes.options.backgroundPosition.y ?? 0],
     options: assign({}, planeOptionsDefaults(axes.scales.range.y, axes.scales.range.z), axes.options.backgroundOptions['y'] ?? axes.options.backgroundOptions),
-    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['y'] ?? axes.options.backgroundProperties)
+    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['y'] ?? axes.options.backgroundOptions)
   })
 
   const backgroundZDefaults = (axes: Axes): backgroundConfig => ({ 
@@ -53,7 +53,7 @@ const backgroundXDefaults = (axes: Axes): backgroundConfig => ({
       1:  new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, axes.scales.range.y[1], (axes.scales.range.z[0] + axes.scales.range.z[1]) / 2)
     }[axes.options.backgroundPosition.z ?? 0],
     options: assign({}, planeOptionsDefaults(axes.scales.range.z, axes.scales.range.x), axes.options.backgroundOptions['z'] ?? axes.options.backgroundOptions),
-    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['z'] ?? axes.options.backgroundProperties)
+    properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['z'] ?? axes.options.backgroundOptions)
   })
 
   

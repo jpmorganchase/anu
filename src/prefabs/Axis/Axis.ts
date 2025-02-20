@@ -130,6 +130,7 @@ export class Axes extends TransformNode {
 }
 
 export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface) {
+  const keys = ['x', 'y', 'z']
   const Options: AxesOptionsInterface = {
     scale: options.scale,
     parent: options.parent ?? undefined,
@@ -137,18 +138,19 @@ export function createAxes(name: string, scene: Scene, options: AxesOptionsInter
     domainOptions: options.domainOptions ?? {},
     domainMaterialOptions: options.domainMaterialOptions ?? {},
     background: options.background ?? true,
-    backgroundOptions: options.backgroundOptions ?? {},
-    backgroundProperties: options.backgroundProperties ?? {},
+    backgroundOptions: keys.some(key => key in (options?.backgroundOptions ?? {})) ? {x: options.backgroundOptions?.['x'] ?? {}, y: options.backgroundOptions?.['y'] ?? {}, z: options.backgroundOptions?.['z'] ?? {}} : options.backgroundOptions ?? {},
+    backgroundProperties: keys.some(key => key in (options?.backgroundProperties ?? {})) ? {x: options.backgroundProperties?.['x'] ?? {}, y: options.backgroundProperties?.['y'] ?? {}, z: options.backgroundProperties?.['z'] ?? {}} : options.backgroundProperties ?? {},
     backgroundPosition: options.backgroundPosition ?? {x: 0, y: 0, z: 0},
     grid: options.grid ?? true,
-    gridOptions: options.gridOptions ?? {},
-    gridProperties: options.gridProperties ?? {},
+    gridOptions:  keys.some(key => key in (options?.gridOptions ?? {})) ? {x: options.gridOptions?.['x'] ?? {}, y: options.gridOptions?.['y'] ?? {}, z: options.gridOptions?.['z'] ?? {}} : options.gridOptions ?? {},
+    gridProperties: keys.some(key => key in (options?.gridProperties ?? {})) ? {x: options.gridProperties?.['x'] ?? {}, y: options.gridProperties?.['y'] ?? {}, z: options.gridProperties?.['z'] ?? {}} : options.gridProperties ?? {},
     gridTicks: options.gridTicks ?? {},
     label: options.label ?? true,
-    labelOptions: options.labelOptions ?? {},
-    labelProperties: options.labelProperties ?? {},
+    labelOptions: keys.some(key => key in (options?.labelOptions ?? {})) ? {x: options.labelOptions?.['x'] ?? {}, y: options.labelOptions?.['y'] ?? {}, z: options.labelOptions?.['z'] ?? {}} : options.labelOptions ?? {},
+    labelProperties: keys.some(key => key in (options?.labelProperties ?? {})) ? {x: options.labelProperties?.['x'] ?? {}, y: options.labelProperties?.['y'] ?? {}, z: options.labelProperties?.['z'] ?? {}} : options.labelProperties ?? {},
     labelTicks: options.labelTicks ?? {},
     labelFormat: options.labelFormat ?? {},
+    labelMargin: merge({}, {x: 0.15, y: 0.15, z: 0.15}, options.labelMargin),
     atlas: options.atlas ?? undefined,
   };
 

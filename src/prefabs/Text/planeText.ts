@@ -45,6 +45,15 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
+  public get color() {
+    return this.options.color;
+  }
+
+  public set color(newColor: Color3) {
+    this.options.color = newColor;
+    this.run();
+  }
+
   public get size() {
     return this.options.size;
   }

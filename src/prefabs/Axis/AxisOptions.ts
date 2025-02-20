@@ -16,8 +16,8 @@ export type AxesOptionsInterface = {
     domainMaterialOptions?: GreasedLineMaterial;
     domainProperties?: GreasedLineProperties;
     background?: boolean | { x?: boolean; y?: boolean; z?: boolean };
-    backgroundOptions?: PlaneParams | { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams}; 
-    backgroundProperties?: MeshProperties |  { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties};
+    backgroundOptions?: PlaneParams | { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams} | {}; 
+    backgroundProperties?: MeshProperties |  { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties} | {};
     backgroundPosition?: { x?: 0 | 1; y?: 0 | 1; z?: 0 | 1 };
     grid?: boolean | { x?: boolean; y?: boolean; z?: boolean };
     gridOptions?: LinesParams | {} | {x?: LinesParams, y?: LinesParams, z?: LinesParams};
@@ -28,6 +28,7 @@ export type AxesOptionsInterface = {
     labelProperties?: PlaneTextProperties | { x?: PlaneTextProperties ; y?: PlaneTextProperties; z?: PlaneTextProperties} | {};
     labelTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]};
     labelFormat?: { x?: (d: string)=> string; y?: (d: string)=> string; z?: (d: string)=> string};
+    labelMargin?: {x?: number, y?: number, z?: number};
     atlas?: Texture;
   }
 
