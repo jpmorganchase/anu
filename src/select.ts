@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
+import { Engine } from '@babylonjs/core/Engines';
 import { Node } from '@babylonjs/core/node';
 import { Scene } from '@babylonjs/core/scene';
 import { Tags } from '@babylonjs/core/Misc/tags';
@@ -92,26 +93,40 @@ export function selectTag(tag: string | string[], scene: Scene) {
  *
  * @param key the key or list of keys of the nodes to be selected.
  * @param value the value or list of values corresponding to the respective key(s) passed.
- * @param scene The babylon scene the to select from.
+ * @param scene The babylon scene the to select from. Defaults to the last created scene if undefined.
+ * @param useAndLogic If true, all keys and values must exist and match to be selected. Defaults to false.
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectData(key: string | string[], value: string | number | string[] | number[], scene: Scene) {
+export function selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean) {
+  scene ??= Engine.LastCreatedScene;
+  useAndLogic ??= false; 
+
   let selected: Node[] = [];
-  Array.isArray(key) && Array.isArray(value)
-    ? key.forEach(
-        (e, i) =>
-          (selected = [
-            ...selected,
-            ...scene
-              .getNodes()
-              .filter((node) => node.metadata != null)
-              .filter((node) => node.metadata.data[e] == value[i]),
-          ]),
-      )
-    : (selected = scene
-        .getNodes()
-        .filter((node) => node.metadata != null)
-        .filter((node) => node.metadata.data[key as string] == value));
+  if (Array.isArray(key) && Array.isArray(value)) {
+    if (useAndLogic) {
+      const kvps = Object.fromEntries(key.map((key, index) => [key, value[index]]));
+      scene.getNodes().forEach((node, idx) => {
+        if (node.metadata != null && Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v)) {
+          selected.push(node);
+        }
+      });
+    }
+    else {
+      let nodes = scene.getNodes().reverse();
+      key.forEach((e, i) => {
+        for (let j = nodes.length - 1; j >= 0; j--) {
+          if (nodes[j].metadata != null && nodes[j].metadata.data[e] == value[i]) {
+            selected.push(...nodes.splice(j, 1));
+          }
+        }
+      });
+    }
+  }
+  else {
+    selected = scene.getNodes()
+                    .filter((node) => node.metadata != null && node.metadata.data[key as string] == value);
+  }
+  
   return new Selection(selected, scene);
 }

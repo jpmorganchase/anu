@@ -20,8 +20,11 @@ Plane Text can be created by calling [createPlaneText()](/api/modules.html#creat
 //With createPlaneText() returns Mesh
 let planeText = anu.createPlaneText(name: string, options: {}, scene: Scene);
 
-//updatePlaneText() will update the Mesh with the specified options
+//updatePlaneText() will update the Mesh with the specified options in a single pass
 planeText.updatePlaneText(options: {});
+
+//setters will update the Mesh with the specified option after each call
+planeText.text = string;
 
 //With create() returns Mesh
 let mesh = anu.create('planeText', name: string, scene: Scene, options: {}, data: {});
@@ -41,7 +44,7 @@ Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 | Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
 |   text   | (string) text to be rendered | 'undefined' |
-| size     |   (number) scaling factor to be baked into the vertices    |   1 |
+| size     |   (number) scaling factor to be applied to the Mesh, same as scaling    |   1 |
 | opacity |   (number) opacity value between 0 and 1   |    1 |
 | align |    (string) horizontal alignment of the text, either 'left, 'center', or 'right'    |    'center'    |
 | color |   (Color3) color value of the mesh material   |    Color3.White() |
@@ -54,7 +57,15 @@ Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 
 | Property / Method      |      Description     |  
 | ------------- | ------------- | 
-|   updatePlaneText(options)  |  updates the plane text with the specified options, undeclared options will not be modified  |
+|   updatePlaneText(options)  |  updates the plane text with all the specified options in a single pass. Undeclared options will not be modified  |
+|   text  |  (string) gets or sets the rendered text  |
+|   size  |  (number) gets or sets the scaling factor  |
+|   opacity  |  (number) gets or sets the opacity value  |
+|   align  |  (string) gets or sets the horizontal alignment of the text  |
+|   color  |  (color3) gets or sets the color value of the mesh material  |
+|   font  |  (json) gets or sets the json spec of the MSDF text font |
+|   atlas  |  (png) gets or sets the texture atlas of the MSDF text font |
+|   fontHeight  |  (number) gets or sets the max height of the json spec |
 
 ## Examples
 
@@ -71,6 +82,8 @@ options.color = Color3.Red();
 options.size = 1.5;
 
 scene.onPointerDown = (pointer) => myText.updatePlaneText(options);
+
+scene.onPointerUp = (pointer) => myText.text = "Hello Again";
 ```
 
 <singleView :scene="text" />

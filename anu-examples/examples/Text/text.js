@@ -50,6 +50,16 @@ export const text = function(engine){
   options2.size = 1;
   setTimeout(() => text2.updatePlaneText(options2), 2000);
   setTimeout(() => text2.updatePlaneText({ text: "Europe", color: Color3.Black(), size: 1.5 }), 3000);
+  setTimeout(() => {
+    console.log(text2.text)
+    text2.text = "Africa";
+    console.log(text2.text)
+    text2.color = Color3.Yellow();
+    text2.size = 2;
+    text2.align = 'left';
+    text2.opacity = 0.1;
+    console.log(text2.font)
+    }, 4000);
 
   //------------
 
