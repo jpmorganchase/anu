@@ -63,11 +63,6 @@ export function barchart3D(babylonEngine){
         }
          );
 
-
-    chart.run((d,n,i) => {
-        n.normalizeToUnitCube();
-        camera.setTarget(n);;
-    }).positionY(1.5)
    
     return scene;
 }

@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Texture, TransformNode, Node } from '@babylonjs/core';
-import { Scene } from '@babylonjs/core/scene';
+import { Texture, TransformNode, Node, Scene} from '@babylonjs/core';
 import { Selection } from '../../selection';
-import { labelAlt } from './label';
-import { backgroundAlt } from './background';
-import { grid } from './grid';
-import { domain } from './domain';
-import png from '../../assets/roboto-regular.png';
+import { labelAlt, updateLabel } from './label';
+import { backgroundNew, updateBackground } from './background';
+import { grid, updateGrid } from './grid';
+import { domain, updateDomain } from './domain';
+import { AxesOptionsInterface } from './AxisOptions';
+import { TransitionOptions } from '../../selection/animation/transition';
+import merge from 'lodash-es/merge';
 
 interface AxisOptions {
   parent?: Node | Selection;
@@ -35,37 +36,29 @@ interface AxisOptions {
 }
 
 export class Axes extends TransformNode {
-  options: AxisOptions;
+  options: AxesOptionsInterface;
   CoT: Selection;
   scales: any;
   domain: Selection;
   background: { x?: Selection; y?: Selection; z?: Selection };
   grid: Selection;
   label: { x?: Selection; y?: Selection; z?: Selection };
+  tempScales: any;
+  tempAxes: any;
 
-  constructor(name: string, scene: Scene, options: AxisOptions = {}) {
+  constructor(name: string, scene: Scene, options: AxesOptionsInterface) {
     super(name, scene, true);
+
     this.name = name;
     this.options = options;
-    this.parent = this.options.parent instanceof Selection ? this.options.parent.selected[0] : this.options.parent;
+    this.parent = (this.options.parent instanceof Selection ? (this.options.parent.selected[0]) : this.options.parent);
     this.CoT = new Selection([this], scene);
     this.scales = this.setScales();
-    this.domain = this.options.domain ? this.setDomain() : new Selection([], scene);
-    this.background = this.options.background ? this.setBackground() : {};
-    this.grid = this.options.grid ? this.setGrid() : new Selection([], scene);
+    this.domain = this.setDomain();
+    this.background =  this.setBackground()
+    this.grid = this.options.grid ? this.setGrid() : undefined;
     this.label = this.options.label ? this.setLabel() : {};
   }
-
-  // private setCoT(): Selection {
-  //   let CoT;
-  //   if (this.options.parent === undefined) {
-  //     let node = new TransformNode(this.name + 'CoT', this.scene);
-  //     CoT = new Selection([node], this.scene);
-  //   } else {
-  //     CoT = this.options.parent.bind('cot').prop('name', this.name + 'CoT');
-  //   }
-  //   return CoT;
-  // }
 
   private setScales() {
     let scaleX: any;
@@ -108,38 +101,55 @@ export class Axes extends TransformNode {
 
     return {
       size: size,
+      range: {x: rangeX, y: rangeY, z: rangeZ },
+      scale: {x: scaleX, y: scaleY, z: scaleZ },
+      domain: {x: domainX, y: domainY, z: domainZ },
       x: { scale: scaleX, range: rangeX, domain: domainX },
       y: { scale: scaleY, range: rangeY, domain: domainY },
       z: { scale: scaleZ, range: rangeZ, domain: domainZ },
     };
   }
 
+  public updateAxes(axesOptions: AxesOptionsInterface, transitionOptions?: TransitionOptions){
+    this.tempScales = this.scales;
+    this.tempAxes = this;
+    this.options = merge({}, this.options, axesOptions);
+    this.scales = this.setScales();
+    updateBackground(this, transitionOptions);
+    updateDomain(this, transitionOptions);
+    updateGrid(this, transitionOptions);
+    this.label = updateLabel(this, transitionOptions);
+    this.tempScales = null;
+    this.tempAxes = null;
+  }
+
   private setDomain = domain;
-  private setBackground = backgroundAlt;
+  private setBackground = backgroundNew;
   private setGrid = grid;
   private setLabel = labelAlt;
 }
 
-export function createAxes(name: string, scene: Scene, options: AxisOptions) {
-  const Options: AxisOptions = {
+export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface) {
+  const Options: AxesOptionsInterface = {
     scale: options.scale,
-    parent: options.parent ??= undefined,
-    domain: options.domain ??= true,
-    domainOptions: options.domainOptions ??= {},
-    domainMaterialOptions: options.domainMaterialOptions ??= {},
-    background: options.background ??= true,
-    backgroundOptions: options.backgroundOptions ??= {},
-    backgroundProperties: options.backgroundProperties ??= {},
-    grid: options.grid ??= true,
-    gridOptions: options.gridOptions ??= {},
-    gridProperties: options.gridProperties ??= {},
-    gridTicks: options.gridTicks ??= {},
-    label: options.label ??= true,
-    labelOptions: options.labelOptions ??= {},
-    labelProperties: options.labelProperties ??= {},
-    labelTicks: options.labelTicks ??= {},
-    labelFormat: options.labelFormat ??= {},
-    atlas: options.atlas ??= undefined,
+    parent: options.parent ?? undefined,
+    domain: options.domain ?? true,
+    domainOptions: options.domainOptions ?? {},
+    domainMaterialOptions: options.domainMaterialOptions ?? {},
+    background: options.background ?? true,
+    backgroundOptions: options.backgroundOptions ?? {x: {}, y: {}, z: {}},
+    backgroundProperties: options.backgroundProperties ?? {x: {}, y: {}, z: {}},
+    backgroundPosition: options.backgroundPosition ?? {x: 0, y: 0, z: 0},
+    grid: options.grid ?? true,
+    gridOptions: options.gridOptions ?? {x: {}, y: {}, z: {}},
+    gridProperties: options.gridProperties ?? {x: {}, y: {}, z: {}},
+    gridTicks: options.gridTicks ?? {},
+    label: options.label ?? true,
+    labelOptions: options.labelOptions ?? {},
+    labelProperties: options.labelProperties ?? {},
+    labelTicks: options.labelTicks ?? {},
+    labelFormat: options.labelFormat ?? {},
+    atlas: options.atlas ?? undefined,
   };
 
   let axes = new Axes(name, scene, Options);

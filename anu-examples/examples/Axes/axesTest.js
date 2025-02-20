@@ -6,6 +6,7 @@ import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
+import { AxesOptions } from '@jpmorganchase/anu';
 
 //import { Mesh } from 'anu';
 
@@ -21,7 +22,7 @@ export const axesTest = function(engine){
   //Add a camera that rotates around the origin 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(28,0,-30);
+  camera.position = new Vector3(28,0,-50);
 
   //Create the functions that we will use to scale our data according to our desired dimensions. In this case we want to scale the position of our points. 
   //These functions will take a number and scale it between -10 and 10. calling .nice() adds some padding at the beginning and end 
@@ -63,10 +64,23 @@ export const axesTest = function(engine){
   //       new Vector3(1, 1, 1),
   //       100));
 
- 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+  let axesOps = new AxesOptions
+  
 
-    
+  console.log(axesOps.backgroundProperties)
+
+  var scaleX2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
+  var scaleY2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
+
+
+  let axes = anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}, background: true,
+  backgroundProperties: {x: {"material.diffuseColor": Color3.Random()}, y: {"material.diffuseColor": Color3.Random()}},
+  backgroundPosition: {z: 0},
+  gridProperties: {x: {"color": Color3.Random()}}
+});
+
+  //axes.updateAxes({scale: {x: scaleX2}}, {})
+
 
     return scene;
   

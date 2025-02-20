@@ -2,6 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 export { Selection } from './selection/index';
+export { AxesOptions } from './prefabs/Axis/AxisOptions';
 export { Axes as Axis } from './prefabs/Axis/Axis';
 export { PlaneText } from './prefabs/Text/planeText';
 export { TextureGlobe } from './prefabs/Mapping/textureGlobe';
