@@ -27,8 +27,8 @@ export function grid(this: Axes) {
 
   for (let key in lines){
 
-    let gridOptions = this.options.gridOptions[key] ?? {};
-    let gridProperties = this.options.gridProperties[key] ?? {};
+    let gridOptions = this.options.gridOptions[key] ?? this.options.gridOptions;
+    let gridProperties = this.options.gridProperties[key] ?? this.options.gridProperties;
 
     // @ts-ignore
     let tickMesh = this.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [lines[key]]).props(

@@ -6,6 +6,7 @@ import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { Selection } from '../../selection';
 import { TransitionOptions } from '../../selection/animation/transition';
+import { PlaneText } from '../Text/planeText';
 
 export function labelAlt(this: Axes) {
 
@@ -61,8 +62,8 @@ const labelXDefaults = (axes: Axes, textHeight: number): labelConfig => ({
       0: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - textHeight, axes.scales.range.z[0]),
       1: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - textHeight, axes.scales.range.z[1]),
     }[axes.options.backgroundPosition.x ?? 0],
-    options: assign({}, { text: (d: any) => d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.backgroundOptions['x'] ?? {}),
-    properties: assign({}, labelPropertiesDefaults, axes.options.backgroundProperties['x'] ?? {})
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.x?.(d.text) ?? d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['x'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['x'] ?? axes.options.labelProperties)
   })
 
 function labelBuilder(config: labelConfig, ticks: any[]): Selection {
@@ -81,7 +82,6 @@ function labelBuilder(config: labelConfig, ticks: any[]): Selection {
       "rotation": config.rotation
     })
     .props(config.properties);
-
 
   return labelMesh
 }

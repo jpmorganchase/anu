@@ -74,9 +74,11 @@ export const axesTest = function(engine){
 
 
   let axes = anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}, background: true,
-  backgroundProperties: {x: {"material.diffuseColor": Color3.Random()}, y: {"material.diffuseColor": Color3.Random()}},
+  backgroundProperties: {x: {"material.diffuseColor": Color3.Random()}},
   backgroundPosition: {z: 0},
-  gridProperties: {x: {"color": Color3.Random()}}
+  gridProperties: {"color": Color3.Random()},
+  labelFormat: {x: (d) => d + "%"},
+  labelOptions: {"color": Color3.Random()}
 });
 
   //axes.updateAxes({scale: {x: scaleX2}}, {})

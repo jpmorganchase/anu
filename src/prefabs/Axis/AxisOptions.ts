@@ -1,7 +1,7 @@
 
 import { Texture, TransformNode, Node, CreateGreasedLine, CreatePlane, Mesh, GreasedLineMesh, CreateLineSystem, LinesMesh, AbstractMesh} from '@babylonjs/core';
 import { Selection } from '../../selection';
-import { createPlaneText } from '../Text/planeText';
+import { PlaneText, createPlaneText } from '../Text/planeText';
 
 export type AxesBools = {x?: boolean, y?: boolean, z?: boolean};
 
@@ -25,7 +25,7 @@ export type AxesOptionsInterface = {
     gridTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]};
     label?: boolean | { x?: boolean; y?: boolean; z?: boolean };
     labelOptions?: PlaneTextParams | { x?: PlaneTextParams ; y?: PlaneTextParams; z?: PlaneTextParams} | {};
-    labelProperties?: MeshProperties;
+    labelProperties?: PlaneTextProperties | { x?: PlaneTextProperties ; y?: PlaneTextProperties; z?: PlaneTextProperties} | {};
     labelTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]};
     labelFormat?: { x?: (d: string)=> string; y?: (d: string)=> string; z?: (d: string)=> string};
     atlas?: Texture;
@@ -37,6 +37,7 @@ type PropertyKeys<T> = {
 
 export type MeshProperties = Partial<Pick<Mesh, PropertyKeys<Mesh>>>;
 export type GreasedLineProperties = Partial<Pick<GreasedLineMesh, PropertyKeys<GreasedLineMesh>>>;
+export type PlaneTextProperties = Partial<Pick<PlaneText, PropertyKeys<Mesh>>>;
 export type GreasedLineParams = Parameters<typeof CreateGreasedLine>[1];
 export type GreasedLineMaterial = Parameters<typeof CreateGreasedLine>[2];
 export type LineProperties = Partial<Pick<LinesMesh, PropertyKeys<LinesMesh>>>;
