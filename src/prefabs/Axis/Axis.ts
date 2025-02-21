@@ -86,7 +86,7 @@ export class Axes extends TransformNode {
     };
   }
 
-  public updateAxes(axesOptions: AxesOptionsInterface, transitionOptions?: TransitionOptions){
+  public updateAxes(axesOptions: AxesOptionsInterface | AxesConfig, transitionOptions?: TransitionOptions){
     this.tempScales = this.scales;
     this.tempAxes = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     this.options = merge({}, this.options, axesOptions);

@@ -104,36 +104,42 @@ export function updateBackground(axes: Axes, transitionOptions){
     let config = backgroundXDefaults(axes)
     transitionOptions ?
     selections.x.transition(transitionOptions).props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
     : selections.x.props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
   }
   if (selections.y) {
     let config = backgroundYDefaults(axes)
     transitionOptions ?
     selections.y.transition(transitionOptions).props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
     : selections.y.props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
   }
   if (selections.z) {
     let config = backgroundZDefaults(axes)
     transitionOptions ?
     selections.z.transition(transitionOptions).props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
     : selections.z.props({
-      scaling: (d,n) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
-      position: config.position
+      scaling: (d) => new Vector3(config.options.width / d.width, config.options.height / d.height, 1),
+      position: config.position,
+      ...config.properties
     })
   }
 }
