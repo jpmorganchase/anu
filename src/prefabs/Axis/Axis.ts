@@ -112,12 +112,12 @@ export class Axes extends TransformNode {
 
   public updateAxes(axesOptions: AxesOptionsInterface, transitionOptions?: TransitionOptions){
     this.tempScales = this.scales;
-    this.tempAxes = this;
+    this.tempAxes = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     this.options = merge({}, this.options, axesOptions);
     this.scales = this.setScales();
     updateBackground(this, transitionOptions);
     updateDomain(this, transitionOptions);
-    updateGrid(this, transitionOptions);
+    this.grid = updateGrid(this, transitionOptions);
     this.label = updateLabel(this, transitionOptions);
     this.tempScales = null;
     this.tempAxes = null;

@@ -120,6 +120,7 @@ export class AxesOptions{
     labelProperties?: MeshProperties;
     labelTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]};
     labelFormat?: { x?: (d: string)=> string; y?: (d: string)=> string; z?: (d: string)=> string};
+    labelMargin?: {x?: number, y?: number, z?: number};
     atlas?: Texture; // dont think this is needed?
 
     constructor() {

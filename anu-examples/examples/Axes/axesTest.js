@@ -78,13 +78,13 @@ export const axesTest = function(engine){
   backgroundPosition: {z: 0},
   //gridOptions: {},
   gridProperties: { z: {"color": Color3.Random()}},
-  labelFormat: {x: (d) => d + "%"},
-  labelOptions: {},
+  //labelFormat: {x: (d) => d + "%"},
+  //labelOptions: {x: {size: 1}},
   labelProperties: {x: {"color": Color3.Random()}, z: {"color": Color3.Random()}},
   labelMargin: {y:0.25}
 });
 
-  //axes.updateAxes({scale: {x: scaleX2}}, {})
+  axes.updateAxes({scale: {x: scaleX2}}, {})
 
 
     return scene;

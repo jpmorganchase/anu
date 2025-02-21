@@ -41,7 +41,7 @@ export function grid(this: Axes) {
   return new Selection(girdSelections, this._scene);
 }
 
-export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
+export function updateGrid(axes: Axes, transitionOptions: TransitionOptions): Selection{
 
   const ticks = buildTicks(axes.scales, axes.options.gridTicks);
 
@@ -51,8 +51,6 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
 
   const linesArray = buildLinesArray(axes.scales, ticks);
 
-
-
   axes.grid.dispose();
 
   let default_options = {lines: (d) => d.vectors, updatable: true};
@@ -60,7 +58,7 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
   let default_properties = { name: (d) => axes.name + '_grid_' + d.axis, alpha: 0.3, color: Color3.White() };
   
 
-  let girdSelections: Mesh[] = [];
+  let gridSelections: Mesh[] = [];
 
 
   for (let key in linesArray){
@@ -73,10 +71,10 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
       assign({}, default_properties, gridProperties),
     );
 
-    girdSelections.push(tickMesh.selected[0] as Mesh);
+    gridSelections.push(tickMesh.selected[0] as Mesh);
   }
 
-  let gridSelection = new Selection(girdSelections, axes._scene);
+  let gridSelection = new Selection(gridSelections, axes._scene);
 
   (transitionOptions)
   ?gridSelection.transition(transitionOptions).tween((d,n,i) => {
@@ -91,6 +89,8 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
     }
   })
   : null;
+
+  return gridSelection
 
 }
 

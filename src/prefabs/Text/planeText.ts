@@ -7,7 +7,7 @@ import png from '../../assets/roboto-regular.png';
 import { createTextMesh } from 'babylon-msdf-text';
 import assign from 'lodash-es/assign';
 
-interface planeTextOptions {
+export interface PlaneTextOptions {
   text: string;
   size: number;
   font: any;
@@ -21,9 +21,9 @@ interface planeTextOptions {
 export class PlaneText extends Mesh {
   name: string;
   scene: Scene;
-  private options: planeTextOptions;
+  private options: PlaneTextOptions;
 
-  constructor(name: string, options: planeTextOptions, scene: Scene) {
+  constructor(name: string, options: PlaneTextOptions, scene: Scene) {
     super(name, scene);
 
     if (options.fontHeight === undefined) {
@@ -107,7 +107,7 @@ export class PlaneText extends Mesh {
    *
    * @param options An options object of the properties to change.
    */
-  public updatePlaneText(options: planeTextOptions) {
+  public updatePlaneText(options: PlaneTextOptions) {
     //Override the existing options object with any new options
     this.options = assign({}, this.options, options);
     this.run();
@@ -223,7 +223,7 @@ export class PlaneText extends Mesh {
  * @param options An options object of the PlaneText.
  * @param scene The target scene for the created PlaneText.
  */
-export function createPlaneText(name: string, options: planeTextOptions, scene: Scene) {
+export function createPlaneText(name: string, options: PlaneTextOptions, scene: Scene) {
   const ops = {
     text: options.text ?? "undefined",
     size: options.size ?? 1,
