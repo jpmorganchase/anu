@@ -6,7 +6,6 @@ import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
 import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
-import { AxesOptions } from '@jpmorganchase/anu';
 
 //import { Mesh } from 'anu';
 
@@ -64,27 +63,32 @@ export const axesTest = function(engine){
   //       new Vector3(1, 1, 1),
   //       100));
 
-  let axesOps = new AxesOptions
-  
 
-  console.log(axesOps.backgroundProperties)
 
   var scaleX2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
   var scaleY2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
 
+  let axesOptions = new anu.AxesConfig({x: scaleX, y: scaleY, z: scaleZ})
 
-  let axes = anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}, background: true,
-  backgroundProperties: {x: {"material.diffuseColor": Color3.Random()}},
-  backgroundPosition: {z: 0},
-  //gridOptions: {},
-  gridProperties: { z: {"color": Color3.Random()}},
-  //labelFormat: {x: (d) => d + "%"},
-  //labelOptions: {x: {size: 1}},
-  labelProperties: {x: {"color": Color3.Random()}, z: {"color": Color3.Random()}},
-  labelMargin: {y:0.25}
-});
+  axesOptions.parent = chart
+  axesOptions.labelFormat = {x: (d) => d + "%"}
+  axesOptions.background.x = false
+  axesOptions.backgroundProperties.y = {'material.alpha': 1}
 
-  axes.updateAxes({scale: {x: scaleX2}}, {})
+  let axes = anu.createAxes('test', scene, axesOptions);
+
+//   let axes = anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}, background: true,
+//   backgroundProperties: {x: {"material.diffuseColor": Color3.Random()}},
+//   backgroundPosition: {z: 0},
+//   //gridOptions: {},
+//   gridProperties: { z: {"color": Color3.Random()}},
+//   //labelFormat: {x: (d) => d + "%"},
+//   //labelOptions: {x: {size: 1}},
+//   labelProperties: {x: {"color": Color3.Random()}, z: {"color": Color3.Random()}},
+//   labelMargin: {y:0.25}
+// });
+
+  //axes.updateAxes({scale: {x: scaleX2}}, {})
 
 
     return scene;

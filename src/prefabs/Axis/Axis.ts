@@ -1,39 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Texture, TransformNode, Node, Scene} from '@babylonjs/core';
+import { TransformNode, Scene} from '@babylonjs/core';
 import { Selection } from '../../selection';
 import { labelAlt, updateLabel } from './label';
 import { backgroundNew, updateBackground } from './background';
 import { grid, updateGrid } from './grid';
 import { domain, updateDomain } from './domain';
-import { AxesOptionsInterface } from './AxisOptions';
+import { AxesOptionsInterface, AxesConfig} from './AxisOptions';
 import { TransitionOptions } from '../../selection/animation/transition';
 import merge from 'lodash-es/merge';
-
-interface AxisOptions {
-  parent?: Node | Selection;
-  xScale?: any;
-  yScale?: any;
-  zScale?: any;
-  scale?: { x?: any; y?: any; z?: any };
-  domain?: boolean;
-  domainOptions?: any;
-  domainMaterialOptions?: any;
-  background?: boolean;
-  backgroundOptions?: {};
-  backgroundProperties?: {};
-  grid?: boolean;
-  gridOptions?: any;
-  gridProperties?: any;
-  gridTicks?: { x?: any; y?: any; z?: any };
-  label?: boolean;
-  labelOptions?: any;
-  labelProperties?: any;
-  labelTicks?: { x?: any; y?: any; z?: any };
-  labelFormat?: { x?: any; y?: any; z?: any };
-  atlas?: Texture;
-}
 
 export class Axes extends TransformNode {
   options: AxesOptionsInterface;
@@ -129,8 +105,9 @@ export class Axes extends TransformNode {
   private setLabel = labelAlt;
 }
 
-export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface) {
+export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface | AxesConfig) {
   const keys = ['x', 'y', 'z']
+
   const Options: AxesOptionsInterface = {
     scale: options.scale,
     parent: options.parent ?? undefined,
