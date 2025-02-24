@@ -306,6 +306,13 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
+"2-Anu-Fundamentals/3-Your-First-Vis/6-Step6/content.md": {
+	id: "2-Anu-Fundamentals/3-Your-First-Vis/6-Step6/content.md";
+  slug: "2-anu-fundamentals/3-your-first-vis/6-step6/content";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
 "2-Anu-Fundamentals/3-Your-First-Vis/meta.md": {
 	id: "2-Anu-Fundamentals/3-Your-First-Vis/meta.md";
   slug: "2-anu-fundamentals/3-your-first-vis/meta";

@@ -1,7 +1,7 @@
 import * as anu from "@jpmorganchase/anu";
 import penguins from "./penguins.json" assert {type: 'json'}
-import { extent, scaleLinear, scaleOrdinal } from "d3";
-import { Vector3 } from "@babylonjs/core";
+import { extent, scaleLinear, scaleOrdinal} from "d3";
+import { Vector3, ExecuteCodeAction, ActionManager} from "@babylonjs/core";
 
 export default (scene) => {
     
@@ -28,8 +28,29 @@ export default (scene) => {
             return new Vector3(scaleFactor,scaleFactor,scaleFactor)
          })
          .material((d) => colorScale(d["Species"]))
- 
 
+    let text
+
+    let OnPointerOverTrigger
+
+    let OnPointerOutTrigger
+ 
+    let axes = anu.createAxes("myAxes", scene, {
+        scale: {x: scaleX, y: scaleX, z: scaleZ},
+        parent: cot
+    })
+
+
+	let labelX = cot.bind("planeText", {text: "Beak Length (mm)"})
+                    .position(new Vector3(0, -6, -5))
+
+    let labelY = cot.bind("planeText", {text: "Flipper Length (mm)"})
+        .position(new Vector3(-6, 0, -5))
+        .rotationZ(90 * (3.14/180))
+
+    let labelZ = cot.bind("planeText", {text: "Flipper Depth (mm)"})
+        .position(new Vector3(5, -6, 0))
+        .rotationY(-90 * (3.14/180))
 
     return scene
 }
