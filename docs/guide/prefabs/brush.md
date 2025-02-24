@@ -10,7 +10,7 @@ outline: deep
 # Brush
 
 ## Overview
-Brushing (and linking) is a common interaction technique in visualization. The Brush prefab provides a way to enable brushing on a visualization with a few lines of code. It leverages Babylon's [PointerDragBehavior](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/meshBehaviors/#pointerdragbehavior) and [BoundingBoxGizmo][https://doc.babylonjs.com/features/featuresDeepDive/mesh/gizmo/#bounding-box-gizmo] to allow for the translation, rotation, and scaling of the selected region in a manner reminiscent of [d3-brush](https://github.com/d3/d3-brush). The prefab provides several [Observables](https://doc.babylonjs.com/features/featuresDeepDive/events/observables) that provide access to the Meshes that the Brush had selected. Sensible defaults are provided depending on the scales set in the options (i.e., 1D, 2D, vs 3D charts).
+Brushing (and linking) is a common interaction technique in visualization. The Brush prefab provides a way to enable brushing on a visualization with a few lines of code. It leverages Babylon's [PointerDragBehavior](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/meshBehaviors/#pointerdragbehavior) and [BoundingBoxGizmo](https://doc.babylonjs.com/features/featuresDeepDive/mesh/gizmo/#bounding-box-gizmo) to allow for the translation, rotation, and scaling of the selected region in a manner reminiscent of [d3-brush](https://github.com/d3/d3-brush). The prefab provides several [Observables](https://doc.babylonjs.com/features/featuresDeepDive/events/observables) that provide access to the Meshes that the Brush had selected. Sensible defaults are provided depending on the scales set in the options (i.e., 1D, 2D, vs 3D charts).
 
 ## Usage
 
@@ -35,10 +35,10 @@ brush.onBrushChangedObservable.add((evt) => {
 });
 
 //Selected Meshes can also be accessed from the Brush instance, and can be wrapped in an Anu Selection object
-let selection = anu.Selection(brush.brushed)
+let selection = anu.Selection(brush.brushed);
 
 //Brush can be updated with new options
-brush.updateBrush(options: {});
+brush.updateBrush(options: { ... });
 ```
 
 ## Options
@@ -47,7 +47,7 @@ brush.updateBrush(options: {});
 |---	|---	|---	|
 | scale 	| ({x?: scale, y?: scale, z?: scale}) the scale(s) of the chart's axes. At least one is required 	| Required 	|
 | parent 	| (Node \| Selection) Node or Selection that defines the parent node. This should be the same parent node that contains the chart 	| Required 	|
-| material 	| (StandardMaterial) the material of the Brush's mesh. 	| new StandardMaterial(), alpha = 0.4 	|
+| material 	| (StandardMaterial) the material of the Brush's mesh 	| new StandardMaterial(), alpha = 0.4 	|
 | brushable 	| (AbstractMesh[] \| Selection) Array of Meshes or Selection that denotes the Meshes that can be brushed 	| All child Meshes of parent with bound data 	|
 | padding 	| ({ x?: number, y?: number, z?: number }) the extra space in meters along each respective dimension that the Brush can move along 	| x: 0, y: 0, z: 0 	|
 | translateAxes 	| ({ x?: boolean, y?: boolean, z?: boolean }) sets whether the Brush can be translated along each respective dimension 	| Sensible defaults depending on scales set 	|
