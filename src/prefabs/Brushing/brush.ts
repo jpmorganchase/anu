@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Node, Observable, AbstractMesh, Mesh, BoundingBoxGizmo, UtilityLayerRenderer, PointerDragBehavior, Vector3, Color3, TransformNode, Quaternion, StandardMaterial, Material,  } from '@babylonjs/core';
+import { Scene, Node, Observable, AbstractMesh, Mesh, BoundingBoxGizmo, UtilityLayerRenderer, PointerDragBehavior, Vector3, Color3, TransformNode, Quaternion, StandardMaterial } from '@babylonjs/core';
 import { create } from '../../create';
 import { Selection } from '../../selection';
 import { assign, clamp, defaults, set, clone } from 'lodash-es';
