@@ -51,6 +51,7 @@ import { fig1 } from './examples/Figures/fig1';
 import { fig2 } from './examples/Figures/fig2';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 import { animate } from './examples/Animation/animate';
+import { brushing } from './examples/Brushing/Brushing';
 
 
 const queryString = window.location.search;
@@ -105,6 +106,7 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
+  'brushing': brushing,
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
   'fig1': fig1,
