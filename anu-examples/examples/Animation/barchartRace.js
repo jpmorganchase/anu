@@ -94,21 +94,21 @@ export const barchartRace = function(engine) {
       });
 
     //Do the same but for the labels shown on the bars
-    labels.transition((d,n,i) => ({ duration: interval }))  //We don't need onAnimationEnd again since we call it already for the bars
-      .tween((d,n,i) => {
-        let countryData = data.find(y => y.country === d.country);
+    // labels.transition((d,n,i) => ({ duration: interval }))  //We don't need onAnimationEnd again since we call it already for the bars
+    //   .tween((d,n,i) => {
+    //     let countryData = data.find(y => y.country === d.country);
 
-        let popTween = d3.interpolateNumber(Number(n.options.text.slice(0, -1) * 1000000), countryData.population); //We could store the previous year's population somewhere, here we just take it from the existing text before the animation begins
-        let posXTween = d3.interpolateNumber(n.position.x, scalePop(countryData.population) + 0.1);
-        let posYTween = d3.interpolateNumber(n.position.y, scaleRank(countryData.rank) - 0.025);
-        let alphaTween = d3.interpolateNumber(n.options.opacity, (countryData.rank) <= 10 ? 1 : 0);
+    //     let popTween = d3.interpolateNumber(Number(n.options.text.slice(0, -1) * 1000000), countryData.population); //We could store the previous year's population somewhere, here we just take it from the existing text before the animation begins
+    //     let posXTween = d3.interpolateNumber(n.position.x, scalePop(countryData.population) + 0.1);
+    //     let posYTween = d3.interpolateNumber(n.position.y, scaleRank(countryData.rank) - 0.025);
+    //     let alphaTween = d3.interpolateNumber(n.options.opacity, (countryData.rank) <= 10 ? 1 : 0);
 
-        return (t) => {
-          n.updatePlaneText({ text: (popTween(t) / 1000000).toFixed(1) + "M", opacity: alphaTween(t) });
-          n.position.x = posXTween(t);
-          n.position.y = posYTween(t)
-        }
-    });
+    //     return (t) => {
+    //       n.updatePlaneText({ text: (popTween(t) / 1000000).toFixed(1) + "M", opacity: alphaTween(t) });
+    //       n.position.x = posXTween(t);
+    //       n.position.y = posYTween(t)
+    //     }
+    // });
 
     //Update the label that displays the year
     yearLabel.updatePlaneText({ text: year });

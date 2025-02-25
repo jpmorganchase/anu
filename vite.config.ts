@@ -1,5 +1,4 @@
 // vite.config.js
-import { rollup } from 'd3';
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts';

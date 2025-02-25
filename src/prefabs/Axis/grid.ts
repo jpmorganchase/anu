@@ -41,7 +41,7 @@ export function grid(this: Axes) {
   return new Selection(girdSelections, this._scene);
 }
 
-export function updateGrid(axes: Axes, transitionOptions: TransitionOptions): Selection{
+export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
 
   const ticks = buildTicks(axes.scales, axes.options.gridTicks);
 
@@ -51,7 +51,9 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions): Se
 
   const linesArray = buildLinesArray(axes.scales, ticks);
 
-  axes.grid.dispose();
+  //axes.grid.dispose();
+
+  let previous_selection = axes.grid;
 
   let default_options = {lines: (d) => d.vectors, updatable: true};
 
@@ -60,37 +62,69 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions): Se
 
   let gridSelections: Mesh[] = [];
 
+  let gridUpdater = () => {
+    previous_selection.scaling(new Vector3(0,0,0));
 
-  for (let key in linesArray){
+      if (transitionOptions){
+        for (let key in linesArray){
 
-    let gridOptions = axes.options.gridOptions[key] ?? {};
-    let gridProperties = axes.options.gridProperties[key] ?? {};
+          let gridOptions = axes.options.gridOptions[key] ?? {};
+          let gridProperties = axes.options.gridProperties[key] ?? {};
 
-    // @ts-ignore
-    let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArray[key]]).props(
-      assign({}, default_properties, gridProperties),
-    );
+          // @ts-ignore
+          let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArrayPrev[key]]).props(
+            assign({}, default_properties, gridProperties),
+          );
 
-    gridSelections.push(tickMesh.selected[0] as Mesh);
-  }
-
-  let gridSelection = new Selection(gridSelections, axes._scene);
-
-  (transitionOptions)
-  ?gridSelection.transition(transitionOptions).tween((d,n,i) => {
-
-    const flattenedArrayPrev: number[] = linesArrayPrev[d.axis].vectors.flat().flatMap(vector => [vector.x, vector.y, vector.z]);
-    const flattenedArray: number[] = linesArray[d.axis].vectors.flat().flatMap(vector => [vector.x, vector.y, vector.z]);
+          gridSelections.push(tickMesh.selected[0] as Mesh);
+        }
     
-    let interpolate = interpolateNumberArray(flattenedArrayPrev, flattenedArray)
+        let gridSelection = new Selection(gridSelections, axes._scene);
+        
+        axes.grid = gridSelection;
+          
+        gridSelection.transition(transitionOptions).tween((d,n,i) => {
+          const flattenedArrayPrev: number[] = linesArrayPrev[d.axis].vectors.flat().flatMap(vector => [vector.x, vector.y, vector.z]);
+          const flattenedArray: number[] = linesArray[d.axis].vectors.flat().flatMap(vector => [vector.x, vector.y, vector.z]);
+            
+          let interpolate = interpolateNumberArray(flattenedArrayPrev, flattenedArray)
 
-    return (t) => {
-      create('lineSystem', n.name,  {lines: convertToVector3List(interpolate(t)), updatable: true, instance: n})
-    }
-  })
-  : null;
+          return (t) => {
+            try {
+              create('lineSystem', n.name,  {lines: convertToVector3List(interpolate(t)), updatable: true, instance: n})
+            } catch {}
+          }
+        })
+      } else {
+        for (let key in linesArray){
 
-  return gridSelection
+          let gridOptions = axes.options.gridOptions[key] ?? {};
+          let gridProperties = axes.options.gridProperties[key] ?? {};
+
+          // @ts-ignore
+          let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArray[key]]).props(
+            assign({}, default_properties, gridProperties),
+          );
+
+          gridSelections.push(tickMesh.selected[0] as Mesh);
+        }
+    
+        let gridSelection = new Selection(gridSelections, axes._scene);
+        
+        axes.grid = gridSelection;
+          
+      }
+
+    
+    previous_selection.run((d,n) => {
+      (n as Mesh).onBeforeDrawObservable.addOnce(() => n.dispose(false, true));
+    })
+
+    
+    axes._scene.unregisterBeforeRender(gridUpdater);
+}
+
+  axes._scene.registerBeforeRender(gridUpdater);
 
 }
 

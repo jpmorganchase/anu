@@ -93,7 +93,7 @@ export class Axes extends TransformNode {
     this.scales = this.setScales();
     updateBackground(this, transitionOptions);
     updateDomain(this, transitionOptions);
-    this.grid = updateGrid(this, transitionOptions);
+    updateGrid(this, transitionOptions);
     this.label = updateLabel(this, transitionOptions);
     this.tempScales = null;
     this.tempAxes = null;
