@@ -16,6 +16,8 @@ export function grid(this: Axes) {
   let ticks = buildTicks(this.scales, this.options.gridTicks);
 
   let lines = buildLinesArray(this.scales, ticks);
+
+  console.log(lines)
  
   let default_options = {lines: (d) => d.vectors, updatable: true};
 
@@ -26,16 +28,16 @@ export function grid(this: Axes) {
 
 
   for (let key in lines){
+    if (this.options.grid[key]) {
+      let gridOptions = this.options.gridOptions[key] ?? this.options.gridOptions;
+      let gridProperties = this.options.gridProperties[key] ?? this.options.gridProperties;
 
-    let gridOptions = this.options.gridOptions[key] ?? this.options.gridOptions;
-    let gridProperties = this.options.gridProperties[key] ?? this.options.gridProperties;
-
-    // @ts-ignore
-    let tickMesh = this.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [lines[key]]).props(
-      assign({}, default_properties, gridProperties),
-    );
-
-    girdSelections.push(tickMesh.selected[0] as Mesh);
+      // @ts-ignore
+      let tickMesh = this.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [lines[key]]).props(
+        assign({}, default_properties, gridProperties),
+      );
+      girdSelections.push(tickMesh.selected[0] as Mesh);
+    }
   }
 
   return new Selection(girdSelections, this._scene);
@@ -65,18 +67,19 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
   let gridUpdater = () => {
     previous_selection.scaling(new Vector3(0,0,0));
 
-      if (transitionOptions){
+      if (transitionOptions ){
         for (let key in linesArray){
+          if (axes.options.grid[key]){
+            let gridOptions = axes.options.gridOptions[key] ?? {};
+            let gridProperties = axes.options.gridProperties[key] ?? {};
 
-          let gridOptions = axes.options.gridOptions[key] ?? {};
-          let gridProperties = axes.options.gridProperties[key] ?? {};
+            // @ts-ignore
+            let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArrayPrev[key]]).props(
+              assign({}, default_properties, gridProperties),
+            );
 
-          // @ts-ignore
-          let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArrayPrev[key]]).props(
-            assign({}, default_properties, gridProperties),
-          );
-
-          gridSelections.push(tickMesh.selected[0] as Mesh);
+            gridSelections.push(tickMesh.selected[0] as Mesh);
+          }
         }
     
         let gridSelection = new Selection(gridSelections, axes._scene);
@@ -97,16 +100,17 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
         })
       } else {
         for (let key in linesArray){
+          if (axes.options.grid[key]){
+            let gridOptions = axes.options.gridOptions[key] ?? {};
+            let gridProperties = axes.options.gridProperties[key] ?? {};
 
-          let gridOptions = axes.options.gridOptions[key] ?? {};
-          let gridProperties = axes.options.gridProperties[key] ?? {};
+            // @ts-ignore
+            let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArray[key]]).props(
+              assign({}, default_properties, gridProperties),
+            );
 
-          // @ts-ignore
-          let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArray[key]]).props(
-            assign({}, default_properties, gridProperties),
-          );
-
-          gridSelections.push(tickMesh.selected[0] as Mesh);
+            gridSelections.push(tickMesh.selected[0] as Mesh);
+          }
         }
     
         let gridSelection = new Selection(gridSelections, axes._scene);
@@ -160,6 +164,8 @@ function buildTicks(scales, ticks?){
   builtTicks.x = ticks?.x ? ticks.x : scaleX?.ticks?.() ?? domainX; 
   builtTicks.y = ticks?.y ? ticks.y : scaleY?.ticks?.() ?? domainY; 
   builtTicks.z = ticks?.z ? ticks.z : scaleZ?.ticks?.() ?? domainZ; 
+
+  
 
   return builtTicks;
 }

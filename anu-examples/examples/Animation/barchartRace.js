@@ -28,7 +28,7 @@ export const barchartRace = function(engine) {
                   .diffuseColor((d,n,i) => Color3.Random());  //Ideally we map this to semantically relevant colors per country
 
   //Value labels per each bar
-  let labels = chart.bind('planeText', { text: "0", size: 0.15, align: "left" }, population);
+  let labels = chart.bind('planeText', { text: "0", size: 0.15, align: "left", opacity: 0}, population).positionZ(-0.02);
 
   //Label for the current year
   let yearLabel = anu.createPlaneText('yearLabel', { text: "1800", size: 0.4, parent: chart });
@@ -93,22 +93,27 @@ export const barchartRace = function(engine) {
         }
       });
 
+     // console.log(labels.filter((d,n,i) => { console.log(.material.alpha); return true}).selected)
+
+    
+
     //Do the same but for the labels shown on the bars
-    // labels.transition((d,n,i) => ({ duration: interval }))  //We don't need onAnimationEnd again since we call it already for the bars
-    //   .tween((d,n,i) => {
-    //     let countryData = data.find(y => y.country === d.country);
+    labels.filter((d,n,i) => n.material.alpha > 0).transition((d,n,i) => ({ duration: interval }))  //We don't need onAnimationEnd again since we call it already for the bars
+      .tween((d,n,i) => {
+        let countryData = data.find(y => y.country === d.country);
 
-    //     let popTween = d3.interpolateNumber(Number(n.options.text.slice(0, -1) * 1000000), countryData.population); //We could store the previous year's population somewhere, here we just take it from the existing text before the animation begins
-    //     let posXTween = d3.interpolateNumber(n.position.x, scalePop(countryData.population) + 0.1);
-    //     let posYTween = d3.interpolateNumber(n.position.y, scaleRank(countryData.rank) - 0.025);
-    //     let alphaTween = d3.interpolateNumber(n.options.opacity, (countryData.rank) <= 10 ? 1 : 0);
-
-    //     return (t) => {
-    //       n.updatePlaneText({ text: (popTween(t) / 1000000).toFixed(1) + "M", opacity: alphaTween(t) });
-    //       n.position.x = posXTween(t);
-    //       n.position.y = posYTween(t)
-    //     }
-    // });
+        let popTween = d3.interpolateNumber(Number(n.options.text.slice(0, -1) * 1000000), countryData.population); //We could store the previous year's population somewhere, here we just take it from the existing text before the animation begins
+        let posXTween = d3.interpolateNumber(n.position.x, scalePop(countryData.population) + 0.1);
+        let posYTween = d3.interpolateNumber(n.position.y, scaleRank(countryData.rank) - 0.025);
+        let alphaTween = d3.interpolateNumber(n.options.opacity, (countryData.rank) <= 10 ? 1 : 0);
+        return (t) => {
+          if ((countryData.rank) <= 10){
+            n.updatePlaneText({ text: (popTween(t) / 1000000).toFixed(1) + "M", opacity: alphaTween(t) });
+            n.position.x = posXTween(t);
+            n.position.y = posYTween(t)
+          }
+        }
+    });
 
     //Update the label that displays the year
     yearLabel.updatePlaneText({ text: year });
@@ -119,13 +124,13 @@ export const barchartRace = function(engine) {
       axesOptions.labelFormat.x = (pop) => (pop / 1000000) + "M";
       axesOptions.background.x = false;
       axesOptions.background.y = false;
-      axesOptions.grid.x = false;
+      axesOptions.grid.x = true;
       axesOptions.grid.y = false;
       axes = anu.createAxes('axes', scene, axesOptions);
     }
     else {    
       axesOptions.scale = { x: scalePop, y: scaleRank };
-      axesOptions.labelFormat.y = (rank) => data.find(d => d.rank === Number(rank)).country
+      axesOptions.labelFormat.y = (rank) => rank
       axes.updateAxes(axesOptions, { duration: 350 });
     }
   }

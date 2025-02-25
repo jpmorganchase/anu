@@ -74,15 +74,16 @@ export const axesTest = function(engine){
   axesOptions.labelFormat = {x: (d) => d + "%"}
   axesOptions.background.x = false
   axesOptions.backgroundProperties.y = {'material.alpha': 1}
+  axesOptions.grid.z = false;
 
   let axes = anu.createAxes('test', scene, axesOptions);
 
 
   axesOptions.scale.x = scaleX2
   axesOptions.backgroundProperties.z = {'material.diffuseColor': Color3.Random()}
+  axesOptions.labelFormat.y = (t) => t + ": hello"
 
-
-  axes.updateAxes(axesOptions, {})
+  axes.updateAxes(axesOptions)
 
 
     return scene;
