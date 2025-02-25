@@ -30,13 +30,13 @@ export function labelAlt(this: Axes) {
     //If no labels, return now
     if (!createLabel) return undefined;
   
-    if (createLabel.x && this.options.scale?.x != undefined  && this.options.scale?.y != undefined){
+    if (createLabel.x && this.options.scale?.x != undefined){
       selections.x = labelBuilder(labelXDefaults(this, textHeight), ticks.x);
     }
-    if (createLabel.y && this.options.scale?.y != undefined && this.options.scale?.z != undefined){
+    if (createLabel.y && this.options.scale?.y != undefined){
       selections.y = labelBuilder(labelYDefaults(this, textHeight), ticks.y)
     }
-    if (createLabel.z && this.options.scale?.z != undefined && this.options.scale?.x != undefined){
+    if (createLabel.z && this.options.scale?.z != undefined){
       selections.z = labelBuilder(labelZDefaults(this, textHeight), ticks.z)
     }
 
@@ -47,7 +47,7 @@ export function labelAlt(this: Axes) {
 type labelConfig = {
   name: string,
   cot: Selection,
-  position: (d) => Vector3
+  position: (d) => Vector3,
   rotation: Vector3,
   options: {},
   properties: {}
@@ -159,7 +159,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
 
 
   
-    if (createLabel.x && axes.options.scale?.x != undefined  && axes.options.scale?.y != undefined){
+    if (createLabel.x && axes.options.scale?.x != undefined){
       axes.label.x.scaling(new Vector3(0,0,0))
       if (transitionOptions) {
         const startConfig = labelXDefaults(axes.tempAxes, textHeight)
@@ -181,7 +181,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
         (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose());
       })
     }
-    if (createLabel.y && axes.options.scale?.y != undefined && axes.options.scale?.z != undefined){
+    if (createLabel.y && axes.options.scale?.y != undefined){
       axes.label.y.scaling(new Vector3(0,0,0))
       if (transitionOptions) {
         const startConfig = labelYDefaults(axes.tempAxes, textHeight)
@@ -203,7 +203,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
         (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose());
       })
     }
-    if (createLabel.z && axes.options.scale?.z != undefined && axes.options.scale?.x != undefined){
+    if (createLabel.z && axes.options.scale?.z != undefined){
       axes.label.z.scaling(new Vector3(0,0,0))
       if (transitionOptions) {
         const startConfig = labelZDefaults(axes.tempAxes, textHeight)

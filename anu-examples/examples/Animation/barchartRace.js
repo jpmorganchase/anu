@@ -39,7 +39,7 @@ export const barchartRace = function(engine) {
   let axes = null;
 
   let year = 1800;    //Current year shown in the race, 1800 is the start of this dataset
-  let interval = 400; //Time between years in milliseconds
+  let interval = 200; //Time between years in milliseconds
   nextTimestep();
 
   function nextTimestep() {
@@ -86,15 +86,17 @@ export const barchartRace = function(engine) {
         //We have to return a function with t as an argument that will actually modify the Mesh, in this case using our D3 interpolators
         //This function will be called every frame until the animation finishes, where t starts at 0 and ends at 1
         return (t) => {
-          n.position.x = posXTween(t);
-          n.scaling.x = scaleXTween(t);
-          n.position.y = posYTween(t);
-          n.material.alpha = alphaTween(t);
+          if ((countryData.rank) <= 11) {
+            n.position.x = posXTween(t);
+            n.scaling.x = scaleXTween(t);
+            n.position.y = posYTween(t);
+            n.material.alpha = alphaTween(t);
+          }
+          else {
+            n.material.alpha = 0;
+          }
         }
       });
-
-     // console.log(labels.filter((d,n,i) => { console.log(.material.alpha); return true}).selected)
-
     
 
     //Do the same but for the labels shown on the bars
@@ -107,10 +109,13 @@ export const barchartRace = function(engine) {
         let posYTween = d3.interpolateNumber(n.position.y, scaleRank(countryData.rank) - 0.025);
         let alphaTween = d3.interpolateNumber(n.options.opacity, (countryData.rank) <= 10 ? 1 : 0);
         return (t) => {
-          if ((countryData.rank) <= 10){
+          if ((countryData.rank) <= 11){
             n.updatePlaneText({ text: (popTween(t) / 1000000).toFixed(1) + "M", opacity: alphaTween(t) });
             n.position.x = posXTween(t);
             n.position.y = posYTween(t)
+          }
+          else {
+            n.position.y = 0;
           }
         }
     });
@@ -122,6 +127,7 @@ export const barchartRace = function(engine) {
       axesOptions = new anu.AxesConfig({ x: scalePop, y: scaleRank });
       axesOptions.parent = chart;
       axesOptions.labelFormat.x = (pop) => (pop / 1000000) + "M";
+      axesOptions.labelFormat.y = (rank) => data.find(d => d.rank === Number(rank)).country;
       axesOptions.background.x = false;
       axesOptions.background.y = false;
       axesOptions.grid.x = true;
@@ -130,8 +136,8 @@ export const barchartRace = function(engine) {
     }
     else {    
       axesOptions.scale = { x: scalePop, y: scaleRank };
-      axesOptions.labelFormat.y = (rank) => rank
-      axes.updateAxes(axesOptions, { duration: 350 });
+      axesOptions.labelFormat.y = (rank) => data.find(d => d.rank === Number(rank)).country;
+      axes.updateAxes(axesOptions, { duration: interval - 10 });
     }
   }
 
