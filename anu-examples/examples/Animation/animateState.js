@@ -62,6 +62,7 @@ export const animateState = function (engine) {
 
     let axesOptions = new anu.AxesConfig({ x: scaleX, y: scaleY, z: scaleZ });
     axesOptions.parent = CoT;
+    //axesOptions.label = {x: true}
 
     if (!axes)
         axes = anu.createAxes('axes', scene, axesOptions);

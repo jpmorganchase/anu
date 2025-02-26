@@ -134,7 +134,8 @@ function buildTicks(scales, ticks?){
 }
 
 export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
-  
+
+  let previous_selection = axes.label;
 
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
 
@@ -151,16 +152,15 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
     let createLabel = (typeof axes.options.label === "object") ? axes.options.label :
     axes.options.label === true ? {x: true, y: true, z: true} : false;
   
-
-    
-
     //If no labels, return now
     if (!createLabel) return undefined;
-
-
   
     if (createLabel.x && axes.options.scale?.x != undefined){
-      axes.label.x.scaling(new Vector3(0,0,0))
+    previous_selection.x.run((d,n) => n.setEnabled(false));
+    axes._scene.onAfterRenderObservable.addOnce(() => {
+      previous_selection.x.dispose();
+    })
+      
       if (transitionOptions) {
         const startConfig = labelXDefaults(axes.tempAxes, textHeight)
         const endConfig = labelXDefaults(axes, textHeight)
@@ -177,12 +177,14 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
       } else {
         selections.x = labelBuilder(labelXDefaults(axes, textHeight), ticks.x)
       }
-      axes.label.x.run((d,n) => {
-        (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose());
-      })
     }
     if (createLabel.y && axes.options.scale?.y != undefined){
-      axes.label.y.scaling(new Vector3(0,0,0))
+
+      previous_selection.y.run((d,n) => n.setEnabled(false));
+      axes._scene.onAfterRenderObservable.addOnce(() => {
+        previous_selection.y.dispose();
+      })
+
       if (transitionOptions) {
         const startConfig = labelYDefaults(axes.tempAxes, textHeight)
         const endConfig = labelYDefaults(axes, textHeight)
@@ -199,12 +201,14 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
       } else {
         selections.y = labelBuilder(labelYDefaults(axes, textHeight), ticks.y)
       }
-      axes.label.y.run((d,n) => {
-        (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose());
-      })
     }
     if (createLabel.z && axes.options.scale?.z != undefined){
-      axes.label.z.scaling(new Vector3(0,0,0))
+
+      previous_selection.z.run((d,n) => n.setEnabled(false));
+      axes._scene.onAfterRenderObservable.addOnce(() => {
+        previous_selection.z.dispose();
+      })
+
       if (transitionOptions) {
         const startConfig = labelZDefaults(axes.tempAxes, textHeight)
         const endConfig = labelZDefaults(axes, textHeight)
@@ -221,10 +225,9 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
       } else {
         selections.z = labelBuilder(labelZDefaults(axes, textHeight), ticks.z)
       }
-      axes.label.z.run((d,n) => {
-        (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose());
-      })
     }
+
+
 
   return selections
 }

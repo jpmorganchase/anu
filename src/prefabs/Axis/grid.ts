@@ -16,8 +16,6 @@ export function grid(this: Axes) {
   let ticks = buildTicks(this.scales, this.options.gridTicks);
 
   let lines = buildLinesArray(this.scales, ticks);
-
-  console.log(lines)
  
   let default_options = {lines: (d) => d.vectors, updatable: true};
 
@@ -64,9 +62,9 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
 
   let gridSelections: Mesh[] = [];
 
-  let gridUpdater = () => {
-    previous_selection.scaling(new Vector3(0,0,0));
-
+  axes._scene.onBeforeRenderObservable.addOnce(() => {
+    previous_selection.run((d,n) => n.setEnabled(false))
+      let count = 0;
       if (transitionOptions ){
         for (let key in linesArray){
           if (axes.options.grid[key]){
@@ -77,6 +75,8 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
             let tickMesh = axes.CoT.bind('lineSystem',  assign({}, default_options, gridOptions), [linesArrayPrev[key]]).props(
               assign({}, default_properties, gridProperties),
             );
+
+          
 
             gridSelections.push(tickMesh.selected[0] as Mesh);
           }
@@ -120,15 +120,22 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
       }
 
     
-    previous_selection.run((d,n) => {
-      (n as Mesh).onBeforeDrawObservable.addOnce(() => n.dispose(false, true));
-    })
-
     
-    axes._scene.unregisterBeforeRender(gridUpdater);
-}
+    // previous_selection.run((d,n) => {
+    //   (n as Mesh).onBeforeRenderObservable.addOnce(() => n.dispose(false, true));
+    // })
 
-  axes._scene.registerBeforeRender(gridUpdater);
+
+    axes._scene.onAfterRenderObservable.addOnce(() => {
+      previous_selection.dispose();
+    })
+    
+  
+    
+    //axes._scene.unregisterBeforeRender(gridUpdater);
+});
+
+  //axes._scene.registerBeforeRender(gridUpdater);
 
 }
 
