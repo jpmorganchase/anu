@@ -132,6 +132,7 @@ export const barchartRace = function(engine) {
       axesOptions.background.y = false;
       axesOptions.grid.x = true;
       axesOptions.grid.y = false;
+      axesOptions.domainMaterialOptions = {width: 0.01}
       axes = anu.createAxes('axes', scene, axesOptions);
     }
     else {    
