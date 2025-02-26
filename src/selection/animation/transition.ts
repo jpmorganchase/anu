@@ -108,6 +108,7 @@ export function createTransition(selection: Selection, accessor: string, value: 
   });
 }
 
+//Need to add a feature to stop and start a new tween when it is called more than once
 /**
  * Applies a tweening function to each node in the selection, returning a eased time value between 0-1 to be used for animation control for the total duration of the transition. The tweening function is executed for each node, allowing for fine-grained control over the animation process.
  *
