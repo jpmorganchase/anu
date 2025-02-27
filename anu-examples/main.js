@@ -52,6 +52,8 @@ import { fig2 } from './examples/Figures/fig2';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 import { animate } from './examples/Animation/animate';
 import { brushing } from './examples/Brushing/Brushing';
+import { animateState } from './examples/Animation/animateState';
+import { barchartRace } from './examples/Animation/barchartRace';
 
 
 const queryString = window.location.search;
@@ -112,7 +114,9 @@ const scenes = {
   'fig1': fig1,
   'fig2': fig2,
   'scatterplotThinInstance': scatterplotThinInstance,
-  'animate': animate
+  'animate': animate,
+  'animateState': animateState,
+  'barchartRace': barchartRace
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
