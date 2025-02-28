@@ -21,3 +21,4 @@ export { planeLayout, cylinderLayout } from './prefabs/Layout/Layout';
 export { createAxes } from './prefabs/Axis/Axis';
 export { ordinalChromatic, sequentialChromatic, schemes } from './prefabs/Chromatic/Chromatic';
 export { createMeshMap } from './prefabs/Mapping/MeshMap';
+export { createBrush } from './prefabs/Brushing/brush';

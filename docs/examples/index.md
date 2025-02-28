@@ -43,6 +43,14 @@ layout: page
         </div>
     </div>
     <div class='section'>
+        <h2>Brushing and Linking</h2>
+        <hr>
+        <div class="cards">
+            <card title="Single Selection" example="brushingLinkingSingle" link="/anu/examples/brushing_linking_single"></card>
+            <card title="Multiple Selection" example="brushingLinkingMultiple" link="/anu/examples/brushing_linking_multiple"></card>
+        </div>
+    </div>
+    <div class='section'>
         <h2>Networks</h2>
         <hr>
         <div class="cards">

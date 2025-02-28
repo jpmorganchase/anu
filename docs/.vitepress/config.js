@@ -59,6 +59,7 @@ export default defineConfig({
             { text: 'Texture Maps', link: '/guide/prefabs/texturemaps.md'},
             { text: 'Mesh Map', link: '/guide/prefabs/meshmap.md'},
             { text: 'Transform Widget UI', link: "/guide/prefabs/transformwidgetui.md"},
+            { text: 'Brush', link: '/guide/prefabs/brush.md' },
             //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
             //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
             { text: 'Layout', link: '/guide/prefabs/layout.md' },
@@ -127,6 +128,14 @@ export default defineConfig({
           { text: 'Details on Demand', link: './details' },
           { text: 'Transform Widget UI', link: './transform_widget_ui' },
           { text: 'Layouts', link: './layout' },
+        ]
+      },
+      {
+        text: 'Brushing and Linking',
+        collapsed: false,
+        items: [
+          { text: 'Single Selection', link: './brushing_linking_single' },
+          { text: 'Multiple Selection', link: './brushing_linking_multiple' }
         ]
       },
       {

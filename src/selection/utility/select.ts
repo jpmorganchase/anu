@@ -106,7 +106,6 @@ export function selectData(this: Selection, key: string | string[], value: strin
     if (useAndLogic) {
       const kvps = Object.fromEntries(key.map((key, index) => [key, value[index]]));
       let nodes = [...this.selected, ...this.selected.flatMap((element) => [element, ...element.getChildren(undefined, false)])];
-      console.log(nodes)
       nodes.forEach((node, idx) => {
         if (node.metadata != null && Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v)) {
           selected.push(node);
