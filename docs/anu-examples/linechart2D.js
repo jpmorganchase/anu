@@ -70,7 +70,8 @@ export function linechart2D(engine){
                                   scale: { x: scaleX, y: scaleY },
                                   domainMaterialOptions: { "color": Color3.Black(), width: 0.05 },
                                   labelTicks: { x: scaleX.ticks(d3.timeYear) },
-                                  labelFormat: { x: dateFormat, y: (text) => '$' + text }
+                                  labelFormat: { x: dateFormat, y: (text) => '$' + text },
+                                  background: false   //Hide background to prevent z-fighting
   });
 
   return scene;
