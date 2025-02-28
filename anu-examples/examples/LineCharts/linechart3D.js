@@ -77,7 +77,7 @@ export function linechart3D(babylonEngine) {
 
     anu.createAxes('test', scene, { parent: anu.select("#cot", scene),
                                     scale: {x: scaleX, y: scaleY, z: scaleZ},
-                                    domainMaterialOptions: { "color": Color3.Black(), width: 5},
+                                    domainMaterialOptions: { "color": Color3.Black(), width: 0.05},
                                     gridTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
                                     labelTicks: {x: scaleX.ticks(d3.timeYear.every(2))},
                                     labelFormat: {x: dateFormat, y: (text) => {

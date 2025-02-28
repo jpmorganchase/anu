@@ -68,7 +68,7 @@ export function linechart2D(engine){
   //Also adjust its visual properties to properly format the axes labels
   anu.createAxes("axes", scene, { parent: chart,
                                   scale: { x: scaleX, y: scaleY },
-                                  domainMaterialOptions: { "color": Color3.Black(), width: 2 },
+                                  domainMaterialOptions: { "color": Color3.Black(), width: 0.05 },
                                   labelTicks: { x: scaleX.ticks(d3.timeYear) },
                                   labelFormat: { x: dateFormat, y: (text) => '$' + text }
   });

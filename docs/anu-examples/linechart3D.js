@@ -79,7 +79,7 @@ export function linechart3D(engine) {
   //Also adjust its visual properties to properly format the axes labels
   anu.createAxes("test", scene, { parent: CoT,
                                   scale: { x: scaleX, y: scaleY, z: scaleZ },
-                                  domainMaterialOptions: { "color": Color3.Black(), width: 5 },
+                                  domainMaterialOptions: { "color": Color3.Black(), width: 0.05 },
                                   gridTicks: { x: scaleX.ticks(d3.timeYear.every(2)) },
                                   labelTicks: { x: scaleX.ticks(d3.timeYear.every(2)) },
                                   labelFormat: { x: dateFormat, y: (text) => (text === undefined) ? "0%" : text + "%" }
