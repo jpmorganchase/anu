@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AxesConfig](classes/AxesConfig.md)
 - [Axis](classes/Axis.md)
 - [Layout](classes/Layout.md)
 - [MeshMap](classes/MeshMap.md)
@@ -27,6 +28,7 @@
 - [bindThinInstance](modules.md#bindthininstance)
 - [create](modules.md#create)
 - [createAxes](modules.md#createaxes)
+- [createBrush](modules.md#createbrush)
 - [createMeshMap](modules.md#createmeshmap)
 - [createPlaneText](modules.md#createplanetext)
 - [createTextureGlobe](modules.md#createtextureglobe)
@@ -49,7 +51,7 @@
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:81](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L81)
+[src/prefabs/Chromatic/Chromatic.ts:105](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L105)
 
 ## Functions
 
@@ -84,7 +86,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:29](https://github.com/jpmorganchase/anu/blob/9b6add0/src/bind.ts#L29)
+[src/bind.ts:29](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L29)
 
 ___
 
@@ -112,7 +114,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:47](https://github.com/jpmorganchase/anu/blob/9b6add0/src/bind.ts#L47)
+[src/bind.ts:52](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L52)
 
 ___
 
@@ -140,7 +142,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:70](https://github.com/jpmorganchase/anu/blob/9b6add0/src/bind.ts#L70)
+[src/bind.ts:75](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L75)
 
 ___
 
@@ -174,7 +176,7 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[src/create.ts:103](https://github.com/jpmorganchase/anu/blob/9b6add0/src/create.ts#L103)
+[src/create.ts:111](https://github.com/jpmorganchase/anu/blob/7421a80/src/create.ts#L111)
 
 ___
 
@@ -188,7 +190,7 @@ ___
 | :------ | :------ |
 | `name` | `string` |
 | `scene` | `Scene` |
-| `options` | `AxisOptions` |
+| `options` | `AxesOptionsInterface` \| [`AxesConfig`](classes/AxesConfig.md) |
 
 #### Returns
 
@@ -196,7 +198,29 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:127](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L127)
+[src/prefabs/Axis/Axis.ts:108](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L108)
+
+___
+
+### createBrush
+
+▸ **createBrush**(`name`, `scene`, `options`): `Brush`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `scene` | `Scene` |
+| `options` | `BrushOptionsInterface` |
+
+#### Returns
+
+`Brush`
+
+#### Defined in
+
+[src/prefabs/Brushing/brush.ts:392](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Brushing/brush.ts#L392)
 
 ___
 
@@ -225,29 +249,31 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:85](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/MeshMap.ts#L85)
+[src/prefabs/Mapping/MeshMap.ts:108](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L108)
 
 ___
 
 ### createPlaneText
 
-▸ **createPlaneText**(`name`, `options`, `scene`): `Mesh`
+▸ **createPlaneText**(`name`, `options`, `scene`): [`PlaneText`](classes/PlaneText.md)
+
+Creates a new PlaneText prefab.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `options` | `planeTextOptions` |
-| `scene` | `Scene` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of this PlaneText. |
+| `options` | `PlaneTextOptions` | An options object of the PlaneText. |
+| `scene` | `Scene` | The target scene for the created PlaneText. |
 
 #### Returns
 
-`Mesh`
+[`PlaneText`](classes/PlaneText.md)
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:70](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Text/planeText.ts#L70)
+[src/prefabs/Text/planeText.ts:226](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L226)
 
 ___
 
@@ -273,7 +299,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:125](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L125)
+[src/prefabs/Mapping/textureGlobe.ts:131](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L131)
 
 ___
 
@@ -300,7 +326,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureMap.ts:191](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureMap.ts#L191)
+[src/prefabs/Mapping/textureMap.ts:193](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureMap.ts#L193)
 
 ___
 
@@ -322,7 +348,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Layout/Layout.ts:258](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Layout/Layout.ts#L258)
+[src/prefabs/Layout/Layout.ts:281](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Layout/Layout.ts#L281)
 
 ___
 
@@ -342,7 +368,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:68](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L68)
+[src/prefabs/Chromatic/Chromatic.ts:93](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L93)
 
 ___
 
@@ -364,7 +390,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Layout/Layout.ts:244](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Layout/Layout.ts#L244)
+[src/prefabs/Layout/Layout.ts:269](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Layout/Layout.ts#L269)
 
 ___
 
@@ -391,13 +417,13 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:18](https://github.com/jpmorganchase/anu/blob/9b6add0/src/select.ts#L18)
+[src/select.ts:19](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L19)
 
 ___
 
 ### selectData
 
-▸ **selectData**(`key`, `value`, `scene`): [`Selection`](classes/Selection.md)
+▸ **selectData**(`key`, `value`, `scene?`, `useAndLogic?`): [`Selection`](classes/Selection.md)
 
 Select all nodes from the scene graph with binded data matching the given key value pairs and return them as a
 instance of Selection.
@@ -408,7 +434,8 @@ instance of Selection.
 | :------ | :------ | :------ |
 | `key` | `string` \| `string`[] | the key or list of keys of the nodes to be selected. |
 | `value` | `string` \| `number` \| `string`[] \| `number`[] | the value or list of values corresponding to the respective key(s) passed. |
-| `scene` | `Scene` | The babylon scene the to select from. |
+| `scene?` | `Scene` | The babylon scene the to select from. Defaults to the last created scene if undefined. |
+| `useAndLogic?` | `boolean` | If true, all keys and values must exist and match to be selected. Defaults to false. |
 
 #### Returns
 
@@ -419,7 +446,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:99](https://github.com/jpmorganchase/anu/blob/9b6add0/src/select.ts#L99)
+[src/select.ts:101](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L101)
 
 ___
 
@@ -446,7 +473,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:62](https://github.com/jpmorganchase/anu/blob/9b6add0/src/select.ts#L62)
+[src/select.ts:63](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L63)
 
 ___
 
@@ -473,7 +500,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:45](https://github.com/jpmorganchase/anu/blob/9b6add0/src/select.ts#L45)
+[src/select.ts:46](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L46)
 
 ___
 
@@ -500,7 +527,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:79](https://github.com/jpmorganchase/anu/blob/9b6add0/src/select.ts#L79)
+[src/select.ts:80](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L80)
 
 ___
 
@@ -520,4 +547,4 @@ ___
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:72](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Chromatic/Chromatic.ts#L72)
+[src/prefabs/Chromatic/Chromatic.ts:97](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L97)

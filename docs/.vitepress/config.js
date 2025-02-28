@@ -42,12 +42,13 @@ export default defineConfig({
             { text: 'Creating Meshes', link: '/guide/first_steps.md' },
             { text: 'Using Selections', link: '/guide/using_selections.md' },
             { text: 'Manipulating Selections', link: '/guide/manipulating_selections.md' },
+            { text: '3D Scatter Plot', link: '/guide/first_visualization.md'}
             ]
           },
-            { text: 'Creating Visualizations',
+            { text: 'Deeper Topics',
             collapsed: false,
             items: [
-              { text: '3D Scatter Plot', link: '/guide/first_visualization.md'}
+              { text: 'Mesh, Clones, Instances', link: '/guide/deeper_topics/mesh_clone_instance.md'}
             ]
           },
           { text: 'Anu Prefabs',
@@ -60,8 +61,6 @@ export default defineConfig({
             { text: 'Mesh Map', link: '/guide/prefabs/meshmap.md'},
             { text: 'Transform Widget UI', link: "/guide/prefabs/transformwidgetui.md"},
             { text: 'Brush', link: '/guide/prefabs/brush.md' },
-            //{ text: 'Texture Map', link: '/guide/manipulating_selections.md' },
-            //{ text: 'Texture Globe', link: '/guide/manipulating_selections.md' },
             { text: 'Layout', link: '/guide/prefabs/layout.md' },
             ]
           },
@@ -82,13 +81,13 @@ export default defineConfig({
       //     { text: 'WIP', link: '' }
       //   ]
       // },
-      {
-        text: 'Advanced Topics',
-        collapsed: true,
-        items: [
-          { text: 'WIP', link: '' }
-        ]
-      },
+      // {
+      //   text: 'Advanced Topics',
+      //   collapsed: true,
+      //   items: [
+      //     { text: 'WIP', link: '' }
+      //   ]
+      // },
       {
         text: 'Contributing',
         collapsed: true,

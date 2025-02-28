@@ -44,30 +44,137 @@ export type LinesParams = Parameters<typeof CreateLineSystem>[1];
 export type PlaneTextParams = Parameters<typeof createPlaneText>[1];
 
 type AxesScales = { x: any } | { y: any } | { z: any };
-
-export class AxesConfig{
+/**
+ * Configuration class for setting up axes in a 3D scene.
+ */
+export class AxesConfig {
+    /**
+     * The scale(s) of the axes you want to render. At least one is required.
+     */
     scale?: { x?: any; y?: any; z?: any };
+
+    /**
+     * Selection that defines the parent node. If not set, a parent node will be created at the root of the scene graph.
+     */
     parent?: Node | Selection;
-    domain?: boolean | { x?: boolean; y?: boolean; z?: boolean } = {x: true, y: true, z: true};
+
+    /**
+     * Render the domain or not. Can be a boolean or an object specifying each axis.
+     * @default {x: true, y: true, z: true}
+     */
+    domain?: boolean | { x?: boolean; y?: boolean; z?: boolean } = { x: true, y: true, z: true };
+
+    /**
+     * Initial options of the GreasedLine mesh.
+     * @default {}
+     */
     domainOptions?: GreasedLineParams | {} = {};
+
+    /**
+     * Initial options of the GreasedLine material.
+     * @default {}
+     */
     domainMaterialOptions?: GreasedLineMaterial = {};
+
+    /**
+     * Properties of the GreasedLine mesh.
+     * @default {}
+     */
     domainProperties?: GreasedLineProperties = {};
-    background?: boolean | { x?: boolean; y?: boolean; z?: boolean } = {x: true, y: true, z: true};
-    backgroundOptions?: PlaneParams | { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams} | {} = {x: {}, y: {}, z: {}}; 
-    backgroundProperties?: MeshProperties |  { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties} | {} = {x: {}, y: {}, z: {}}; 
-    backgroundPosition?: { x?: 0 | 1; y?: 0 | 1; z?: 0 | 1 } = {x: 0, y: 0, z: 0}; 
-    grid?: boolean | { x?: boolean; y?: boolean; z?: boolean } = {x: true, y: true, z: true}; 
-    gridOptions?: LinesParams | {} | {x?: LinesParams, y?: LinesParams, z?: LinesParams} = {x: {}, y: {}, z: {}}; 
-    gridProperties?: LineProperties| {} | {x?: LineProperties, y?: LineProperties, z?: LineProperties} = {x: {}, y: {}, z: {}}; 
-    gridTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]} = {x: undefined, y: undefined, z: undefined}; 
-    label?: boolean | { x?: boolean; y?: boolean; z?: boolean } = {x: true, y: true, z: true}; 
-    labelOptions?: PlaneTextParams | { x?: PlaneTextParams ; y?: PlaneTextParams; z?: PlaneTextParams} | {} = {x: {}, y: {}, z: {}}; 
-    labelProperties?: PlaneTextProperties | { x?: PlaneTextProperties ; y?: PlaneTextProperties; z?: PlaneTextProperties} | {} = {x: {}, y: {}, z: {}}; 
-    labelTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[]} = {x: undefined, y: undefined, z: undefined}; 
-    labelFormat?: { x?: (d: string)=> string; y?: (d: string)=> string; z?: (d: string)=> string} = {x: undefined, y: undefined, z: undefined}; 
-    labelMargin?: {x?: number, y?: number, z?: number} = {x: 0.15, y: 0.15, z: 0.15};
+
+    /**
+     * Render the background or not. Can be a boolean or an object specifying each axis.
+     * @default {x: true, y: true, z: true}
+     */
+    background?: boolean | { x?: boolean; y?: boolean; z?: boolean } = { x: true, y: true, z: true };
+
+    /**
+     * Initial options for the background planes.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    backgroundOptions?: PlaneParams | { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams } | {} = { x: {}, y: {}, z: {} };
+
+    /**
+     * Properties of the background planes.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    backgroundProperties?: MeshProperties | { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties } | {} = { x: {}, y: {}, z: {} };
+
+    /**
+     * Position of the background planes.
+     * @default {x: 0, y: 0, z: 0}
+     */
+    backgroundPosition?: { x?: 0 | 1; y?: 0 | 1; z?: 0 | 1 } = { x: 0, y: 0, z: 0 };
+
+    /**
+     * Render the grid lines or not. Can be a boolean or an object specifying each axis.
+     * @default {x: true, y: true, z: true}
+     */
+    grid?: boolean | { x?: boolean; y?: boolean; z?: boolean } = { x: true, y: true, z: true };
+
+    /**
+     * Initial options of the LineSystem mesh.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    gridOptions?: LinesParams | {} | { x?: LinesParams; y?: LinesParams; z?: LinesParams } = { x: {}, y: {}, z: {} };
+
+    /**
+     * Properties of the LineSystem mesh.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    gridProperties?: LineProperties | {} | { x?: LineProperties; y?: LineProperties; z?: LineProperties } = { x: {}, y: {}, z: {} };
+
+    /**
+     * Array of values for ticks to be drawn.
+     * @default {x: undefined, y: undefined, z: undefined}
+     */
+    gridTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[] } = { x: undefined, y: undefined, z: undefined };
+
+    /**
+     * Render the labels or not. Can be a boolean or an object specifying each axis.
+     * @default {x: true, y: true, z: true}
+     */
+    label?: boolean | { x?: boolean; y?: boolean; z?: boolean } = { x: true, y: true, z: true };
+
+    /**
+     * Initial options of the PlaneText mesh.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    labelOptions?: PlaneTextParams | { x?: PlaneTextParams; y?: PlaneTextParams; z?: PlaneTextParams } | {} = { x: {}, y: {}, z: {} };
+
+    /**
+     * Properties of the PlaneText mesh.
+     * @default {x: {}, y: {}, z: {}}
+     */
+    labelProperties?: PlaneTextProperties | { x?: PlaneTextProperties; y?: PlaneTextProperties; z?: PlaneTextProperties } | {} = { x: {}, y: {}, z: {} };
+
+    /**
+     * Array of values for ticks to be drawn.
+     * @default {x: undefined, y: undefined, z: undefined}
+     */
+    labelTicks?: { x?: (string | number)[]; y?: (string | number)[]; z?: (string | number)[] } = { x: undefined, y: undefined, z: undefined };
+
+    /**
+     * A function that formats the label text.
+     * @default {x: undefined, y: undefined, z: undefined}
+     */
+    labelFormat?: { x?: (d: string) => string; y?: (d: string) => string; z?: (d: string) => string } = { x: undefined, y: undefined, z: undefined };
+
+    /**
+     * Margin for the labels.
+     * @default {x: 0.15, y: 0.15, z: 0.15}
+     */
+    labelMargin?: { x?: number; y?: number; z?: number } = { x: 0.15, y: 0.15, z: 0.15 };
+
+    /**
+     * Texture atlas for the labels.
+     */
     atlas?: Texture;
 
+    /**
+     * Constructs an AxesConfig instance with the given scales.
+     * @param scales - The scales for the axes.
+     */
     constructor(scales: AxesScales) {
         this.scale = scales;
     }
