@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Actions
+slug: /:partSlug/:chapterSlug/5-Actions.html/
 ---
 
 # Adding Interaction with Actions

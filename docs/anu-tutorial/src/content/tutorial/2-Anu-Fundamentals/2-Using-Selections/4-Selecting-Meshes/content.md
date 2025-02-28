@@ -1,6 +1,7 @@
 ---
 type: lesson
-title: Selecting Meshes 
+title: Selecting Meshes
+slug: /:partSlug/:chapterSlug/4-Selecting-Meshes.html/
 ---
 
 # Selecting Meshes

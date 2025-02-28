@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Step 4 Adding Axes
+slug: /:partSlug/:chapterSlug/4-Step4.html/
 ---
 
 # Adding Axes and Labels

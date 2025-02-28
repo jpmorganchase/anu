@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Anu Create() a Mesh
+slug: /:partSlug/:chapterSlug/2-Create.html/
 ---
 
 # Create a Mesh with Anu

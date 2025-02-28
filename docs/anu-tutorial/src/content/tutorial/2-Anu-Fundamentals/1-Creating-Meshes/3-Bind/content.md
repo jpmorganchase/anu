@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Anu Bind() Several Meshes
+slug: /:partSlug/:chapterSlug/3-Bind.html/
 ---
 
 # Binding Several Meshes

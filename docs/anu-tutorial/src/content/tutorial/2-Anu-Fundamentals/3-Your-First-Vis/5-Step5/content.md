@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Step 5 Add Interaction
+slug: /:partSlug/:chapterSlug/5-Step5.html/
 ---
 
 # Adding Interaction

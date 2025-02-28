@@ -1,0 +1,1 @@
+{"/counter.js":"export function setupCounter(element) {\n  let counter = 0;\n\n  const setCounter = (count) => {\n    counter = count;\n    element.innerHTML = `count is ${counter}`;\n  };\n\n  element.addEventListener('click', () => setCounter(counter + 1));\n\n  setCounter(0);\n}\n"}

@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Manipulating Selections
+slug: /:partSlug/:chapterSlug/1-Manipulating-Selections.html/
 ---
 
 # Manipulating Selection

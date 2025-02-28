@@ -1,0 +1,1 @@
+{"/lesson.js":"import * as anu from \"@jpmorganchase/anu\";\nimport penguins from \"./penguins.json\" assert {type: 'json'}\n\nexport default (scene) => {\n    \n    let cot = anu.bind('cot');\n\n    let marks = cot.bind('sphere', {segments: 16}, penguins);\n\n    return scene\n}"}

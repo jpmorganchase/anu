@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Materials and Colors
+slug: /:partSlug/:chapterSlug/2-Materials-and-Colors.html/
 ---
 
 # Materials and Colors

@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Babylon MeshBuilder(s)
+slug: /:partSlug/:chapterSlug/1-MeshBuilder.html/
 ---
 
 # Babylon's MeshBuilder(s)

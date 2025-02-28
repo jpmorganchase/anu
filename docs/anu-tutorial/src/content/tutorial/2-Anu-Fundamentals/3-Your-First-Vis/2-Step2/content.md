@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Step 2 Scales and Transforms
+slug: /:partSlug/:chapterSlug/2-Step2.html/
 ---
 
 # Scales and Transforms

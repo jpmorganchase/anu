@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Step 3 Colors and Materials 
+slug: /:partSlug/:chapterSlug/3-Step3.html/
 ---
 
 # Adding Color

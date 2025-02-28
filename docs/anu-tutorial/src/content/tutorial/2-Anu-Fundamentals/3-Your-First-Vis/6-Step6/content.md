@@ -12,9 +12,10 @@ terminal:
       allowRedirects: true
       allowCommands:
         - npx
+slug: /:partSlug/:chapterSlug/6-Step6.html/
 ---
 
-# Adding Interaction
+# Adding WebXR
 
 Now we have a complete 3D visualization! We can view and interact with it in 2D on our desktop/laptop browser, but we can also view this visualization in AR/VR using WebXR!
 Thankfully, Babylon has excellent webXR support and we can add the essentials for a XR app to our scene in a couple lines. Once we add these features we can preview them either using an emulator in our browser or by opening the webpage in our headsets browser. 

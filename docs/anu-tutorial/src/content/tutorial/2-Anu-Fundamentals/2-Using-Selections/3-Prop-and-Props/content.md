@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Prop and Props
+slug: /:partSlug/:chapterSlug/3-Prop-and-Props.html/
 ---
 
 # Prop and Props

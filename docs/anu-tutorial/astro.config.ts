@@ -10,6 +10,7 @@ export default defineConfig({
   build: {
     format: 'file'
   },
+  outDir: "../public/tutorial",
   vite: {
     plugins: []
   }

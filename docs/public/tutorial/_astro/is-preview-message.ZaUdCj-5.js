@@ -1,0 +1,1 @@
+var E;(function(n){n.UncaughtException="PREVIEW_UNCAUGHT_EXCEPTION",n.UnhandledRejection="PREVIEW_UNHANDLED_REJECTION",n.ConsoleError="PREVIEW_CONSOLE_ERROR"})(E||(E={}));const e=[E.ConsoleError,E.UncaughtException,E.UnhandledRejection];function o(n){return!(n==null||typeof n!="object"||!("type"in n)||!e.includes(n.type))}export{o as i};

@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Nesting Meshes
+slug: /:partSlug/:chapterSlug/4-Nesting.html/
 ---
 
 # Nesting Meshes

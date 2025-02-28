@@ -1,6 +1,7 @@
 ---
 type: lesson
 title: Step 1 Bind Nodes
+slug: /:partSlug/:chapterSlug/1-Step1.html/
 ---
 
 # Build a 3D Scatter Plot with Anu
