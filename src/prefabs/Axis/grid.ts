@@ -23,10 +23,11 @@ export function grid(this: Axes) {
   
 
   let girdSelections: Mesh[] = [];
-
+  
+  console.log(this.options.grid)
 
   for (let key in lines){
-    if (this.options.grid[key]) {
+    if (this.options.grid?.[key] || this.options.grid) {
       let gridOptions = this.options.gridOptions[key] ?? this.options.gridOptions;
       let gridProperties = this.options.gridProperties[key] ?? this.options.gridProperties;
 
@@ -100,7 +101,7 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
         })
       } else {
         for (let key in linesArray){
-          if (axes.options.grid[key]){
+          if (axes.options.grid?.[key] || axes.options.grid){
             let gridOptions = axes.options.gridOptions[key] ?? {};
             let gridProperties = axes.options.gridProperties[key] ?? {};
 
