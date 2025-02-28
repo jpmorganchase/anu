@@ -235,7 +235,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:41](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L41)
+[src/prefabs/Mapping/textureGlobe.ts:40](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L40)
 
 ## Properties
 
@@ -629,7 +629,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:33](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L33)
+[src/prefabs/Mapping/textureGlobe.ts:32](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L32)
 
 ___
 
@@ -639,7 +639,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:37](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L37)
+[src/prefabs/Mapping/textureGlobe.ts:36](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L36)
 
 ___
 
@@ -649,7 +649,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:38](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L38)
+[src/prefabs/Mapping/textureGlobe.ts:37](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L37)
 
 ___
 
@@ -712,7 +712,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:29](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L29)
+[src/prefabs/Mapping/textureGlobe.ts:28](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L28)
 
 ___
 
@@ -722,7 +722,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:39](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L39)
+[src/prefabs/Mapping/textureGlobe.ts:38](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L38)
 
 ___
 
@@ -732,7 +732,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:32](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L32)
+[src/prefabs/Mapping/textureGlobe.ts:31](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L31)
 
 ___
 
@@ -742,7 +742,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:36](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L36)
+[src/prefabs/Mapping/textureGlobe.ts:35](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L35)
 
 ___
 
@@ -772,7 +772,7 @@ TransformNode.name
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:27](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L27)
+[src/prefabs/Mapping/textureGlobe.ts:26](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L26)
 
 ___
 
@@ -908,7 +908,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:34](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L34)
+[src/prefabs/Mapping/textureGlobe.ts:33](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L33)
 
 ___
 
@@ -934,7 +934,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:28](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L28)
+[src/prefabs/Mapping/textureGlobe.ts:27](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L27)
 
 ___
 
@@ -960,7 +960,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:30](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L30)
+[src/prefabs/Mapping/textureGlobe.ts:29](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L29)
 
 ___
 
@@ -970,7 +970,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:35](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L35)
+[src/prefabs/Mapping/textureGlobe.ts:34](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L34)
 
 ___
 
@@ -996,7 +996,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:31](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L31)
+[src/prefabs/Mapping/textureGlobe.ts:30](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L30)
 
 ___
 
@@ -2496,7 +2496,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:56](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L56)
+[src/prefabs/Mapping/textureGlobe.ts:62](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L62)
 
 ___
 
@@ -2510,7 +2510,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:95](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L95)
+[src/prefabs/Mapping/textureGlobe.ts:101](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L101)
 
 ___
 
@@ -2524,7 +2524,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:67](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L67)
+[src/prefabs/Mapping/textureGlobe.ts:73](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L73)
 
 ___
 
@@ -2544,7 +2544,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:111](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L111)
+[src/prefabs/Mapping/textureGlobe.ts:117](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L117)
 
 ___
 
@@ -2558,7 +2558,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:77](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Mapping/textureGlobe.ts#L77)
+[src/prefabs/Mapping/textureGlobe.ts:83](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L83)
 
 ___
 

@@ -68,6 +68,8 @@
 - [setGrid](Axis.md#setgrid)
 - [setLabel](Axis.md#setlabel)
 - [state](Axis.md#state)
+- [tempAxes](Axis.md#tempaxes)
+- [tempScales](Axis.md#tempscales)
 - [uniqueId](Axis.md#uniqueid)
 - [BILLBOARDMODE\_ALL](Axis.md#billboardmode_all)
 - [BILLBOARDMODE\_NONE](Axis.md#billboardmode_none)
@@ -196,6 +198,7 @@
 - [translate](Axis.md#translate)
 - [unfreezeWorldMatrix](Axis.md#unfreezeworldmatrix)
 - [unregisterAfterWorldMatrixUpdate](Axis.md#unregisterafterworldmatrixupdate)
+- [updateAxes](Axis.md#updateaxes)
 - [updateCache](Axis.md#updatecache)
 - [updatePoseMatrix](Axis.md#updateposematrix)
 - [AddNodeConstructor](Axis.md#addnodeconstructor)
@@ -207,7 +210,7 @@
 
 ### constructor
 
-• **new Axis**(`name`, `scene`, `options?`): [`Axis`](Axis.md)
+• **new Axis**(`name`, `scene`, `options`): [`Axis`](Axis.md)
 
 #### Parameters
 
@@ -215,7 +218,7 @@
 | :------ | :------ |
 | `name` | `string` |
 | `scene` | `Scene` |
-| `options` | `AxisOptions` |
+| `options` | `AxesOptionsInterface` |
 
 #### Returns
 
@@ -227,7 +230,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:46](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L46)
+[src/prefabs/Axis/Axis.ts:25](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L25)
 
 ## Properties
 
@@ -237,7 +240,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L39)
+[src/prefabs/Axis/Axis.ts:16](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L16)
 
 ___
 
@@ -639,7 +642,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:42](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L42)
+[src/prefabs/Axis/Axis.ts:19](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L19)
 
 ___
 
@@ -649,7 +652,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:41](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L41)
+[src/prefabs/Axis/Axis.ts:18](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L18)
 
 ___
 
@@ -659,7 +662,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:43](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L43)
+[src/prefabs/Axis/Axis.ts:20](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L20)
 
 ___
 
@@ -730,7 +733,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:44](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L44)
+[src/prefabs/Axis/Axis.ts:21](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L21)
 
 ___
 
@@ -846,11 +849,11 @@ ___
 
 ### options
 
-• **options**: `AxisOptions`
+• **options**: `AxesOptionsInterface`
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:38](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L38)
+[src/prefabs/Axis/Axis.ts:15](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L15)
 
 ___
 
@@ -908,7 +911,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:40](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L40)
+[src/prefabs/Axis/Axis.ts:17](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L17)
 
 ___
 
@@ -930,7 +933,7 @@ ___
 
 ### setBackground
 
-• `Private` **setBackground**: (`this`: [`Axis`](Axis.md)) => \{ `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `backgroundAlt`
+• `Private` **setBackground**: (`this`: [`Axis`](Axis.md)) => \{ `x?`: [`Selection`](Selection.md) ; `y?`: [`Selection`](Selection.md) ; `z?`: [`Selection`](Selection.md)  } = `backgroundNew`
 
 #### Type declaration
 
@@ -954,7 +957,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:119](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L119)
+[src/prefabs/Axis/Axis.ts:103](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L103)
 
 ___
 
@@ -978,7 +981,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:118](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L118)
+[src/prefabs/Axis/Axis.ts:102](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L102)
 
 ___
 
@@ -1002,7 +1005,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:120](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L120)
+[src/prefabs/Axis/Axis.ts:104](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L104)
 
 ___
 
@@ -1032,7 +1035,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:121](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L121)
+[src/prefabs/Axis/Axis.ts:105](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L105)
 
 ___
 
@@ -1049,6 +1052,26 @@ TransformNode.state
 #### Defined in
 
 node_modules/@babylonjs/core/node.d.ts:61
+
+___
+
+### tempAxes
+
+• **tempAxes**: `any`
+
+#### Defined in
+
+[src/prefabs/Axis/Axis.ts:23](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L23)
+
+___
+
+### tempScales
+
+• **tempScales**: `any`
+
+#### Defined in
+
+[src/prefabs/Axis/Axis.ts:22](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L22)
 
 ___
 
@@ -4265,6 +4288,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `domain` | \{ `x`: `any` = domainX; `y`: `any` = domainY; `z`: `any` = domainZ } |
+| `domain.x` | `any` |
+| `domain.y` | `any` |
+| `domain.z` | `any` |
+| `range` | \{ `x`: `number`[] = rangeX; `y`: `number`[] = rangeY; `z`: `number`[] = rangeZ } |
+| `range.x` | `number`[] |
+| `range.y` | `number`[] |
+| `range.z` | `number`[] |
+| `scale` | \{ `x`: `any` = scaleX; `y`: `any` = scaleY; `z`: `any` = scaleZ } |
+| `scale.x` | `any` |
+| `scale.y` | `any` |
+| `scale.z` | `any` |
 | `size` | `number` |
 | `x` | \{ `domain`: `any` = domainX; `range`: `number`[] = rangeX; `scale`: `any` = scaleX } |
 | `x.domain` | `any` |
@@ -4281,7 +4316,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:70](https://github.com/jpmorganchase/anu/blob/9b6add0/src/prefabs/Axis/Axis.ts#L70)
+[src/prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L39)
 
 ___
 
@@ -4363,6 +4398,27 @@ TransformNode.unregisterAfterWorldMatrixUpdate
 #### Defined in
 
 node_modules/@babylonjs/core/Meshes/transformNode.d.ts:475
+
+___
+
+### updateAxes
+
+▸ **updateAxes**(`axesOptions`, `transitionOptions?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `axesOptions` | `AxesOptionsInterface` \| [`AxesConfig`](AxesConfig.md) |
+| `transitionOptions?` | `TransitionOptions` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/prefabs/Axis/Axis.ts:89](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L89)
 
 ___
 

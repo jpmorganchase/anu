@@ -3,7 +3,7 @@ layout: page
 ---
 
 <script setup>
-  //import card from '../vue_components/card.vue'
+ import cardImg from '../vue_components/cardImg.vue'
   import multiView from '../vue_components/multiView.vue'
 </script>
 
@@ -15,9 +15,12 @@ layout: page
         <h2>The Classics</h2>
         <hr>
         <div class="cards">
-            <card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card>
-            <card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card>
-            <card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card>
+            <cardImg  title="3D Scatter Plot"  img="/anu/assets/example-images/scatterplot3D.png" link="/anu/examples/scatter_plot_3D"></cardImg>
+            <cardImg title="3D Bar Chart"  img="/anu/assets/example-images/barchart3D.png" link="/anu/examples/bar_chart_3D"></cardImg>
+             <cardImg title="3D Line Chart"  img="/anu/assets/example-images/linechart3D.png" link="/anu/examples/line_chart_3D"></cardImg>
+            <!-- <card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card> -->
+            <!-- <card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card> -->
+            <!-- <card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card> -->
             <card title="2D Scatter Plot" example="Scatterplot2D" link="/anu/examples/scatter_plot_2D"></card>
             <card title="2D Bar Chart" example="barchart2d" link="/anu/examples/bar_chart_2D"></card>
             <card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card>
@@ -40,6 +43,14 @@ layout: page
             <card title="Details On Demand" example="Details" link="/anu/examples/details"></card>  
             <card title="Transform Widget UI" example="TransformWidget" link="/anu/examples/transform_widget_ui"></card>
             <card title="Layouts" example="layout" link="/anu/examples/layout"></card>
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Brushing and Linking</h2>
+        <hr>
+        <div class="cards">
+            <card title="Single Selection" example="brushingLinkingSingle" link="/anu/examples/brushing_linking_single"></card>
+            <card title="Multiple Selection" example="brushingLinkingMultiple" link="/anu/examples/brushing_linking_multiple"></card>
         </div>
     </div>
     <div class='section'>
@@ -112,6 +123,14 @@ h4 {
     margin-top: 10px;
   }
   .cards canvas {
+    margin: 5px;
+    border: 1px solid #000;
+    box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.3);
+    width: 10em;
+    height: 10em;
+  }
+
+ .cards img {
     margin: 5px;
     border: 1px solid #000;
     box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.3);

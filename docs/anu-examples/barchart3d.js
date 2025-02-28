@@ -20,7 +20,7 @@ export function barchart3D(engine){
   camera.wheelPrecision = 20; // Adjust the sensitivity of the mouse wheel's zooming
   camera.minZ = 0;            // Adjust the distance of the camera's near plane
   camera.attachControl(true); // Allow the camera to respond to user controls
-  camera.position = new Vector3(1, 1.5, -2);
+  camera.position = new Vector3(5, 5, -12);
 
   //Get the unique values for our categorical and ordinal dimensions
   const origin = [...new Set(cars.map(item => item.Origin))];
@@ -67,9 +67,6 @@ export function barchart3D(engine){
 
   //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
   anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
-
-  //Call a Babylon function to automatically resize the chart such that its bounds completely fits into a unit cube for viewability
-  CoT.normalizeToUnitCube();
 
   //Adjust the position of the chart slightly
   chart.positionY(-0.25);

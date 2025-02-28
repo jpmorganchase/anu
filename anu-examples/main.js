@@ -15,6 +15,7 @@ import { box_bind } from './examples/FirstSteps/Box_Bind';
 import { box_selection } from './examples/FirstSteps/Box_Selection';
 import { select } from './examples/Selections/select';
 import { select_name_tag } from './examples/Selections/select_name_tag';
+import { select_data } from './examples/Selections/select_data';
 import { linechart3D } from './examples/LineCharts/linechart3D';
 import { scatterplot2D } from './examples/ScatterPlots/Scatterplot2D';
 import { barchart2d } from './examples/BarCharts/barchart2d';
@@ -50,6 +51,9 @@ import { fig1 } from './examples/Figures/fig1';
 import { fig2 } from './examples/Figures/fig2';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 import { animate } from './examples/Animation/animate';
+import { brushing } from './examples/Brushing/Brushing';
+import { animateState } from './examples/Animation/animateState';
+import { barchartRace } from './examples/Animation/barchartRace';
 
 
 const queryString = window.location.search;
@@ -72,6 +76,7 @@ const scenes = {
   'box_selection': box_selection,
   'select': select,
   'select_name_tag': select_name_tag,
+  'select_data': select_data,
   'scatterplot3D': scatterplot3D, 
   'barchart3D': barchart3D, 
   'linechart3D': linechart3D,
@@ -103,12 +108,15 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
+  'brushing': brushing,
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
   'fig1': fig1,
   'fig2': fig2,
   'scatterplotThinInstance': scatterplotThinInstance,
-  'animate': animate
+  'animate': animate,
+  'animateState': animateState,
+  'barchartRace': barchartRace
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

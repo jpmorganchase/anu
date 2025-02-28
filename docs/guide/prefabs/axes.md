@@ -3,8 +3,9 @@ outline: deep
 ---
 
 <script setup>
-  //import singleView from  "../../vue_components/singleView.vue"
   import { axesTest } from  "../../anu-examples/axesTest.js"
+  import { axesConfig } from "../../anu-examples/axesConfig.js"
+  import { axesUpdate } from "../../anu-examples/axesUpdate.js"
 </script>
 
 # Axes
@@ -19,7 +20,7 @@ This prefab integrates [d3-scale](https://github.com/d3/d3-scale) to help positi
 
 ``` js
 //Returns instance of Axes Class
-let axes = anu.createAxes(name: String, scene: Scene, options: {});
+let axes = anu.createAxes(name: String, scene: Scene, options: {} | AxisConfig);
 
 //Selection object of the main axis line using GreasedLine mesh
 axes.domain 
@@ -34,24 +35,57 @@ axes.grid.x //y or z
 axes.label.x //y or z 
 ```
 
+#### Using AxesConfig
+We can also set the axes options using the [AxesConfig](/api/classes/AxesConfig.html) helper class. This will generate defaults and allow us to change the options without writing the json object directly
+
+``` js
+let axesOptions = new anu.AxesConfig({x?: scaleX, y?: scaleY, z?: scaleZ})
+
+axesOptions.domain = false;
+
+axesOptions.grid.y = false;
+
+let axes = anu.createAxes('name', scene, axesOptions);
+```
+
+#### Updating Axes
+To update the axes we can call [updateAxes](/api/classes/Axis.html#updateaxes) on an instance of axes, passing in a new AxesOptions or AxesConfig and an optional TransitionOptions object if you wish to add a transition to the update. 
+
+```js
+let axesOptions = new anu.AxesConfig({x?: scaleX, y?: scaleY, z?: scaleZ})
+
+let axes = anu.createAxes('name', scene, axesOptions);
+
+axesOptions.scale.x = newScaleX
+
+axes.updateAxes(axesOptions, {duration: 250})
+```
+
 ## Options
 
-| Property       |      Value      |  Default |
-| ------------- | ------------- | ------------- |
-|   scale   | ({x?: scale, y?: scale, z?: scale}) the scale(s) of the axes you want to render. At least one is required  | Required |
-|  parent  |  (Selection) Selection that defines the parent node. If not set a parent node will be created at the root of the scene graph.  |  undefined  |
-|  domain  |  (boolean) render the domain or not  |  true  |
-|  domainOptions  |  (Object) initial options of the [GreasedLine](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/greased_line) mesh |  {}  |
-|  domainMaterialOptions  |  (Object) initial options of the [GreasedLine](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/greased_line) material  |  {}  |
-|  grid | (boolean) render the grid lines or not   |  true  |
-|  gridOptions  | (Object) initial options of the [LineSystem](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/line_system) mesh    |  {}  |
-|  gridProperties  | (Object) post rendering properties of the [LineSystem](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/line_system) mesh    |  {}  |
-|  gridTicks  | ({x\y\z: []}) array of values for ticks to be drawn. If nothing is passed scale.ticks() or scale.domain used |  {}  |
-|  label | (boolean) render the labels or not   |  true  |
-|  labelOptions  | (Object) initial options of the [PlaneText](/guide/prefabs/planetext.html) mesh  |  {}  |
-|  labelProperties  | (Object) post rendering properties of the [PlaneText](/guide/prefabs/planetext.html) mesh   |  {}  |
-|  labelTicks  | ({x\y\z: []}) array of values for ticks to be drawn. If nothing is passed scale.ticks() or scale.domain used |  {}  |
-|  labelTicks  | ({x\y\z: (text: string) => string}) a function that takes a string and returns a new string. If not set this will default to text from scale.ticks() or scale.domain() |  {}  |
+| Property                | Value                                                                                                                                  | Default     |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| scale                   | ({ x?: any; y?: any; z?: any }) the scale(s) of the axes you want to render. At least one is required                                   | Required    |
+| parent                  | (Node \| Selection) Selection that defines the parent node. If not set, a parent node will be created at the root of the scene graph.   | undefined   |
+| domain                  | (boolean \| { x?: boolean; y?: boolean; z?: boolean }) render the domain or not                                                        | true        |
+| domainOptions           | (GreasedLineParams \| {}) initial options of the [GreasedLine](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/greased_line) mesh | {}          |
+| domainMaterialOptions   | (GreasedLineMaterial) initial options of the [GreasedLine](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/greased_line) material | {}          |
+| domainProperties        | (GreasedLineProperties) properties of the GreasedLine mesh                                                                             | {}          |
+| background              | (boolean \| { x?: boolean; y?: boolean; z?: boolean }) render the background or not                                                    | false       |
+| backgroundOptions       | (PlaneParams \| { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams } \| {}) initial options for the background planes                 | {}          |
+| backgroundProperties    | (MeshProperties \| { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties } \| {}) properties of the background planes           | {}          |
+| backgroundPosition      | ({ x?: 0 \| 1; y?: 0 \| 1; z?: 0 \| 1 }) position of the background planes                                                             | { x\: 0, y: 0, z: 0 } |
+| grid                    | (boolean \| { x?: boolean; y?: boolean; z?: boolean }) render the grid lines or not                                                    | true        |
+| gridOptions             | (LinesParams \| {} \| { x?: LinesParams; y?: LinesParams; z?: LinesParams }) initial options of the [LineSystem](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/line_system) mesh | {}          |
+| gridProperties          | (LineProperties \| {} \| { x?: LineProperties; y?: LineProperties; z?: LineProperties }) properties of the LineSystem mesh             | {}          |
+| gridTicks               | ({ x?: (string \| number)[]; y?: (string \| number)[]; z?: (string \| number)[] }) array of values for ticks to be drawn               | {}          |
+| label                   | (boolean \| { x?: boolean; y?: boolean; z?: boolean }) render the labels or not                                                        | true        |
+| labelOptions            | (PlaneTextParams \| { x?: PlaneTextParams; y?: PlaneTextParams; z?: PlaneTextParams } \| {}) initial options of the [PlaneText](/guide/prefabs/planetext.html) mesh | {}          |
+| labelProperties         | (PlaneTextProperties \| { x?: PlaneTextProperties; y?: PlaneTextProperties; z?: PlaneTextProperties } \| {}) properties of the PlaneText mesh | {}          |
+| labelTicks              | ({ x?: (string \| number)[]; y?: (string \| number)[]; z?: (string \| number)[] }) array of values for ticks to be drawn               | {}          |
+| labelFormat             | ({ x?: (d: string) => string; y?: (d: string) => string; z?: (d: string) => string }) a function that formats the label text           | {}          |
+| labelMargin             | ({ x?: number; y?: number; z?: number }) margin for the labels                                                                         | { x\: 0, y: 0, z: 0 } |
+| atlas                   | (Texture) texture atlas for the labels                                                                                                 | undefined   |
 
 
 ## Examples
@@ -71,4 +105,45 @@ anu.createAxes('myAxes', scene, {scale: {x: scaleX, y: scaleY, z: scaleZ}});
 ```
 
 <singleView :scene="axesTest" />
+
+### Using AxisConfig
+``` js
+//Create a transform node to use as the parent node for all our meshes
+let CoT = new TransformNode('cot')
+
+//Select our center or transform with Anu to give us a selection obj CoT.
+let chart = anu.selectName('cot', scene);
+
+let axesOptions = new anu.AxesConfig({x: scaleX, y: scaleY, z: scaleZ})
+axesOptions.parent = chart;
+axesOptions.grid = false;
+axesOptions.backgroundProperties = {"material.diffuseColor": Color3.Random()}
+
+let axes = anu.createAxes('test', scene, axesOptions);
+```
+
+<singleView :scene="axesConfig" />
+
+### Updating Axes (mouse down and up to update)
+
+
+```js
+  let axesOptions = new anu.AxesConfig({x: scaleX, y: scaleY, z: scaleZ})
+  let axes = anu.createAxes('test', scene, axesOptions);
+
+  var scaleX2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); 
+
+  scene.onPointerDown = (pointer) => {
+    axesOptions.scale.x = scaleX2
+    axes.updateAxes(axesOptions);
+  }
+
+  scene.onPointerUp = (pointer) => {
+    axesOptions.scale.x = scaleX
+    axes.updateAxes(axesOptions, {duration: 300})
+  }
+```
+
+<singleView :scene="axesUpdate" />
+
 

@@ -1,165 +1,233 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { BoundingInfo, Mesh, Vector3 } from '@babylonjs/core';
+import { BoundingInfo, Mesh, Vector3, Color3} from '@babylonjs/core';
 import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { Selection } from '../../selection';
+import { TransitionOptions } from '../../selection/animation/transition';
+import { PlaneText } from '../Text/planeText';
+import { interpolateObject } from 'd3-interpolate';
+import { PlaneTextOptions } from '../Text/planeText';
+import clone from 'lodash-es/clone';
 
 export function labelAlt(this: Axes) {
-  let scaleX = this.scales.x.scale;
-  let rangeX = this.scales.x.range;
-  let domainX = this.scales.x.domain;
-
-  let scaleY = this.scales.y.scale;
-  let rangeY = this.scales.y.range;
-  let domainY = this.scales.y.domain;
-
-  let scaleZ = this.scales.z.scale;
-  let rangeZ = this.scales.z.range;
-  let domainZ = this.scales.z.domain;
 
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
 
-  //scale label size to 2.5% selection height + width
+  //scale label size to 0.05% selection height + width
   let { min, max } = this.CoT.selected[0].getHierarchyBoundingVectors();
   let bounds = new BoundingInfo(min, max).boundingBox;
   let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
   let textHeight = scaleMultiplier * 0.05;
 
-  //console.log(scaleMultiplier,  bounds);
-
-  if (this.options.scale?.x != undefined) {
-    let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-
-    if (this.options.labelTicks?.x != undefined) {
-      ticks = this.options.labelTicks.x;
-    } else {
-      try {
-        ticks = scaleX.ticks();
-      } catch {
-        ticks = domainX;
-      }
+  let ticks = buildTicks(this.scales, this.options.labelTicks);
+  
+    //Check what labels if any we want to render
+    let createLabel = (typeof this.options.label === "object") ? this.options.label :
+    this.options.label === true ? {x: true, y: true, z: true} : false;
+  
+    //If no labels, return now
+    if (!createLabel) return undefined;
+  
+    if (createLabel.x && this.options.scale?.x != undefined){
+      selections.x = labelBuilder(labelXDefaults(this, textHeight), ticks.x);
     }
-
-    let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-    textPosition = (d) => new Vector3(scaleX(d.text), rangeY[0], rangeZ[0]);
-
-    let default_options;
-    if (this.options.labelFormat?.x != undefined) {
-      default_options = {
-        text: (d: any) => this.options.labelFormat?.x(d.text),
-        size: textHeight,
-        atlas: this.options.atlas,
-      };
-    } else {
-      default_options = { text: (d: any) => d.text, size: textHeight, atlas: this.options.atlas };
+    if (createLabel.y && this.options.scale?.y != undefined){
+      selections.y = labelBuilder(labelYDefaults(this, textHeight), ticks.y)
     }
-
-    let default_properties = {};
-
-    let labelMesh = this.CoT.bind(
-      'planeText',
-      assign({}, default_options, this.options.labelOptions),
-      ticks.map((x: any) => {
-        return { text: x };
-      }),
-    )
-      .prop('name', this.name + '_labelX')
-      .position((d, n, i) => new Vector3(scaleX(d.text), rangeY[0] - textHeight, rangeZ[0]))
-      .props(assign({}, default_properties, this.options.labelProperties));
-
-    selections.x = labelMesh;
-  }
-
-  if (this.options.scale?.y != undefined) {
-    let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-
-    if (this.options.labelTicks?.y != undefined) {
-      ticks = this.options.labelTicks.y;
-    } else {
-      try {
-        ticks = scaleY.ticks();
-      } catch {
-        ticks = domainY;
-      }
+    if (createLabel.z && this.options.scale?.z != undefined){
+      selections.z = labelBuilder(labelZDefaults(this, textHeight), ticks.z)
     }
-
-    let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-
-    textPosition = (d) => new Vector3(rangeX[0], scaleY(d.text), rangeZ[0]);
-
-    let default_options;
-    if (this.options.labelFormat?.y != undefined) {
-      default_options = {
-        text: (d: any) => this.options.labelFormat?.y(d.text),
-        align: 'right',
-        size: textHeight,
-        atlas: this.options.atlas,
-      };
-    } else {
-      default_options = { text: (d: any) => d.text, align: 'right', size: textHeight, atlas: this.options.atlas };
-    }
-
-    let default_properties = {};
-
-    let labelMesh = this.CoT.bind(
-      'planeText',
-      assign({}, default_options, this.options.labelOptions),
-      ticks.map((x: any) => {
-        return { text: x };
-      }),
-    )
-      .prop('name', this.name + '_labelY')
-      .position((d, n, i) => new Vector3(rangeX[0] - 0.05, scaleY(d.text), rangeZ[0]))
-      .props(assign({}, default_properties, this.options.labelProperties));
-
-    selections.y = labelMesh;
-  }
-
-  if (this.options.scale?.z != undefined) {
-    let ticks; //Not every d3 scale supports the ticks function, for those that don't default to using domain
-
-    if (this.options.labelTicks?.z != undefined) {
-      ticks = this.options.labelTicks.z;
-    } else {
-      try {
-        ticks = scaleZ.ticks();
-      } catch {
-        ticks = domainZ;
-      }
-    }
-
-    let textPosition: Vector3 | ((d: any) => Vector3) = new Vector3(0, 0, 0);
-
-    textPosition = (d) => new Vector3(rangeX[1], rangeY[0], scaleZ(d.text));
-
-    let default_options;
-    if (this.options.labelFormat?.z != undefined) {
-      default_options = {
-        text: (d: any) => this.options.labelFormat?.z(d.text),
-        size: textHeight,
-        atlas: this.options.atlas,
-      };
-    } else {
-      default_options = { text: (d: any) => d.text, size: textHeight, atlas: this.options.atlas };
-    }
-
-    let default_properties = { 'rotation.y': -Math.PI / 2 };
-
-    let labelMesh = this.CoT.bind(
-      'planeText',
-      assign({}, default_options, this.options.labelOptions),
-      ticks.map((x: any) => {
-        return { text: x };
-      }),
-    )
-      .prop('name', this.name + '_labelZ')
-      .position((d, n, i) => new Vector3(rangeX[1], rangeY[0] - textHeight, scaleZ(d.text)))
-      .props(assign({}, default_properties, this.options.labelProperties));
-
-    selections.z = labelMesh;
-  }
 
   return selections;
+}
+
+
+type labelConfig = {
+  name: string,
+  cot: Selection,
+  position: (d) => Vector3,
+  rotation: Vector3,
+  options: {},
+  properties: {}
+}
+
+const labelPropertiesDefaults = {}
+
+const labelOptionsDefaults = {};
+
+const labelXDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
+    name: axes.name + "_label_x",
+    cot: axes.CoT,
+    rotation: new Vector3(0, 0, 0),
+    position: {
+      0: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['x']), axes.scales.range.z[0]),
+      1: (d) => new Vector3(axes.scales.scale.x(d.text), axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['x']), axes.scales.range.z[1]),
+    }[0],
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.x?.(d.text) ?? d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['x'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['x'] ?? axes.options.labelProperties)
+  })
+
+  const labelYDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
+    name: axes.name + "_label_y",
+    cot: axes.CoT,
+    rotation: new Vector3(0, 0, 0),
+    position: {
+      0: (d) => new Vector3(axes.scales.range.x[0] - (axes.options.labelMargin['y']), axes.scales.scale.y(d.text), axes.scales.range.z[0]),
+      1: (d) => new Vector3(axes.scales.range.x[1] + (axes.options.labelMargin['y']), axes.scales.scale.y(d.text), axes.scales.range.z[0]),
+    }[0],
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.y?.(d.text) ?? d.text, align: 'right', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['y'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['y'] ?? axes.options.labelProperties)
+  })
+
+  const labelZDefaults = (axes: Axes, textHeight: number): labelConfig => ({ 
+    name: axes.name + "_label_z",
+    cot: axes.CoT,
+    rotation: new Vector3(0, -1.5708, 0),
+    position: {
+      0: (d) => new Vector3(axes.scales.range.x[1], axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['z']), axes.scales.scale.z(d.text)),
+      1: (d) => new Vector3(axes.scales.range.x[0], axes.scales.range.y[0] - (textHeight / 2) - (axes.options.labelMargin['z']), axes.scales.scale.z(d.text)),
+    }[0],
+    options: assign({}, { text: (d: any) => axes.options.labelFormat?.z?.(d.text) ?? d.text, align: 'center', size: textHeight, atlas: axes.options.atlas }, axes.options.labelOptions['z'] ?? axes.options.labelOptions),
+    properties: assign({}, labelPropertiesDefaults, axes.options.labelProperties['z'] ?? axes.options.labelProperties)
+  })
+
+
+
+function labelBuilder(config: labelConfig, ticks: any[]): Selection {
+
+  let labelMesh = config.cot.bind(
+    'planeText',
+    // @ts-ignore
+    config.options,
+    ticks.map((x: any) => {
+      return { text: x };
+    }))
+    .props({
+      "name": config.name,
+      "position": config.position,
+      "rotation": config.rotation
+    })
+    .props(config.properties);
+
+  return labelMesh
+}
+
+function buildTicks(scales, ticks?){
+  let scaleX = scales.x.scale;
+  let domainX = scales.x.domain;
+
+  let scaleY = scales.y.scale;
+  let domainY = scales.y.domain;
+
+  let scaleZ = scales.z.scale;
+  let domainZ = scales.z.domain;
+
+  let builtTicks: {x?: any[], y?: any[], z?: any[]} = {};
+
+  builtTicks.x = ticks?.x ? ticks.x : scaleX?.ticks?.() ?? domainX; 
+  builtTicks.y = ticks?.y ? ticks.y : scaleY?.ticks?.() ?? domainY; 
+  builtTicks.z = ticks?.z ? ticks.z : scaleZ?.ticks?.() ?? domainZ; 
+
+  return builtTicks;
+}
+
+export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
+
+  let previous_selection = axes.label;
+
+  let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
+
+  //scale label size to 0.05% selection height + width
+  let { min, max } = axes.CoT.selected[0].getHierarchyBoundingVectors();
+  let bounds = new BoundingInfo(min, max).boundingBox;
+  let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
+  let textHeight = scaleMultiplier * 0.05;
+
+  let ticksPrev = buildTicks(axes.tempScales, axes.options.labelTicks);
+  let ticks = buildTicks(axes.scales, axes.options.labelTicks);
+  
+    //Check what labels if any we want to render
+    let createLabel = (typeof axes.options.label === "object") ? axes.options.label :
+    axes.options.label === true ? {x: true, y: true, z: true} : false;
+  
+    //If no labels, return now
+    if (!createLabel) return undefined;
+  
+    if (createLabel.x && axes.options.scale?.x != undefined){
+    previous_selection.x.run((d,n) => n.setEnabled(false));
+    axes._scene.onAfterRenderObservable.addOnce(() => {
+      previous_selection.x.dispose();
+    })
+      
+      if (transitionOptions) {
+        const startConfig = labelXDefaults(axes.tempAxes, textHeight)
+        const endConfig = labelXDefaults(axes, textHeight)
+        selections.x = labelBuilder(startConfig, ticks.x);
+        selections.x.transition(transitionOptions).tween((d,n,i) => {
+          let interpolate = interpolateObject(n.position, endConfig.position(d));
+          let options = clone(endConfig.options);
+          options['text'] = endConfig.options['text'](d);
+          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+          return (t) => {
+            n.position = interpolate(t);
+          }
+        })
+      } else {
+        selections.x = labelBuilder(labelXDefaults(axes, textHeight), ticks.x)
+      }
+    }
+    if (createLabel.y && axes.options.scale?.y != undefined){
+
+      previous_selection.y.run((d,n) => n.setEnabled(false));
+      axes._scene.onAfterRenderObservable.addOnce(() => {
+        previous_selection.y.dispose();
+      })
+
+      if (transitionOptions) {
+        const startConfig = labelYDefaults(axes.tempAxes, textHeight)
+        const endConfig = labelYDefaults(axes, textHeight)
+        selections.y = labelBuilder(startConfig, ticks.y);
+        selections.y.transition(transitionOptions).tween((d,n,i) => {
+          let interpolate = interpolateObject(n.position, endConfig.position(d));
+          let options = clone(endConfig.options);
+          options['text'] = endConfig.options['text'](d);
+          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+          return (t) => {
+            n.position = interpolate(t);
+          }
+        })
+      } else {
+        selections.y = labelBuilder(labelYDefaults(axes, textHeight), ticks.y)
+      }
+    }
+    if (createLabel.z && axes.options.scale?.z != undefined){
+
+      previous_selection.z.run((d,n) => n.setEnabled(false));
+      axes._scene.onAfterRenderObservable.addOnce(() => {
+        previous_selection.z.dispose();
+      })
+
+      if (transitionOptions) {
+        const startConfig = labelZDefaults(axes.tempAxes, textHeight)
+        const endConfig = labelZDefaults(axes, textHeight)
+        selections.z = labelBuilder(startConfig, ticks.z);
+        selections.z.transition(transitionOptions).tween((d,n,i) => {
+          let interpolate = interpolateObject(n.position, endConfig.position(d));
+          let options = clone(endConfig.options);
+          options['text'] = endConfig.options['text'](d);
+          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+          return (t) => {
+            n.position = interpolate(t);
+          }
+        })
+      } else {
+        selections.z = labelBuilder(labelZDefaults(axes, textHeight), ticks.z)
+      }
+    }
+
+
+
+  return selections
 }

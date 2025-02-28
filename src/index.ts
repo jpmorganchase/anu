@@ -2,6 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 export { Selection } from './selection/index';
+export { AxesConfig } from './prefabs/Axis/AxisOptions';
 export { Axes as Axis } from './prefabs/Axis/Axis';
 export { PlaneText } from './prefabs/Text/planeText';
 export { TextureGlobe } from './prefabs/Mapping/textureGlobe';
@@ -20,3 +21,4 @@ export { planeLayout, cylinderLayout } from './prefabs/Layout/Layout';
 export { createAxes } from './prefabs/Axis/Axis';
 export { ordinalChromatic, sequentialChromatic, schemes } from './prefabs/Chromatic/Chromatic';
 export { createMeshMap } from './prefabs/Mapping/MeshMap';
+export { createBrush } from './prefabs/Brushing/brush';

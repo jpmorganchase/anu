@@ -36,11 +36,6 @@ export const selectBoxes = function(engine){
   let boxesSelection = spheres.selectName('box')
   boxesSelection.positionX(2)
 
-  Inspector.Show(scene, {
-    embedMode: true,
-    showInspector: false
-  });
- 
   return scene;
   
 }; 
