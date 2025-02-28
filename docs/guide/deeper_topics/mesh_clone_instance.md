@@ -17,7 +17,7 @@ The performance of the examples bellow are influenced by each other since they a
 :::
 
 ## Mesh
-The standard method for mesh rendering through [create]() or [bind]() is to call Babylon's MeshBuilder methods generating a new mesh for each call. In this approach each mesh with be created with new geometry and its own draw call. While this gives us the most control and flexibility over how we create and change meshes, it is also the most resource intensive. In typical usage using this method will start to slow down scenes after around 2000 draw calls. 
+The standard method for mesh rendering through [create](/api/modules.html#create) or [bind](/api/modules.html#bind) is to call Babylon's MeshBuilder methods generating a new mesh for each call. In this approach each mesh with be created with new geometry and its own draw call. While this gives us the most control and flexibility over how we create and change meshes, it is also the most resource intensive. In typical usage using this method will start to slow down scenes after around 2000 draw calls. 
 
 <singleView :scene="meshBench" />
 

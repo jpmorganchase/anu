@@ -3,6 +3,7 @@
 /dist
 /docs/node_modules
 /docs/dist
+/docs/anu-tutorial/node_modules
 /docs/.vitepress/cache
 /anu-examples/node_modules
 /anu-examples/anu-examples.code-workspace
