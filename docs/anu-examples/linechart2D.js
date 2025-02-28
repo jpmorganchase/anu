@@ -62,7 +62,8 @@ export function linechart2D(engine){
       mat.diffuseColor = Color3.FromHexString("#4287f5");
       mat.alpha = 1;
       return mat;
-  });
+  })
+    .positionZ(-0.001);   //Move ribbon forward to prevent z-fighting
 
   //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
   //Also adjust its visual properties to properly format the axes labels
@@ -70,8 +71,7 @@ export function linechart2D(engine){
                                   scale: { x: scaleX, y: scaleY },
                                   domainMaterialOptions: { "color": Color3.Black(), width: 0.05 },
                                   labelTicks: { x: scaleX.ticks(d3.timeYear) },
-                                  labelFormat: { x: dateFormat, y: (text) => '$' + text },
-                                  background: false   //Hide background to prevent z-fighting
+                                  labelFormat: { x: dateFormat, y: (text) => '$' + text }
   });
 
   return scene;
