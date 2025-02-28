@@ -12,7 +12,7 @@ Babylon supports several methods of rendering meshes each with there advantages 
 
 :::tip
 
-The performance of the examples bellow are influenced by each other since they are running on the same page. Remember to reset the sliders to reduce this effect. 
+The performance of the examples below are influenced by each other since they are running on the same page. Remember to reset the sliders to reduce this effect. 
 
 :::
 
