@@ -24,24 +24,25 @@ let points1 = [
     new Vector3(2, -1, 0),
 ]
 
-let points2 = [
-  new Vector3(-1, -1, 0),
-  new Vector3(1, 0, 0),
-  new Vector3(0, 0, 0),
-]
-
-  let line = anu.bind('tube', {path: points1, updatable: true}, undefined, scene)
+  let line = anu.bind('lines', {points: points1, updatable: true}, [points1], scene)
 
   //click the scene to transition
   scene.onPointerDown = (pointer) => {
-    var box_transition = line.transition({duration: 1000}).tween((d,n,i) => {
+    var line_transition = line.transition({duration: 1000}).tween((d,n,i) => {
 
+      let points2 = [
+        Vector3.Random(-5,5),
+        Vector3.Random(-5,5),
+        Vector3.Random(-5,5),
+      ]
+      
       let interpolater = interpolateArray(points1, points2)
-
-
+     
       return (t) => {
-        console.log(interpolater(t))
-        anu.create("tube", "tube", {path: interpolater(t), updatable: true, instance: n}, scene)
+        
+        let points = interpolater(t).map((v) => new Vector3(v._x,v._y,v._z))
+  
+        anu.create("lines", "lines", {points: points, updatable: true, instance: n}, [points], scene)
       }
     })
   }
