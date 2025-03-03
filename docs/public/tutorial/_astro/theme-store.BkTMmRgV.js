@@ -1,0 +1,1 @@
+import{a as o}from"./index.DgoachrA.js";const m="tk_theme",e=o(n());function n(){return document.querySelector("html")?.getAttribute("data-theme")??"light"}function a(){const t=e.get()==="dark"?"light":"dark";e.set(t),localStorage.setItem(m,t),document.querySelector("html")?.setAttribute("data-theme",t)}export{e as a,a as t};

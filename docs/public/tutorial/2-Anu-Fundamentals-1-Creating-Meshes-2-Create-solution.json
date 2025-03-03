@@ -1,0 +1,1 @@
+{"/lesson.js":"import * as anu from '@jpmorganchase/anu';\n\nexport default (scene) => {\n  let data = { goals: 5, assists: 10, points: 2 };\n\n  let box = anu.create(\n    'box',\n    'ourBox',\n    { height: (d) => d.goals, width: (d) => d.assists, depth: (d) => d.points },\n    data,\n  );\n\n  return scene;\n};\n"}
