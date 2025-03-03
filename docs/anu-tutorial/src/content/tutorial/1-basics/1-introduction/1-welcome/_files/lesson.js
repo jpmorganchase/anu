@@ -1,5 +1,5 @@
 import * as anu from "@jpmorganchase/anu";
-import penguins from "_files/penguins.json" assert {type: 'json'}
+import penguins from "./penguins.json" assert {type: 'json'}
 import { extent, scaleLinear, scaleOrdinal} from "d3";
 import { Vector3, ExecuteCodeAction, ActionManager} from "@babylonjs/core";
 

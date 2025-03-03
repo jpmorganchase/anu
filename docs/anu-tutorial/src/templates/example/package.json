@@ -9,12 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "latest",
-    "vite-plugin-mkcert": "^1.17.6"
+    "vite": "latest"
   },
   "dependencies": {
     "@babylonjs/core": "latest",
     "@babylonjs/inspector": "latest",
+    "@babylonjs/gui": "latest",
     "@jpmorganchase/anu": "latest",
     "d3": "latest"
   }

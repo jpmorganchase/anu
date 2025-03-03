@@ -1,5 +1,5 @@
 import { Vector3, StandardMaterial, Color3} from "@babylonjs/core";
-import { scaleOrdinal } from "d3-scale";
+import { scaleOrdinal } from "d3";
 import * as anu from "@jpmorganchase/anu";
 
 export default (scene) => {
