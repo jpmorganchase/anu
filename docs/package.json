@@ -3,7 +3,8 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "clean_ext": "node clean_ext.js"
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.4",
