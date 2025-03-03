@@ -76,7 +76,7 @@ export function animationBarChartRace(engine) {
                   .scalingX((d,n,i) => scaleX(d.value))
                   .positionY((d,n,i) => scaleY(d.rank))
                   .material((d,n,i) => new StandardMaterial(d.name + 'Mat'))
-                  .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Countries not in the top N are transparent
+                  .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Companies not in the top N are transparent
                   .diffuseColor((d,n,i) => Color3.FromHexString(scaleC(d)));
 
   let labels = chart.bind('planeText', { text: "0", size: 0.1, align: "right"}, keyframes[0][1])
@@ -122,7 +122,7 @@ export function animationBarChartRace(engine) {
           if (i == 0)                   //This callback is run for every Mesh in the selection, so the easiest way to have this be run
               nextTimestep(timestep++); //only once is to put the conditional you see here (i.e., the first Mesh in the selection)
         }}))
-      .tween((d,n,i) => {             //We use tween() here as it gives us finer grain control of the animation in each frame during the transition
+      .tween((d,n,i) => {               //We use tween() here as it gives us finer grain control of the animation in each frame during the transition
         //Create D3 interpolators to help tween between start and end values
         let posXTween = d3.interpolateNumber(n.position.x, scaleX(d.value) / 2);
         let scaleXTween = d3.interpolateNumber(n.scaling.x, scaleX(d.value));
@@ -184,7 +184,7 @@ export function animationBarChartRace(engine) {
   button.left = "42.5%";
   button.onPointerClickObservable.add(() => {
     //If the keyframes have been exhausted, we need to call nextTimestep() again
-    if (timestep > keyframes.length) {
+    if (timestep >= keyframes.length) {
       timestep = 0;
       nextTimestep();
     }
@@ -194,6 +194,7 @@ export function animationBarChartRace(engine) {
     }
   });
   advancedTexture.addControl(button);
+  
   
   return scene;
 }

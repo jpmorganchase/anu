@@ -18,7 +18,7 @@ export function animationScatterPlot(engine) {
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(2, 2.5, -3);
+  camera.position = new Vector3(2, 2.5, -4);
 
   //Scaling functions
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial());
@@ -32,13 +32,18 @@ export function animationScatterPlot(engine) {
                       .position((d) => Vector3.Zero())        //Set the position of the spheres before any transition has begun
                       .material((d) => scaleC(d.species));    //We need to use the arrow function here despite setting a uniform value, otherwise the animation will not work properly
 
-  //Create a variable for the scatterplot axes so that we can access it easily
+  //Create a variable for the scatterplot axes so that we can access it easily for updating
   let axes;
+  //Create an AxesConfig which will store the options for our axes between states
+  let axesOptions = new anu.AxesConfig({});   //Blank object since we will be filling in the axis scales later
+  axesOptions.parent = chart;
 
   //Create our functions which will change the scatterplot to two hardcoded states
   //Create our easing function, see https://doc.babylonjs.com/features/featuresDeepDive/animation/advanced_animations#easing-functions
   let sineEase = new SineEase();
   sineEase.setEasingMode(2);
+
+  const animDuration = 1000;
 
   function changeState1() {
     //Create scales for this state
@@ -47,7 +52,7 @@ export function animationScatterPlot(engine) {
     let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.petalLength}))).range([-1,1]).nice();
 
     spheres.transition((d,n,i) => ({        //Start the transition, arrow function allows us to customize transition properties per each Mesh in our selection
-            duration: 2000,                 //Duration of the animation in milliseconds
+            duration: animDuration,         //Duration of the animation in milliseconds
             loopMode: 0,                    //0: no loop, 1: loop
             delay: 0,                       //Delay to apply to this Mesh's animation in milliseconds
             easingFunction: sineEase,       //Set our EasingFunction
@@ -57,11 +62,20 @@ export function animationScatterPlot(engine) {
             .positionY((d,n,i) => scaleY(d.sepalWidth))
             .positionZ((d,n,i) => scaleZ(d.petalLength));
     
+    //Update axes with our new scales
+    axesOptions.scale.x = scaleX;
+    axesOptions.scale.y = scaleY;
+    axesOptions.scale.z = scaleZ;
 
-    //Destroy the previous axes if it exists
-    axes?.CoT.dispose();
-    //Create axes
-    axes = anu.createAxes('axes', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
+    //Create or update axes
+    if (!axes) {
+      axes = anu.createAxes('axes', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
+    }
+    else {
+      //Update the axes with an animation
+      //Second parameter takes in Transition Options, leave blank/undefined for no animations (i.e., jump cut)
+      axes.updateAxes(axesOptions, { duration: animDuration, easingFunction: sineEase });
+    }
   }
 
   //Same as above but with different data dimensions
@@ -71,7 +85,7 @@ export function animationScatterPlot(engine) {
     let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.petalWidth}))).range([-1,1]).nice();
 
     spheres.transition((d,n,i) => ({
-            duration: 2000,
+            duration: animDuration,
             loopMode: 0,
             delay: 0,
             easingFunction: sineEase,
@@ -81,11 +95,16 @@ export function animationScatterPlot(engine) {
             .positionY((d,n,i) => scaleY(d.sepalLength))
             .positionZ((d,n,i) => scaleZ(d.petalWidth));
             
-    //Destroy the previous axes if it exists
-    axes?.CoT.dispose();
+    axesOptions.scale.x = scaleX;
+    axesOptions.scale.y = scaleY;
+    axesOptions.scale.z = scaleZ;
 
-    //Create axes
-    axes = anu.createAxes('axes', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
+    if (!axes) {
+      axes = anu.createAxes('axes', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
+    }
+    else {
+      axes.updateAxes(axesOptions, { duration: animDuration, easingFunction: sineEase });
+    }
   }
 
   //Call our function to initially change the data dimensions of the scatterplot
