@@ -13,7 +13,7 @@ Animated transitions are one of the best ways to bring our scenes to life. Using
 
 ## Basic Transition
 
-Creating a transition is as easy as taking an existing Selection with some meshes in them and calling the [transition()]() method. This will return a new [Selection]() instance setup to run the transition animations. Then simply use any wrapper function, prop(), or props() method that uses any of the following types: Color3, Float, Matrix, QUATERNION, Vector2, or Vector3. This will result in an animation being created and started that animates the mesh from the start value to the end value ordering to the transitionOptions passed to transition(). 
+Creating a transition is as easy as taking an existing Selection with some meshes in them and calling the [transition()](/api/classes/Selection.html#transition) method. This will return a new [Selection](/api/classes/Selection.html) instance setup to run the transition animations. Then simply use any wrapper function, prop(), or props() method that uses any of the following types: Color3, Float, Matrix, QUATERNION, Vector2, or Vector3. This will result in an animation being created and started that animates the mesh from the start value to the end value ordering to the transitionOptions passed to transition(). 
 
 ```js
 let box = anu.bind('box', {}, [...Array(10).keys()]);
@@ -81,7 +81,7 @@ scene.onPointerDown = (pointer) => {
 
 ## Tween
 
-Sometimes we want more control over our transitions, or want to animate a variable change other the ones supported. For these cases we can use the [tween()](http://localhost:5173/anu/api/classes/Selection.html#tween) method. 
+Sometimes we want more control over our transitions, or want to animate a variable change other the ones supported. For these cases we can use the [tween()](/api/classes/Selection.html#tween) method. 
 tween expects a function that takes one variable t (time) as an argument. For each tick of the transition this function will be called passing in the current time in the transition to the function. We can use the [D3 interpolate](https://d3js.org/d3-interpolate) methods to calculate the new value of the transition variable. 
 
 ```js
