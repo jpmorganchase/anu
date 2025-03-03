@@ -159,30 +159,16 @@ declare module 'astro:content' {
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
-"1-basics/1-introduction/meta.md": {
-	id: "1-basics/1-introduction/meta.md";
-  slug: "1-basics/1-introduction/meta";
-  body: string;
-  collection: "tutorial";
-  data: InferEntrySchema<"tutorial">
-} & { render(): Render[".md"] };
-"1-basics/2-setup/1-quick-setup/content.md": {
-	id: "1-basics/2-setup/1-quick-setup/content.md";
+"1-basics/1-introduction/2-quick-setup/content.md": {
+	id: "1-basics/1-introduction/2-quick-setup/content.md";
   slug: "/:partSlug/:chapterSlug/2-quick-setup.html/";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
 } & { render(): Render[".md"] };
-"1-basics/2-setup/2-running-dev/content.md": {
-	id: "1-basics/2-setup/2-running-dev/content.md";
-  slug: "/:partSlug/:chapterSlug/2-running-dev.html/";
-  body: string;
-  collection: "tutorial";
-  data: InferEntrySchema<"tutorial">
-} & { render(): Render[".md"] };
-"1-basics/2-setup/meta.md": {
-	id: "1-basics/2-setup/meta.md";
-  slug: "1-basics/2-setup/meta";
+"1-basics/1-introduction/meta.md": {
+	id: "1-basics/1-introduction/meta.md";
+  slug: "1-basics/1-introduction/meta";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
@@ -316,6 +302,20 @@ declare module 'astro:content' {
 "2-Anu-Fundamentals/3-Your-First-Vis/meta.md": {
 	id: "2-Anu-Fundamentals/3-Your-First-Vis/meta.md";
   slug: "2-anu-fundamentals/3-your-first-vis/meta";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/4-Your-Turn/1-Make-it-Yours/content.md": {
+	id: "2-Anu-Fundamentals/4-Your-Turn/1-Make-it-Yours/content.md";
+  slug: "/:partSlug/:chapterSlug/1-Make-it-Yours.html/";
+  body: string;
+  collection: "tutorial";
+  data: InferEntrySchema<"tutorial">
+} & { render(): Render[".md"] };
+"2-Anu-Fundamentals/4-Your-Turn/meta.md": {
+	id: "2-Anu-Fundamentals/4-Your-Turn/meta.md";
+  slug: "2-anu-fundamentals/4-your-turn/meta";
   body: string;
   collection: "tutorial";
   data: InferEntrySchema<"tutorial">
