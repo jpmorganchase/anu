@@ -6,10 +6,10 @@ import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import * as gui from '@babylonjs/gui';
 import { Scene, HemisphericLight, ArcRotateCamera, Vector3, SineEase } from '@babylonjs/core';
-import iris from './data/iris.json' assert {type: 'json'};  //Our data
+import iris from '../../data/iris.json' assert {type: 'json'};  //Our data
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function animationScatterPlot(engine) {
+export const animateState = function(engine) {
 
   //Babylon boilerplate
   const scene = new Scene(engine);
@@ -18,8 +18,8 @@ export function animationScatterPlot(engine) {
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(2, 2.5, -4);
-
+  camera.position = new Vector3(2, 2.5, -3);
+  
   //Scaling functions
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial());
 

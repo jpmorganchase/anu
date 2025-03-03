@@ -76,7 +76,7 @@ export const barchartRace = function(engine) {
                   .scalingX((d,n,i) => scaleX(d.value))
                   .positionY((d,n,i) => scaleY(d.rank))
                   .material((d,n,i) => new StandardMaterial(d.name + 'Mat'))
-                  .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Countries not in the top N are transparent
+                  .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Companies not in the top N are transparent
                   .diffuseColor((d,n,i) => Color3.FromHexString(scaleC(d)));
 
   let labels = chart.bind('planeText', { text: "0", size: 0.1, align: "right"}, keyframes[0][1])
@@ -184,7 +184,7 @@ export const barchartRace = function(engine) {
   button.left = "42.5%";
   button.onPointerClickObservable.add(() => {
     //If the keyframes have been exhausted, we need to call nextTimestep() again
-    if (timestep > keyframes.length) {
+    if (timestep >= keyframes.length) {
       timestep = 0;
       nextTimestep();
     }
