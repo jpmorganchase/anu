@@ -48,7 +48,8 @@ export default defineConfig({
             { text: 'Deeper Topics',
             collapsed: false,
             items: [
-              { text: 'Mesh, Clones, Instances', link: '/guide/deeper_topics/mesh_clone_instance.md'}
+              { text: 'Mesh, Clones, Instances', link: '/guide/deeper_topics/mesh_clone_instance.md'}, 
+              { text: 'Transitions', link: '/guide/deeper_topics/transitions.md'}
             ]
           },
           { text: 'Anu Prefabs',
