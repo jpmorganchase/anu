@@ -5,6 +5,7 @@
 /docs/dist
 /docs/anu-tutorial/node_modules
 /docs/.vitepress/cache
+/docs/.vitepress/dist
 /anu-examples/node_modules
 /anu-examples/anu-examples.code-workspace
 /docs/docs.code-workspace
