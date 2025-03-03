@@ -2,7 +2,8 @@
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import { HemisphericLight, ArcRotateCamera, Vector3, Scene, Engine} from '@babylonjs/core';
-import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
+import lesson from "./lesson";
+
 
 //Grab DOM element where we will attach our canvas. #app is the id assigned to an empty <div> in our index.html 
 const app = document.querySelector('#app');
@@ -22,8 +23,12 @@ const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10
 camera.position = new Vector3(-10, 10, -20)
 camera.attachControl(true)
 
-//Make a box as a anu Selection object
-let box = anu.bind('box');
+//Call your function executing our lesson code from lesson.js passing our scene for support 
+lesson(scene)
+
+//Add webXR experience helper
+let defaultXRExperience
+
 
 //Render the scene we created
 babylonEngine.runRenderLoop(() => {
@@ -36,14 +41,16 @@ window.addEventListener("resize", function () {
 });
 
 
-// hide/show the Inspector
+scene.debugLayer.show({embedMode: true});
+
+
+// hide/show the Inspector with i
 window.addEventListener("keydown", (ev) => {
-    // Shift+Ctrl+Alt+I
-    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+    if (ev.key == 'I') {
         if (scene.debugLayer.isVisible()) {
             scene.debugLayer.hide();
         } else {
-            scene.debugLayer.show();
+            scene.debugLayer.show({embedMode: true});
         }
     }
 });

@@ -17,7 +17,7 @@ export default (scene) => {
 
   boxSelection.positionY(2)
 
-  let sphereSelection = anu.selectID('sphere-ID', scene)
+  let sphereSelection = anu.selectId('sphere-ID', scene)
 
   sphereSelection.positionY(-2)  
 

@@ -1,7 +1,6 @@
 ---
 type: lesson
 title: Welcome to Anu
-focus: /counter.js
 slug: /:partSlug/:chapterSlug/1-welcome.html/
 ---
 
@@ -13,8 +12,8 @@ The contents of this website are an interactive tutorial series that will guide 
 
 Throughout this tutorial you will be asked to write code that is running live right here on this page! Everything is running client-side directly in your browser by your own machine. Use this page to get familiar with the interfaces, try changing some of the code to see live previews. The code running on this page is an example application of a complete visualization made using anu. By the end of this tutorial you will learn how to create an application just like this, and hopefully have the knowledge to go even further!
 
-# Table of Contents
-Feel free to follow the tutorial in order, or to skip around depending on your needs!
+:::tip 
+This interactive tutorial use tutorialkit and webcontainers to run a live node environment in your browser all client-side. Examples may take a few minutes to full load in. While loading you should see either activity in the console, or the Anu loading screen. If after a few minutes nothing loads still, check the developer console for errors. 
 
-- test
-
+Feel free to download the current project at any point by using the download button at the top nav bar if you want to work locally instead. 
+:::
