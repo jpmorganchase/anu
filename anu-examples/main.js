@@ -48,7 +48,7 @@ import { details } from './examples/Interactions/Details';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
 import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
-import { fig2 } from './examples/Figures/fig2';
+import { tiltMap } from './examples/Figures/tiltMap';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 import { animate } from './examples/Animation/animate';
 import { brushing } from './examples/Brushing/Brushing';
@@ -112,7 +112,7 @@ const scenes = {
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
   'fig1': fig1,
-  'fig2': fig2,
+  'tiltMap': tiltMap,
   'scatterplotThinInstance': scatterplotThinInstance,
   'animate': animate,
   'animateState': animateState,

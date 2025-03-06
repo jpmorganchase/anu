@@ -16,17 +16,11 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg  title="3D Scatter Plot"  img="/anu/assets/example-images/scatterplot3D.png" link="/anu/examples/scatter_plot_3D"></cardImg>
-            <!-- <card title="3D Scatter Plot" example="Scatterplot3D" link="/anu/examples/scatter_plot_3D"></card> -->
             <cardImg title="3D Bar Chart"  img="/anu/assets/example-images/barchart3D.png" link="/anu/examples/bar_chart_3D"></cardImg>
-            <!-- <card title="3D Bar Chart" example="barchart3d" link="/anu/examples/bar_chart_3D"></card> -->
              <cardImg title="3D Line Chart"  img="/anu/assets/example-images/linechart3D.png" link="/anu/examples/line_chart_3D"></cardImg>
-            <!-- <card title="3D Line Chart" example="linechart3D" link="/anu/examples/line_chart_3D"></card> -->
             <cardImg title="2D Scatter Plot" img="/anu/assets/example-images/scatterplot2D.png" link="/anu/examples/scatter_plot_2D"></cardImg>
-            <!-- <card title="2D Scatter Plot" example="Scatterplot2D" link="/anu/examples/scatter_plot_2D"></card> -->
             <cardImg title="2D Bar Chart" img="/anu/assets/example-images/barchart2D.png" link="/anu/examples/bar_chart_2D"></cardImg>
-            <!-- <card title="2D Bar Chart" example="barchart2d" link="/anu/examples/bar_chart_2D"></card> -->
             <cardImg title="2D Line Chart" img="/anu/assets/example-images/linechart2D.png" link="/anu/examples/line_chart_2D"></cardImg>
-            <!-- <card title="2D Line Chart" example="linechart2D" link="/anu/examples/line_chart_2D"></card> -->
         </div>
     </div>
     <div class='section'>
@@ -34,11 +28,8 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg title="Texture Map" img="/anu/assets/example-images/textureMap.png" link="/anu/examples/texture_map"></cardImg>
-            <!-- <card title="Texture Map" example="Texture_Map" link="/anu/examples/texture_map"></card> -->
             <cardImg title="Texture Globe" img="/anu/assets/example-images/textureGlobe.png" link="/anu/examples/texture_globe"></cardImg>
-            <!-- <card title="Texture Globe" example="Texture_Globe" link="/anu/examples/texture_globe"></card> -->
             <cardImg title="Mesh Map" img="/anu/assets/example-images/meshMap.png" link="/anu/examples/mesh_map"></cardImg>
-            <!-- <card title="Mesh Map" example="Mesh_Map" link="/anu/examples/mesh_map"></card> -->
         </div>
     </div>
     <div class='section'>
@@ -46,13 +37,9 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg title="Pointer Hover" img="/anu/assets/example-images/pointerHover.png" link="/anu/examples/hover"></cardImg>
-            <!-- <card title="Pointer Hover" example="Hover" link="/anu/examples/hover"></card> -->
-            <cardImg title="Details On Demand" img="/anu/assets/example-images/detailsOnDemand.png" link="/anu/examples/details"></cardImg>  
-            <!-- <card title="Details On Demand" example="Details" link="/anu/examples/details"></card>   -->
+            <cardImg title="Details On Demand" img="/anu/assets/example-images/detailsOnDemand.png" link="/anu/examples/details"></cardImg>
             <cardImg title="Transform Widget UI" img="/anu/assets/example-images/transformWidgetUI.png" link="/anu/examples/transform_widget_ui"></cardImg>
-            <!-- <card title="Transform Widget UI" example="TransformWidget" link="/anu/examples/transform_widget_ui"></card> -->
             <cardImg title="Layouts" img="/anu/assets/example-images/layout.png" link="/anu/examples/layout"></cardImg>
-            <!-- <card title="Layouts" example="layout" link="/anu/examples/layout"></card> -->
         </div>
     </div>
     <div class='section'>
@@ -60,9 +47,7 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg title="Single Selection" img="/anu/assets/example-images/brushingLinkingSingle.png" link="/anu/examples/brushing_linking_single"></cardImg>
-            <!-- <card title="Single Selection" example="brushingLinkingSingle" link="/anu/examples/brushing_linking_single"></card> -->
             <cardImg title="Multiple Selection" img="/anu/assets/example-images/brushingLinkingMultiple.png" link="/anu/examples/brushing_linking_multiple"></cardImg>
-            <!-- <card title="Multiple Selection" example="brushingLinkingMultiple" link="/anu/examples/brushing_linking_multiple"></card> -->
         </div>
     </div>
     <div class='section'>
@@ -70,7 +55,6 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg title="Node Link 3D" img="/anu/assets/example-images/nodeLink3D.png" link="/anu/examples/node_link_3d"></cardImg>
-            <!-- <card title="Node Link 3D" example="NodeLink3D" link="/anu/examples/node_link_3d"></card> -->
         </div>
     </div>
     <div class='section'>
@@ -78,11 +62,15 @@ layout: page
         <hr>
         <div class="cards">
             <cardImg title="Basic Animation" img="/anu/assets/example-images/animationBarChart.png" link="/anu/examples/animation_bar_chart"></cardImg>
-            <!-- <card title="Basic Animation" example="animationBarChart" link="/anu/examples/animation_bar_chart"></card> -->
             <cardImg title="Data Dimension Change" img="/anu/assets/example-images/animationScatterPlot.png" link="/anu/examples/animation_scatter_plot"></cardImg>
-            <!-- <card title="Data Dimension Change" example="animationScatterPlot" link="/anu/examples/animation_scatter_plot"></card> -->
             <cardImg title="Bar Chart Race" img="/anu/assets/example-images/animationBarChartRace.png" link="/anu/examples/animation_bar_chart_race"></cardImg>
-            <!-- <card title="Bar Chart Race" example="animationBarChartRace" link="/anu/examples/animation_bar_chart_race"></card> -->
+        </div>
+    </div>
+    <div class='section'>
+        <h2>Advanced</h2>
+        <hr>
+        <div class="cards">
+            <cardImg title="Tilt Map" img="/anu/assets/example-images/tiltMap.png" link="/anu/examples/tilt_map"></cardImg>
         </div>
     </div>
 

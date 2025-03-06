@@ -15,6 +15,7 @@
     "@babylonjs/gui": "^7.1.0",
     "@babylonjs/inspector": "^7.1.0",
     "@babylonjs/loaders": "^7.1.0",
+    "@babylonjs/materials": "^7.52.0",
     "@jpmorganchase/anu": "latest",
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",
