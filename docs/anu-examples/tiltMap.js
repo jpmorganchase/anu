@@ -1,16 +1,19 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
 import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Color3, Quaternion, SixDofDragBehavior } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Slider } from '@babylonjs/gui';
 import { GradientMaterial } from '@babylonjs/materials';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
-import data from 'anu/../../data/population_engineers_hurricanes.csv';
-import centroids from 'anu/../../data/centroids.json';
-import geoJ from "anu/../../data/gz_2010_us_040_00_5m.json";
+import data from './data/population_engineers_hurricanes.csv';
+import centroids from './data/centroids.json';
+import geoJ from "./data/gz_2010_us_040_00_5m.json";
 
-export function tiltMap(babylonEngine){
+export function tiltMap(engine){
 
   //Babylon boilerplate
-  const scene = new Scene(babylonEngine);
+  const scene = new Scene(engine);
   const light = new HemisphericLight('light1', new Vector3(0, 10, -10), scene)
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.wheelPrecision = 20;

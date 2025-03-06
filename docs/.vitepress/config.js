@@ -119,6 +119,7 @@ export default defineConfig({
           { text: 'Texture Map', link: './texture_map' },
           { text: 'Texture Globe', link: './texture_globe' },
           { text: 'Mesh Map', link: './mesh_map' },
+          { text: 'Tilt Map', link: './tilt_map' }
         ]
       },
       {
@@ -153,6 +154,13 @@ export default defineConfig({
           { text: 'Basic Animation', link: './animation_bar_chart' },
           { text: 'Data Dimension Change', link: './animation_scatter_plot' },
           { text: 'Bar Chart Race', link: './animation_bar_chart_race' },
+        ]
+      },
+      {
+        text: 'Advanced',
+        collapsed: false,
+        items: [
+          { text: 'Tilt Map', link: './tilt_map' },
         ]
       }
     ]
