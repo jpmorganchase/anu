@@ -119,7 +119,8 @@ export default defineConfig({
           { text: 'Texture Map', link: './texture_map' },
           { text: 'Texture Globe', link: './texture_globe' },
           { text: 'Mesh Map', link: './mesh_map' },
-          { text: 'Tilt Map', link: './tilt_map' }
+          { text: '3D Trajectory on Map', link: './trajectory_3D' },
+          { text: 'Origin-Destination Globe', link: './origin_destination_globe' }
         ]
       },
       {

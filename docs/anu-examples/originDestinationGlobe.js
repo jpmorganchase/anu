@@ -1,21 +1,22 @@
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Curve3, GreasedLineMeshColorDistributionType, Constants, Color3 } from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Color3, Curve3, GreasedLineMeshColorDistributionType, Constants } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
-import airports from 'anu/../../data/airports.csv';
-import flights from 'anu/../../data/flights-airport.csv';
-import { XYZ } from 'ol/source';
-import TileLayer from 'ol/layer/Tile';
+import airports from './data/airports.csv';
+import flights from './data/flights-airport.csv';
 
-export function flightPath(babylonEngine){
+export function originDestinationGlobe(engine){
 
   //Babylon boilerplate
-  const scene = new Scene(babylonEngine);
+  const scene = new Scene(engine);
   const light = new HemisphericLight('light1', new Vector3(0, 10, -10), scene)
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(0, 1.5, -3)
+  camera.position = new Vector3(0, 2, -3)
 
   //Filter to flights originating from Atlanta
   let filteredFlights = flights.filter(d => d.origin === "ATL");
@@ -28,21 +29,17 @@ export function flightPath(babylonEngine){
   function haversine(lat1, lon1, lat2, lon2) {
     // Convert degrees to radians
     const toRadians = (degrees) => degrees * Math.PI / 180;
-
     // Radius of Earth in kilometers
     const R = 6371;
-
     // Differences in latitudes and longitudes
     const deltaLat = toRadians(lat2 - lat1);
     const deltaLon = toRadians(lon2 - lon1);
-
     // Haversine formula
     const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
               Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
               Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
     // Return distance in kilometers
     return R * c;
   }
