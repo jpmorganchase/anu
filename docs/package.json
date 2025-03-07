@@ -11,11 +11,11 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "@babylonjs/core": "^7.1.0",
-    "@babylonjs/gui": "^7.1.0",
-    "@babylonjs/inspector": "^7.1.0",
-    "@babylonjs/loaders": "^7.1.0",
-    "@babylonjs/materials": "^7.52.0",
+    "@babylonjs/core": "^7.52.1",
+    "@babylonjs/gui": "^7.52.1",
+    "@babylonjs/inspector": "^7.52.1",
+    "@babylonjs/loaders": "^7.52.1",
+    "@babylonjs/materials": "^7.52.1",
     "@jpmorganchase/anu": "latest",
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",

@@ -54,6 +54,8 @@ import { animate } from './examples/Animation/animate';
 import { brushing } from './examples/Brushing/Brushing';
 import { animateState } from './examples/Animation/animateState';
 import { barchartRace } from './examples/Animation/barchartRace';
+import { dronePath } from './examples/Geographic/dronePath';
+import { flightPath } from './examples/Geographic/flightPath';
 
 
 const queryString = window.location.search;
@@ -116,7 +118,9 @@ const scenes = {
   'scatterplotThinInstance': scatterplotThinInstance,
   'animate': animate,
   'animateState': animateState,
-  'barchartRace': barchartRace
+  'barchartRace': barchartRace,
+  'dronePath': dronePath,
+  'flightPath': flightPath
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);
