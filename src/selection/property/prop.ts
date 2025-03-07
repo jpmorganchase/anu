@@ -6,7 +6,7 @@ import { Selection } from '../index';
 import set from 'lodash-es/set';
 import get from 'lodash-es/get';
 import hasIn from 'lodash-es/hasIn';
-import { createTransition } from '../animation/transition';
+import { createTransition, createTransitions } from '../animation/transition';
 
 /**
  * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
@@ -55,11 +55,13 @@ export function prop(this: Selection, accessor: string, value: any) {
  * @returns The modified selection
  */
 export function props(this: Selection, properties: {}) {
+  
+  if (this.transitions.length > 0) {
+    console.log("transition")
+    createTransitions(this, properties);
+  } else {
   this.selected.forEach((node, i) => {
     for (let accessor in properties) {
-      if (this.transitions.length > 0) {
-        createTransition(this, accessor, properties[accessor]);
-      } else {
         hasIn(node, accessor)
           ? set(
               node,
@@ -68,10 +70,10 @@ export function props(this: Selection, properties: {}) {
                 ? (properties as any)[accessor]((node.metadata.data ??= {}), node, i)
                 : (properties as any)[accessor],
             )
-          : console.log(accessor + ' not property of ' + node);
+          : console.warn(accessor + ' not property of ' + node);
       }
-    }
-  });
+    });
+  }
 
   return this;
 }

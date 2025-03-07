@@ -4,6 +4,7 @@
 import { Animation, EasingFunction, Node, Animatable } from '@babylonjs/core';
 import { Selection } from '../index';
 import get from 'lodash-es/get';
+import hasIn  from 'lodash-es/hasIn';
 
 export type TransitionOptions = {
   duration?: number; //done
@@ -74,37 +75,92 @@ export function transition(
 export function createTransition(selection: Selection, accessor: string, value: any) {
   let sequence = selection.transitions.length - 1;
   selection.selected.forEach(async (node, i) => {
-    let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
-    let duration = (transitionOptions.duration || 250) / 1000;
-    let fps: number = transitionOptions.framePerSecond || 30;
-    let delay: number = transitionOptions.delay || 0;
-    let frames: number = fps * duration;
-    let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT;
-    let ease: EasingFunction = transitionOptions.easingFunction || undefined;
-    let wait: boolean = (transitionOptions.sequence ??= true);
-    let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
+    if (hasIn(node, accessor)) {
+      let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
+      let duration = (transitionOptions.duration || 250) / 1000;
+      let fps: number = transitionOptions.framePerSecond || 30;
+      let delay: number = transitionOptions.delay || 0;
+      let frames: number = fps * duration;
+      let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT;
+      let ease: EasingFunction = transitionOptions.easingFunction || undefined;
+      let wait: boolean = (transitionOptions.sequence ??= true);
+      let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
 
-    let animatable: Animatable = new Animatable(node.getScene(), node);
-    animatable.pause();
-    let promise: Promise<Animatable> = animatable.waitAsync();
-    selection.transitions[sequence].animatables.push(promise);
-    if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
+      let animatable: Animatable = new Animatable(node.getScene(), node);
+      animatable.pause();
+      let promise: Promise<Animatable> = animatable.waitAsync();
+      selection.transitions[sequence].animatables.push(promise);
+      if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
 
-    setTimeout(() => {
-      let animation = Animation.CreateAndStartAnimation(
-        node.name + '_animation',
-        node,
-        accessor,
-        fps,
-        frames,
-        get(node, accessor),
-        value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
-        loop,
-        ease,
-        onEnd,
-      );
-      animation.onAnimationEndObservable.addOnce(() => animatable.stop());
-    }, delay);
+      setTimeout(() => {
+        let animation = Animation.CreateAndStartAnimation(
+          node.name + '_animation',
+          node,
+          accessor,
+          fps,
+          frames,
+          get(node, accessor),
+          value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+          loop,
+          ease,
+          onEnd,
+        );
+        animation.onAnimationEndObservable.addOnce(() => animatable.stop());
+      }, delay);
+    } else {
+      console.warn(accessor + ' not property of ' + node);
+    }
+  });
+}
+
+
+/**
+ * Creates and starts a transition animation for each node in the given selection and for each property in properties object. The transition is configured using the options specified in the selection's current transition sequence. This function handles the setup of animation parameters such as duration, frames per second, delay, loop mode, and easing function.
+ *
+ * @param selection - The selection of nodes to which the transition will be applied. Each node in the selection will have its property animated according to the specified options.
+ * @param properties Object of key value pairs for the properties to be set or changed, e.g., \{\"renderingGroupId": 2, "material.alpha": 0.2\}.
+ */
+export function createTransitions(selection: Selection,  properties: {}) {
+  let sequence = selection.transitions.length - 1;
+  selection.selected.forEach(async (node, i) => {
+    for (let accessor in properties) {
+      if (hasIn(node, accessor)) {
+        let value = properties[accessor]
+        let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
+        let duration = (transitionOptions.duration || 250) / 1000;
+        let fps: number = transitionOptions.framePerSecond || 30;
+        let delay: number = transitionOptions.delay || 0;
+        let frames: number = fps * duration;
+        let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT;
+        let ease: EasingFunction = transitionOptions.easingFunction || undefined;
+        let wait: boolean = (transitionOptions.sequence ??= true);
+        let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
+
+        let animatable: Animatable = new Animatable(node.getScene(), node);
+        animatable.pause();
+        let promise: Promise<Animatable> = animatable.waitAsync();
+        selection.transitions[sequence].animatables.push(promise);
+        if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
+
+        setTimeout(() => {
+          let animation = Animation.CreateAndStartAnimation(
+            node.name + '_animation',
+            node,
+            accessor,
+            fps,
+            frames,
+            get(node, accessor),
+            value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+            loop,
+            ease,
+            onEnd,
+          );
+          animation.onAnimationEndObservable.addOnce(() => animatable.stop());
+        }, delay);
+      } else {
+        console.warn(accessor + ' not property of ' + node);
+      }
+    }
   });
 }
 
