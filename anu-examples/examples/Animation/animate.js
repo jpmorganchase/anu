@@ -10,7 +10,6 @@ export const animate = function(engine){
     
   const scene = new Scene(engine)
 
-  console.log(scene.getEngine().constructor.LastCreatedScene)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
@@ -20,30 +19,39 @@ export const animate = function(engine){
   //let box = anu.create('box', 'ourBox', {}, [{}]);
 
 
-  let nodes = anu.bind("box", [...new Array(1)])
+  let nodes = anu.bind("box", {}, [...new Array(10)])
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
 
-  nodes
-    .material(() => new StandardMaterial('mat'))
-    .transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } }))
-    .positionX(2)
-    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } })
-    .positionX(-2)
-    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
-    .positionX(2)
-    .positionY(2)
-    .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
-    .tween((d,n,i) => { 
-      let inter = interpolateBrBG
+  // nodes
+  //   .material(() => new StandardMaterial('mat'))
+  //   .transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } }))
+  //   .positionX(2)
+  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } })
+  //   .positionX(-2)
+  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
+  //   .positionX(2)
+  //   .positionY(2)
+  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
+  //   .tween((d,n,i) => { 
+  //     let inter = interpolateBrBG
 
-      return (t) => {
-        let rgb = color(inter(t)).rgb();
-        n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
-      }
+  //     return (t) => {
+  //       let rgb = color(inter(t)).rgb();
+  //       n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
+  //     }
       
+  //   })
+
+    nodes.transition().props({'position.x': ()=> {
+      console.log("position")
+      return 2;
+    },
+    'scaling.y': 2
     })
+
+
 
   return scene;
 }; 
