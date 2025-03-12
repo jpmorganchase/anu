@@ -161,6 +161,7 @@ export default defineConfig({
         text: 'Advanced',
         collapsed: false,
         items: [
+          { text: 'Baseball Pitches', link: './pitches' },
           { text: 'Tilt Map', link: './tilt_map' },
         ]
       }

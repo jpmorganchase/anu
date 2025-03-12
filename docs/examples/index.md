@@ -72,6 +72,7 @@ layout: page
         <h2>Advanced</h2>
         <hr>
         <div class="cards">
+            <cardImg title="Baseball Pitches" img="/anu/assets/example-images/pitches.png" link="/anu/examples/pitches"></cardImg>
             <cardImg title="Tilt Map" img="/anu/assets/example-images/tiltMap.png" link="/anu/examples/tilt_map"></cardImg>
         </div>
     </div>

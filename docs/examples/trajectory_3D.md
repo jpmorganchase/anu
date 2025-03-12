@@ -7,7 +7,7 @@ import { trajectory3D } from '../anu-examples/trajectory3D.js'
 </script>
 
 # 3D Trajectory on a Map
-Based on the sample log from [Data Comets](https://www.datacomets.com/). For a better visualization, you can replace the URL of the tile provider to one that provides satellite images.
+Based on a sample log from [Data Comets by Saffo et al.](https://onlinelibrary.wiley.com/doi/10.1111/cgf.13994). For a better visualization, you can replace the URL of the tile provider to one that provides satellite images.
 <singleView :scene="trajectory3D" />
 
 ::: code-group
