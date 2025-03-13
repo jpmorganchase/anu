@@ -57,6 +57,7 @@ import { dronePath } from './examples/Geographic/dronePath';
 import { flightPath } from './examples/Geographic/flightPath';
 import { tiltMap } from './examples/Advanced/tiltMap';
 import { pitches } from './examples/Advanced/pitches';
+import { greasedLine } from './examples/GreasedLine/greasedLine';
 
 
 const queryString = window.location.search;
@@ -118,11 +119,7 @@ const scenes = {
   'scatterplotThinInstance': scatterplotThinInstance,
   'animate': animate,
   'animateState': animateState,
-  'barchartRace': barchartRace,
-  'dronePath': dronePath,
-  'flightPath': flightPath,
-  'tiltMap': tiltMap,
-  'pitches': pitches
+  'barchartRace': barchartRace
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

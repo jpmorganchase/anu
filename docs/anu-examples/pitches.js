@@ -70,13 +70,16 @@ export function pitches(engine){
   let CoT = anu.create("cot", "chart");
   let chart = anu.selectName("chart", scene);
 
-  //Create lines for each pitch's trajectory
-  let trajectories = chart.bind('greasedLine', { points: (d,n,i) => pitchToPoints(d) }, data)
-    .run((d,n,i) => {
-      n.greasedLineMaterial.width = 0.02;
-      n.greasedLineMaterial.visibility = 0;     //This will cause the line to shrink and become fully invisible
-      n.greasedLineMaterial.color = scaleC(d.pitch_name);
 
+  let greaseMaterialOptions = {
+    width: 0.02,
+    visibility: 0,   //This will cause the line to shrink and become fully invisible
+    color: (d) => scaleC(d.pitch_name),
+  }
+
+  //Create lines for each pitch's trajectory
+  let trajectories = chart.bind('greasedLine', { meshOptions: {points: (d,n,i) => pitchToPoints(d)}, materialOptions: greaseMaterialOptions}, data)
+    .run((d,n,i) => {
       //We want to have transparency for greasedLines to facilitate hover highlighting, but unfortunately Babylon does not support this easily as of now
       //A workaround is to assign a 1x1 texture with an alpha value and toggle its alpha on and off. The greasedLineMaterial.color will override the texture's rgb values so we just sent these to 0
       const texture = new RawTexture(new Uint8Array([0, 0, 0, 50]), 1, 1, Engine.TEXTUREFORMAT_RGBA, scene, false, false, Engine.TEXTURE_LINEAR_LINEAR);
