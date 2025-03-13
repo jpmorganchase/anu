@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Color3, Curve3, GreasedLineMeshColorDistributionType, Constants } from '@babylonjs/core';
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Color3, Curve3, GreasedLineMeshColorDistributionType, GreasedLineMeshColorDistribution, Constants } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import airports from './data/airports.csv';
@@ -66,17 +66,21 @@ export function originDestinationGlobe(engine){
   //Create D3 scale to determine the width of the trajectories
   let scaleWidth = d3.scaleLinear().domain([0, Math.max(...filteredFlights.map(d => d.count))]).range([0.001, 0.01]);
   
+  //there are a lot of material options we want to set so lets do it in a separate variable for readability 
+  let greasedLineMaterialOptions = {
+    width: (d) => scaleWidth(Number(d.count)), 
+    createAndAssignMaterial: true,   
+    colors: [Color3.Red(), Color3.Green()],   //Set red for origin, green for destination. This needs to be set after setting sampling and distribution type    //Scale the greasedLine based on the number of flights
+    useColors: true,
+    colorsSampling: Constants.TEXTURE_LINEAR_LINEAR,  //Change sampling to cause a gradual color gradient throughout the line
+    colorDistribution: GreasedLineMeshColorDistribution.COLOR_DISTRIBUTION_NONE, //Set distribution to None since we want to use distribution type instead so the colors blend in the middle
+    colorDistributionType: GreasedLineMeshColorDistributionType.COLOR_DISTRIBUTION_TYPE_LINE //Make the colors not repeat throughout the line since we are only going to set 2 colors
+  }
+
   //Create our globe and trajectories
   let CoT = anu.create("cot", "globe");
   let globe = anu.selectName("globe", scene);
-  let trajectories = globe.bind('greasedLine', { points: (d,n,i) => flightToPoints(d) }, filteredFlights)   //Because we have multiple trajectories, we pass in an arrow function to convert each flight to an array of Vector3 that corresponds to the 3D arc
-    .run((d,n,i) => {                                                     //Material properties of the greasedLine need to be set separately for now in .run()
-      n.greasedLineMaterial.width = scaleWidth(Number(d.count));          //Scale the greasedLine based on the number of flights
-      n.greasedLineMaterial.useColors = true;
-      n.greasedLineMaterial.colorsSampling = Constants.TEXTURE_LINEAR_LINEAR;   //Change sampling to cause a gradual color gradient throughout the line
-      n.greasedLineMaterial.colorsDistributionType = GreasedLineMeshColorDistributionType.COLOR_DISTRIBUTION_TYPE_LINE;   //Make the colors not repeat throughout the line since we are only going to set 2 colors
-      n.greasedLineMaterial.colors = [Color3.Red(), Color3.Green()];      //Set red for origin, green for destination. This needs to be set after setting sampling and distribution type
-    })
-
+  let trajectories = globe.bind('greasedLine', { meshOptions: { points: (d) => flightToPoints(d) }, materialOptions: greasedLineMaterialOptions }, filteredFlights) 
+ 
   return scene;
 }

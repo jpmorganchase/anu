@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera } from '@babylonjs/core';
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Material } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import data from './data/drone-path.json';
@@ -58,12 +58,12 @@ export function trajectory3D(engine){
 
       //Create chart and trajectory
       let CoT = anu.create("cot", "chart");
-      let chart = anu.selectName("chart", scene);
-      let trajectories = chart.bind('greasedLine', { points: flightPath })     //Since we only have one trajectory, we can just pass in an array of Vector3 into the points parameter
-        .run((d,n,i) => {                                                      //Material properties of the greasedLine need to be set separately for now in .run()
-          n.greasedLineMaterial.useColors = true;                              //See for customization options: https://doc.babylonjs.com/typedoc/interfaces/BABYLON.IGreasedLineMaterial
-          n.greasedLineMaterial.colors = flightColors;
-      });
+      let chart = anu.selectName("chart", scene);  //Note that greased line works a little different since it has two options params one for mesh and one for material
+      let trajectories = chart.bind('greasedLine', { meshOptions: { points: (d) => d }, materialOptions: { useColors: true, colors: flightColors } }, [flightPath])     //Since we only have one trajectory, we can just pass in an array of Vector3 into the points parameter but lets use the data binding method just incase we want to do something with the data later
+      //   .run((d,n,i) => {                      //If you want to change the material properties after building the mesh use .run() to directly access the mesh 
+      //     n.greasedLineMaterial.useColors = true;      //See for customization options: https://doc.babylonjs.com/typedoc/interfaces/BABYLON.IGreasedLineMaterial
+      //     n.greasedLineMaterial.colors = flightColors;
+      // });
   });
 
   return scene;
