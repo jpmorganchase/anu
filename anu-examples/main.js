@@ -48,12 +48,15 @@ import { details } from './examples/Interactions/Details';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
 import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
-import { tiltMap } from './examples/Figures/tiltMap';
 import { scatterplotThinInstance } from './examples/ScatterPlots/ScatterplotThinInstance';
 import { animate } from './examples/Animation/animate';
 import { brushing } from './examples/Brushing/Brushing';
 import { animateState } from './examples/Animation/animateState';
 import { barchartRace } from './examples/Animation/barchartRace';
+import { dronePath } from './examples/Geographic/dronePath';
+import { flightPath } from './examples/Geographic/flightPath';
+import { tiltMap } from './examples/Advanced/tiltMap';
+import { pitches } from './examples/Advanced/pitches';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
 
 
@@ -113,12 +116,10 @@ const scenes = {
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
   'fig1': fig1,
-  'tiltMap': tiltMap,
   'scatterplotThinInstance': scatterplotThinInstance,
   'animate': animate,
   'animateState': animateState,
-  'barchartRace': barchartRace,
-  'greasedLine': greasedLine
+  'barchartRace': barchartRace
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

@@ -30,6 +30,8 @@ layout: page
             <cardImg title="Texture Map" img="/anu/assets/example-images/textureMap.png" link="/anu/examples/texture_map"></cardImg>
             <cardImg title="Texture Globe" img="/anu/assets/example-images/textureGlobe.png" link="/anu/examples/texture_globe"></cardImg>
             <cardImg title="Mesh Map" img="/anu/assets/example-images/meshMap.png" link="/anu/examples/mesh_map"></cardImg>
+            <cardImg title="3D Trajectory on Map" img="/anu/assets/example-images/trajectory3D.png" link="/anu/examples/trajectory_3D"></cardImg>
+            <cardImg title="Origin-Destination Globe" img="/anu/assets/example-images/originDestinationGlobe.png" link="/anu/examples/origin_destination_globe"></cardImg>
         </div>
     </div>
     <div class='section'>
@@ -70,6 +72,7 @@ layout: page
         <h2>Advanced</h2>
         <hr>
         <div class="cards">
+            <cardImg title="Baseball Pitches" img="/anu/assets/example-images/pitches.png" link="/anu/examples/pitches"></cardImg>
             <cardImg title="Tilt Map" img="/anu/assets/example-images/tiltMap.png" link="/anu/examples/tilt_map"></cardImg>
         </div>
     </div>
