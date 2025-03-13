@@ -28,7 +28,6 @@ function createCOT(name: string, options: object, scene?: Scene) {
 }
 
 function createGL(name: string, options: { meshOptions: GreasedLineMeshBuilderOptions, materialOptions: GreasedLineMaterialBuilderOptions } , scene?: Scene) {
-  console.log(options.materialOptions)
   return CreateGreasedLine(name, options.meshOptions, options.materialOptions, scene);
 }
 
