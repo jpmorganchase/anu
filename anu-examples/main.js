@@ -54,6 +54,7 @@ import { animate } from './examples/Animation/animate';
 import { brushing } from './examples/Brushing/Brushing';
 import { animateState } from './examples/Animation/animateState';
 import { barchartRace } from './examples/Animation/barchartRace';
+import { greasedLine } from './examples/GreasedLine/greasedLine';
 
 
 const queryString = window.location.search;
@@ -116,7 +117,8 @@ const scenes = {
   'scatterplotThinInstance': scatterplotThinInstance,
   'animate': animate,
   'animateState': animateState,
-  'barchartRace': barchartRace
+  'barchartRace': barchartRace,
+  'greasedLine': greasedLine
 }
 
 let scene = scenes[urlParams.get('example')](babylonEngine);

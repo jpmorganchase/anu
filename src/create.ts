@@ -10,6 +10,7 @@ import {
   Tags,
   CreateGreasedLine,
   GreasedLineMeshBuilderOptions,
+  GreasedLineMaterialBuilderOptions,
 } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { createContainer } from './prefabs/Misc/container';
@@ -26,8 +27,8 @@ function createCOT(name: string, options: object, scene?: Scene) {
   return new TransformNode(name, scene);
 }
 
-function createGL(name: string, options: GreasedLineMeshBuilderOptions, scene?: Scene) {
-  return CreateGreasedLine(name, options, {}, scene);
+function createGL(name: string, options: { meshOptions: GreasedLineMeshBuilderOptions, materialOptions: GreasedLineMaterialBuilderOptions } , scene?: Scene) {
+  return CreateGreasedLine(name, options.meshOptions, options.materialOptions, scene);
 }
 
 const meshList: StringByFunc = {
@@ -117,8 +118,23 @@ export function create<MeshType extends keyof MeshTypes>(
 ): Mesh {
   let executedOptions: StringByAny = {};
 
-  for (let [key, value] of Object.entries(options)) {
-    value instanceof Function ? (executedOptions[key] = (value as Function)(data)) : (executedOptions[key] = value);
+
+
+  if (shape === "greasedLine"){
+
+     for (let [key, value] of Object.entries(options)) {
+       for (let [sub_key, sub_value] of Object.entries(options[key])) {
+          executedOptions[key] = {};
+          sub_value instanceof Function ? (executedOptions[key][sub_key] = (sub_value as Function)(data)) : (executedOptions[key][sub_key] = sub_value);
+       }
+    }
+
+  } else {
+
+    for (let [key, value] of Object.entries(options)) {
+      value instanceof Function ? (executedOptions[key] = (value as Function)(data)) : (executedOptions[key] = value);
+    }
+
   }
 
   let builder: Function = meshList[shape];
