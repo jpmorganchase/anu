@@ -11,12 +11,6 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "@babylonjs/core": "^7.1.0",
-    "@babylonjs/gui": "^7.1.0",
-    "@babylonjs/inspector": "^7.1.0",
-    "@babylonjs/loaders": "^7.1.0",
-    "@babylonjs/materials": "^7.52.0",
-    "@jpmorganchase/anu": "file:..",
     "@babylonjs/core": "^7.52.1",
     "@babylonjs/gui": "^7.52.1",
     "@babylonjs/inspector": "^7.52.1",
