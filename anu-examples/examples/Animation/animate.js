@@ -19,37 +19,48 @@ export const animate = function(engine){
   //let box = anu.create('box', 'ourBox', {}, [{}]);
 
 
-  let nodes = anu.bind("box", {}, [...new Array(10)])
+  let nodes = anu.bind("box", {}, [...new Array(5000)])
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
 
-  // nodes
-  //   .material(() => new StandardMaterial('mat'))
-  //   .transition((d,n,i) => ({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } }))
-  //   .positionX(2)
-  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase(), onAnimationEnd: () =>  { console.log('hi') } })
-  //   .positionX(-2)
-  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
-  //   .positionX(2)
-  //   .positionY(2)
-  //   .transition({duration: 1000, loopMode: 0, delay: 0,  easingFunction: new CircleEase()})
-  //   .tween((d,n,i) => { 
-  //     let inter = interpolateBrBG
-
-  //     return (t) => {
-  //       let rgb = color(inter(t)).rgb();
-  //       n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
-  //     }
-      
-  //   })
-
-    nodes.transition().props({'position.x': ()=> {
-      console.log("position")
-      return 2;
-    },
-    'scaling.y': 2
+  let transitions = nodes
+    .material(() => new StandardMaterial())
+    .transition({duration: 1000})
+    .tween((d,n,i) => { 
+      let inter = interpolateBrBG
+      return (t) => {
+        let rgb = color(inter(t)).rgb();
+        n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
+      }
     })
+    .transition()
+    .tween((d,n,i) => { 
+      let inter = interpolate(0,2)
+      return (t) => {
+        n.position.x = inter(t)  
+      }
+    })
+
+    // let transitions = nodes.transition({duration: 1000, delay: 500}).props({'position.x': ()=> {
+    //   console.log("position")
+    //   return 2;
+    // }}).transition().props({"position.x": 1})
+
+    // let transitions = nodes.transition({duration: 1000}).positionX(2).positionY(2)
+    //                        .transition({duration: 1000}).positionX(0).positionY(0)
+    //                        .transition({duration: 1000}).positionX(1).positionY(1)
+                            
+                            
+      //transitions.stopTransitions();
+
+    // setTimeout(() => {
+    //   transitions.stopTweens()
+    // }, 1500)
+
+    //    setTimeout(() => {
+    //   transitions.restartTransitions()
+    // }, 1000)
 
 
 
