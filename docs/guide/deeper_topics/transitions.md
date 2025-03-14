@@ -138,3 +138,36 @@ scene.onPointerDown = (pointer) => {
 <inlineView scene="Line_Tween" />
 
 </multiView>
+
+# Controlling Active Transitions  
+
+There are several methods you can call on selections with active transitions to stop, end, pause etc... These methods are helpful when you need to interrupt animations in progress to start a different set of transitions. For example when the user clicks a animate button multiple times. 
+
+| Method Name            | Description                                                                                     |
+|------------------------|-------------------------------------------------------------------------------------------------|
+| `stopTweens`           | Stops all tween `onBeforeRenderObservables` currently running or waiting to be run on the selection. |
+| `stopTransitions`      | Stops all animations currently playing or waiting to be played on the selection.                |
+| `resetTransitions`     | Resets and plays all animations currently playing or waiting to be played on the selection.     |
+| `resetStopTransitions` | Resets and stops all animations currently playing or waiting to be played on the selection.     |
+| `pauseTransitions`     | Pauses all animations currently playing or waiting to be played on the selection.               |
+| `restartTransitions`   | Resumes all paused animations currently playing or waiting to be played on the selection.       |
+| `endTransitions`       | Skips to the end of all animations currently playing or waiting to be played on the selection.  |
+
+
+
+```js
+let box = anu.bind('box', {}, [...Array(10).keys()]);
+
+let transitionOptions = {
+  duration: 500,
+  delay: 100,
+  easingFunction: new CircleEase(),
+  onAnimationEnd: () => console.log('animate')
+}
+
+var box_transition = box.transition(transitionOptions).position(() => Vector3.Random(-5,5))
+
+setTimeout(() => {
+  box_transition.stopTransitions();
+}, 250)
+```

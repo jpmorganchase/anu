@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Animation, EasingFunction, Node, Animatable } from '@babylonjs/core';
+import { Animation, EasingFunction, Node, Animatable, Observer, Scene } from '@babylonjs/core';
 import { Selection } from '../index';
 import get from 'lodash-es/get';
 import hasIn  from 'lodash-es/hasIn';
@@ -19,7 +19,7 @@ export type TransitionOptions = {
 export class Transition {
   sequence: number;
   transitionOptions: TransitionOptions[];
-  animatables?: Promise<Animatable>[];
+  animatables?: {waitingPromise: Promise<Animatable>, animatable?: Animatable, animationPromise?: Promise<Animatable>, tweenObserver?: Observer<Scene>}[];
 
   constructor(sequence: number, transitionOptions: TransitionOptions[]) {
     this.sequence = sequence;
@@ -85,16 +85,21 @@ export function createTransition(selection: Selection, accessor: string, value: 
       let ease: EasingFunction = transitionOptions.easingFunction || undefined;
       let wait: boolean = (transitionOptions.sequence ??= true);
       let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
+      
+      const transition = selection.transitions[sequence];
+      const animationsCount = transition.animatables.length;
 
       let animatable: Animatable = new Animatable(node.getScene(), node);
       animatable.pause();
       let promise: Promise<Animatable> = animatable.waitAsync();
-      selection.transitions[sequence].animatables.push(promise);
-      if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
+      selection.transitions[sequence].animatables.push({ waitingPromise: promise});
+      let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+      if (sequence !== 0 && wait) await lastAnimation.waitingPromise
+      if (lastAnimation.animatable) await lastAnimation.animationPromise
 
-      setTimeout(() => {
+
         let animation = Animation.CreateAndStartAnimation(
-          node.name + '_animation',
+          node.name + '_' + accessor + '_animation',
           node,
           accessor,
           fps,
@@ -105,13 +110,18 @@ export function createTransition(selection: Selection, accessor: string, value: 
           ease,
           onEnd,
         );
-        animation.onAnimationEndObservable.addOnce(() => animatable.stop());
-      }, delay);
+        animation.pause();
+        transition.animatables[animationsCount].animatable = animation;
+        transition.animatables[animationsCount].animationPromise = animation.waitAsync();
+        animatable.stop()
+        setTimeout(() => animation.restart(), delay);
     } else {
       console.warn(accessor + ' not property of ' + node);
     }
   });
 }
+
+
 
 
 /**
@@ -136,13 +146,18 @@ export function createTransitions(selection: Selection,  properties: {}) {
         let wait: boolean = (transitionOptions.sequence ??= true);
         let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
 
+        const transition = selection.transitions[sequence];
+        const animationsCount = transition.animatables.length;
+
         let animatable: Animatable = new Animatable(node.getScene(), node);
         animatable.pause();
         let promise: Promise<Animatable> = animatable.waitAsync();
-        selection.transitions[sequence].animatables.push(promise);
-        if (sequence !== 0 && wait) await selection.transitions[Math.max(0, sequence - 1)].animatables[i];
+        selection.transitions[sequence].animatables.push({ waitingPromise: promise});
+        let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+        if (sequence !== 0 && wait) await lastAnimation.waitingPromise
+        if (lastAnimation.animatable) await lastAnimation.animationPromise
 
-        setTimeout(() => {
+       
           let animation = Animation.CreateAndStartAnimation(
             node.name + '_animation',
             node,
@@ -155,8 +170,12 @@ export function createTransitions(selection: Selection,  properties: {}) {
             ease,
             onEnd,
           );
-          animation.onAnimationEndObservable.addOnce(() => animatable.stop());
-        }, delay);
+          animation.pause();
+          transition.animatables[animationsCount].animatable = animation;
+          transition.animatables[animationsCount].animationPromise = animation.waitAsync();
+          animatable.stop()
+
+          setTimeout(() => animation.restart(), delay);
       } else {
         console.warn(accessor + ' not property of ' + node);
       }
@@ -186,28 +205,154 @@ export function tween(this: Selection, value: (d, n, i) => (t) => void) {
     let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
     let func = value((node.metadata.data ??= {}), node, i);
     let startTime = null;
-    let accumulatedTime = 0;
+    //let accumulatedTime = 0;
 
-    let animatable: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, onEnd);
+    const transition = this.transitions[sequence];
+    const animationsCount = transition.animatables.length;
+
+
+    let animatable: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, undefined);
     animatable.pause();
     let promise: Promise<Animatable> = animatable.waitAsync();
-    this.transitions[sequence].animatables.push(promise);
-    if (sequence !== 0 && wait) await this.transitions[Math.max(0, sequence - 1)].animatables[i];
+    this.transitions[sequence].animatables.push({ waitingPromise: promise });
+    let lastAnimation = this.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+    if (sequence !== 0 && wait) await lastAnimation.waitingPromise
+    if (lastAnimation.animatable) await lastAnimation.animationPromise
+    let animation: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, onEnd);
+    animation.pause();
+    transition.animatables[animationsCount].animatable = animation;
+    transition.animatables[animationsCount].animationPromise = animation.waitAsync();
     setTimeout(() => {
-      let transition = scene.onBeforeRenderObservable.add(() => {
-        if (startTime === null) startTime = performance.now();
+      let observer = scene.onBeforeRenderObservable.add(() => {
+        transition.animatables[animationsCount].tweenObserver = observer
+        animatable.stop();
 
+        if (startTime === null) startTime = performance.now();
         let elapsedTime = performance.now() - startTime;
         let lerpTime = Math.min(elapsedTime / duration, 1);
 
-        func(ease ? ease.ease(lerpTime) : lerpTime);
+        func(ease ? ease.ease(lerpTime)  : lerpTime);
 
         if (lerpTime === 1) {
-          scene.onBeforeRenderObservable.remove(transition);
-          animatable.stop();
-        }
+          animation.stop();
+          observer.remove()
+        }       
       });
     }, delay);
   });
   return this;
 }
+
+/**
+ * Stops all tween onBeforeRenderObservables currently running or waiting to be run on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+export function stopTweens(this: Selection){
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.tweenObserver.remove();
+    })
+  })
+
+  return this
+}
+
+/**
+ * Stops all animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+export function stopTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.stop();
+    })
+  })
+ return this;
+}
+
+/**
+ * Rests and plays all animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+export function resetTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.reset();
+    })
+  })
+ 
+  return this;
+ }
+
+ /**
+ * Rests and stops all animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+ export function resetStopTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.reset();
+      a.animatable.stop();
+    })
+  })
+ 
+  return this;
+ }
+
+ /**
+ * Pauses all animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+ export function pauseTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.pause();
+    })
+  })
+ 
+  return this;
+ }
+
+
+ /**
+ * Resumes all paused animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+ export function restartTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.restart();
+    })
+  })
+  return this;
+ }
+
+ /**
+ * Skips to the end of all animations currently playing or waiting to be played on the selection. 
+ *
+ * @returns The modified selection with the applied transition animations.
+ */
+ export function endTransitions(this: Selection) {
+  this.transitions.forEach((t) => {
+    t.animatables.forEach( async (a) => {
+      await a.waitingPromise
+      a.animatable.pause();
+      a.animatable.goToFrame(a.animatable.toFrame);
+      a.animatable.stop();
+    })
+  })
+ 
+  return this;
+ }
