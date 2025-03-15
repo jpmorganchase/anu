@@ -268,7 +268,8 @@ export function stopTransitions(this: Selection) {
   this.transitions.forEach((t) => {
     t.animatables.forEach( async (a) => {
       await a.waitingPromise
-      a.animatable.stop();
+      a?.animatable.stop();
+      a?.tweenObserver.remove();
     })
   })
  return this;

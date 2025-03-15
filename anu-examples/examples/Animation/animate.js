@@ -54,9 +54,9 @@ export const animate = function(engine){
                             
       //transitions.stopTransitions();
 
-    // setTimeout(() => {
-    //   transitions.stopTweens()
-    // }, 1500)
+    setTimeout(() => {
+      transitions.stopTransitions()
+    }, 1500)
 
     //    setTimeout(() => {
     //   transitions.restartTransitions()
