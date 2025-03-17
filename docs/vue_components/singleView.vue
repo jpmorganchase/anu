@@ -6,7 +6,7 @@
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted, onBeforeUnmount } from 'vue';
-import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
+import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking, WebXRState} from '@babylonjs/core'
 
 const props = defineProps({
   scene: Function,
@@ -36,10 +36,23 @@ onMounted(async () => {
     defaultXRExperience.enterExitUI.overlay.style.position = 'relative';
     defaultXRExperience.enterExitUI.overlay.style.float = 'right';
 
+
     if (!defaultXRExperience.baseExperience) {
       console.log('No XR');
     } else {
       const featureManager = defaultXRExperience.baseExperience.featuresManager;
+
+      defaultXRExperience.baseExperience.onStateChangedObservable.add((state) => {
+        if (state === WebXRState.ENTERING_XR) {
+          //Special exceptions for certain scenes
+          switch (scene.metadata?.name) {
+            case "thinInstances":
+              console.log("Disabling GPU Picking interactions in WebXR due to lack of support.")
+              scene.onPointerObservable.clear();
+              break;
+          }
+        }
+      });
 
       if (!featureManager) {
         console.log('No Feature Manager');

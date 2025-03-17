@@ -120,5 +120,6 @@ export function thinInstances(engine){
     });
   });
 
+  scene.metadata = { name: "thinInstances" };
   return scene;
 };
