@@ -3,8 +3,9 @@
 
 //Contains the styles for our page, currently setting body,app div, and canvas to 100% h&w
 import './style.css'
-import { Engine, Color3, WebXRFeatureName, Vector3} from '@babylonjs/core';
+import { Engine, Color3, WebXRFeatureName, Vector3, HavokPlugin} from '@babylonjs/core';
 import { Inspector } from '@babylonjs/inspector';
+import HavokPhysics from "@babylonjs/havok";
 
 //Import all of babylonjs, you most likely want to import individual methods as needed
 import {scatterplot3D } from './examples/ScatterPlots/Scatterplot3D';
@@ -59,6 +60,7 @@ import { tiltMap } from './examples/Advanced/tiltMap';
 import { pitches } from './examples/Advanced/pitches';
 import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
+import { imaxes } from './examples/Advanced/imaxes';
 
 
 const queryString = window.location.search;
@@ -121,6 +123,7 @@ const scenes = {
   'animate': animate,
   'animateState': animateState,
   'barchartRace': barchartRace,
+  'imaxes': imaxes,
   'dronePath': dronePath,
   'flightPath': flightPath,
   'tiltMap': tiltMap,
@@ -128,7 +131,8 @@ const scenes = {
   'largeThinInstance': largeThinInstance
 }
 
-let scene = scenes[urlParams.get('example')](babylonEngine);
+
+let scene = await scenes[urlParams.get('example')](babylonEngine);
 
 let screenshot = urlParams.get('thumbnail') || false;
 // scene.clearColor = new Color3(30/256,30/256,32/256)

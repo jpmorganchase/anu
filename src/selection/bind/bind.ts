@@ -27,7 +27,7 @@ export function bind<MeshType extends keyof MeshTypes>(
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
       var mesh = create(shape, shape, options, element, this.scene);
-      mesh.setParent(node);
+      mesh.parent = node;
       meshes.push(mesh as Mesh);
     });
   });

@@ -14,6 +14,19 @@ export default defineConfig({
       allow: ['..'],
     },
   },
+  optimizeDeps: { // 👈 optimizedeps
+    esbuildOptions: {
+      target: "esnext", 
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      },
+      supported: { 
+        bigint: true 
+      }, 
+    },
+    exclude: ['@babylonjs/havok']
+  }, 
   build: {
     target: 'esnext',
     outDir: '../docs/public',
