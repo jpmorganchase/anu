@@ -14,7 +14,7 @@ export function registerInstancedBuffer(this: Selection, attr: string, size: num
 export function setInstancedBuffer(this: Selection, attr: string, value: any) {
   this.selected.forEach((node, i) => {
     node instanceof InstancedMesh
-      ? (node.instancedBuffers[attr] = value instanceof Function ? value(node.metadata.data, i) : value)
+      ? (node.instancedBuffers[attr] = value instanceof Function ? value(node.metadata.data, node, i) : value)
       : console.log('Node not a mesh, skipping.');
   });
   return this;

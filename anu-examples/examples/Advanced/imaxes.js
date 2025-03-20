@@ -1,4 +1,4 @@
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial} from '@babylonjs/core';
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial} from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import cars from '../../data/cars.json' assert {type: 'json'};
@@ -232,6 +232,13 @@ Object.keys(key_types).forEach(k => {
  
   }
 
+
+  let root_sphere = anu.create("sphere", "root_sphere", {segments: 8, diameter: 0.025})
+  root_sphere.isVisible = false;
+  root_sphere.registerInstancedBuffer("color", 4);
+  root_sphere.instancedBuffers.color = new Color4(0, 0, 0, 1); 
+
+
   function createScatterplot(axesName1, axesName2) {
     axesName1 = axesName1.replace("_scatterCol", "")
     axesName2 = axesName2.replace("__scatterCol", "")
@@ -258,12 +265,11 @@ Object.keys(key_types).forEach(k => {
          .name(axesName1 + axesName2 + "_scatter")
 
 
-    parent.bind("sphere", {diameter: 0.02, segments: 8}, data1)
+    parent.bindInstance(root_sphere, data1)
           .positionY((d) => scale1(d))
           .positionX((d,n,i) => scale2(data2[i]))
-          .material((d,n,i) => colorScaleMaterial(originList[i]))
+          .setInstancedBuffer("color", (d,n,i) => colorScale(originList[i]))
           
-
   }
 
 
@@ -274,11 +280,6 @@ Object.keys(key_types).forEach(k => {
   first.position.y = -axes_height / 2
   first.rotation.z = 3.14 / 2
   
-
-
-
-
-
 
   return scene;
 }
