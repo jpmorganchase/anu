@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import cars from '../../data/cars.json' assert {type: 'json'};
 import HavokPhysics from "@babylonjs/havok";
 import { scale } from 'ol/transform';
+import { mesh } from 'topojson-client';
 
 
 export async function imaxes(babylonEngine){
@@ -253,14 +254,9 @@ Object.keys(key_types).forEach(k => {
     let scale2 = (typeof data2[0] === "string") ?  d3.scalePoint().range([0, axes_height]).domain([...new Set(data2)]) : d3.scaleLinear().range([0, axes_height]).domain(d3.extent(data2))
 
     
-    let parent = anu.bind("cot")
+    let parent = axis1.bind("cot")
          .name(axesName1 + axesName2 + "_scatter")
-         .run((d,n) => {
-          n.parent = mesh1
-        })
 
-
-      
 
     parent.bind("sphere", {diameter: 0.02, segments: 8}, data1)
           .positionY((d) => scale1(d))
