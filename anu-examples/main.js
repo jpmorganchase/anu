@@ -58,6 +58,7 @@ import { dronePath } from './examples/Geographic/dronePath';
 import { flightPath } from './examples/Geographic/flightPath';
 import { tiltMap } from './examples/Advanced/tiltMap';
 import { pitches } from './examples/Advanced/pitches';
+import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
 import { imaxes } from './examples/Advanced/imaxes';
 
@@ -123,6 +124,11 @@ const scenes = {
   'animateState': animateState,
   'barchartRace': barchartRace,
   'imaxes': imaxes,
+  'dronePath': dronePath,
+  'flightPath': flightPath,
+  'tiltMap': tiltMap,
+  'pitches': pitches,
+  'largeThinInstance': largeThinInstance
 }
 
 
