@@ -24,14 +24,15 @@ onMounted(async () => {
   canvas.value.addEventListener('wheel', evt => evt.preventDefault());
   babylonEngine = new Engine(canvas.value, true);
 
-  let scene = props.scene(babylonEngine);
+  let scene = await props.scene(babylonEngine);
 
-  const env = scene.createDefaultEnvironment();
-  env.setMainColor(Color3.FromHexString('#0e0e17'));
-  env.ground.position = new Vector3(0, -2, 0);
+  // const env = scene.createDefaultEnvironment();
+  // env.setMainColor(Color3.FromHexString('#0e0e17'));
+  // env.ground.position = new Vector3(0, -2, 0);
 
   try {
-    var defaultXRExperience = await scene.createDefaultXRExperienceAsync({ floorMeshes: [env.ground] });
+    //{ floorMeshes: [env.ground] }
+    var defaultXRExperience = await scene.createDefaultXRExperienceAsync();
 
     defaultXRExperience.enterExitUI.overlay.style.position = 'relative';
     defaultXRExperience.enterExitUI.overlay.style.float = 'right';

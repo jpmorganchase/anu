@@ -74,7 +74,8 @@ layout: page
         <div class="cards">
             <cardImg title="Baseball Pitches" img="/anu/assets/example-images/pitches.png" link="/anu/examples/pitches"></cardImg>
             <cardImg title="Tilt Map" img="/anu/assets/example-images/tiltMap.png" link="/anu/examples/tilt_map"></cardImg>
-            <cardImg title="ThinInstance Interactions " img="/anu/assets/example-images/thinInstances.png" link="/anu/examples/thin_instances"></cardImg>
+            <cardImg title="ThinInstance Interactions" img="/anu/assets/example-images/thinInstances.png" link="/anu/examples/thin_instances"></cardImg>
+            <cardImg title="Imaxes Simplified" img="/anu/assets/example-images/imaxes.png" link="/anu/examples/imaxes_simplified"></cardImg>
         </div>
     </div>
 

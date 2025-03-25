@@ -164,6 +164,7 @@ export default defineConfig({
           { text: 'Baseball Pitches', link: './pitches' },
           { text: 'Tilt Map', link: './tilt_map' },
           { text: 'ThinInstance Interactions', link: './thin_instances' },
+          { text: 'Imaxes Simplified', link: './imaxes_simplified'}
         ]
       }
     ]
@@ -180,7 +181,19 @@ export default defineConfig({
         rollupOptions: {
           external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
         },
-
+        optimizeDeps: { // 👈 optimizedeps
+          esbuildOptions: {
+            target: "esnext", 
+            // Node.js global to browser globalThis
+            define: {
+              global: 'globalThis'
+            },
+            supported: { 
+              bigint: true 
+            }, 
+          },
+          exclude: ['@babylonjs/havok']
+        }, 
         // server: {
         //     // watch: {
         //     //     followSymlinks: false,

@@ -1,10 +1,8 @@
 import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial, Angle, Space} from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
-import cars from '../../data/cars.json' assert {type: 'json'};
+import cars from './data/cars.json' assert {type: 'json'};
 import HavokPhysics from "@babylonjs/havok";
-import { rotate } from 'ol/transform';
-
 
 export async function imaxes(babylonEngine){
   const havokInstance = await HavokPhysics();
@@ -58,12 +56,11 @@ export async function imaxes(babylonEngine){
       })
 
   let colliderMat = new StandardMaterial('colliderMat')
-   colliderMat.alpha = 0.1
+  colliderMat.alpha = 0.1
 
   let barMaterial = new StandardMaterial("barMaterial")
-   barMaterial.diffuseColor = Color3.Teal()
+  barMaterial.diffuseColor = Color3.Teal()
 
-  const FILTER_GROUP_COLLISION = 1;
   const FILTER_GROUP_TRIGGER = 2;
 
   imAxes.positionX((d,n,i) => (i * 1.5) - 5).positionY(0.75)
@@ -71,19 +68,6 @@ export async function imaxes(babylonEngine){
   let labels = anu.bind("planeText", {text: (d) => d.replaceAll("_", " "), size: 0.25}, Object.keys(key_types))
                   .run((d,n,i) => n.parent = imAxes.selected[i])
                   .positionY((axes_height / 2) + 0.1)
-
-  // let parallel_colliders = imAxes.bind("sphere", {diameter: axes_height + 0.25})
-  //       .material(colliderMat)
-  //       .prop("isPickable", false)
-  //       .name((d,n, i) => Object.keys(key_types)[i] + "_collider")
-  //       .run((d,n) => {
-  //         var colliderAggregate = new PhysicsAggregate(n, PhysicsShapeType.BOX, { mass:  Infinity}, scene);
-  //         colliderAggregate.shape.filterMembershipMask = FILTER_GROUP_COLLISION;
-  //         colliderAggregate.shape.filterColliderMask =  FILTER_GROUP_COLLISION;
-  //         colliderAggregate.body.setCollisionCallbackEnabled(true);
-  //         colliderAggregate.body.disablePreStep = false;
-  //         colliderAggregate.body.setPrestepType(PhysicsPrestepType.TELEPORT);
-  //       })
 
   let parallel_triggers = imAxes.bind("sphere", {diameter: axes_height + 0.25})
                                   .material(colliderMat)
@@ -99,16 +83,12 @@ export async function imaxes(babylonEngine){
                                     colliderAggregate.shape.isTrigger =  true;
                                   })
                               
-                    
-
 let parallel_charts = [];
-
 
 const trigger_observer =  havokPlugin.onTriggerCollisionObservable.add((collisionEvent) => {
   let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "");
   let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "");
   if (collisionEvent.type === "TRIGGER_EXITED")  {
-    console.log("exit")
     disposePara(name1, name2)
   } else if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_TRIGGER){
     if (collisionEvent.type === "TRIGGER_ENTERED") {
@@ -143,14 +123,10 @@ function disposePara(name1, name2){
 
   anu.selectName(name1 + name2 + "_para", scene).dispose()
 
-  console.log(parallel_charts)
-
   Array.from([name1, name2, name1 + name2]).forEach(str => {
     const index = parallel_charts.indexOf(str);
     if (index !== -1) parallel_charts.splice(index, 1);
   });
-
-  console.log(parallel_charts)
 
   if (!(parallel_charts.includes(name1))) {
     anu.selectName(name1 + "_hist", scene).run((d,n,i) => n.setEnabled(true))
@@ -189,8 +165,6 @@ Object.keys(key_types).forEach(k => {
 
       let size = (axes_height / bins.length) * 0.5
 
-      console.log(size)
-      
       parent.bind('box', {depth: 0.05, height: size }, bins)
             .material(barMaterial)
             .scalingX((d) => linearScale(d.length))
@@ -314,8 +288,6 @@ Object.keys(key_types).forEach(k => {
 
   }
 
-
-  
   return scene;
 }
 
@@ -366,4 +338,7 @@ var perpendicular = areVectorsPerpendicular(up1, up2, epsilon);
   } else {
       return undefined
   }
+
+
 }
+

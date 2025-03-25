@@ -154,7 +154,7 @@ if (screenshot == true){
 } else {
 
   try {
-  var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground]}  );
+  var defaultXRExperience = await scene.createDefaultXRExperienceAsync( { floorMeshes: [env.ground],  disableTeleportation: true}  );
 
   if (!defaultXRExperience.baseExperience) {
     console.log("No XR")
