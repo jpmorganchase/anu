@@ -97,7 +97,7 @@ export function details(engine) {
                      ))
 
   //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
-  anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ }, labelOptions: {size: 0.02} });
+  anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
 
   return scene;
 
