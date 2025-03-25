@@ -1,10 +1,8 @@
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial} from '@babylonjs/core';
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial, Angle, Space} from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import cars from '../../data/cars.json' assert {type: 'json'};
 import HavokPhysics from "@babylonjs/havok";
-import { scale } from 'ol/transform';
-import { mesh } from 'topojson-client';
 
 
 export async function imaxes(babylonEngine){
@@ -21,8 +19,6 @@ export async function imaxes(babylonEngine){
   camera.minZ = 0;
   camera.attachControl(true);
   camera.position = new Vector3(0, 2.5, -2)
-
-
 
   const key_types = {
     "Name": "string",
@@ -45,14 +41,13 @@ export async function imaxes(babylonEngine){
   const axes_diameter = 0.1;
 
   let colorScale = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4())
-  let colorScaleMaterial = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial())
-
   let originList = cars.map(d => d.Origin)
 
 
   let imAxes = anu.bind("cylinder", {diameter: axes_diameter, height: axes_height}, carsColumns)
       .name((d,n,i) => Object.keys(key_types)[i])
-      .run((d,n,i) => n.addBehavior(new PointerDragBehavior({ dragPlaneNormal: Axis.X})))
+      .behavior((d,n,i) => new PointerDragBehavior({ dragPlaneNormal: Axis.X}))
+      //.behavior((d,n,i) => new PointerDragBehavior({ dragPlaneNormal: Axis.Z}))
 
   let colliderMat = new StandardMaterial('colliderMat')
 
@@ -62,21 +57,23 @@ export async function imaxes(babylonEngine){
   const FILTER_GROUP_SCATTER = 2;
 
 
-  // let parallel_colliders = imAxes.bind("box", {height: axes_height, width: 2, depth: 2})
-  //                                 .material(colliderMat)
-  //                                 .prop("isPickable", false)
-  //                                 .name((d,n, i) => Object.keys(key_types)[i] + "_collider")
-  //                                 .run((d,n) => {
-  //                                   var colliderAggregate = new PhysicsAggregate(n, PhysicsShapeType.BOX, { mass:  Infinity}, scene);
-  //                                   colliderAggregate.body.setCollisionCallbackEnabled(true);
-  //                                   colliderAggregate.body.disablePreStep = false;
-  //                                   colliderAggregate.body.setPrestepType(PhysicsPrestepType.TELEPORT);
-  //                                   colliderAggregate.shape.filterMembershipMask = FILTER_GROUP_PARA;
-  //                                   colliderAggregate.shape.filterColliderMask =  FILTER_GROUP_PARA;
-  //                                 })
-
-  let scatter_colliders = imAxes.bind("box", {height: axes_height + 0.2, width: axes_diameter, depth: axes_diameter})
+  let parallel_colliders = imAxes.bind("box", {height: axes_height, width: 2, depth: 2})
                                   .material(colliderMat)
+                                  .prop("isPickable", false)
+                                  .name((d,n, i) => Object.keys(key_types)[i] + "_collider")
+                                  .run((d,n) => {
+                                    var colliderAggregate = new PhysicsAggregate(n, PhysicsShapeType.BOX, { mass:  Infinity}, scene);
+                                    colliderAggregate.body.setCollisionCallbackEnabled(true);
+                                    colliderAggregate.body.disablePreStep = false;
+                                    colliderAggregate.body.setPrestepType(PhysicsPrestepType.TELEPORT);
+                                    colliderAggregate.shape.filterMembershipMask = FILTER_GROUP_PARA;
+                                    colliderAggregate.shape.filterColliderMask =  FILTER_GROUP_PARA;
+                                  })
+
+  let scatter_colliders = imAxes.bind("capsule", {radius: axes_diameter / 2, height: 0.20, capSubdivisions: 1, orientation: Vector3.Right})
+                                  .positionY((-axes_height / 2) - 0.05)
+                                  .rotation(Vector3.Zero)
+                                  // .material(colliderMat)
                                   .prop("isPickable", false)
                                   .name((d,n, i) => Object.keys(key_types)[i] + "_scatterCol")
                                   .run((d,n) => {
@@ -88,12 +85,7 @@ export async function imaxes(babylonEngine){
                                     colliderAggregate.shape.filterCollideMask = FILTER_GROUP_SCATTER;
                                   })
                         
-
- 
-
-
 const collision_observer =  havokPlugin.onCollisionObservable.add((collisionEvent) => {
-  console.log(collisionEvent.collider.shape.filterMembershipMask)
   if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_PARA){
     let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "");
     let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "");
@@ -105,35 +97,52 @@ const collision_observer =  havokPlugin.onCollisionObservable.add((collisionEven
       if (!scene.getMeshByName(name1 + name2 + "_para") && orientation === "parallel") createParallelCoords(name1,name2)
     } else if(collisionEvent.type === "COLLISION_CONTINUED"){
       if (!scene.getMeshByName(name1 + name2 + "_para") && orientation === "parallel") createParallelCoords(name1,name2)
-      else if (orientation !== "parallel") disposeNodes(name1, name2)
+      else if (scene.getMeshByName(name1 + name2 + "_para") && orientation !== "parallel") disposePara(name1, name2)
     }
   } 
   if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_SCATTER) {
-    console.log("scatterplot GOOOO")
     let name1 = collisionEvent.collider.transformNode.name.replace("_scatterCol", "");
     let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_scatterCol", "");
+
+    let axis1 = collisionEvent.collider.transformNode.parent
+    let axis2 = collisionEvent.collidedAgainst.transformNode.parent
+    let orientation = checkOrientation(axis1, axis2)
     if (collisionEvent.type === "COLLISION_STARTED") {
-      createScatterplot(name1, name2)
-    }
+      if (scene.getMeshByName(name1 + name2 + "_scatter") === null && orientation === "perpendicular") createScatterplot(name1, name2)
+    } else if (scene.getMeshByName(name1 + name2 + "_scatter") && orientation !== "perpendicular") disposeScatter(name1, name2)
   }
 
 });
 
 const collisionEnded_observer =  havokPlugin.onCollisionEndedObservable.add((collisionEvent) => {
-  let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "");
-  let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "");
-  disposeNodes(name1, name2)
+  let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "").replace("_scatterCol", "");
+  let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "").replace("_scatterCol", "");
+  if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_PARA) disposePara(name1, name2)
+  if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_SCATTER) disposeScatter(name1, name2)
 });
 
 
-function disposeNodes(name1, name2){
-  name1 = name1.replace("_collider", "");
-  name2 = name2.replace("_collider", "");
+function disposePara(name1, name2){
+  name1 = name1.replace("_collider", "")
+  name2 = name2.replace("_collider", "")
+
   anu.selectName(name1 + name2 + "_para", scene).dispose()
 
   anu.selectName(name1 + "_hist", scene).run((d,n,i) => n.setEnabled(true))
   anu.selectName(name2 + "_hist", scene).run((d,n,i) => n.setEnabled(true))
 }
+
+
+function disposeScatter(name1, name2){
+  name1 = name1.replace("_scatterCol", "")
+  name2 = name2.replace("_scatterCol", "")
+
+  anu.selectName(name1 + name2 + "_scatter", scene).dispose()
+
+  anu.selectName(name1 + "_hist", scene).run((d,n,i) => n.setEnabled(true))
+  anu.selectName(name2 + "_hist", scene).run((d,n,i) => n.setEnabled(true))
+}
+  
   
 Object.keys(key_types).forEach(k => {
   createBarChart(k)
@@ -238,7 +247,6 @@ Object.keys(key_types).forEach(k => {
   root_sphere.registerInstancedBuffer("color", 4);
   root_sphere.instancedBuffers.color = new Color4(0, 0, 0, 1); 
 
-
   function createScatterplot(axesName1, axesName2) {
     axesName1 = axesName1.replace("_scatterCol", "")
     axesName2 = axesName2.replace("__scatterCol", "")
@@ -246,11 +254,13 @@ Object.keys(key_types).forEach(k => {
     let axis1 = anu.selectName(axesName1, scene)
     let axis2 = anu.selectName(axesName2, scene)
 
-    axis1.selectName(axesName1 + "_hist").run((d,n,i) => n.setEnabled(false))
-    axis2.selectName(axesName2 + "_hist").run((d,n,i) => n.setEnabled(false))
+    axis1.selectName(axesName1 + "_hist")
+      .run((d,n,i) => n.setEnabled(false))
+     
+    axis2.selectName(axesName2 + "_hist")
+      .run((d,n,i) => n.setEnabled(false))
 
-    let mesh1 = axis1.selected[0]
-    let mesh2 = axis2.selected[0]
+    console.log(axis1.selected[0].getDirection(Axis.Y))
 
     let data1 = axis1.get("metadata.data")[0];
     let data2 = axis2.get("metadata.data")[0];
@@ -259,18 +269,27 @@ Object.keys(key_types).forEach(k => {
 
     let scale1 = (typeof data1[0] === "string") ? d3.scalePoint().range(range).domain([...new Set(data1)]) : d3.scaleLinear().range(range).domain(d3.extent(data1))
     let scale2 = (typeof data2[0] === "string") ?  d3.scalePoint().range([0, axes_height]).domain([...new Set(data2)]) : d3.scaleLinear().range([0, axes_height]).domain(d3.extent(data2))
-
     
+    
+
     let parent = axis1.bind("cot")
          .name(axesName1 + axesName2 + "_scatter")
 
 
+    let pos = (d,n,i) => new Vector3(scale2(data2[i]), scale1(d), 0)
+
     parent.bindInstance(root_sphere, data1)
-          .positionY((d) => scale1(d))
-          .positionX((d,n,i) => scale2(data2[i]))
+          .position((d,n,i) => pos(d,n,i))
           .setInstancedBuffer("color", (d,n,i) => colorScale(originList[i]))
+
+    parent.run((d,n) => n.setDirection(axis2.selected[0].rotation) )
           
   }
+
+  function createScatterplot3D(name1, name2){
+    console.log("3D ScatterPlotTime", name1, name2)
+  }
+
 
 
 
@@ -279,6 +298,12 @@ Object.keys(key_types).forEach(k => {
   let first = imAxes.selected[0]
   first.position.y = -axes_height / 2
   first.rotation.z = 3.14 / 2
+  
+  let second = imAxes.selected[2]
+  second.position.z = axes_height / 2
+  second.position.y = -axes_height / 2
+  second.position.x = 1
+  second.rotation.x = 3.14 / 2
   
 
   return scene;
@@ -289,7 +314,7 @@ function checkOrientation(mesh1, mesh2) {
   var worldMatrix1 = mesh1.getWorldMatrix();
   var worldMatrix2 = mesh2.getWorldMatrix();
 
-  // Get the forward, up, and right vectors of each mesh using the world matrix
+  // Get the up vectors of each mesh using the world matrix
   var up1 = Vector3.TransformNormal(Axis.Y, worldMatrix1);
   var up2 = Vector3.TransformNormal(Axis.Y, worldMatrix2);
 
@@ -318,13 +343,10 @@ var parallel = areVectorsParallel(up1, up2, epsilon)
 var perpendicular = areVectorsPerpendicular(up1, up2, epsilon);
 
   if (parallel) {
-      console.log("The meshes are parallel.");
       return "parallel"
   } else if (perpendicular) {
-      console.log("The meshes are perpendicular.");
       return "perpendicular"
   } else {
-      console.log("The meshes are neither parallel nor perpendicular.");
       return undefined
   }
 }

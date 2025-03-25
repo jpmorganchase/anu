@@ -55,7 +55,7 @@ const meshList: StringByFunc = {
   lathe: MeshBuilder.CreateLathe,
   polygon: MeshBuilder.CreatePolygon,
   extrudePolygon: MeshBuilder.ExtrudePolygon,
-  polyhedra: MeshBuilder.CreatePolyhedron,
+  polyhedron: MeshBuilder.CreatePolyhedron,
   icosphere: MeshBuilder.CreateIcoSphere,
   geodesic: MeshBuilder.CreateGeodesic,
   goldberg: MeshBuilder.CreateGoldberg,
@@ -88,7 +88,7 @@ export interface MeshTypes {
   lathe: Parameters<typeof MeshBuilder.CreateLathe>[1];
   polygon: Parameters<typeof MeshBuilder.CreatePolygon>[1];
   extrudePolygon: Parameters<typeof MeshBuilder.ExtrudePolygon>[1];
-  polyhedra: Parameters<typeof MeshBuilder.CreatePolyhedron>[1];
+  polyhedron: Parameters<typeof MeshBuilder.CreatePolyhedron>[1];
   icosphere: Parameters<typeof MeshBuilder.CreateIcoSphere>[1];
   geodesic: Parameters<typeof MeshBuilder.CreateGeodesic>[1];
   goldberg: Parameters<typeof MeshBuilder.CreateGoldberg>[1];

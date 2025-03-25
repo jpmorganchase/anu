@@ -12,6 +12,7 @@ import { scaling, scalingX, scalingY, scalingZ } from './property/scaling';
 import { get } from './utility/get';
 import { addTags, hasTags, removeTags } from './property/tags';
 import { action } from './property/actions';
+import { behavior } from './property/behavior';
 import {
   ambientColor,
   diffuseColor,
@@ -102,6 +103,7 @@ export class Selection {
   public removeTags = removeTags;
   public hasTags = hasTags;
   public action = action;
+  public behavior = behavior;
   public material = material;
   public diffuseColor = diffuseColor;
   public specularColor = specularColor;
