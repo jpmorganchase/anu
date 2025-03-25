@@ -285,7 +285,7 @@ Object.keys(key_types).forEach(k => {
     axisConfig1.domainMaterialOptions = {width: 0.01};
     axisConfig1.labelTicks = {y: (scale1.domain().length > 10) ? evenDistributedSlice(scale1.domain(), 10) : undefined}
    // axisConfig.labelFormat = label_format
-    axisConfig1.labelOptions = {y: {size: 0.15, align: "center", color: Color3.Black()}}
+    axisConfig1.labelOptions = {y: {size: 0.15, align: "center"}}
     axisConfig1.labelProperties = {y: {"position.x": 0, "position.z": -axes_diameter / 2}}
     anu.createAxes(axesName1 + "_para_axis", scene, axisConfig1)
 
@@ -295,7 +295,7 @@ Object.keys(key_types).forEach(k => {
     axisConfig2.grid = false;
     axisConfig2.domainMaterialOptions = {width: 0.01};
     axisConfig2.labelTicks = {y: (scale2.domain().length > 10) ? evenDistributedSlice(scale2.domain(), 10) : undefined}
-    axisConfig2.labelOptions = {y: {size: 0.15, align: "center", color: Color3.Black()}}
+    axisConfig2.labelOptions = {y: {size: 0.15, align: "center"}}
     axisConfig2.labelProperties = {y: {"position.x": 0, "position.z": -axes_diameter / 2}}
     anu.createAxes(axesName2 + "_para_axis", scene, axisConfig2)
 
