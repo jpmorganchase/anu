@@ -57,6 +57,7 @@ import { barchartRace } from './examples/Animation/barchartRace';
 import { dronePath } from './examples/Geographic/dronePath';
 import { flightPath } from './examples/Geographic/flightPath';
 import { tiltMap } from './examples/Advanced/tiltMap';
+import { linkedScatterPlots } from './examples/Advanced/linkedScatterPlots';
 import { pitches } from './examples/Advanced/pitches';
 import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
@@ -128,6 +129,7 @@ const scenes = {
   'flightPath': flightPath,
   'tiltMap': tiltMap,
   'pitches': pitches,
+  'linkedScatterPlots': linkedScatterPlots,
   'largeThinInstance': largeThinInstance
 }
 

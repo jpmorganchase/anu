@@ -161,10 +161,11 @@ export default defineConfig({
         text: 'Advanced',
         collapsed: false,
         items: [
+          { text: 'Thin Instance Interactions', link: './thin_instances' },
           { text: 'Baseball Pitches', link: './pitches' },
+          { text: 'Linked Scatter Plots', link: './linked_scatter_plots' },
           { text: 'Tilt Map', link: './tilt_map' },
-          { text: 'ThinInstance Interactions', link: './thin_instances' },
-          { text: 'Imaxes Simplified', link: './imaxes_simplified'}
+          { text: 'ImAxes Simplified', link: './imaxes_simplified'}
         ]
       }
     ]
