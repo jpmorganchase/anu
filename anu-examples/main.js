@@ -46,6 +46,7 @@ import { meshMap } from './examples/Geographic/Mesh_Map';
 import { facetPosition } from './examples/Interactions/FacetPosition';
 import { hover } from './examples/Interactions/Hover';
 import { details } from './examples/Interactions/Details';
+import { multipleInteractions } from './examples/Interactions/MultipleInteractions';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
 import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
@@ -116,6 +117,7 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
+  'multipleInteractions': multipleInteractions,
   'brushing': brushing,
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 

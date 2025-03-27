@@ -14,6 +14,9 @@ export const brushing = function (engine) {
   camera.wheelPrecision = 12;
   camera.attachControl(true);
 
+  setTimeout(() => {
+
+
   //Add a unique index to each car so that we can easily retrieve this later
   cars.forEach((element, index) => element.index = index);
 
@@ -30,7 +33,7 @@ export const brushing = function (engine) {
                       .material((d) => scaleC(d.Origin))
                       .prop('outlineWidth', 0.0075);
   anu.createAxes('chart1', scene, { parent: chart1, scale: { x: scaleX1, y: scaleY1 } });
-  CoT1.position = new Vector3(-1.3, 0, 0);
+  CoT1.position = new Vector3(-1.4, 0, 0);
   
 
   //Right 3D scatterplot
@@ -47,7 +50,7 @@ export const brushing = function (engine) {
                       .material((d) => scaleC(d.Origin))
                       .prop('outlineWidth', 0.01);
   anu.createAxes('chart2', scene, { parent: chart2, scale: { x: scaleX2, y: scaleY2, z: scaleZ2 } });
-  CoT2.position = new Vector3(1.3, 0, 0);
+  CoT2.position = new Vector3(1.4, 0, 0);
 
   //Create brush for the 2D scatterplot
   let brush1 = anu.createBrush('brush1', scene,
@@ -61,17 +64,17 @@ export const brushing = function (engine) {
 
   //Create brush for the 3D scatterplot
   //We can also create a material to pass into the brush
-  let mat = new StandardMaterial('myBrushMaterial');
-  mat.diffuseColor = Color3.Yellow();
-  mat.alpha = 0.4;
-  let brush2 = anu.createBrush('brush2', scene,
-    {
-      parent: chart2,
-      scales: { x: scaleX2, y: scaleY2, z: scaleZ2 },
-      minSize: { x: 0.5, y: 0.5, z: 0.5 },          //The minimum size of the brush along each axis, has sensible defaults depending on the scales set
-      material: mat                                 //Assign our material
-    }
-  );
+  // let mat = new StandardMaterial('myBrushMaterial');
+  // mat.diffuseColor = Color3.Yellow();
+  // mat.alpha = 0.4;
+  // let brush2 = anu.createBrush('brush2', scene,
+  //   {
+  //     parent: chart2,
+  //     scales: { x: scaleX2, y: scaleY2, z: scaleZ2 },
+  //     minSize: { x: 0.5, y: 0.5, z: 0.5 },          //The minimum size of the brush along each axis, has sensible defaults depending on the scales set
+  //     material: mat                                 //Assign our material
+  //   }
+  // );
 
   //Create observables to respond to brush events
   //Get a list of all of our spheres which we will then use to find linked marks
@@ -87,16 +90,17 @@ export const brushing = function (engine) {
               .prop('renderOutline', false)                             //Change appearance
   });
 
-  brush2.onBrushChangedObservable.add((evt) => {
-    let addedIndices = evt.added.map(n => n.metadata.data.index);
-    allSpheres.filter((d,n,i) => addedIndices.includes(d.index))        //Brushed marks can also be accessed via evt.brushed,
-              .transition((d,n,i) => ({ duration: 200 }))               //but evt.added and removed makes performing transitions easier
-              .scaling(new Vector3(1.5, 1.5, 1.5));
-    let removedIndices = evt.removed.map(n => n.metadata.data.index);
-    allSpheres.filter((d,n,i) => removedIndices.includes(d.index))
-              .transition((d,n,i) => ({ duration: 200 }))
-              .scaling(Vector3.One());
-  });
+  // brush2.onBrushChangedObservable.add((evt) => {
+  //   let addedIndices = evt.added.map(n => n.metadata.data.index);
+  //   allSpheres.filter((d,n,i) => addedIndices.includes(d.index))        //Brushed marks can also be accessed via evt.brushed,
+  //             .transition((d,n,i) => ({ duration: 200 }))               //but evt.added and removed makes performing transitions easier
+  //             .scaling(new Vector3(1.5, 1.5, 1.5));
+  //   let removedIndices = evt.removed.map(n => n.metadata.data.index);
+  //   allSpheres.filter((d,n,i) => removedIndices.includes(d.index))
+  //             .transition((d,n,i) => ({ duration: 200 }))
+  //             .scaling(Vector3.One());
+  // });
 
+}, 1000)
   return scene;
 };

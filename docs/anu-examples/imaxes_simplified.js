@@ -1,4 +1,7 @@
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial, Angle, Space} from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, SixDofDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeType , StandardMaterial } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import cars from './data/cars.json' assert {type: 'json'};

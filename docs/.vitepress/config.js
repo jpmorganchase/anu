@@ -130,6 +130,7 @@ export default defineConfig({
           { text: 'Pointer Hover', link: './hover' },
           { text: 'Details on Demand', link: './details' },
           { text: 'Transform Widget UI', link: './transform_widget_ui' },
+          { text: 'Multiple Interactions', link: './multiple_interactions' },
           { text: 'Layouts', link: './layout' },
         ]
       },

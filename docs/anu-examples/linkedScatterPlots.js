@@ -130,20 +130,20 @@ export function linkedScatterPlots(engine){
   rect1.color = "white";
   rect1.thickness = 4;
   rect1.background = "blue";
-  rect1.top = "30%";
+  rect1.top = "40%";
   rect1.left = "-25%";
   rect1.onPointerClickObservable.add(() => {
       createScatterPlot(scatterplots.length);
       updateLines();
   });
   let rect2 = GUI.Button.CreateSimpleButton("button2", "Remove Scatter Plot");
-  rect2.width = 0.15;
+  rect2.width = 0.19;
   rect2.height = "40px";
   rect2.cornerRadius = 2;
   rect2.color = "white";
   rect2.thickness = 4;
   rect2.background = "blue";
-  rect2.top = "30%";
+  rect2.top = "40%";
   rect2.left = "25%";
   rect2.onPointerClickObservable.add(() => {
     if (scatterplots.length > 1) {
