@@ -3,8 +3,6 @@ import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import cars from '../../data/cars.json' assert {type: 'json'};
 import HavokPhysics from "@babylonjs/havok";
-import { rotate } from 'ol/transform';
-
 
 export async function imaxes(babylonEngine){
   const havokInstance = await HavokPhysics();

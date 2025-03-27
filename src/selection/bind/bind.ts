@@ -35,8 +35,35 @@ export function bind<MeshType extends keyof MeshTypes>(
   return new Selection(meshes, this.scene);
 }
 
+
 /**
- * Take a selection, a shape type, and data. For each index in the data create a new mesh for each node in the selection as the parent.
+ * Take a selection, a mesh, and data. For each index in the data create a new mesh for each node in the selection as the parent.
+ * The data index of the mesh is also attached to the mesh node object under the metadata property.
+ *
+ * @param mesh The mesh to create instances from.
+ * @param data The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data.
+ * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+ * or undefined if a selection could not be made.
+ */
+export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+  let meshes: Node[] = [];
+  this.selected.forEach((node) => {
+    data.forEach((element, i) => {
+      var clone = mesh.clone(mesh.name + '_' + i);
+      if (clone instanceof Mesh) clone.actionManager = new ActionManager(this.scene);
+      Tags.EnableFor(clone);
+      clone.parent = node;
+      clone.metadata = { ...mesh.metadata, data: element };
+      meshes.push(clone);
+    });
+  });
+
+  return new Selection(meshes, this.scene);
+}
+
+
+/**
+ * Take a selection, a mesh, and data. For each index in the data create a new mesh for each node in the selection as the parent.
  * The data index of the mesh is also attached to the mesh node object under the metadata property.
  *
  * @param mesh The mesh to create instances from.

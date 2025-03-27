@@ -1,9 +1,8 @@
 <script setup>
-  // import multiView from "../../vue_components/multiView.vue"
-  //import inlineView from "../vue_components/inlineView.vue"
   import { meshBench } from  "../../anu-examples/bench_mesh.js"
   import { instanceBench } from "../../anu-examples/bench_instance.js"
   import { thinInstanceBench } from "../../anu-examples/bench_thinInstance.js"
+  import { cloneBench } from "../../anu-examples/bench_clone.js"
 </script>
 
 
@@ -28,8 +27,16 @@ The standard method for mesh rendering through [create](/api/modules.html#create
 
 
 ## Clone
+If we are drawing many meshes with the same geometry, but we still need them to be fully independent, we can use [Clones](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies) to reuse geometry and save a little bit of performance. We can do this with [bindClone](/api/modules.html#bindclone).
 
-Coming Soon
+```js
+anu.bindClone(mesh: Mesh, data: [], scene: Scene)
+```
+<singleView :scene="cloneBench" />
+::: details Source
+::: code-group
+<<< @/./anu-examples/bench_clone.js 
+:::
 
 ## Instance
 If we are drawing many meshes with the same geometry, we can use [Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances/) to render them all in a single draw call leading to much better performance. [InstancedMeshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.InstancedMesh) will still have their own nodes in the scene graph and can each have unique properties such as names, metadata, and transforms. However, since they all share the same mesh geometry, and materials we need to use instanced buffers to set their other properties such as color. 
