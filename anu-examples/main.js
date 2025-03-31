@@ -63,6 +63,7 @@ import { pitches } from './examples/Advanced/pitches';
 import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
 import { imaxes } from './examples/Advanced/imaxesSimple';
+import { box_clone } from './examples/FirstSteps/Box_Clone';
 
 
 const queryString = window.location.search;
@@ -131,8 +132,9 @@ const scenes = {
   'flightPath': flightPath,
   'tiltMap': tiltMap,
   'pitches': pitches,
-  'linkedScatterPlots': linkedScatterPlots,
-  'largeThinInstance': largeThinInstance
+  'largeThinInstance': largeThinInstance,
+  'clone': box_clone,
+  'linkedScatterPlots': linkedScatterPlots
 }
 
 

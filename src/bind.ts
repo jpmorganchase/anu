@@ -12,6 +12,7 @@ import { Node, ActionManager, Tags, Mesh, Scene, InstancedMesh, Matrix } from '@
 
 import { Selection } from './index';
 import { create, MeshTypes } from './create';
+import { clone } from 'ol/extent';
 
 type Property<T, MeshType extends keyof T> = T[MeshType];
 
@@ -38,6 +39,29 @@ export function bind<MeshType extends keyof MeshTypes>(
     meshes.push(mesh);
   });
   return new Selection(meshes, meshes[0].getScene());
+}
+
+/**
+ * Take a selection, a mesh, and data. For each index in the data clone a new mesh.
+ * The data index of the mesh is also attached to the mesh node object under the metadata property.
+ *
+ * @param mesh The mesh to create instances from.
+ * @param data The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data.
+ * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+ * or undefined if a selection could not be made.
+ */
+export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
+  scene = scene != undefined ? scene : mesh.getScene();
+  let meshes: Node[] = [];
+    data.forEach((element, i) => {
+      var clone = mesh.clone(mesh.name + '_' + i);
+      if (clone instanceof Mesh) clone.actionManager = new ActionManager(scene);
+      Tags.EnableFor(clone);
+      clone.metadata = { ...clone.metadata, data: element };
+      meshes.push(clone);
+  });
+
+  return new Selection(meshes, this.scene);
 }
 
 /**

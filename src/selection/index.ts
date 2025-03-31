@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, Mesh, TransformNode, InstancedMesh, AbstractMesh, Nullable } from '@babylonjs/core';
+import { Node, Mesh, TransformNode, AbstractMesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
-import { bind, bindInstance, bindThinInstance } from './bind/bind';
+import { bind, bindInstance, bindThinInstance, bindClone} from './bind/bind';
 import { position, positionX, positionY, positionZ } from './property/position';
 import { translate } from './bind/translate';
 import { rotation, rotationX, rotationY, rotationZ } from './property/rotation';
@@ -157,7 +157,6 @@ export class Selection {
   public restartTransitions = restartTransitions;
   public endTransitions = endTransitions;
   public stopTweens = stopTweens;
-
-
+  public bindClone = bindClone;
 
 }
