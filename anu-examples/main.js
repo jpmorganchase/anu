@@ -46,6 +46,7 @@ import { meshMap } from './examples/Geographic/Mesh_Map';
 import { facetPosition } from './examples/Interactions/FacetPosition';
 import { hover } from './examples/Interactions/Hover';
 import { details } from './examples/Interactions/Details';
+import { multipleInteractions } from './examples/Interactions/MultipleInteractions';
 import { nodelink3d } from './examples/Networks/NodeLink3D';
 import { benchmark } from './examples/Benchmarks/benchmark';
 import { fig1 } from './examples/Figures/fig1';
@@ -57,6 +58,7 @@ import { barchartRace } from './examples/Animation/barchartRace';
 import { dronePath } from './examples/Geographic/dronePath';
 import { flightPath } from './examples/Geographic/flightPath';
 import { tiltMap } from './examples/Advanced/tiltMap';
+import { linkedScatterPlots } from './examples/Advanced/linkedScatterPlots';
 import { pitches } from './examples/Advanced/pitches';
 import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
@@ -116,6 +118,7 @@ const scenes = {
   'facetposition': facetPosition,
   'hover': hover,
   'details': details,
+  'multipleInteractions': multipleInteractions,
   'brushing': brushing,
   'nodelink3d': nodelink3d,
   'benchmark': benchmark, 
@@ -130,7 +133,8 @@ const scenes = {
   'tiltMap': tiltMap,
   'pitches': pitches,
   'largeThinInstance': largeThinInstance,
-  'clone': box_clone
+  'clone': box_clone,
+  'linkedScatterPlots': linkedScatterPlots
 }
 
 

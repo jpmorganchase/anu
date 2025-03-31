@@ -41,6 +41,7 @@ layout: page
             <cardImg title="Pointer Hover" img="/anu/assets/example-images/pointerHover.png" link="/anu/examples/hover"></cardImg>
             <cardImg title="Details On Demand" img="/anu/assets/example-images/detailsOnDemand.png" link="/anu/examples/details"></cardImg>
             <cardImg title="Transform Widget UI" img="/anu/assets/example-images/transformWidgetUI.png" link="/anu/examples/transform_widget_ui"></cardImg>
+            <cardImg title="Multiple Interactions" img="/anu/assets/example-images/multipleInteractions.png" link="/anu/examples/multiple_interactions"></cardImg>
             <cardImg title="Layouts" img="/anu/assets/example-images/layout.png" link="/anu/examples/layout"></cardImg>
         </div>
     </div>
@@ -72,10 +73,11 @@ layout: page
         <h2>Advanced</h2>
         <hr>
         <div class="cards">
+            <cardImg title="Thin Instance Interactions" img="/anu/assets/example-images/thinInstances.png" link="/anu/examples/thin_instances"></cardImg>
             <cardImg title="Baseball Pitches" img="/anu/assets/example-images/pitches.png" link="/anu/examples/pitches"></cardImg>
+            <cardImg title="Linked Scatter Plots" img="/anu/assets/example-images/linkedScatterPlots.png" link="/anu/examples/linked_scatter_plots"></cardImg>
             <cardImg title="Tilt Map" img="/anu/assets/example-images/tiltMap.png" link="/anu/examples/tilt_map"></cardImg>
-            <cardImg title="ThinInstance Interactions" img="/anu/assets/example-images/thinInstances.png" link="/anu/examples/thin_instances"></cardImg>
-            <cardImg title="Imaxes Simplified" img="/anu/assets/example-images/imaxes.png" link="/anu/examples/imaxes_simplified"></cardImg>
+            <cardImg title="ImAxes Simplified" img="/anu/assets/example-images/imaxes.png" link="/anu/examples/imaxes_simplified"></cardImg>
         </div>
     </div>
 

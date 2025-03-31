@@ -8,9 +8,7 @@ import { hover } from '../anu-examples/Hover.js'
 
 
 # Pointer Hover
-
 Example demonstrating how to use the .action() method to add [Babylon pointer actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions) to nodes in a selection.
-
 
 <singleView :scene="hover" />
 

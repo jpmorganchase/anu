@@ -8,16 +8,15 @@ import iris from './data/iris.json' assert {type: 'json'};  //Our data
 
 export function transformWidget(engine) {
 
-  //Setup basic Babylon variables
-  const scene = new Scene(engine);
-
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
-
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  //Create an empty scene
+  const scene = new Scene(engine)
+  //Add some lighting (name, position, scene)
+  new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+  //Add a camera that rotates around the origin 
+  const camera = new ArcRotateCamera("Camera", -(Math.PI / 3), Math.PI / 2, 5, new Vector3(0, 0, 0), scene);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(2, 0, -5.5);
 
   //D3 scales
   let scaleX = d3.scaleLinear().domain(d3.extent(d3.map(iris, (d) => {return d.sepalLength}))).range([-1,1]).nice();
@@ -29,24 +28,10 @@ export function transformWidget(engine) {
   let CoT = anu.create("cot", "cot");
   let chart = anu.selectName('cot', scene);
 
-  //Create spheres with simple mouse over animations
+  //Create spheres
   let spheres = chart.bind('sphere', { diameter: 0.05 }, iris)
                      .position((d) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth)))
-                     .material((d) => scaleC(d.species))
-                     .action((d,n,i) => new InterpolateValueAction(
-                           ActionManager.OnPointerOverTrigger,
-                           n,
-                           'scaling',
-                           new Vector3(1.2, 1.2, 1.2),
-                           100
-                       ))
-                       .action((d,n,i) => new InterpolateValueAction(
-                         ActionManager.OnPointerOutTrigger,
-                         n,
-                         'scaling',
-                         new Vector3(1, 1, 1),
-                         100
-                       ));
+                     .material((d) => scaleC(d.species));
 
   //Create axes
   anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } })

@@ -9,28 +9,28 @@ import tsne from '../../data/mnist_tsne.csv';
 export const largeThinInstance = function (engine) {
 
   //Babylon boilerplate
-  const scene = new Scene(engine)
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
+  const scene = new Scene(engine);
+  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.attachControl(true)
-  camera.position = new Vector3(0, 0, -20);
+  camera.attachControl(true);
+  camera.position = new Vector3(0, 0, -23);
 
-  let scaleX = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE1}))).range([-1,1]).nice();
-  let scaleY = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE2}))).range([-1,1]).nice();
-  let scaleZ = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE3}))).range([-1,1]).nice();
+  //D3 scales
+  let scaleX = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE1}))).range([-1,1]);
+  let scaleY = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE2}))).range([-1,1]);
+  let scaleZ = scaleLinear().domain(extent(map(tsne, (d) => {return d.TSNE3}))).range([-1,1]);
   let scaleC = scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
   
-  let CoT = anu.create("cot", "cot");
-  let chart = anu.selectName('cot', scene);
-
   //Create the sphere that is the basis for our instances spheres
-  let sphere = anu.create('sphere', 'sphere', { diameter: 0.1, segments: 2 });  //Decrease segments to decreate vertices and increase performance
-  sphere.hasVertexAlpha = true;   //Must be set to allow for transparency in thinInstances
+  let sphere = anu.create('sphere', 'sphere', { diameter: 0.1, segments: 1 });  //Decrease segments to decrease vertices and increase performance
+  sphere.hasVertexAlpha = true;   //Must be set to allow for transparency in thin instances
   sphere.isVisible = false;   //Hide root node
   sphere.material = new StandardMaterial('myMat');
-  sphere.material.forceDepthWrite = true;   //Setting hasVertexAlpha to true causes issues with depth, so we force it here
+  sphere.material.specularColor = new Color4(0, 0, 0, 1);         //Remove reflections
+  sphere.material.emissiveColor = new Color4(0.3, 0.3, 0.3, 1);   //Make a bit brighter
+  sphere.material.forceDepthWrite = true;   //Setting hasVertexAlpha to true causes occlusion issues with depth, so we force it here
 
-  //Bind thinInstances based on our data
+  //Bind thin instances based on our data
   let spheres = anu.bindThinInstance(sphere, tsne, scene)
     .thinInstancePosition((d) => new Vector3(scaleX(d.TSNE1), scaleY(d.TSNE2), scaleZ(d.TSNE3)))
     .thinInstanceColor((d) => scaleC(d.class))
@@ -61,7 +61,7 @@ export const largeThinInstance = function (engine) {
   
   //Create a GPUPicker that is much faster than regular picking on the CPU, see: https://doc.babylonjs.com/features/featuresDeepDive/mesh/interactions/picking_collisions#gpu-picking
   let picker1 = new GPUPicker();
-  picker1.setPickingList([sphere]);    //Pass in the root mesh that is used for the thinInstances since it contains them
+  picker1.setPickingList([sphere]);    //Pass in the root mesh that is used for the thin instances since it contains them
 
   //Details on demand interaction using pointer move
   scene.onPointerObservable.add((pointerInfo) => {
@@ -84,8 +84,7 @@ export const largeThinInstance = function (engine) {
       else {
         hoverPlane.isVisible = false;
       }
-
-      //GPUPicker can destructively modify the PickingList passed into it, meaning that a thinInstance might only be able to be picked once as it is removed from the list
+      //GPUPicker can destructively modify the PickingList passed into it, meaning that a thin instance might only be able to be picked once as it is removed from the list
       //Here we set the PickingList again after every pick to ensure it is always a valid picking target
       picker1.setPickingList([sphere]);
     });
@@ -108,7 +107,7 @@ export const largeThinInstance = function (engine) {
         let thisClass = tsne[pickingInfo.thinInstanceIndex].class;
         spheres.thinInstanceColor((d,n,i) => {
           let color = scaleC(d.class);
-          return new Color4(color.r, color.g, color.b, (d.class === thisClass) ? 1 : 0.1);    //Make all thinInstances that do not have the same class transparent
+          return new Color4(color.r, color.g, color.b, (d.class === thisClass) ? 1 : 0.1);    //Make all thin instances that do not have the same class transparent
         });
         sphere.material.forceDepthWrite = false;    //Turn this off so that transparency works correctly
       }
@@ -121,5 +120,6 @@ export const largeThinInstance = function (engine) {
     });
   });
 
+  scene.metadata = { name: "thinInstances" };
   return scene;
 }

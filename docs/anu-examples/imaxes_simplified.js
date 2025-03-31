@@ -1,4 +1,7 @@
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, Color4, Quaternion, SixDofDragBehavior, PointerDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeBox, PhysicsShapeType , StandardMaterial, Angle, Space} from '@babylonjs/core';
+// SPDX-License-Identifier: Apache-2.0
+// Copyright : J.P. Morgan Chase & Co.
+
+import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Axis, Color3, SixDofDragBehavior, PhysicsPrestepType, HavokPlugin, PhysicsAggregate, PhysicsShapeType , StandardMaterial } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
 import cars from './data/cars.json' assert {type: 'json'};
@@ -7,17 +10,15 @@ import HavokPhysics from "@babylonjs/havok";
 export async function imaxes(babylonEngine){
   const havokInstance = await HavokPhysics();
   const havokPlugin = new HavokPlugin(true, havokInstance);
-  
 
   const scene = new Scene(babylonEngine);
   scene.enablePhysics(new Vector3(0,0,0), havokPlugin);
 
   const light = new HemisphericLight('light1', new Vector3(0, 10, -10), scene)
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  const camera = new ArcRotateCamera("Camera", -(Math.PI / 2), Math.PI / 3, 4, new Vector3(0, 0.5, 0), scene);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(0, 2.5, -2)
 
   const key_types = {
     "Name": "string",
@@ -100,23 +101,6 @@ const trigger_observer =  havokPlugin.onTriggerCollisionObservable.add((collisio
   }
 })
 
-
-// const collision_observer =  havokPlugin.onCollisionObservable.add((collisionEvent) => {
-//   if (collisionEvent.collider.shape.filterMembershipMask === FILTER_GROUP_COLLISION){
-//       let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "");
-//       let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "");
-//     if (collisionEvent.type === "COLLISION_CONTINUED"){
-//         let axis1 = collisionEvent.collider.transformNode.parent
-//         let axis2 = collisionEvent.collidedAgainst.transformNode.parent
-//         let orientation = checkOrientation(axis1, axis2)
-//         if (parallel_charts.includes(name1 + name2) && orientation !== "parallel"){
-//           disposePara(name1, name2)
-//          } 
-//       }
-//   }
-// });
-
-
 function disposePara(name1, name2){
   name1 = name1.replace("_collider", "")
   name2 = name2.replace("_collider", "")
@@ -139,13 +123,9 @@ function disposePara(name1, name2){
   } 
 }
 
-  
-  
 Object.keys(key_types).forEach(k => {
   createBarChart(k)
  })
-
-
 
   function createBarChart(axesName) {
     axesName = axesName.replace("_collider", "")
