@@ -20,7 +20,7 @@
     "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
-    "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
+    "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts"
   },
   "repository": {
     "type": "git",
