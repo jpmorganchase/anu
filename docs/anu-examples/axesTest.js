@@ -39,7 +39,7 @@ export const axesTest = function(engine){
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
  
-  anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+  anu.createAxes('myAxes', {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
 
     
 

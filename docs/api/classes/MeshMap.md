@@ -230,7 +230,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:25](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L25)
+[src/prefabs/Mapping/MeshMap.ts:25](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L25)
 
 ## Properties
 
@@ -624,7 +624,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:21](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L21)
+[src/prefabs/Mapping/MeshMap.ts:21](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L21)
 
 ___
 
@@ -634,7 +634,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:23](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L23)
+[src/prefabs/Mapping/MeshMap.ts:23](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L23)
 
 ___
 
@@ -644,7 +644,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:17](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L17)
+[src/prefabs/Mapping/MeshMap.ts:17](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L17)
 
 ___
 
@@ -727,7 +727,7 @@ TransformNode.name
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:14](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L14)
+[src/prefabs/Mapping/MeshMap.ts:14](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L14)
 
 ___
 
@@ -831,7 +831,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:18](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L18)
+[src/prefabs/Mapping/MeshMap.ts:18](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L18)
 
 ___
 
@@ -889,7 +889,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:15](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L15)
+[src/prefabs/Mapping/MeshMap.ts:15](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L15)
 
 ___
 
@@ -899,7 +899,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:22](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L22)
+[src/prefabs/Mapping/MeshMap.ts:22](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L22)
 
 ___
 
@@ -909,7 +909,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:20](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L20)
+[src/prefabs/Mapping/MeshMap.ts:20](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L20)
 
 ___
 
@@ -919,7 +919,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:16](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L16)
+[src/prefabs/Mapping/MeshMap.ts:16](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L16)
 
 ___
 
@@ -945,7 +945,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:19](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L19)
+[src/prefabs/Mapping/MeshMap.ts:19](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L19)
 
 ___
 
@@ -2461,7 +2461,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:46](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L46)
+[src/prefabs/Mapping/MeshMap.ts:46](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L46)
 
 ___
 

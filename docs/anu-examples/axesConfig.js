@@ -44,7 +44,7 @@ export const axesConfig = function(engine){
   axesOptions.grid = false;
   axesOptions.backgroundProperties.x = {"material.diffuseColor": Color3.Random()}
  
-  let axes = anu.createAxes('test', scene, axesOptions);
+  let axes = anu.createAxes('myAxes', axesOptions);
 
   return scene;
   

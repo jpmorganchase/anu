@@ -45,7 +45,7 @@ export const axesUpdate = function(engine){
 
   axesOptions.parent = chart
 
-  let axes = anu.createAxes('test', scene, axesOptions);
+  let axes = anu.createAxes('myAxes', axesOptions);
 
   var scaleX2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); //We want to encode sepal length along the x axis, so we make a linear scale function the will scale our data range (min and max sepal length) to our coordinate space (-10, 10 units)
  

@@ -230,7 +230,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:25](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L25)
+[src/prefabs/Axis/Axis.ts:25](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L25)
 
 ## Properties
 
@@ -240,7 +240,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:16](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L16)
+[src/prefabs/Axis/Axis.ts:16](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L16)
 
 ___
 
@@ -642,7 +642,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:19](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L19)
+[src/prefabs/Axis/Axis.ts:19](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L19)
 
 ___
 
@@ -652,7 +652,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:18](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L18)
+[src/prefabs/Axis/Axis.ts:18](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L18)
 
 ___
 
@@ -662,7 +662,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:20](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L20)
+[src/prefabs/Axis/Axis.ts:20](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L20)
 
 ___
 
@@ -733,7 +733,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:21](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L21)
+[src/prefabs/Axis/Axis.ts:21](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L21)
 
 ___
 
@@ -853,7 +853,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:15](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L15)
+[src/prefabs/Axis/Axis.ts:15](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L15)
 
 ___
 
@@ -911,7 +911,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:17](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L17)
+[src/prefabs/Axis/Axis.ts:17](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L17)
 
 ___
 
@@ -957,7 +957,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:103](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L103)
+[src/prefabs/Axis/Axis.ts:103](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L103)
 
 ___
 
@@ -981,7 +981,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:102](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L102)
+[src/prefabs/Axis/Axis.ts:102](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L102)
 
 ___
 
@@ -1005,7 +1005,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:104](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L104)
+[src/prefabs/Axis/Axis.ts:104](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L104)
 
 ___
 
@@ -1035,7 +1035,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:105](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L105)
+[src/prefabs/Axis/Axis.ts:105](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L105)
 
 ___
 
@@ -1061,7 +1061,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:23](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L23)
+[src/prefabs/Axis/Axis.ts:23](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L23)
 
 ___
 
@@ -1071,7 +1071,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:22](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L22)
+[src/prefabs/Axis/Axis.ts:22](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L22)
 
 ___
 
@@ -4316,7 +4316,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L39)
+[src/prefabs/Axis/Axis.ts:39](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L39)
 
 ___
 
@@ -4418,7 +4418,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:89](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L89)
+[src/prefabs/Axis/Axis.ts:89](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L89)
 
 ___
 

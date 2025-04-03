@@ -612,7 +612,7 @@ Mesh.constructor
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:26](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L26)
+[src/prefabs/Text/planeText.ts:26](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L26)
 
 ## Properties
 
@@ -2114,7 +2114,7 @@ Mesh.name
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L22)
+[src/prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L22)
 
 ___
 
@@ -2385,7 +2385,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:24](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L24)
+[src/prefabs/Text/planeText.ts:24](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L24)
 
 ___
 
@@ -2583,7 +2583,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L23)
+[src/prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L23)
 
 ___
 
@@ -3641,7 +3641,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:89](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L89)
+[src/prefabs/Text/planeText.ts:89](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L89)
 
 • `set` **align**(`newAlign`): `void`
 
@@ -3657,7 +3657,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:92](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L92)
+[src/prefabs/Text/planeText.ts:92](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L92)
 
 ___
 
@@ -3771,7 +3771,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:73](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L73)
+[src/prefabs/Text/planeText.ts:73](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L73)
 
 • `set` **atlas**(`newAtlas`): `void`
 
@@ -3787,7 +3787,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:76](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L76)
+[src/prefabs/Text/planeText.ts:76](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L76)
 
 ___
 
@@ -4172,7 +4172,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:48](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L48)
+[src/prefabs/Text/planeText.ts:48](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L48)
 
 • `set` **color**(`newColor`): `void`
 
@@ -4188,7 +4188,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:52](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L52)
+[src/prefabs/Text/planeText.ts:52](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L52)
 
 ___
 
@@ -4390,7 +4390,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L65)
+[src/prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L65)
 
 • `set` **font**(`newFont`): `void`
 
@@ -4406,7 +4406,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:68](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L68)
+[src/prefabs/Text/planeText.ts:68](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L68)
 
 ___
 
@@ -4420,7 +4420,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:97](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L97)
+[src/prefabs/Text/planeText.ts:97](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L97)
 
 • `set` **fontHeight**(`newFontHeight`): `void`
 
@@ -4436,7 +4436,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:100](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L100)
+[src/prefabs/Text/planeText.ts:100](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L100)
 
 ___
 
@@ -5508,7 +5508,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:81](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L81)
+[src/prefabs/Text/planeText.ts:81](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L81)
 
 • `set` **opacity**(`newOpacity`): `void`
 
@@ -5524,7 +5524,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:84](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L84)
+[src/prefabs/Text/planeText.ts:84](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L84)
 
 ___
 
@@ -6236,7 +6236,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:57](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L57)
+[src/prefabs/Text/planeText.ts:57](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L57)
 
 • `set` **size**(`newSize`): `void`
 
@@ -6252,7 +6252,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:60](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L60)
+[src/prefabs/Text/planeText.ts:60](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L60)
 
 ___
 
@@ -6376,7 +6376,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:40](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L40)
+[src/prefabs/Text/planeText.ts:40](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L40)
 
 • `set` **text**(`newText`): `void`
 
@@ -6392,7 +6392,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:43](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L43)
+[src/prefabs/Text/planeText.ts:43](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L43)
 
 ___
 
@@ -9104,7 +9104,7 @@ Mesh.dispose
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:212](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L212)
+[src/prefabs/Text/planeText.ts:212](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L212)
 
 ___
 
@@ -9153,7 +9153,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:193](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L193)
+[src/prefabs/Text/planeText.ts:193](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L193)
 
 ___
 
@@ -12156,7 +12156,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:116](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L116)
+[src/prefabs/Text/planeText.ts:116](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L116)
 
 ___
 
@@ -13182,7 +13182,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:142](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L142)
+[src/prefabs/Text/planeText.ts:142](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L142)
 
 ___
 
@@ -13504,7 +13504,7 @@ Updates the PlaneText with new options.
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:110](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L110)
+[src/prefabs/Text/planeText.ts:110](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L110)
 
 ___
 
