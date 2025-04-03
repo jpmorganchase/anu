@@ -57,7 +57,6 @@ export function prop(this: Selection, accessor: string, value: any) {
 export function props(this: Selection, properties: {}) {
   
   if (this.transitions.length > 0) {
-    console.log("transition")
     createTransitions(this, properties);
   } else {
   this.selected.forEach((node, i) => {

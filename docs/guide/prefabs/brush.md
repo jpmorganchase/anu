@@ -16,7 +16,7 @@ Brushing (and linking) is a common interaction technique in visualization. The B
 
 ``` js
 //Returns instance of Brush class
-let brush = anu.createBrush(name: String, scene: Scene, options: { ... });
+let brush = anu.createBrush(name: String, options: { ... }, scene?: Scene);
 
 //Calls the callback whenever the user starts to interact with the Brush
 brush.onBrushStartObservable.add(() => { ... });
@@ -71,7 +71,7 @@ let scaleX = d3.scaleLinear().domain(d3.extent(d3.map(cars, (d) => {return d.Hor
 let scaleY = d3.scaleLinear().domain(d3.extent(d3.map(cars, (d) => {return d.Weight_in_lbs}))).range([-1, 1]).nice();
 let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(cars, (d) => {return d.Displacement}))).range([-1,1]).nice();
 
-let brush = anu.createBrush('brush', scene, {
+let brush = anu.createBrush('brush', {
     parent: chart,
     scales: { x: scaleX, y: scaleY, z: scaleZ }
 });

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Node, Observable, AbstractMesh, Mesh, BoundingBoxGizmo, UtilityLayerRenderer, PointerDragBehavior, Vector3, Color3, TransformNode, Quaternion, StandardMaterial } from '@babylonjs/core';
+import { Scene, Node, Observable, AbstractMesh, Mesh, BoundingBoxGizmo, UtilityLayerRenderer, PointerDragBehavior, Vector3, Color3, TransformNode, Quaternion, StandardMaterial, Engine } from '@babylonjs/core';
 import { create } from '../../create';
 import { Selection } from '../../selection';
 import { assign, clamp, defaults, set, clone } from 'lodash-es';
@@ -389,12 +389,55 @@ export class Brush extends TransformNode {
 }
 
 
-export function createBrush(name: string, scene: Scene, options: BrushOptionsInterface) {
-  if (!options.scales)
-    throw new Error("Brush Prefab requires at least one scale to be defined");
+// Define function signature overrides to support scene last as optional while maintaining backwards compat. 
+export function createBrush(name: string, scene: Scene, options: BrushOptionsInterface): Brush;
+export function createBrush(name: string, options: BrushOptionsInterface, scene?: Scene): Brush;
 
-  if (!options.parent)
-    throw new Error("Brush prefab must have a parent")
+/**
+ * Creates an instance of Brush with the specified configuration.
+ *
+ * This function supports two argument orders for backward compatibility, scene is optional if passed last:
+ * 1. `createBrush(name, scene, options)`
+ * 2. `createBrush(name, options, scene?)`
+ *
+ * @param name - The name of the brush.
+ * @param arg2 - Either the scene in which the brush will be created or the configuration options for the brush.
+ * @param arg3 - Either the configuration options for the brush or the optional scene in which the brush will be created.
+ * 
+ * @returns An instance of Brush configured with the specified options.
+ *
+ * @throws Will throw an error if no scales are defined in the options.
+ * @throws Will throw an error if no parent is defined in the options.
+ *
+ * @remarks
+ * The function determines the order of the `scene` and `options` arguments based on their types.
+ * If `arg2` is an instance of `Scene`, it is treated as the `scene`, and `arg3` is treated as the `options`.
+ * Otherwise, `arg2` is treated as the `options`, and `arg3` is treated as the `scene`.
+ *
+ * The `options` parameter allows for extensive customization of the brush, including scales, material, and axes transformations.
+ *
+ * For more information, see the [Brush Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/brush.html).
+ */
+export function createBrush(name: string, arg2: Scene | BrushOptionsInterface, arg3?: Scene | BrushOptionsInterface) {
+  let scene: Scene;
+  let options: BrushOptionsInterface;
+
+  if (arg2 instanceof Scene) {
+    console.warn('Deprecation Warning: scene is now optional so the order of arguments for createBrush has changed. Please use createBrush(name, options, scene?) instead.');
+    scene = arg2;
+    options = arg3 as BrushOptionsInterface;
+  } else {
+    options = arg2 as BrushOptionsInterface;
+    scene = arg3 as Scene ?? Engine.LastCreatedScene;
+  }
+
+  if (!options.scales) {
+    throw new Error("Brush Prefab requires at least one scale to be defined");
+  }
+
+  if (!options.parent) {
+    throw new Error("Brush prefab must have a parent");
+  }
 
   const Options: BrushOptionsInterface = {
     parent: options.parent,
@@ -406,7 +449,7 @@ export function createBrush(name: string, scene: Scene, options: BrushOptionsInt
     rotateAxes: options.rotateAxes ?? undefined,
     minSize: options.minSize ?? undefined,
     maxSize: options.maxSize ?? undefined,
-  }
+  };
 
   return new Brush(name, scene, Options);
 }

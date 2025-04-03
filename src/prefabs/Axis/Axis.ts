@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { TransformNode, Scene} from '@babylonjs/core';
+import { TransformNode, Scene, Engine} from '@babylonjs/core';
 import { Selection } from '../../selection';
 import { labelAlt, updateLabel } from './label';
 import { backgroundNew, updateBackground } from './background';
@@ -105,8 +105,47 @@ export class Axes extends TransformNode {
   private setLabel = labelAlt;
 }
 
-export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface | AxesConfig) {
-  const keys = ['x', 'y', 'z']
+// We are changing the order of scene for prefabs moving forward to be optional but supporting backwards compatibility in the mean time.
+export function createAxes(name: string, scene: Scene, options: AxesOptionsInterface | AxesConfig): Axes;
+export function createAxes(name: string, options: AxesOptionsInterface | AxesConfig, scene?: Scene): Axes;
+
+/**
+ * Creates an instance of Axes with the specified configuration.
+ *
+ * This function supports two argument orders for backward compatibility:
+ * 1. `createAxes(name, scene, options)`
+ * 2. `createAxes(name, options, scene?)`
+ *
+ * @param name - The name of the axes.
+ * @param arg2 - Either the scene in which the axes will be created or the configuration options for the axes.
+ * @param arg3 - Either the configuration options for the axes or the scene in which the axes will be created, scene can be optional.
+ * 
+ * @returns An instance of Axes configured with the specified options.
+ *
+ * @remarks
+ * For more information, see the [Axes Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/axes.html).
+ *
+ * @example
+ * ```javascript
+ * const options: AxesOptionsInterface = { scale: {x: scaleX, y: scaleY, z: scaleZ} };
+ * const axes = createAxes('myAxes', scene, options);
+ * ```
+ */
+export function createAxes(name: string, arg2: Scene | AxesOptionsInterface | AxesConfig, arg3?: Scene | AxesOptionsInterface | AxesConfig) {
+  let scene: Scene;
+  let options: AxesOptionsInterface | AxesConfig;
+
+  // Determine the order of arguments based on their types
+  if (arg2 instanceof Scene) {
+    scene = arg2;
+    options = arg3 as AxesOptionsInterface | AxesConfig;
+    console.warn('Deprecation Warning: The order of arguments for createAxes has changed. Please use createAxes(name, options, scene) instead.');
+  } else {
+    options = arg2 as AxesOptionsInterface | AxesConfig;
+    scene = arg3 as Scene ?? Engine.LastCreatedScene;
+  }
+
+  const keys = ['x', 'y', 'z'];
 
   const Options: AxesOptionsInterface = {
     scale: options.scale,

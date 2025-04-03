@@ -24,6 +24,7 @@
 ### Functions
 
 - [bind](modules.md#bind)
+- [bindClone](modules.md#bindclone)
 - [bindInstance](modules.md#bindinstance)
 - [bindThinInstance](modules.md#bindthininstance)
 - [create](modules.md#create)
@@ -51,7 +52,7 @@
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:105](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L105)
+[src/prefabs/Chromatic/Chromatic.ts:105](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Chromatic/Chromatic.ts#L105)
 
 ## Functions
 
@@ -86,7 +87,36 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:29](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L29)
+[src/bind.ts:30](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/bind.ts#L30)
+
+___
+
+### bindClone
+
+▸ **bindClone**(`this`, `mesh`, `data?`, `scene?`): [`Selection`](classes/Selection.md)
+
+Take a selection, a mesh, and data. For each index in the data clone a new mesh.
+The data index of the mesh is also attached to the mesh node object under the metadata property.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Selection`](classes/Selection.md) | - |
+| `mesh` | `Mesh` | The mesh to create instances from. |
+| `data` | `object`[] | The data to bind elements too, must be passed as a list of objects where each object represents a row of tabular data. |
+| `scene?` | `Scene` | - |
+
+#### Returns
+
+[`Selection`](classes/Selection.md)
+
+An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
+or undefined if a selection could not be made.
+
+#### Defined in
+
+[src/bind.ts:53](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/bind.ts#L53)
 
 ___
 
@@ -114,7 +144,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:52](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L52)
+[src/bind.ts:76](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/bind.ts#L76)
 
 ___
 
@@ -142,7 +172,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/bind.ts:75](https://github.com/jpmorganchase/anu/blob/7421a80/src/bind.ts#L75)
+[src/bind.ts:99](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/bind.ts#L99)
 
 ___
 
@@ -176,7 +206,7 @@ A mesh object created with the passed parameters.
 
 #### Defined in
 
-[src/create.ts:111](https://github.com/jpmorganchase/anu/blob/7421a80/src/create.ts#L111)
+[src/create.ts:112](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/create.ts#L112)
 
 ___
 
@@ -184,21 +214,77 @@ ___
 
 ▸ **createAxes**(`name`, `scene`, `options`): [`Axis`](classes/Axis.md)
 
+Creates an instance of Axes with the specified configuration.
+
+This function supports two argument orders for backward compatibility:
+1. `createAxes(name, scene, options)`
+2. `createAxes(name, options, scene?)`
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `scene` | `Scene` |
-| `options` | `AxesOptionsInterface` \| [`AxesConfig`](classes/AxesConfig.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the axes. |
+| `scene` | `Scene` | - |
+| `options` | `AxesOptionsInterface` \| [`AxesConfig`](classes/AxesConfig.md) | - |
 
 #### Returns
 
 [`Axis`](classes/Axis.md)
 
+An instance of Axes configured with the specified options.
+
+**`Remarks`**
+
+For more information, see the [Axes Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/axes.html).
+
+**`Example`**
+
+```javascript
+const options: AxesOptionsInterface = { scale: {x: scaleX, y: scaleY, z: scaleZ} };
+const axes = createAxes('myAxes', scene, options);
+```
+
 #### Defined in
 
-[src/prefabs/Axis/Axis.ts:108](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Axis/Axis.ts#L108)
+[src/prefabs/Axis/Axis.ts:109](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L109)
+
+▸ **createAxes**(`name`, `options`, `scene?`): [`Axis`](classes/Axis.md)
+
+Creates an instance of Axes with the specified configuration.
+
+This function supports two argument orders for backward compatibility:
+1. `createAxes(name, scene, options)`
+2. `createAxes(name, options, scene?)`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the axes. |
+| `options` | `AxesOptionsInterface` \| [`AxesConfig`](classes/AxesConfig.md) | - |
+| `scene?` | `Scene` | - |
+
+#### Returns
+
+[`Axis`](classes/Axis.md)
+
+An instance of Axes configured with the specified options.
+
+**`Remarks`**
+
+For more information, see the [Axes Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/axes.html).
+
+**`Example`**
+
+```javascript
+const options: AxesOptionsInterface = { scale: {x: scaleX, y: scaleY, z: scaleZ} };
+const axes = createAxes('myAxes', scene, options);
+```
+
+#### Defined in
+
+[src/prefabs/Axis/Axis.ts:110](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/Axis.ts#L110)
 
 ___
 
@@ -206,21 +292,91 @@ ___
 
 ▸ **createBrush**(`name`, `scene`, `options`): `Brush`
 
+Creates an instance of Brush with the specified configuration.
+
+This function supports two argument orders for backward compatibility, scene is optional if passed last:
+1. `createBrush(name, scene, options)`
+2. `createBrush(name, options, scene?)`
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `scene` | `Scene` |
-| `options` | `BrushOptionsInterface` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the brush. |
+| `scene` | `Scene` | - |
+| `options` | `BrushOptionsInterface` | - |
 
 #### Returns
 
 `Brush`
 
+An instance of Brush configured with the specified options.
+
+**`Throws`**
+
+Will throw an error if no scales are defined in the options.
+
+**`Throws`**
+
+Will throw an error if no parent is defined in the options.
+
+**`Remarks`**
+
+The function determines the order of the `scene` and `options` arguments based on their types.
+If `arg2` is an instance of `Scene`, it is treated as the `scene`, and `arg3` is treated as the `options`.
+Otherwise, `arg2` is treated as the `options`, and `arg3` is treated as the `scene`.
+
+The `options` parameter allows for extensive customization of the brush, including scales, material, and axes transformations.
+
+For more information, see the [Brush Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/brush.html).
+
 #### Defined in
 
-[src/prefabs/Brushing/brush.ts:392](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Brushing/brush.ts#L392)
+[src/prefabs/Brushing/brush.ts:393](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Brushing/brush.ts#L393)
+
+▸ **createBrush**(`name`, `options`, `scene?`): `Brush`
+
+Creates an instance of Brush with the specified configuration.
+
+This function supports two argument orders for backward compatibility, scene is optional if passed last:
+1. `createBrush(name, scene, options)`
+2. `createBrush(name, options, scene?)`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the brush. |
+| `options` | `BrushOptionsInterface` | - |
+| `scene?` | `Scene` | - |
+
+#### Returns
+
+`Brush`
+
+An instance of Brush configured with the specified options.
+
+**`Throws`**
+
+Will throw an error if no scales are defined in the options.
+
+**`Throws`**
+
+Will throw an error if no parent is defined in the options.
+
+**`Remarks`**
+
+The function determines the order of the `scene` and `options` arguments based on their types.
+If `arg2` is an instance of `Scene`, it is treated as the `scene`, and `arg3` is treated as the `options`.
+Otherwise, `arg2` is treated as the `options`, and `arg3` is treated as the `scene`.
+
+The `options` parameter allows for extensive customization of the brush, including scales, material, and axes transformations.
+
+For more information, see the [Brush Documentation](https://jpmorganchase.github.io/anu/guide/prefabs/brush.html).
+
+#### Defined in
+
+[src/prefabs/Brushing/brush.ts:394](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Brushing/brush.ts#L394)
 
 ___
 
@@ -249,7 +405,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:108](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/MeshMap.ts#L108)
+[src/prefabs/Mapping/MeshMap.ts:108](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L108)
 
 ___
 
@@ -273,7 +429,7 @@ Creates a new PlaneText prefab.
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:226](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Text/planeText.ts#L226)
+[src/prefabs/Text/planeText.ts:226](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L226)
 
 ___
 
@@ -299,7 +455,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureGlobe.ts:131](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureGlobe.ts#L131)
+[src/prefabs/Mapping/textureGlobe.ts:131](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/textureGlobe.ts#L131)
 
 ___
 
@@ -326,7 +482,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/textureMap.ts:193](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Mapping/textureMap.ts#L193)
+[src/prefabs/Mapping/textureMap.ts:193](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/textureMap.ts#L193)
 
 ___
 
@@ -348,7 +504,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Layout/Layout.ts:281](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Layout/Layout.ts#L281)
+[src/prefabs/Layout/Layout.ts:281](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Layout/Layout.ts#L281)
 
 ___
 
@@ -368,7 +524,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:93](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L93)
+[src/prefabs/Chromatic/Chromatic.ts:93](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Chromatic/Chromatic.ts#L93)
 
 ___
 
@@ -390,7 +546,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Layout/Layout.ts:269](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Layout/Layout.ts#L269)
+[src/prefabs/Layout/Layout.ts:269](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Layout/Layout.ts#L269)
 
 ___
 
@@ -417,7 +573,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:19](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L19)
+[src/select.ts:19](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/select.ts#L19)
 
 ___
 
@@ -446,7 +602,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:101](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L101)
+[src/select.ts:101](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/select.ts#L101)
 
 ___
 
@@ -473,7 +629,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:63](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L63)
+[src/select.ts:63](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/select.ts#L63)
 
 ___
 
@@ -500,7 +656,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:46](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L46)
+[src/select.ts:46](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/select.ts#L46)
 
 ___
 
@@ -527,7 +683,7 @@ or undefined if a selection could not be made.
 
 #### Defined in
 
-[src/select.ts:80](https://github.com/jpmorganchase/anu/blob/7421a80/src/select.ts#L80)
+[src/select.ts:80](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/select.ts#L80)
 
 ___
 
@@ -547,4 +703,4 @@ ___
 
 #### Defined in
 
-[src/prefabs/Chromatic/Chromatic.ts:97](https://github.com/jpmorganchase/anu/blob/7421a80/src/prefabs/Chromatic/Chromatic.ts#L97)
+[src/prefabs/Chromatic/Chromatic.ts:97](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Chromatic/Chromatic.ts#L97)

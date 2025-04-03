@@ -21,11 +21,8 @@ export function grid(this: Axes) {
 
   let default_properties = { name: (d) => this.name + '_grid_' + d.axis, alpha: 0.3, color: Color3.White() };
   
-
   let girdSelections: Mesh[] = [];
   
-  console.log(this.options.grid)
-
   for (let key in lines){
     if (this.options.grid?.[key] || this.options.grid) {
       let gridOptions = this.options.gridOptions[key] ?? this.options.gridOptions;

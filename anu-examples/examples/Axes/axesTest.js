@@ -81,7 +81,7 @@ export const axesTest = function(engine){
 
   axesOptions.scale.x = scaleX2
   axesOptions.backgroundProperties.z = {'material.diffuseColor': Color3.Random()}
-  axesOptions.labelFormat.y = (t) => t + ": hello"
+  axesOptions.labelFormat.y = (t) => t + ": hello2"
 
   axes.updateAxes(axesOptions)
 

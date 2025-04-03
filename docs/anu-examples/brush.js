@@ -36,7 +36,7 @@ export const brush = function (engine) {
   anu.createAxes('chart', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
 
   //Create brush for the 3D scatterplot
-  let brush = anu.createBrush('brush', scene,
+  let brush = anu.createBrush('brush', 
     {
       parent: chart,
       scales: { x: scaleX, y: scaleY, z: scaleZ }

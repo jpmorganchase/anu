@@ -20,7 +20,7 @@ This prefab integrates [d3-scale](https://github.com/d3/d3-scale) to help positi
 
 ``` js
 //Returns instance of Axes Class
-let axes = anu.createAxes(name: String, scene: Scene, options: {} | AxisConfig);
+let axes = anu.createAxes(name: String, options: {} | AxisConfig, scene?: Scene);
 
 //Selection object of the main axis line using GreasedLine mesh
 axes.domain 
@@ -45,7 +45,7 @@ axesOptions.domain = false;
 
 axesOptions.grid.y = false;
 
-let axes = anu.createAxes('name', scene, axesOptions);
+let axes = anu.createAxes('name', axesOptions);
 ```
 
 #### Updating Axes
@@ -54,7 +54,7 @@ To update the axes we can call [updateAxes](/api/classes/Axis.html#updateaxes) o
 ```js
 let axesOptions = new anu.AxesConfig({x?: scaleX, y?: scaleY, z?: scaleZ})
 
-let axes = anu.createAxes('name', scene, axesOptions);
+let axes = anu.createAxes('name', axesOptions);
 
 axesOptions.scale.x = newScaleX
 
@@ -119,7 +119,7 @@ axesOptions.parent = chart;
 axesOptions.grid = false;
 axesOptions.backgroundProperties = {"material.diffuseColor": Color3.Random()}
 
-let axes = anu.createAxes('test', scene, axesOptions);
+let axes = anu.createAxes('myAxes', axesOptions);
 ```
 
 <singleView :scene="axesConfig" />
@@ -129,7 +129,7 @@ let axes = anu.createAxes('test', scene, axesOptions);
 
 ```js
   let axesOptions = new anu.AxesConfig({x: scaleX, y: scaleY, z: scaleZ})
-  let axes = anu.createAxes('test', scene, axesOptions);
+  let axes = anu.createAxes('myAxes', axesOptions);
 
   var scaleX2 = scaleLinear().domain([4,10]).range([-10,10]).nice(); 
 

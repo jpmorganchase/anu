@@ -50,7 +50,7 @@ export const brushingLinkingMultiple = function (engine) {
   CoT2.position = new Vector3(1.3, 0, 0);
 
   //Create brush for the 2D scatterplot
-  let brush1 = anu.createBrush('brush1', scene,
+  let brush1 = anu.createBrush('brush1', 
     {
       parent: chart1,                               //The chart that the brush is bound to, must be set
       scales: { x: scaleX1, y: scaleY1 },           //The scales of this chart which are used to determine ranges that the brush can move in, at least one must be set
@@ -64,7 +64,7 @@ export const brushingLinkingMultiple = function (engine) {
   let mat = new StandardMaterial('myBrushMaterial');
   mat.diffuseColor = Color3.Yellow();
   mat.alpha = 0.4;
-  let brush2 = anu.createBrush('brush2', scene,
+  let brush2 = anu.createBrush('brush2', 
     {
       parent: chart2,
       scales: { x: scaleX2, y: scaleY2, z: scaleZ2 },
