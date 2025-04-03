@@ -17,13 +17,10 @@
   },
   "scripts": {
     "compile": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
-    "docs": "cd docs && npm run docs:dev",
-    "clean": "rm -rf ./dist"
   },
   "repository": {
     "type": "git",
