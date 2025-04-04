@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene} from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Color3, Scene, Quaternion, StandardMaterial} from '@babylonjs/core';
 import { interpolate } from 'd3';
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 
@@ -17,17 +17,22 @@ export const box_tween = async function(engine){
   camera.position = new Vector3(-10, 10, -20);
   camera.attachControl(true);
 
-  let box = anu.bind('box', {}, [...Array(10).keys()]);
+  let box = anu.bind('box', {}, [...Array(10).keys()])
+               .material(() => new StandardMaterial());
 
   //click the scene to transition
   scene.onPointerDown = (pointer) => {
     var box_transition = box.transition().tween((d,n,i) => {
 
-      let interpolater = interpolate(n.position.x, Math.random() * 10)
+      let interpolator = interpolate(n.position.x, (Math.random() - 0.5) * 10)
+      let startColor = n.material.diffuseColor;
+      let endColor = Color3.Random();
 
-
-      return (t) => n.position.x = interpolater(t)
-    })
+      return (t) => {
+        n.position.x = interpolator(t);
+        n.material.diffuseColor = Color3.Lerp(startColor, endColor, t);
+      }
+    });
   }
 
 

@@ -61,17 +61,17 @@ outline: deep
 
 ## Overview
 
-The color scale prefab provides utility class and methods for generating color scales and returning them in a variety of formats (hex, color3, material, etc.). This prefab can be used standalone or in conjunction with [d3-scale](https://d3js.org/d3-scale). Additionally, these functions implement [chroma.js](https://gka.github.io/chroma.js/) to provide a variety of predefined schemes like [color brewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3), or your own custom color maps. We are also working on a few schemes of our own to come out later. 
+The color scale prefab provides utility class and methods for generating color scales and returning them in a variety of formats (e.g., hexstring, Color3, Material). This prefab can be used standalone or in conjunction with [d3-scale](https://d3js.org/d3-scale). Additionally, these functions implement [chroma.js](https://gka.github.io/chroma.js/) to provide a variety of predefined schemes like [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) or your own custom color maps.
 
 ## Usage
 
 
 
 ``` js
-//returns list of color from scheme name or list of color hex codes
+//Returns list of color from scheme name or list of color hex codes
 anu.ordinalChromatic(string | string[]).toColor3()
 
-//returns function that accepts int 0-1 and returns corresponding color
+//Returns function that accepts int 0-1 and returns corresponding color
 anu.sequentialChromatic(string | string[]).toColor3() 
 ```
 

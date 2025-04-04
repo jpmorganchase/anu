@@ -3,7 +3,6 @@ outline: deep
 ---
 
 <script setup>
-  //import singleView from  "../../vue_components/singleView.vue"
   import { meshMap } from  "../../anu-examples/Mesh_Map.js"
 </script>
 
@@ -11,19 +10,19 @@ outline: deep
 
 ## Overview 
 
-The Mesh Map prefab takes a [GeoJson](https://geojson.org/) and [d3-geo projection](https://d3js.org/d3-geo/projection) input and generates a [Extruded Polygon](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/extrude_polygon) mesh for each polygon or multi-polygon GeoJSON feature. This prefab also utilize [topoJson](https://github.com/topojson/topojson) for mesh simplification. The createMeshMap() method returns an instance of the MeshMap object which contains the relevant properties for the mesh creation and manipulation. Each polygon metadata.data property will be set with the data from its features.properties GeoJSON.
+The Mesh Map prefab takes a [GeoJson](https://geojson.org/) and [d3-geo projection](https://d3js.org/d3-geo/projection) input and generates a [Extruded Polygon](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/extrude_polygon) Mesh for each polygon or multi-polygon GeoJSON feature. This prefab also utilize [topoJson](https://github.com/topojson/topojson) for Mesh simplification. The [createMeshMap()](/api/modules.md#createmeshmap) method returns an instance of the MeshMap object which contains the relevant properties for the Mesh creation and manipulation. Each polygon metadata.data property will be set with the data from its features.properties GeoJSON.
 
 ## Usage 
 
 ```js
 //name (required), options (geojson required), babylon scene (optional) 
-// returns instance of MeshMap
+//Returns instance of MeshMap
 let map = anu.createMeshMap(name: String, options: {}, scene: BABYLON.Scene);
 
 //The transformed input d3-geo projection
 let projection = map.projection
 
-// A selection object containing all the generated polygons
+//A selection object containing all the generated polygons
 let selection = map.selection
 
 ```

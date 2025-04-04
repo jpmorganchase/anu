@@ -10,7 +10,7 @@ outline: deep
 # Layouts
 
 ## Overview 
-The Layout prefabs provide a quick way to generate 3D layout for a selection of 3D visualizations created by Anu. 
+The Layout prefabs provide a quick way to generate 3D layouts for a Selection of 3D visualizations created using Anu. 
 
 ## Usage 
 

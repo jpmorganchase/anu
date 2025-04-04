@@ -18,31 +18,35 @@ export const line_tween = async function(engine){
   camera.attachControl(true);
 
 
-let points1 = [
-    new Vector3(-2, -1, 0),
-    new Vector3(0, 1, 0),
-    new Vector3(2, -1, 0),
-]
+  let startPoints = [
+    Vector3.Random(-5, 5),
+    Vector3.Random(-5, 5),
+    Vector3.Random(-5, 5),
+    Vector3.Random(-5, 5),
+    Vector3.Random(-5, 5),
+  ]
 
-  let line = anu.bind('lines', {points: points1, updatable: true}, [points1], scene)
+  let line = anu.bind('lines', {points: startPoints, updatable: true}, [startPoints], scene)
 
   //click the scene to transition
   scene.onPointerDown = (pointer) => {
-    var line_transition = line.transition({duration: 1000}).tween((d,n,i) => {
+    var line_transition = line.transition({ duration: 500 }).tween((d,n,i) => {
 
-      let points2 = [
-        Vector3.Random(-5,5),
-        Vector3.Random(-5,5),
-        Vector3.Random(-5,5),
-      ]
+      let endPoints = [
+        Vector3.Random(-5, 5),
+        Vector3.Random(-5, 5),
+        Vector3.Random(-5, 5),
+        Vector3.Random(-5, 5),
+        Vector3.Random(-5, 5),
+      ];
       
-      let interpolater = interpolateArray(points1, points2)
+      let interpolator = interpolateArray(startPoints, endPoints);
      
+      startPoints = endPoints;
+
       return (t) => {
-        
-        let points = interpolater(t).map((v) => new Vector3(v._x,v._y,v._z))
-  
-        anu.create("lines", "lines", {points: points, updatable: true, instance: n}, [points], scene)
+        let points = interpolator(t).map((v) => new Vector3(v._x, v._y, v._z))
+        anu.create("lines", "lines", { points: points, updatable: true, instance: n }, [points], scene)
       }
     })
   }

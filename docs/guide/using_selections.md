@@ -1,22 +1,29 @@
 <script setup>
   import multiView from "../vue_components/multiView.vue"
-  //import inlineView from "../vue_components/inlineView.vue"
 </script>
 
 <multiView>
 
 # Using Selections
 
-Selections are the core of the Anu workflow. A [Selection](../api/classes/Selection.md) is a JavaScript object that is comprised of a list of [nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) in the Babylon scene graph, the Scene object containing those nodes, and several methods for selecting, creating, manipulating, or retrieving values and properties from nodes in the Babylon scene graph.
+Selections are the core of the Anu workflow. A [Selection](../api/classes/Selection.md) is a JavaScript object that is comprised of a list of [Nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) in the Babylon.js scene graph, the [Scene](https://doc.babylonjs.com/typedoc/classes/BABYLON.Scene) object containing those Nodes, and several methods for selecting, creating, manipulating, or retrieving values and properties from Nodes in the Babylon.js scene graph.
+
+<div class="tip custom-block" style="padding-top: 8px">
+
+In Babylon.js, a [Mesh](https://doc.babylonjs.com/typedoc/classes/BABYLON.Mesh) is a renderable model comprised of vertices and triangles. A Node is the base class that Mesh inherits and does not, by itself, have a visual component. While we use these two terms interchangeably here, in most cases with Anu you will be selecting and manipulating Meshes to form the visual elements that make up data visualizations.
+
+</div>
+
 
 ## Manually Creating a Selection
 
-A selection object can simply be created by declaring a new [Selection](../api/classes/Selection.md) object with a list of nodes to be included in the selection and the scene the nodes were created in. Generally speaking, selections should not be created manually, though there are particular circumstances where it is worthwhile to do so.Anu provides several methods for selecting nodes to dynamically create selections from the scene graph which we will go over next. Below is an example of a selection being created manually with the meshes we created.
+A Selection object can be manually created by declaring a new Selection with a list of Nodes. In most cases you should not need to manually create Selections, though there are some instances where this can be useful such as when [building custom polygons](https://doc.babylonjs.com/features/featuresDeepDive/mesh/creation/param/polyMeshBuilder/) and you want to then manipulate it using Anu's API. Anu provides several methods for selecting Nodes to dynamically create Selections from the scene graph. Below is an example of a Selection object created manually.
 
 ::: code-group
 ```js [js]
 let sphere = anu.create("sphere", "mySphere");
 
+//constructor(nodes: Mesh[] | AbstractMesh[] | TransformNode[] | Node[], Scene?: scene)
 let selection = new anu.Selection([sphere], scene);
 ```
 :::
@@ -25,11 +32,11 @@ let selection = new anu.Selection([sphere], scene);
 
 ## Selecting Nodes From the Scene Graph
 
-Anu provides several different methods for selecting nodes from the Babylon scene graph. We can select nodes by name, ID, tags, and even by data values. These methods return an instance of [Selection](../api/classes/Selection.md) containing all the nodes we selected and allow us to update the properties of all the nodes in the selection. To start, let us add some meshes to our scene graph to select. Below we create a box with the name "box-name", and a sphere with the ID "sphere-ID".
+We can also select Nodes by name, ID, tags, and even by data values. These methods return an instance of Selection containing all the Nodes we selected. To start, we first add some Meshes to our scene graph which we will select later.
 
 ::: code-group
 ```js [js]
-//anu.create returns a mesh object that we can modify using Babylon functions
+//anu.create returns a Mesh object that we can modify using Babylon.js functions
 let box = anu.create("box", "myBox");
 box.name = "box-name";
 box.position = new Vector3(-1,0,0);
@@ -45,23 +52,22 @@ sphere.position = new Vector3(1,0,0);
 
 ### Select by Name and ID
 
-Now let us select our two meshes and add a material to each. Below we create two standard Babylon materials, setting the diffuseColor to red for the box's material and green for the sphere's material. Next, we use [selectName()](../api/modules.html#selectname) to select our box by its name, and [selectId()](../api/modules.html#selectid) to select our box by its ID. These each return a [Selection](../api/classes/Selection.md) object including our selected mesh.
-We can then edit the properties of these meshes, but more on that later. Here we use [selection.material()](../api/classes/Selection.html#material) to set the materials for our two meshes respectively.
+Now let us select our two Meshes and add a material to each. Below we create two Babylon.js [StandardMaterials](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial), setting the diffuseColor of one material to red and the other to green. Next, we use [selectName()](../api/modules.html#selectname) to select our box by its name, and [selectId()](../api/modules.html#selectid) to select our sphere by its ID. These each return a [Selection](../api/classes/Selection.md) object that contains our selected Mesh. We can then assign the material for our two meshes using [selection.material()](../api/classes/Selection.html#material). Note that you can still assign Mesh properties using the standard Babylon.js way instead of through Anu's methods, but Anu can provide additional convenience especially in the case of multiple Selections (explained later).
 
 ::: code-group
 ```js [js]
 let boxMaterial = new StandardMaterial('boxMaterial', scene);
-boxMaterial.diffuseColor = new Color3(1,0,0);
+boxMaterial.diffuseColor = new Color3(1, 0, 0);
 
 let sphereMaterial = new StandardMaterial('sphereMaterial', scene);
-sphereMaterial.diffuseColor = new Color3(0,1,0);
+sphereMaterial.diffuseColor = new Color3(0, 1, 0);
 
-//anu.selectName and anu.selectId both return a Selection object that we can modify using Anu functions
-let box_selection = anu.selectName('box-name', scene)
-                        .material(boxMaterial);
+//anu.selectName and anu.selectId both return a Selection object that we can modify using Anu methods
+let boxSelection = anu.selectName('box-name', scene)
+                      .material(boxMaterial);
 
-let sphere_selection = anu.selectId('sphere-ID', scene)
-                        .material(sphereMaterial);
+let boxSelection = anu.selectId('sphere-ID', scene)
+                      .material(sphereMaterial);
 
 ```
 :::
@@ -70,126 +76,120 @@ let sphere_selection = anu.selectId('sphere-ID', scene)
 
 ### Select by Tags
 
-Aside from name and ID, Babylon supports adding [tags](https://doc.babylonjs.com/features/featuresDeepDive/tags) to meshes. Tags are a really handy way to organize and label meshes to make selecting them logically easier. We can use [selectTag()](../api/modules.html#selectTag) to select nodes by tag. Unlike selecting by name and by ID, you can use logic within the selection string. Take this example to select theoretical nodes in a scene graph.
-
+Aside from name and ID, Babylon.js supports adding [tags](https://doc.babylonjs.com/features/featuresDeepDive/tags) to meshes. Tags are a really handy way to organize and label meshes to make selecting them later much easier. We can call [addTags()](../api/classes/Selection.md#addtags) from a Selection object to add a tag to all of its Nodes, and use [selectTag()](../api/modules.html#selectTag) to select all Nodes with the specified tag. Unlike selectName() and selectID(), you can use logic in selectTag() as shown below.
 
 ::: code-group
 ```js [js]
-//Selects all nodes with the "box" tag
-anu.selectTag("box", scene);
-//Selects all nodes with the "box" or "sphere" tag
-anu.selectTag("box || sphere", scene);
-//Selects all nodes with the "box" and "sphere" tag
-anu.selectTag("box && sphere", scene);
-//Selects all nodes without the "box" tag
-anu.selectTag("!box", scene);
-//Selects all nodes without the "box" tag
-anu.selectTag("!box", scene);
-//Selects all nodes with the "box" tag but without the "sphere" tag
-anu.selectTag("box && !sphere", scene);
+//Add the same tag to all Nodes in the Selection
+mySelection.addTags('myTag');
+//Add a tag based on each Node's bound data in the Selection
+mySelection.addTags((d) => d.tag);
+
+//Selects all Nodes with the "box" tag
+anu.selectTag('box', scene);
+//Selects all Nodes with the "box" or "sphere" tag
+anu.selectTag('box || sphere', scene);
+//Selects all Nodes with the "box" and "sphere" tag
+anu.selectTag('box && sphere', scene);
+//Selects all Nodes without the "box" tag
+anu.selectTag('!box', scene);
+//Selects all Nodes without the "box" tag
+anu.selectTag('!box', scene);
+//Selects all Nodes with the "box" tag but without the "sphere" tag
+anu.selectTag('box && !sphere', scene);
 
 ```
 :::
+
 ### Select by Data
 
-Anu's focus is manipulating the scene graph in a data-driven way. Assuming you are using [bind()](../api/modules.html#bind) to bind data to meshes in the scene graph, you can use [selectData()](../api/modules.html#selectdata) to select nodes with your data's key/value pairs. Below is an example of selecting nodes binded with the iris data set.
+Assuming you are using [bind()](../api/modules.html#bind) to bind data to Meshes in the scene graph, you can use [selectData()](../api/modules.html#selectdata) to select Nodes based on their bound data's key-value pairs.
 
 ::: code-group
 ```js [js]
-//Selects all nodes with binded data key "sepal-length" with a value of 1
+//Selects all Nodes that have bound data with the key "sepal-length" and a corresponding value of 1
 anu.selectData('sepal-length', 1, scene);
 ```
 :::
+
+
 ### Multiple Selections
 
-All selection methods can be used to simultaneously select nodes with different search parameters by passing a list instead of a string.
+All selection methods can be used to simultaneously select Nodes with different search parameters by passing a list instead of a string.
 
 ::: code-group
 ```js [js]
-//Selects all nodes with the name "box-name" or "sphere-name"
+//Selects all Nodes with the name "box-name" OR "sphere-name"
 anu.selectName(['box-name', 'sphere-name'], scene);
-//Selects all nodes with the ID "sphere-ID" or "box-ID"
+//Selects all Nodes with the ID "sphere-ID" OR "box-ID"
 anu.selectId(['sphere-ID', 'box-ID'], scene);
-//Selects all nodes with the tag "box" or "sphere"
+//Selects all Nodes with the tag "box" OR "sphere"
 anu.selectTag(["box", "sphere"], scene);
-//Selects all nodes with binded data that has "sepal-length" with a value of 1,
-//or "petal-length" with a value of 2
-anu.selectData(['sepal-length', 'petal-length'], [1,2], scene);
+
+//Selects all Nodes with bound data that has "sepal-length" of 1 OR "petal-length" of 2
+//selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean)
+anu.selectData(['sepal-length', 'petal-length'], [1, 2], scene, false);
+
+//Selects all Nodes with bound data that has "sepal-length" of 1 AND "petal-length" of 2
+//Setting the last argument to true forces selectData() to use AND logic
+anu.selectData(['sepal-length', 'petal-length'], [1, 2], scene, true);
 ```
 :::
 
 ## Creating Nodes with Selections
 
-We can also call the [bind()](../api/classes/Selection.html#bind) method from a [Selection](../api/classes/Selection.md) object. This will return a new Selection object with the created nodes. These new nodes will be created as children of the nodes of the original selection. Below, we demonstrate the typical pattern we recommend for creating new nodes with bind. First, create a Selection object consisting of a single [TransformNode](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode) or otherwise empty mesh. Then use bind to create the desired meshes as children of your TransformNode. This will create a single root for all the newly created meshes which will make it easier to change all the nodes in this subtree later.
+We can also call the bind() method from a Selection object. This will return a new Selection object with the created Nodes as children of the Nodes of the original Selection. Here we demonstrate the typical pattern for creating new Nodes with bind(). First, create a Selection object consisting of a single [TransformNode](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode). This serves as our "Center of Transform" (CoT) that will be the parent of other Meshes in our scene graph. This is akin to the [\<g\>](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/g) element used to group SVG elements in D3. We then use bind() from the Selection to create our desired Meshes as children of our CoT. This makes it easier to keep track of and manipulate all of the Nodes that belong to this CoT.
 
 ::: code-group
 ```js [js]
-//Use a top level anu.bind to create a Selection containing
-//a single TransformNode 'cot' aka Center of Transform.
-//By default the name and ID of a node will be the mesh type
+//Create a single TransformNode as our CoT
 let cot = anu.bind('cot');
 
-//Create a sphere for each row of data in the iris data set.
-//These spheres will be the children of our cot node.
-let spheres = cot.bind('sphere', {diameter: 1}, iris);
-
-//Expand the node tree in the inspector to see structure.
-Inspector.Show(scene, {
-    embedMode: true,
-    showInspector: true
-});
+//Bind spheres as children of our CoT
+let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0, 2])
+                 .positionX(d => d);
 
 ```
 :::
 
 <inlineView scene="cot_bind" :inspector="true" />
 
-If we call bind on a Selection with more than one node it will repeat the method for each node in the selection. Note that this is how the majority of Selection methods function. Here we call bind on our Selection of spheres. This will create a box mesh as a child node of each sphere.
+If we call bind() on a Selection with more than one Node, it will repeat the method for each Node in the Selection. This is how the majority of Selection methods function. Here we call bind() on our Selection of spheres. This will create a box Mesh as a child of each sphere.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 
-let spheres = cot.bind('sphere', {diameter: 1}, iris);
+let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0, 2])
+                 .positionX(d => d);
 
-//We can keep nesting bind on new selections
-//For example, calling bind on the Selection "spheres"
-//we can create a box for each sphere
+//Calling bind() on our Selection of spheres will bind new Nodes as children of each sphere
 let boxes = spheres.bind('box');
-
-//Expand the node tree in the inspector to see structure.
-//Each sphere under cot will now be the parent of a box mesh.
-Inspector.Show(scene, {
-    embedMode: true,
-    showInspector: false
-});
+                   .positionY(-1);
 ```
 :::
 
 <inlineView scene="spheres_bind" :inspector="true" />
 
 
-## Manipulating Nodes with Selections
-We can update these new nodes in two ways. We can either directly change the returned Selection of these nodes, or change the parent selection of the children nodes. In Babylon, when you update the transform properties of a parent node (position, scale, rotation) it changes these properties for all children of that node. First, let us update the transform properties of a selection of boxes. We will use random numbers for position, scale, and rotation. This will change these transform properties for each box in the selection individually. The result is rather artistic.
+## Manipulating Parent-Child Nodes with Selections
+Following this pattern, we now have two Selection objects: one for the parent CoT and the other for the child Meshes. This gives us the option to manipulate either the parent or child Selection which will achieve different results. In Babylon.js (and in many other 3D engines), updating the transform properties of a parent Node (i.e., position, rotation, scaling) will also change the corresponding property of its children Nodes. To demonstrate this, let us try updating a Selection of child Meshes with random values, which will update the properties of each Mesh individually. The result is rather artistic.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 
-let boxes = cot.bind('box', {size: 1}, iris);
+let boxes = cot.bind('box', { size: 1 }, iris);
 
-//Call the transform methods exposed by Selection
-//Set random transforms for all the box meshes
-//These methods will be executed for each box
 boxes.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
-    .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()))
-    .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+     .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+     .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()));
 ```
 :::
 
 <inlineView scene="boxes_transform" />
 
-In contrast, if we change the transform properties of the parent node instead (in our case the cot selection), the result is much less dramatic. This is because we are changing the transform of only one node, and because the boxes are children of that node they are all being transformed in the same way. This can be useful when we want to move, scale, or rotate a group of meshes at once. For example, if we create a scatter plot and all the meshes are children of a single transform node, we can change the position, scale, and rotation of the whole scatter plot by changing the properties of the root parent node, but more on that later.
+In contrast, if we update the transform properties of the Selection for the parent CoT, only this parent Node will be updated and all of its child Meshes will move along with it. This is particularly useful for when we want to move, rotate, or scale a group of Meshes at once, such as when our CoT holds all of the child Meshes that forms a chart which we want to reposition as a whole.
 
 ::: code-group
 ```js [js]
@@ -197,12 +197,10 @@ let cot = anu.bind('cot');
 
 let boxes = cot.bind('box', {size: 1}, iris);
 
-//Call the transform methods exposed by Selection
-//set random transforms for cot which will change the transform of all children
-//These methods will be executed once for the single cot
+//Calling from "cot" and not "boxes"
 cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
-    .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()))
-    .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+   .rotation(() => new Vector3(Math.random(), Math.random(), Math.random()))
+   .scaling(() => new Vector3(Math.random(), Math.random(), Math.random()));
 ```
 :::
 
@@ -210,54 +208,45 @@ cot.position(() => new Vector3(Math.random(), Math.random(), Math.random()))
 
 ## Nested Selections
 
-Up to this point, we have only selected nodes from the top level of the scene graph. However, we can also call any of the selection methods from an instance of [Selection](../api/classes/Selection.md). Two things change when we do this. First, we no longer have to pass the scene as a parameter and second, only the subgraph of nodes in the Selection object will be searched. For example, below we use the same scene graph as above where each sphere has one child box. We will add one more box with the same name and ID as the nested meshes "box" to the root of the scene graph. When we call a selection method like [selectName](../api/classes/Selection.html#selectName) from our "spheres" selection object, only the children boxes of the spheres will be selected and returned as a new Selection object. This can be seen as we can now manipulate our new Selection of boxes without changing the box mesh we added to the root of the scene.
+Up to this point, we have only selected Nodes from the top level of the scene graph. However, we can also call any of the Selection methods from an instance of Selection. Two things change when we do this. First, we no longer have to pass the scene as a parameter and second, only the subgraph of Nodes in the Selection object will be searched. The following example demonstrates how calling a Selection method like selectName() from a Selection object will not select a Node with the correct name that is not part of said Selection object or its children.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 
-//Create a sphere for each row of data in the iris data set.
-//These spheres will be the children of our cot node.
-let spheres = cot.bind('sphere', {diameter: 1}, iris);
-let boxes = spheres.bind('box')
+//Create two spheres and put them to the left and middle of the screen
+let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0]);
+                 .positionX(d => d);
+//Create a box for each sphere as children
+let boxes = spheres.bind('box');
 
-//Create a new box at the root level of the scene graph
-//Move it on the x axis to -2
-let root_box = anu.bind('box', scene);
-root_box.positionX(-2)
+//Create a third box and put it towards the right
+let rootBox = anu.bind('box')
+                 .positionX(2);
 
-//Select the boxes who are children of the nodes in the sphere selection
-//Move these boxes on the x axis to 2
-let boxesSelection = spheres.selectName('box')
-boxesSelection.positionX(2)
-
-Inspector.Show(scene, {
-    embedMode: true,
-    showInspector: false
-});
+//Make a new Selection of boxes, but only to those that belong to or are children of our "spheres" Selection
+let newSelection = spheres.selectName('box');
+//Move only the selected boxes down
+newSelection.positionY(-1);
 ```
 :::
 
 <inlineView scene="select_boxes" :inspector="true" />
 
-<!-- ## Getting Selection Values
-We can retrieve values of properties from nodes in a [Selection](../api/classes/Selection.md) object.  -->
 
 ## Filtering Selections
-We can filter existing selections by values of properties from nodes in a [Selection](../api/classes/Selection.md) object with the [filter](../api/classes/Selection.html#filter) method.
+We can filter existing Selections using the [filter](../api/classes/Selection.html#filter) method which expects a predicate function, keeping only the Nodes that passed the predicate.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
-let spheres = cot.bind('sphere', {diameter: 1}, iris);
+let spheres = cot.bind('sphere', { diameter: 1 }, iris);
 
-let setosa = spheres.filter((d) => d.species == "setosa")
-
+let setosa = spheres.filter((d) => d.species === "setosa");
 ```
 :::
 
 ## Manipulating Selection Nodes
-In the previous examples, we have already shown how we can modify the properties of nodes in our [Selection](../api/classes/Selection.html) object.
-However, this goes way beyond just changing nodes' position and color. We can modify any property of nodes in a selection using Anu. In the next section, we will cover this in-depth.
+Up until now, we have shown how we can modify the properties of Nodes in our Selection objects. However, we can go beyond just modifying their position, rotation, scaling, and color. In the next section, we demonstrate how we can modify any property of our Nodes using Anu.
 
 </multiView>

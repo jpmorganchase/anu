@@ -6,17 +6,17 @@
 </script>
 
 
-# Meshes Clones and (Thin)Instance
-Babylon supports several methods of rendering meshes each with there advantages and disadvantages. Anu's scene graph apis currently support creating [Meshes](https://doc.babylonjs.com/features/featuresDeepDive/mesh/), [Clones](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/clones/), [Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances/), and [ThinInstance](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/thinInstances/). Since each of these methods works slight differently not all of anu's operators will work with each one. This page will dive deeper into these methods, when to use them, and how to use them in anu. 
+# Mesh, Clones, and (Thin) Instances
+Babylon.js supports several ways to render meshes, each with their advantages and disadvantages. Anu's scene graph APIs currently support creating [Meshes](https://doc.babylonjs.com/features/featuresDeepDive/mesh/), [Clones](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/clones/), [Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances/), and [Thin Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/thinInstances/). Since each of these work slightly differently from each other, not all of the methods in Anu's [Selection](../../api/classes/Selection.md) class will work with all of them. This page will dive deeper into these four approaches, when to use them, and how to use them with Anu.
 
-:::tip
+<div class="tip custom-block" style="padding-top: 8px">
 
-The performance of the examples below are influenced by each other since they are running on the same page. Remember to reset the sliders to reduce this effect. 
+This page contains several live examples meant to demonstrate the performance of each rendering approach. Since they all run on the same page, their performance will be influenced by each other. Remember to reset the sliders to mitigate this effect.
 
-:::
+</div>
 
 ## Mesh
-The standard method for mesh rendering through [create](/api/modules.html#create) or [bind](/api/modules.html#bind) is to call Babylon's MeshBuilder methods generating a new mesh for each call. In this approach each mesh with be created with new geometry and its own draw call. While this gives us the most control and flexibility over how we create and change meshes, it is also the most resource intensive. In typical usage using this method will start to slow down scenes after around 2000 draw calls. 
+The standard method for Mesh rendering used internally by [create()](/api/modules.html#create) and [bind()](/api/modules.html#bind) is to call Babylon.js's [MeshBuilder methods](https://doc.babylonjs.com/typedoc/variables/BABYLON.MeshBuilder). In this approach, each Mesh with be created with its own geometry and draw call. While this gives us the most control and flexibility over how we create and manipulate Meshes, it is also the most resource intensive for both the CPU and GPU. In typical usage, this approach will start to slow down Babylon.js after around 2000 draw calls. 
 
 <singleView :scene="meshBench" />
 
@@ -27,7 +27,7 @@ The standard method for mesh rendering through [create](/api/modules.html#create
 
 
 ## Clone
-If we are drawing many meshes with the same geometry, but we still need them to be fully independent, we can use [Clones](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies) to reuse geometry and save a little bit of performance. We can do this with [bindClone](/api/modules.html#bindclone).
+If we are drawing many Meshes with the same geometry but we still want them to be fully independent from each other, we can use Clones to reuse geometry and save a little bit of performance. We can do this with [bindClone()](/api/modules.html#bindclone), which accepts an existing Mesh whose geometry will be cloned.
 
 ```js
 anu.bindClone(mesh: Mesh, data: [], scene: Scene)
@@ -39,16 +39,15 @@ anu.bindClone(mesh: Mesh, data: [], scene: Scene)
 :::
 
 ## Instance
-If we are drawing many meshes with the same geometry, we can use [Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances/) to render them all in a single draw call leading to much better performance. [InstancedMeshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.InstancedMesh) will still have their own nodes in the scene graph and can each have unique properties such as names, metadata, and transforms. However, since they all share the same mesh geometry, and materials we need to use instanced buffers to set their other properties such as color. 
+If we are still drawing many Meshes with the same geometry, but we don't mind sacrificing some flexibility for the sake of performance, we can use Instances. [InstancedMeshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.InstancedMesh) all share geometry and are rendered in a single draw call, leading to much better GPU performance. They are also still represented as individual Nodes in the Babylon.js scene graph, and thus can still retain individual properties such as name, metadata, and transforms. However, setting properties such as color now need to use [InstancedBuffers](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/instances#custom-buffers) to be able to set unique values per each InstancedMesh.
 
-Using anu we can create [InstancedMeshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.InstancedMesh) using the [bindInstance](/api/modules.html#bindthininstance) method. Unlike the bind method that takes a string, bindInstance takes an existing mesh to use as the source mesh for the instances. 
+Using Anu, the [bindInstance()](/api/modules.html#bindthininstance) method can be used to easily create InstancedMeshes from data, which also accepts an existing Mesh whose geometry will be instanced.
 
 ```js
 anu.bindInstance(mesh: Mesh, data: [], scene: Scene)
 ```
 
-To register or set instanced buffers we can use [setInstanceBuffer](/api/classes/Selection.html#setinstancedbuffer) and [registerInstanceBuffer](/api/classes/Selection.html#registerinstancedbuffer) Selection methods.
-
+To register or set InstancedBuffers we can use [registerInstancedBuffer()](/api/classes/Selection.html#registerinstancedbuffer) and [setInstancedBuffer()](/api/classes/Selection.html#setinstancedbuffer) from a Selection object.
 
 ```js
 
@@ -59,7 +58,7 @@ rootSphere.registerInstancedBuffer("color", 4);
 rootSphere.instancedBuffers.color = new Color4(1,1,1,1);
 
 let spheres =  anu.bindInstance(rootSphere, data)
-  .setInstancedBuffer("color", (d) => new Color4(0,0,0,1));
+                  .setInstancedBuffer("color", (d) => new Color4(0, 0, 0, 1));
 ```
 
 <singleView :scene="instanceBench" />
@@ -71,10 +70,9 @@ let spheres =  anu.bindInstance(rootSphere, data)
 
 ## Thin Instance
 
-[ThinInstances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/thinInstances/) are often the most performant way of drawing many identical meshes at once however come with the most restrictions in how you manipulate those meshes. 
-With thin instance we are essential writing directly to the GPU buffer which allows us to draw potentially millions of meshes in a single draw call. However, these meshes will not be represented in the scene graph and instead will be all represented under a single mesh, the root mesh of the thin instance. Additionally when we want to modify a mesh in the thin instance, we need to rewrite the entire matrix buffer to do so. 
+[Thin Instances](https://doc.babylonjs.com/features/featuresDeepDive/mesh/copies/thinInstances/) are often the most performant way of drawing many identical Meshes at once, but come with the most restrictions in how you manipulate those Meshes. With Thin Instances, we are essentially writing directly to the GPU buffer which allows us to draw upwards of millions of Meshes in a single draw call. However, these Meshes are not represented in the scene graph and instead are under a single Mesh: the root Mesh of the Thin Instance. Additionally, when we want to modify a Mesh in the Thin Instance, we need to rewrite the entire matrix buffer to do so.
 
-To support thin instance, anu provides the [bindThinInstance()](/api/classes/Selection.html#bindthininstance) method as well as several special thinInstanceOperators to make modifying the thin instance more connivent. 
+To support Thin Instances, Anu provides the [bindThinInstance()](/api/classes/Selection.html#bindthininstance) method as well as several special Thin Instance specific methods to make modifying them more connivent. 
 
 ```js
 bindThinInstance(mesh: Mesh, data: [], scene: Scene)

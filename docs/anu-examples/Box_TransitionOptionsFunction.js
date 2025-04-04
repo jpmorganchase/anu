@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, StandardMaterial, Color3, Quaternion} from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Quaternion, Scene, CircleEase} from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 
 
 //create and export a function that takes a babylon engine and returns a scene
-export const box_transitionSequence = async function(engine){
+export const box_transitionOptionsFunction = async function(engine){
 
   const scene = new Scene(engine);
 
@@ -16,18 +16,25 @@ export const box_transitionSequence = async function(engine){
   camera.position = new Vector3(-10, 10, -20);
   camera.attachControl(true);
 
-  let box = anu.bind('box', {}, [...Array(10).keys()])
-               .material(() => new StandardMaterial());
+  let box = anu.bind('box', {}, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+  let transitionOptions = {
+    duration: 1000,
+    delay: 200,
+    easingFunction: new CircleEase(),
+    onAnimationEnd: () => console.log('animation ended')
+  }
 
   //click the scene to transition
   scene.onPointerDown = (pointer) => {
-    var box_transition = box.transition({ duration: 1000 })
+    var box_transition = box.transition((d,n,i) => ({
+                                duration: d * 100,
+                                delay: (10 - d) * 100
+                            }))
                             .position(() => Vector3.Random(-5, 5))
-                            .transition({ duration: 1000 })
-                            .rotation(() => Quaternion.Random())
-                            .transition({duration: 2000, sequence: false })
-                            .diffuseColor(() => Color3.Random())
+                            .rotation(() => Quaternion.Random());
   }
+
 
 
   return scene;

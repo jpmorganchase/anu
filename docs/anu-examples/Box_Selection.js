@@ -32,6 +32,7 @@ export const box_selection = async function(engine){
   boxes.positionX((d) => d.goals)
         .positionY((d) => d.assists)
         .positionZ((d) => d.points)
+        .rotationX(Math.PI / 4);
 
   return scene;
 

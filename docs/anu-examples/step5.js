@@ -34,10 +34,10 @@ export const scatterPlot3DStep5 = function(engine){
   .positionY((d,n,i) => scaleY(d.petalLength))
   .positionZ((d,n,i) => scaleZ(d.sepalWidth));
 
-  let axes = anu.createAxes('axes', scene, {  parent: cot,
-                                              scale: {x: scaleX, y: scaleY, z: scaleZ},
-                                              labelProperties: {'billboardMode': 7}
-                                              });
+  let axes = anu.createAxes('axes', {  parent: cot,
+                                      scale: {x: scaleX, y: scaleY, z: scaleZ},
+                                      labelProperties: {'billboardMode': 7}
+                                      });
 
   axes.label.x.positionY((d,n,i) => n.position.y - 0.5)
               .positionZ((d,n,i) => n.position.z - 0.5);

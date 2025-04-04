@@ -11,8 +11,8 @@ import { text } from '../../anu-examples/text.js'
 
 ## Overview
 
-The plane text prefab enables rendering 2D text in Babylon by integrating [babylon-msdf-text](https://github.com/bhushan6/babylon-msdf-text). 
-Plane Text can be created by calling [createPlaneText()](/api/modules.html#createplanetext), [create()](/api/modules.html#create), or [bind()](/api/modules.html#bind) returning a Mesh or [Selection](/api/classes/Selection.html). The returned mesh is an empty parent mesh of the rendered text. The default font included is Roboto Regular. To use a different font, generate a texture atlas and json specification for your font using the [MSDF font generator](https://msdf-bmfont.donmccurdy.com/).
+The Plane Text prefab enables rendering 2D text in Babylon.js by integrating [babylon-msdf-text](https://github.com/bhushan6/babylon-msdf-text). 
+Plane Text can be created by calling [createPlaneText()](/api/modules.html#createplanetext), [create()](/api/modules.html#create), or [bind()](/api/modules.html#bind), returning a Mesh or [Selection](/api/classes/Selection.html). The default font is Roboto Regular. To use a different font, generate a texture atlas and json specification for your font using the [MSDF font generator](https://msdf-bmfont.donmccurdy.com/).
 
 ## Usage
 

@@ -1,26 +1,26 @@
 <script setup>
   import multiView from "../../vue_components/multiView.vue"
-  import { meshBench } from  "../../anu-examples/bench_mesh.js"
-  import { instanceBench } from "../../anu-examples/bench_instance.js"
-  import { thinInstanceBench } from "../../anu-examples/bench_thinInstance.js"
 </script>
 
 <multiView>
 
 # Transitions
 
-Animated transitions are one of the best ways to bring our scenes to life. Using Anu selections we can easily add transitions and animations to our scenes with just a few method calls. Anu's transitions implement the [Babylon animation system](https://doc.babylonjs.com/features/featuresDeepDive/animation/animation_introduction) and follow familiar patterns from [D3's transition methods](https://d3js.org/d3-transition).
+With Anu, we can easily add transitions and animations to our visualizations with just a few method calls. Anu's transitions implement the [Babylon animation system](https://doc.babylonjs.com/features/featuresDeepDive/animation/animation_introduction) and follow familiar patterns from [D3's transition methods](https://d3js.org/d3-transition).
+
 
 ## Basic Transition
 
-Creating a transition is as easy as taking an existing Selection with some meshes in them and calling the [transition()](/api/classes/Selection.html#transition) method. This will return a new [Selection](/api/classes/Selection.html) instance setup to run the transition animations. Then simply use any wrapper function, prop(), or props() method that uses any of the following types: Color3, Float, Matrix, QUATERNION, Vector2, or Vector3. This will result in an animation being created and started that animates the mesh from the start value to the end value ordering to the transitionOptions passed to transition(). 
+Creating a transition is as easy as taking an existing [Selection](/api/classes/Selection.html) and calling the [transition()](/api/classes/Selection.html#transition) method. This will return a new Selection instance setup to run the transition animations. Then simply chain one or more wrapper functions, prop(), or props() methods that uses any of the following types: Number, Vector2, Vector3, Quaternion, Color3, or Matrix. This will result in an animation being created and started that animates the Mesh from the start value to the end value.
 
 ```js
 let box = anu.bind('box', {}, [...Array(10).keys()]);
 
-//click the scene to transition
+// Click the scene to transition
 scene.onPointerDown = (pointer) => {
-  var box_transition = box.transition().position(Vector3.Random(-5,5))
+  let boxTransition = box.transition()
+                         .position(() => Vector3.Random(-5, 5))
+                         .rotation(() => Quaternion.Random());
 }
 ```
 
@@ -28,7 +28,7 @@ scene.onPointerDown = (pointer) => {
 
 ## Transition Options
 
-We can pass an options object to our transition(options:{}) method. There are several options we can set to customize our transitions refer to the table for defaults:
+To customize our transition, we can pass an options object to our transition() method. The following table shows the options you can set and their defaults.
 
 | Variable & Type                  | Description                                                                                   | Default Value |
 |----------------------------------|-----------------------------------------------------------------------------------------------|---------------|
@@ -45,57 +45,96 @@ We can pass an options object to our transition(options:{}) method. There are se
 let box = anu.bind('box', {}, [...Array(10).keys()]);
 
 let transitionOptions = {
-  duration: 500,
-  delay: 100,
-  easingFunction: new CircleEase(),
-  onAnimationEnd: () => console.log('animate')
+    duration: 1000,
+    delay: 200,
+    easingFunction: new CircleEase(),
+    onAnimationEnd: () => console.log('animation ended')
 }
 
-//click the scene to transition
+// Click the scene to transition
 scene.onPointerDown = (pointer) => {
-  var box_transition = box.transition(transitionOptions).position(() => Vector3.Random(-5,5))
+  let boxTransition = box.transition(transitionOptions)
+                         .position(() => Vector3.Random(-5, 5))
+                         .rotation(() => Quaternion.Random());
 }
-
 ```
 
 <inlineView scene="Box_TransitionOptions" />
 
+## Dynamic Transition Options
+
+We can also use an anonymous function to return a unique transition options for each Mesh in the Selection. This allows us to do things like staggered animations based on the "d" and "i" values.
+
+```js
+let box = anu.bind('box', {}, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+// Click the scene to transition
+scene.onPointerDown = (pointer) => {
+  let boxTransition = box.transition((d,n,i) => ({
+                              duration: d * 100,
+                              delay: (10 - d) * 100
+                          }))
+                         .position(() => Vector3.Random(-5, 5))
+                         .rotation(() => Quaternion.Random());
+}
+```
+
+<inlineView scene="Box_TransitionOptionsFunction" />
+
+<div class="tip custom-block" style="padding-top: 8px">
+
+If following the above syntax, make sure the options object you are returning after the "=>" is wrapped in parentheses/brackets, else it is treated as a code block and not an object.
+
+</div>
+
 ## Sequencing Transitions
-By default if want to sequence a series of transitions, all we have to do is call transition() again on our transition selection and each transition will play in order for each node in the Selection. This is controlled by the "sequence" option which is true by default. If you want to have separate options for different transition but want to play at the same time, just set "sequence" to false. 
+By default, if we want to sequence a series of transitions (i.e., staging), all we have to do is call transition() again on our transition selection and each transition will play in order for each Mesh in the Selection. This is controlled by the "sequence" option which is true by default. If you want to have separate options for different transition but want to play at the same time, just set "sequence" to false. 
 
 ```js
 let box = anu.bind('box', {}, [...Array(10).keys()])
               .material(() => new StandardMaterial());
 
-//click the scene to transition
+// Click the scene to transition
 scene.onPointerDown = (pointer) => {
-  var box_transition = box.transition()
-                          .position(() => Vector3.Random(-5,5))
-                          .transition()
-                          .diffuseColor(() => Color3.Random())
+  let boxTransition = box.transition({ duration: 1000 })
+                         .position(() => Vector3.Random(-5, 5))
+                         .transition({ duration: 1000 })
+                         .rotation(() => Quaternion.Random())
+                         .transition({duration: 2000, sequence: false })
+                         .diffuseColor(() => Color3.Random())
 }
 ```
 
 <inlineView scene="Box_TransitionSequence" />
 
+<div class="tip custom-block" style="padding-top: 8px">
+
+Setting the "sequence" flag to false causes the transition to ignore all other transition stages declared prior in the chain, instead animating immediately. To have it run in parallel with another transition while still having it animate after prior animations, consider setting its delay to be the sum of all prior transitions.
+
+</div>
 
 ## Tween
 
-Sometimes we want more control over our transitions, or want to animate a variable change other the ones supported. For these cases we can use the [tween()](/api/classes/Selection.html#tween) method. 
-tween expects a function that takes one variable t (time) as an argument. For each tick of the transition this function will be called passing in the current time in the transition to the function. We can use the [D3 interpolate](https://d3js.org/d3-interpolate) methods to calculate the new value of the transition variable. 
+Sometimes we want more control over transitions, or want to animate a property in a way not already supported. In these cases we can use the [tween()](/api/classes/Selection.html#tween) method instead of wrapper or prop() methods. tween() expects a function that accepts an argument "t", which is a time variable from 0 to 1. For each tick of the transition, this function will be called with "t" being the new time variable of this tick. We can use D3's [interpolate](https://d3js.org/d3-interpolate) methods or others such as [Vector3.Lerp()](https://doc.babylonjs.com/typedoc/classes/BABYLON.Vector3#lerp) to calculate the value which the property should be set to at this tick.
 
 ```js
-let box = anu.bind('box', {}, [...Array(10).keys()]);
+let box = anu.bind('box', {}, [...Array(10).keys()])
+             .material(() => new StandardMaterial());
 
-//click the scene to transition
+// Click the scene to transition
 scene.onPointerDown = (pointer) => {
-  var box_transition = box.transition().tween((d,n,i) => {
+  let boxTransition = box.transition().tween((d,n,i) => {
+    // Initialize interpolating variables
+    let interpolator = d3.interpolate(n.position.x, (Math.random() - 0.5) * 10)
+    let startColor = n.material.diffuseColor;
+    let endColor = Color3.Random();
 
-    let interpolater = d3.interpolate(n.position.x, Math.random() * 10)
-
-
-    return (t) => n.position.x = interpolater(t)
-  })
+    // Return a function which will set Mesh properties every tick using our interpolating variables
+    return (t) => {
+      n.position.x = interpolator(t);
+      n.material.diffuseColor = Color3.Lerp(startColor, endColor, t);
+    };
+  });
 }
 ```
 
@@ -103,45 +142,50 @@ scene.onPointerDown = (pointer) => {
 
 ## Tween For Mesh Updates
 
-Tween is particularly for updating parametric mesh types such as lines. These meshes require you to generate a new mesh of that type and pass the previous mesh in to be replaced. A great example of this is a line mesh. 
+Tween is particularly for updating parametric Mesh types such as lines. These Meshes require you to generate a new Mesh of that type and pass the previous Mesh in to be replaced. A great example of this is a line Mesh. 
 
 ```js
-let points1 = [
-    new Vector3(-2, -1, 0),
-    new Vector3(0, 1, 0),
-    new Vector3(2, -1, 0),
+// Create initial lines
+let startPoints = [
+  Vector3.Random(-5, 5),
+  Vector3.Random(-5, 5),
+  Vector3.Random(-5, 5),
+  Vector3.Random(-5, 5),
+  Vector3.Random(-5, 5),
 ]
 
-let line = anu.bind('lines', {points: points1, updatable: true}, [points1], scene)
+let line = anu.bind('lines', {points: startPoints, updatable: true}, [startPoints], scene)
 
-//click the scene to transition
+// Click the scene to transition
 scene.onPointerDown = (pointer) => {
-  var line_transition = line.transition({duration: 1000}).tween((d,n,i) => {
-  let points2 = [
-    Vector3.Random(-5,5),
-    Vector3.Random(-5,5),
-    Vector3.Random(-5,5),
-  ]
+  var line_transition = line.transition({ duration: 500 }).tween((d,n,i) => {
+    // Generate end points for the animation
+    let endPoints = [
+      Vector3.Random(-5, 5),
+      Vector3.Random(-5, 5),
+      Vector3.Random(-5, 5),
+      Vector3.Random(-5, 5),
+      Vector3.Random(-5, 5),
+    ];
     
-  let interpolater = interpolateArray(points1, points2)
+    let interpolator = interpolateArray(startPoints, endPoints);
     
-  return (t) => {
-    //Re-Mapping the vector3 to make sure they are clean
-    let points = interpolater(t).map((v) => new Vector3(v._x,v._y,v._z))
-    anu.create("lines", "lines", {points: points, updatable: true, instance: n}, [points], scene)
-    }
+    // Update reference so that next transition we have the proper start points
+    startPoints = endPoints;
+
+    return (t) => {
+      let points = interpolator(t).map((v) => new Vector3(v._x, v._y, v._z));
+      anu.create("lines", "lines", { points: points, updatable: true, instance: n }, [points], scene);  // Pass in instance: n
+    };
   })
 }
 ```
 
-
 <inlineView scene="Line_Tween" />
-
-</multiView>
 
 # Controlling Active Transitions  
 
-There are several methods you can call on selections with active transitions to stop, end, pause etc... These methods are helpful when you need to interrupt animations in progress to start a different set of transitions. For example when the user clicks a animate button multiple times. 
+There are several methods you can call on Selections with active transitions to control their behavior. These methods are helpful when you need to interrupt animations in progress to start a different set of transitions, which you might have already noticed if you had tried to rapidly click on the above examples.
 
 | Method Name            | Description                                                                                     |
 |------------------------|-------------------------------------------------------------------------------------------------|
@@ -158,16 +202,17 @@ There are several methods you can call on selections with active transitions to 
 ```js
 let box = anu.bind('box', {}, [...Array(10).keys()]);
 
-let transitionOptions = {
-  duration: 500,
-  delay: 100,
-  easingFunction: new CircleEase(),
-  onAnimationEnd: () => console.log('animate')
+let boxTransition;
+
+// Click the scene to start the transition
+scene.onPointerDown = (pointer) => {
+  boxTransition?.stopTransitions();
+  boxTransition = box.transition((d,n,i) => ({ duration: 500, delay: i * 50 }))
+                      .position(() => Vector3.Random(-5,5))
+                      .rotation(() => Quaternion.Random());
 }
-
-var box_transition = box.transition(transitionOptions).position(() => Vector3.Random(-5,5))
-
-setTimeout(() => {
-  box_transition.stopTransitions();
-}, 250)
 ```
+
+<inlineView scene="Box_TransitionControl" />
+
+</multiView>

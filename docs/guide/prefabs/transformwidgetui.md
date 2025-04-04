@@ -10,7 +10,7 @@ outline: deep
 # Transform Widget UI
 
 ## Overview
-The Transform Widget UI prefab allows you to quickly attach 3D UI widgets for manipulating position, rotation, and scale to elements in a selection. These prefabs use pointer down and out events and pointer behaviors to perform the interaction. The mesh based UI and behavior can be customized through the method options, or after creation via selection. We use pointer based interactions as it better supports multiple platforms and one handed interaction for better accessability. These methods are members of the Selection class and will create a UI for each node in a selection. As such, it is recommended to call the prefab functions from root node selections.
+The Transform Widget UI prefab allows you to quickly attach 3D UI widgets for manipulating position, rotation, and scale to elements in a selection. These prefabs use pointer down and out events and pointer behaviors to perform the interaction. The Mesh based UI and behavior can be customized through the method options, or after creation via selection. We use pointer based interactions as it better supports multiple platforms and one handed interaction for better accessability. These methods are members of the Selection class and will create a UI for each node in a selection. As such, it is recommended to call the prefab functions from root node selections.
 
 ## Usage
 

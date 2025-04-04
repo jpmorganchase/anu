@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, CircleEase} from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Quaternion, Scene, CircleEase} from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu' //import anu, this project is using a local import of babylon js located at ../babylonjs-anu this may not be the latest version and is used for simplicity.
 
 
@@ -19,15 +19,16 @@ export const box_transitionOptions = async function(engine){
   let box = anu.bind('box', {}, [...Array(10).keys()]);
 
   let transitionOptions = {
-    duration: 500,
-    delay: 100,
+    duration: 1000,
+    delay: 200,
     easingFunction: new CircleEase(),
-    onAnimationEnd: () => console.log('animate')
+    onAnimationEnd: () => console.log('animation ended')
   }
 
   //click the scene to transition
   scene.onPointerDown = (pointer) => {
     var box_transition = box.transition(transitionOptions).position(() => Vector3.Random(-5,5))
+                            .rotation(() => Quaternion.Random())
   }
 
 
