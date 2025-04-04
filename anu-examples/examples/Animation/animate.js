@@ -47,13 +47,12 @@ export const animate = function(engine){
     //   return 2;
     // }}).transition().props({"position.x": 1, "rotation.y": 2})
 
-    // let transitions = nodes.transition({duration: 1000}).positionX(2)
-    //                        .transition((d,n,i) => ({duration: 1000 * i})).positionX(1).rotationZ(1)
-    //                        .transition().positionY(1)
+    // let transitions = nodes.transition((d,n,i) => ({duration: 1000})).positionX(2).rotationZ(1).rotationY(1)
+    //                        .transition((d,n,i) => ({duration: 1000 * i})).positionX(1).positionY(1)
+                          
                             
                             
-      //transitions.stopTransitions();
-
+ 
     // setTimeout(() => {
     //   transitions.stopTransitions()
     // }, 1500)

@@ -93,8 +93,10 @@ export function createTransition(selection: Selection, accessor: string, value: 
       animatable.pause();
       let promise: Promise<Animatable> = animatable.waitAsync();
       selection.transitions[sequence].animatables.push({ waitingPromise: promise});
-  
-      let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[i]
+
+      const lastAnimatables = selection.transitions[Math.max(0, sequence - 1)].animatables;
+      let index = (lastAnimatables.length > animationsCount)? animationsCount : (animationsCount - lastAnimatables.length)
+      let lastAnimation = lastAnimatables[index];
       if (sequence !== 0 && wait) await lastAnimation.waitingPromise
       if (lastAnimation.animatable) await lastAnimation.animationPromise
 
@@ -153,7 +155,9 @@ export function createTransitions(selection: Selection,  properties: {}) {
         animatable.pause();
         let promise: Promise<Animatable> = animatable.waitAsync();
         selection.transitions[sequence].animatables.push({ waitingPromise: promise});
-        let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[i]
+        const lastAnimatables = selection.transitions[Math.max(0, sequence - 1)].animatables;
+        let index = (lastAnimatables.length > animationsCount)? animationsCount : (animationsCount - lastAnimatables.length)
+        let lastAnimation = lastAnimatables[index];
         if (sequence !== 0 && wait) await lastAnimation.waitingPromise
         if (lastAnimation.animatable) await lastAnimation.animationPromise
 
@@ -169,7 +173,7 @@ export function createTransitions(selection: Selection,  properties: {}) {
             loop,
             ease,
             onEnd,
-          );
+          ); 
           animation.pause();
           transition.animatables[animationsCount].animatable = animation;
           transition.animatables[animationsCount].animationPromise = animation.waitAsync();
@@ -215,7 +219,9 @@ export function tween(this: Selection, value: (d, n, i) => (t) => void) {
     animatable.pause();
     let promise: Promise<Animatable> = animatable.waitAsync();
     this.transitions[sequence].animatables.push({ waitingPromise: promise });
-    let lastAnimation = this.transitions[Math.max(0, sequence - 1)].animatables[i]
+    const lastAnimatables = this.transitions[Math.max(0, sequence - 1)].animatables;
+    let index = (lastAnimatables.length > animationsCount)? animationsCount : (animationsCount - lastAnimatables.length)
+    let lastAnimation = lastAnimatables[index];
     if (sequence !== 0 && wait) await lastAnimation.waitingPromise
     if (lastAnimation.animatable) await lastAnimation.animationPromise
     let animation: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, onEnd);
@@ -269,7 +275,7 @@ export function stopTransitions(this: Selection) {
     t.animatables.forEach( async (a) => {
       await a.waitingPromise
       a?.animatable.stop();
-      a?.tweenObserver.remove();
+      a?.tweenObserver?.remove();
     })
   })
  return this;
