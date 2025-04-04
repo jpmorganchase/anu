@@ -4,11 +4,11 @@
 //Import everything we need to create our babylon scene and write our visualization code. 
 import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import { VertexBuffer, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
+import { VertexBuffer, Texture, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
 // import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
 import { createTextMesh } from "babylon-msdf-text";
-import fnt from "../../fonts/roboto-regular.json";
-import png from "../../fonts/roboto-regular.png";
+import fnt from "../../fonts/roboto-regular.json"  assert {type: 'json'};;
+import png from "../../fonts/roboto-regular.png"  assert {type: 'png'};;
 
 
 //import { Mesh } from 'anu';
@@ -30,13 +30,16 @@ export const text = function(engine){
   //Basic function
   let options1 = {
     text: 'USA',
-    color: Color3.Red()
+    color: Color3.Red(),
+    font: fnt,
+    atlas: png,
   }
+
   let text1 = anu.createPlaneText('myText1', options1, scene)
 
-  //------------
+  // //------------
 
-  //Update
+  // //Update
   let options2 = {
     text: 'Australia',
     color: Color3.Blue(),
@@ -61,9 +64,9 @@ export const text = function(engine){
     console.log(text2.font)
     }, 4000);
 
-  //------------
+  // //------------
 
-  //Bind
+  // //Bind
   anu.bind('planeText', { color: Color3.Yellow() }, [{ text: "hello", value: -2}, { text: "world", value: -4 }, { text: "!!!", value: -6}])
       .positionY((d,n,i) => d.value)
       .transition((d,n,i) => ({
@@ -79,7 +82,7 @@ export const text = function(engine){
         }
       })
     
-  //Align
+  // //Align
   let leftText = anu.createPlaneText("leftAlign", { text: "Left Align", align: "left" }, scene);
   let centerText = anu.createPlaneText("centerAlign", { text: "Center Align", align: "center" }, scene);
   let rightText = anu.createPlaneText("rightAlign", { text: "Right Align", align: "right" }, scene);

@@ -4,7 +4,7 @@
 import { Scene, Vector3, Color3, Mesh, Matrix, PlaneBlock, TransformNode, SubMesh, Material,VertexBuffer, Texture } from '@babylonjs/core';
 import fnt from '../../assets/roboto-regular.json';
 import png from '../../assets/roboto-regular.png';
-import { createTextMesh } from 'babylon-msdf-text';
+import { createTextMesh } from '../../MSDF-Text/index';
 import assign from 'lodash-es/assign';
 
 export interface PlaneTextOptions {
@@ -124,6 +124,7 @@ export class PlaneText extends Mesh {
     }
     this.options.atlas = texture;
 
+    //@ts-ignore
     let textMesh = createTextMesh({
       text: this.options.text.toString(),
       color: this.options.color,
@@ -224,6 +225,10 @@ export class PlaneText extends Mesh {
  * @param scene The target scene for the created PlaneText.
  */
 export function createPlaneText(name: string, options: PlaneTextOptions, scene: Scene) {
+  const imgElement = document.createElement('img');
+  imgElement.src = png;
+  document.body.appendChild(imgElement);
+
   const ops = {
     text: options.text ?? "undefined",
     size: options.size ?? 1,
