@@ -50,8 +50,8 @@ export function bind<MeshType extends keyof MeshTypes>(
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
-  scene = scene != undefined ? scene : mesh.getScene();
+export function bindClone(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
+  scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
     data.forEach((element, i) => {
       var clone = mesh.clone(mesh.name + '_' + i);
@@ -61,7 +61,7 @@ export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}
       meshes.push(clone);
   });
 
-  return new Selection(meshes, this.scene);
+  return new Selection(meshes, scene);
 }
 
 /**
@@ -74,7 +74,7 @@ export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}
  * or undefined if a selection could not be made.
  */
 export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
-  scene = scene != undefined ? scene : mesh.getScene();
+  scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var instance = mesh.createInstance(mesh.name + '_' + i);
