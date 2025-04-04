@@ -19,7 +19,7 @@ export const animate = function(engine){
   //let box = anu.create('box', 'ourBox', {}, [{}]);
 
 
-  let nodes = anu.bind("box", {}, [...new Array(5000)])
+  let nodes = anu.bind("box", {}, [...new Array(5)])
 
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
@@ -45,18 +45,18 @@ export const animate = function(engine){
     // let transitions = nodes.transition({duration: 1000, delay: 500}).props({'position.x': ()=> {
     //   console.log("position")
     //   return 2;
-    // }}).transition().props({"position.x": 1})
+    // }}).transition().props({"position.x": 1, "rotation.y": 2})
 
-    // let transitions = nodes.transition({duration: 1000}).positionX(2).positionY(2)
-    //                        .transition({duration: 1000}).positionX(0).positionY(0)
-    //                        .transition({duration: 1000}).positionX(1).positionY(1)
+    // let transitions = nodes.transition({duration: 1000}).positionX(2)
+    //                        .transition((d,n,i) => ({duration: 1000 * i})).positionX(1).rotationZ(1)
+    //                        .transition().positionY(1)
                             
                             
       //transitions.stopTransitions();
 
-    setTimeout(() => {
-      transitions.stopTransitions()
-    }, 1500)
+    // setTimeout(() => {
+    //   transitions.stopTransitions()
+    // }, 1500)
 
     //    setTimeout(() => {
     //   transitions.restartTransitions()

@@ -93,10 +93,10 @@ export function createTransition(selection: Selection, accessor: string, value: 
       animatable.pause();
       let promise: Promise<Animatable> = animatable.waitAsync();
       selection.transitions[sequence].animatables.push({ waitingPromise: promise});
-      let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+  
+      let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[i]
       if (sequence !== 0 && wait) await lastAnimation.waitingPromise
       if (lastAnimation.animatable) await lastAnimation.animationPromise
-
 
         let animation = Animation.CreateAndStartAnimation(
           node.name + '_' + accessor + '_animation',
@@ -153,7 +153,7 @@ export function createTransitions(selection: Selection,  properties: {}) {
         animatable.pause();
         let promise: Promise<Animatable> = animatable.waitAsync();
         selection.transitions[sequence].animatables.push({ waitingPromise: promise});
-        let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+        let lastAnimation = selection.transitions[Math.max(0, sequence - 1)].animatables[i]
         if (sequence !== 0 && wait) await lastAnimation.waitingPromise
         if (lastAnimation.animatable) await lastAnimation.animationPromise
 
@@ -215,7 +215,7 @@ export function tween(this: Selection, value: (d, n, i) => (t) => void) {
     animatable.pause();
     let promise: Promise<Animatable> = animatable.waitAsync();
     this.transitions[sequence].animatables.push({ waitingPromise: promise });
-    let lastAnimation = this.transitions[Math.max(0, sequence - 1)].animatables[animationsCount]
+    let lastAnimation = this.transitions[Math.max(0, sequence - 1)].animatables[i]
     if (sequence !== 0 && wait) await lastAnimation.waitingPromise
     if (lastAnimation.animatable) await lastAnimation.animationPromise
     let animation: Animatable = new Animatable(scene, node, undefined, undefined, undefined, undefined, onEnd);
