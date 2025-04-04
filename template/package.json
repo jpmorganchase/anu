@@ -9,12 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.4.5"
+    "vite": "latest"
   },
   "dependencies": {
-    "@babylonjs/core": "^7.1.0",
-    "@babylonjs/inspector": "^7.1.0",
-    "@babylonjs/gui": "^7.1.0",
+    "@babylonjs/inspector": "latest",
+    "@babylonjs/core": "latest",
+    "@babylonjs/gui": "latest",
     "@jpmorganchase/anu": "latest",
     "d3": "latest"
   }
