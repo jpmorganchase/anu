@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "",
   "type": "module",
   "files": [
@@ -30,7 +30,7 @@
   "author": "David Saffo",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@babylonjs/core": "5.x || 6.x || 7.x"
+    "@babylonjs/core": "5.x || 6.x || 7.x || 8.x"
   },
   "dependencies": {
     "babylon-msdf-text": "^0.0.4",
@@ -46,7 +46,7 @@
     "topojson-simplify": "^3.0.3"
   },
   "devDependencies": {
-    "@babylonjs/core": "^7.26.2",
+    "@babylonjs/core": "^8.1.1",
     "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
     "@types/earcut": "^2.1.4",
