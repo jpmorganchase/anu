@@ -7,7 +7,7 @@ import * as anu from '@jpmorganchase/anu' //import anu, this project is using a 
 
 
 //create and export a function that takes a babylon engine and returns a scene
-export const cloneBench = function(engine){
+export const cloneBench = async function(engine){
 
   const scene = new Scene(engine);
 
@@ -19,37 +19,37 @@ export const cloneBench = function(engine){
 
   let n = 100
 
-  let root_box = anu.create('box', 'root_box')
+  let box = anu.create('box', 'root_box')
 
-  let box = anu.bindClone(root_box, [...Array(n).keys()], scene)
-                .position(() => Vector3.Random(-20,20));
+  let boxes = anu.bindClone(box, [...Array(n).keys()], scene)
+                // .position(() => Vector3.Random(-20,20));
 
-  let createBoxes = (num) => {
-    box.dispose();
-    box = anu.bindClone(root_box, [...Array(num).keys()], scene)
-                .position(() => Vector3.Random(-20,20));
+  // let createBoxes = (num) => {
+  //   boxes.dispose();
+  //   boxes = anu.bindClone(box, [...Array(num).keys()])
+  //               .position(() => Vector3.Random(-20,20));
 
-  }
+  // }
   
-	var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("mesh");
+	// var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("mesh");
 
-  var selectBox = new SelectionPanel("mesh");
-  selectBox.width = 0.25;
-  selectBox.height = 0.25;
+  // var selectBox = new SelectionPanel("mesh");
+  // selectBox.width = 0.25;
+  // selectBox.height = 0.25;
 
-  selectBox.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
-  selectBox.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+  // selectBox.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  // selectBox.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
    
-  advancedTexture.addControl(selectBox);
+  // advancedTexture.addControl(selectBox);
 
-  var numGroup = new SliderGroup("1");
-  numGroup.addSlider("Boxes", (value) => createBoxes(Math.round(value)), "", 100, 10000, 100, (value) => Math.round(value)) 
+  // var numGroup = new SliderGroup("1");
+  // numGroup.addSlider("Boxes", (value) => createBoxes(Math.round(value)), "", 100, 10000, 100, (value) => Math.round(value)) 
 
-  selectBox.addGroup(numGroup);
+  // selectBox.addGroup(numGroup);
 
-  scene.onAfterRenderObservable.add(() => {
-    numGroup.header = "FPS: " + scene.getEngine().getFps().toFixed();
-  })
+  // scene.onAfterRenderObservable.add(() => {
+  //   numGroup.header = "FPS: " + scene.getEngine().getFps().toFixed();
+  // })
 
 
   return scene;

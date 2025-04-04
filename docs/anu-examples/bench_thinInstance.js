@@ -7,7 +7,7 @@ import * as anu from '@jpmorganchase/anu' //import anu, this project is using a 
 
 
 //create and export a function that takes a babylon engine and returns a scene
-export const thinInstanceBench = function(engine){
+export const thinInstanceBench = async function(engine){
 
   const scene = new Scene(engine);
 
