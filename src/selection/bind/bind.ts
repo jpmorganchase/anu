@@ -21,7 +21,7 @@ export function bind<MeshType extends keyof MeshTypes>(
   this: Selection,
   shape: MeshType,
   options: Property<MeshTypes, MeshType> = {},
-  data: Array<object> = [{}],
+  data: Array<any> = [{}],
 ): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
@@ -45,7 +45,7 @@ export function bind<MeshType extends keyof MeshTypes>(
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+export function bindClone(this: Selection, mesh: Mesh, data: Array<any> = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
@@ -71,7 +71,7 @@ export function bindClone(this: Selection, mesh: Mesh, data: Array<object> = [{}
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+export function bindInstance(this: Selection, mesh: Mesh, data: Array<any>  = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node) => {
     data.forEach((element, i) => {
@@ -96,7 +96,7 @@ export function bindInstance(this: Selection, mesh: Mesh, data: Array<object> = 
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<object> = [{}]): Selection {
+export function bindThinInstance(this: Selection, mesh: Mesh, data: Array<any>  = [{}]): Selection {
   let meshes: Node[] = [];
   this.selected.forEach((node, i) => {
     //node.metadata = { ...node.metadata, data: data };

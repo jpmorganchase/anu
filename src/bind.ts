@@ -30,7 +30,7 @@ type Property<T, MeshType extends keyof T> = T[MeshType];
 export function bind<MeshType extends keyof MeshTypes>(
   shape: MeshType,
   options?: Property<MeshTypes, MeshType>,
-  data: Array<object> = [{}],
+  data: Array<any> = [{}],
   scene?: Scene,
 ): Selection {
   let meshes: Node[] = [];
@@ -50,7 +50,7 @@ export function bind<MeshType extends keyof MeshTypes>(
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindClone(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
+export function bindClone(mesh: Mesh, data: Array<any> = [{}], scene?: Scene): Selection {
   scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
     data.forEach((element, i) => {
@@ -73,7 +73,7 @@ export function bindClone(mesh: Mesh, data: Array<object> = [{}], scene?: Scene)
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
+export function bindInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): Selection {
   scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
@@ -96,7 +96,7 @@ export function bindInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Sce
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindThinInstance(mesh: Mesh, data: Array<object> = [{}], scene?: Scene): Selection {
+export function bindThinInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): Selection {
   scene = scene != undefined ? scene : mesh.getScene();
   Tags.EnableFor(mesh);
   mesh.actionManager = new ActionManager(scene);
