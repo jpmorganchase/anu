@@ -3,10 +3,10 @@ aside: false
 ---
 <script setup>
 import { barchart2d } from '../anu-examples/barchart2d.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 2D Bar Chart
+Basic 2D bar chart using the cars dataset.
 
 <singleView :scene="barchart2d" />
 

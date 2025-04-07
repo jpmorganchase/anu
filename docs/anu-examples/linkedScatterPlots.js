@@ -1,26 +1,32 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
+import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as GUI from '@babylonjs/gui';
-import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
-import cars from './data/cars.json';
+import data from './data/cars.json';
 
 export function linkedScatterPlots(engine){
 
-  //Babylon boilerplate
+  //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
-  const light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, -10), scene)
-  const camera = new BABYLON.ArcRotateCamera("Camera", -(Math.PI / 4), Math.PI / 2.25, 6, new BABYLON.Vector3(0, -0.5, 2), scene);
+  //Add some lighting
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
+  //Add a camera that rotates around the origin and adjust its properties
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 1.5), scene);
+  camera.position = new BABYLON.Vector3(3, 0, -3);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
 
+  //Define only continuous dimensions in our dataset
   const dimensions = ['Miles_per_Gallon', 'Cylinders', 'Displacement', 'Horsepower', 'Weight_in_lbs', 'Acceleration'];
+  //Create a D3 scale for color, using Anu helper functions map scale outputs to Color4 objects based on the 'schemecategory10' palette from D3
   const scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
-  const scatterplots = [];    //List of our scatterplots
-  const offset = 2;           //Distance between scatterplots
+
+  const scatterplots = [];    //List of our scatter plots
+  const offset = 2;           //Distance between scatter plots
 
   function createScatterPlot(id) {
     //Pick random dimensions to visualize
@@ -29,24 +35,26 @@ export function linkedScatterPlots(engine){
     //Avoid using the same X Y variables
     while (dimX === dimY)
       dimY = dimensions[Math.floor(Math.random() * dimensions.length)];
-
-    //Create D3 scales
-    const scaleX = d3.scaleLinear().domain(d3.extent(d3.map(cars, (d) => d[dimX]))).range([-1, 1]).nice();
-    const scaleY = d3.scaleLinear().domain(d3.extent(d3.map(cars, (d) => d[dimY]))).range([-1, 1]).nice();
-
-    //Create root sphere that will be instanced
+    
+    //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our scatter plot
+    const scaleX = d3.scaleLinear().domain(d3.extent(d3.map(data, (d) => d[dimX]))).range([-1, 1]).nice();
+    const scaleY = d3.scaleLinear().domain(d3.extent(d3.map(data, (d) => d[dimY]))).range([-1, 1]).nice();
+    
+    //We use Mesh instancing here for better performance, first we create a Mesh that serves as the root Node
     const rootSphere = anu.create('sphere', `rootSphere-${id}`, { diameter: 0.04, segments: 4});
-    rootSphere.material = new BABYLON.StandardMaterial('sphereMat');
-    rootSphere.registerInstancedBuffer("color", 4);
     rootSphere.isVisible = false;
+    rootSphere.registerInstancedBuffer('color', 4);
 
-    //Create CoT and spheres
-    const CoT = anu.create('cot', `sp-${id}`);
-    const chart = anu.selectName(`sp-${id}`, scene);
-    const spheres = chart.bindInstance(rootSphere, cars)
-      .position((d) => new BABYLON.Vector3(scaleX(d[dimX]), scaleY(d[dimY]), 0))
-      .scalingZ(0.2)
-      .setInstancedBuffer('color', (d) => scaleC(d.Origin));
+    //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
+    let CoT = anu.create('cot', `sp-${id}`);
+    //Select our CoT so that we have it as a Selection object
+    let chart = anu.selectName(`sp-${id}`, scene);
+
+    //Create instanced sphere meshes from our rootSphere as children of our CoT for each row of our data and set their visual encodings using method chaining
+    let spheres = chart.bindInstance(rootSphere, data)
+                      .position((d) => new BABYLON.Vector3(scaleX(d[dimX]), scaleY(d[dimY]), 0))
+                      .scalingZ(0.2)
+                      .setInstancedBuffer('color', (d) => scaleC(d.Origin));
 
     //Create axes
     const axesOptions = new anu.AxesConfig({ x: scaleX, y: scaleY });
@@ -54,7 +62,7 @@ export function linkedScatterPlots(engine){
     axesOptions.grid = false;
     axesOptions.domain = false;
     axesOptions.labelProperties = { size : 0.15 };
-    const axes = anu.createAxes(`axes-${id}`, scene, axesOptions);
+    const axes = anu.createAxes(`axes-${id}`, axesOptions);
 
     //Position chart
     chart.positionZ(id * offset);
@@ -77,12 +85,12 @@ export function linkedScatterPlots(engine){
     scatterplots.splice(id, 1);
   }
 
-  //Create initial scatterplots
+  //Create initial scatter plots
   createScatterPlot(0);
   createScatterPlot(1);
   createScatterPlot(2);
 
-  //Forms a line for each row in the data
+  //Helper function to create an array of Vector3 for each datum across all of the linked scatter plots
   function getLineData(d) {
     const lineData = [];
     for (let i = 0; i < scatterplots.length; i++) {
@@ -92,59 +100,60 @@ export function linkedScatterPlots(engine){
     return lineData;
   }
 
-  //Create initial lines
+  //Create our links for the starting scatter plots
   const linksCoT = anu.create('cot', 'links');
   const lines = anu.selectName('links', scene)
-    .bind('greasedLine',
-      {
-        meshOptions: {
-          points: (d) => getLineData(d),
-          updateable: true
-        },
-        materialOptions: {
-          width: 0.003,
-          createAndAssignMaterial: true,
-          colors: (d) => [scaleC(d.Origin)],
-          colorDistribution: 1,
-          useColors: true
-        }
-      },
-      cars
-    );
+                   .bind('greasedLine',
+                     {
+                       meshOptions: {
+                         points: (d) => getLineData(d),
+                         updateable: true
+                       },
+                       materialOptions: {
+                         width: 0.003,
+                         createAndAssignMaterial: true,
+                         colors: (d) => [scaleC(d.Origin)],
+                         colorDistribution: BABYLON.GreasedLineMeshColorDistribution.COLOR_DISTRIBUTION_NONE, //Use same color throughout the entire line
+                         useColors: true
+                       }
+                     },
+                     data
+                   );
   
-  //Updates the lines and its vertices to the updated scatter plots
+  //Helper function to update the greasedLine and its vertices when the scatter plots change
   function updateLines() {
     lines.run((d,n,i) => {
       const lineData = getLineData(d);
-      n.widths = BABYLON.CompleteGreasedLineWidthTable(lineData.length, n.widths, 1, 2, 2);
+      n.widths = BABYLON.CompleteGreasedLineWidthTable(lineData.length, n.widths, 1, 2, 2); //Update the widths with the new number of vertices/points per line
       n.setPoints(lineData);
     })
   }
 
-  //Create GUI
-  let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  let rect1 = GUI.Button.CreateSimpleButton("button1", "Add Scatter Plot");
+  //Create GUI for adding and removing scatter plots
+  let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+  let rect1 = GUI.Button.CreateSimpleButton('button1', 'Add Scatter Plot');
   rect1.width = 0.15;
-  rect1.height = "40px";
+  rect1.height = '40px';
   rect1.cornerRadius = 2;
-  rect1.color = "white";
+  rect1.color = 'white';
   rect1.thickness = 4;
-  rect1.background = "blue";
-  rect1.top = "40%";
-  rect1.left = "-25%";
+  rect1.background = 'blue';
+  rect1.top = '40%';
+  rect1.left = '-25%';
   rect1.onPointerClickObservable.add(() => {
       createScatterPlot(scatterplots.length);
       updateLines();
   });
-  let rect2 = GUI.Button.CreateSimpleButton("button2", "Remove Scatter Plot");
+
+  let rect2 = GUI.Button.CreateSimpleButton('button2', 'Remove Scatter Plot');
   rect2.width = 0.19;
-  rect2.height = "40px";
+  rect2.height = '40px';
   rect2.cornerRadius = 2;
-  rect2.color = "white";
+  rect2.color = 'white';
   rect2.thickness = 4;
-  rect2.background = "blue";
-  rect2.top = "40%";
-  rect2.left = "25%";
+  rect2.background = 'blue';
+  rect2.top = '40%';
+  rect2.left = '25%';
   rect2.onPointerClickObservable.add(() => {
     if (scatterplots.length > 1) {
       removeScatterPlot(scatterplots.length - 1);

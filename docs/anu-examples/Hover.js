@@ -2,82 +2,74 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import * as anu from '@jpmorganchase/anu';
-import * as d3 from "d3";
-import { Scene, HemisphericLight, ArcRotateCamera, Vector3, Color3, ActionManager, InterpolateValueAction, ExecuteCodeAction, HighlightLayer } from '@babylonjs/core';
-import penguins from './data/penguins.json' assert {type: 'json'}; //Our data
+import * as BABYLON from '@babylonjs/core';
+import * as d3 from 'd3';
+import data from './data/penguins.json' assert {type: 'json'};
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
 export function hover(engine) {
 
   //Create an empty Scene
-  const scene = new Scene(engine);
-
+  const scene = new BABYLON.Scene(engine);
   //Add some lighting
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
-
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
   //Add a camera that rotates around the origin and adjust its properties
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.wheelPrecision = 20; // Adjust the sensitivity of the mouse wheel's zooming
-  camera.minZ = 0;            // Adjust the distance of the camera's near plane
-  camera.attachControl(true); // Allow the camera to respond to user controls
-  camera.position = new Vector3(2, 2, -3.5);
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+  camera.position = new BABYLON.Vector3(2, 2, -3.5);
+  camera.wheelPrecision = 20;
+  camera.minZ = 0;
+  camera.attachControl(true);
 
-  //Create the D3 scale functions for the x, y, and z positions and color
-  let scaleX = d3.scaleLinear().domain(d3.extent(d3.map(penguins, (d) => { return d['Beak Depth (mm)'] }))).range([-1, 1]).nice();
-  let scaleY = d3.scaleLinear().domain(d3.extent(d3.map(penguins, (d) => { return d['Beak Length (mm)'] }))).range([-1, 1]).nice();
-  let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(penguins, (d) => { return d['Flipper Length (mm)'] }))).range([-1, 1]).nice();
+  //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
+  let scaleX = d3.scaleLinear().domain(d3.extent(d3.map(data, (d) => d['Beak Depth (mm)']))).range([-1,1]).nice();
+  let scaleY = d3.scaleLinear().domain(d3.extent(d3.map(data, (d) => d['Beak Length (mm)']))).range([-1,1]).nice();
+  let scaleZ = d3.scaleLinear().domain(d3.extent(d3.map(data, (d) => d['Flipper Length (mm)']))).range([-1,1]).nice();
+  //Do the same for color, using Anu helper functions to map values to StandardMaterial objects with colors based on the 'schemecategory10' palette from D3
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial());
 
-  //Create a Center of Transform TransformNode using create() that serves the parent node for all our meshes that make up our chart
-  let CoT = anu.create("cot", "cot");
+  //Create a HighlightLayer that will allow us to add a highlight stencil to meshes
+  const highlighter = new BABYLON.HighlightLayer('highlighter', scene);
 
-  //We need to make an Anu Selection separately, as create() does not return a Section but the created Babylon TransformNode
-  let chart = anu.selectName("cot", scene);
+  //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
+  let CoT = anu.create('cot', 'cot');
+  //Select our CoT so that we have it as a Selection object
+  let chart = anu.selectName('cot', scene);
 
-  //Create a Babylon HighlightLayer that will allow us to add a highlight stencil to meshes
-  const highlighter = new HighlightLayer("highlighter", scene);
-
-  //Create our spheres and add Actions to allow them to respond to user input
-  let spheres = chart.bind('sphere', { diameter: 0.05 }, penguins)
-                     .position((d) => new Vector3(scaleX(d['Beak Depth (mm)']), scaleY(d['Beak Length (mm)']), scaleZ(d['Flipper Length (mm)'])))
+  //Create sphere meshes as children of our CoT for each row of our data and set their visual encodings using method chaining
+  let spheres = chart.bind('sphere', { diameter: 0.05 }, data)
+                     .position((d) => new BABYLON.Vector3(scaleX(d['Beak Depth (mm)']), scaleY(d['Beak Length (mm)']), scaleZ(d['Flipper Length (mm)'])))
                      .material((d) => scaleC(d.Species))
-                     //Add an action that will increase the size of the sphere when the pointer is moved over it
-                     .action((d, n, i) => new InterpolateValueAction(   //Type of action, InterpolateValueAction will interpolave a given property's value over a specified period of time
-                         ActionManager.OnPointerOverTrigger,            //Action Trigger
-                         n,                                             //The Mesh or Node to Change, n in Anu refers to the mesh itself
-                         'scaling',                                     //The property to Change
-                         new Vector3(1.2, 1.2, 1.2),                    //The value that the property should be set to
-                         100                                            //The duration in milliseconds that the value is interpolated for
-                     ))
-                     //Add an action that will return the size of the sphere to its original value when the pointer is moved out of it
-                     .action((d, n, i) => new InterpolateValueAction(
-                         ActionManager.OnPointerOutTrigger,
+                     //Add actions to respond to user inputs
+                     .action((d, n, i) => new BABYLON.InterpolateValueAction(   //When the pointer over event happens, the mesh's scaling
+                         BABYLON.ActionManager.OnPointerOverTrigger,            //will be updated and interpolated over the specified duration
                          n,
                          'scaling',
-                         new Vector3(1, 1, 1),
+                         new BABYLON.Vector3(1.2, 1.2, 1.2),
                          100
                      ))
-                     //Add an action that will highlight the sphere mesh using the highlight stencil when the pointer is moved over it
-                     .action((d,n,i) => new ExecuteCodeAction(          //ExecudeCodeAction allows us to execute a given function
-                         ActionManager.OnPointerOverTrigger,
+                     .action((d, n, i) => new BABYLON.InterpolateValueAction(   //When the pointer out event happens, the mesh's scaling
+                         BABYLON.ActionManager.OnPointerOutTrigger,             //will be set back to 1 over the specified duration
+                         n,
+                         'scaling',
+                         BABYLON.Vector3.One(),
+                         100
+                     ))
+                     .action((d,n,i) => new BABYLON.ExecuteCodeAction(          //When the pointer over event happens, we execute code to
+                         BABYLON.ActionManager.OnPointerOverTrigger,            //add the mesh to our HighlightLayer to highlight it
                          () => {
-                             highlighter.addMesh(n, Color3.White());
+                             highlighter.addMesh(n, BABYLON.Color3.White());
                          }
                      ))
-                     //Add an action that will remove the highlight on the sphere mesh when the pointer is moved out of it
-                     .action((d,n,i) => new ExecuteCodeAction( //Same as above but in reverse
-                         ActionManager.OnPointerOutTrigger,
+                     .action((d,n,i) => new BABYLON.ExecuteCodeAction(          //When the pointer out event happens, we execute code to
+                         BABYLON.ActionManager.OnPointerOutTrigger,             //remove the mesh from our HighlightLayer to unhighlight it
                          () => {
                              highlighter.removeMesh(n);
                          }
-                     ))
+                     ));
 
-  //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
-  anu.createAxes('test', scene, { parent: chart, scale: { x: scaleX, y: scaleY, z: scaleZ } });
+  //Use the Axes prefab with our three D3 scales
+  anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY, z: scaleZ }, parent: chart });
 
   return scene;
 
 };
-
-
-

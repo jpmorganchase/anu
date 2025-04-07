@@ -8,6 +8,9 @@ import { layout } from '../anu-examples/layout.js'
 </script>
 
 # Layouts
+Demonstration of the [Layout Prefab](../guide/prefabs/layout.md) to arrange Anu charts in planar, cylindrical, or spherical layouts with customizable options.
+
+
 
 <singleView :scene="layout" />
 

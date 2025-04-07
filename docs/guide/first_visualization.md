@@ -118,7 +118,7 @@ Anu provides two separate ways to declare options for the axes prefab.
 ::: details
 Shown above is the most straightforward way which is to declare the options object directly in the method call. This is considered the [default approach](./prefabs/axes.md#default-3d-axes) of creating axes.
 
-Another way is to declare a separate [AxesConfig](../api/classes/AxesConfig.md) object prior to calling createAxes(). This is a more [advanced approach](http://localhost:5173/anu/guide/prefabs/axes.html#using-axisconfig) that can used in conjunction with [updateAxes()](../api/classes/Axis.md#updateaxes) to make adjustments to the axes appearance without re-declaring repeat options.
+Another way is to declare a separate [AxesConfig](../api/classes/AxesConfig.md) object prior to calling createAxes(). This is a more [advanced approach](../guide/prefabs/axes.md#using-axisconfig) that can used in conjunction with [updateAxes()](../api/classes/Axis.md#updateaxes) to make adjustments to the axes appearance without re-declaring repeat options.
 :::
 
 </div>

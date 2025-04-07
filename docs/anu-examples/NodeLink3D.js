@@ -1,97 +1,83 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import * as anu from '@jpmorganchase/anu'
+import * as anu from '@jpmorganchase/anu';
+import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import { Scene, HemisphericLight, ArcRotateCamera, StandardMaterial, Vector3, Color3, Color4 } from '@babylonjs/core';
-import { forceSimulation, forceCenter, forceManyBody, forceLink, forceCollide } from 'd3-force-3d'; //External required dependency for force layouts
-import leMis from './data/miserables.json' assert {type: 'json'}; //Our data
+import * as d3force from 'd3-force-3d'; //External required dependency for force layouts
+import leMis from './data/miserables.json' assert {type: 'json'};
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
 export function nodelink3d(engine) {
 
-//Create an empty Scene
-  const scene = new Scene(engine);
-
+  //Create an empty Scene
+  const scene = new BABYLON.Scene(engine);
   //Add some lighting
-  let light = new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
-  light.diffuse = new Color3(1, 1, 1);
-  light.specular = new Color3(1, 1, 1);
-  light.groundColor = new Color3(1, 1, 1);
-
+  let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
+  light.diffuse = new BABYLON.Color3(1, 1, 1);
+  light.specular = new BABYLON.Color3(1, 1, 1);
+  light.groundColor = new BABYLON.Color3(1, 1, 1);
   //Add a camera that rotates around the origin and adjust its properties
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
-  camera.wheelPrecision = 30; // Adjust the sensitivity of the mouse wheel's zooming
-  camera.minZ = 0;            // Adjust the distance of the camera's near plane
-  camera.attachControl(true); // Allow the camera to respond to user controls
-  camera.position = new Vector3(1, 1.5, -4);
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+  camera.position = new BABYLON.Vector3(1, 1.5, -3);
+  camera.wheelPrecision = 20;
+  camera.minZ = 0;
+  camera.attachControl(true);
 
-  //Create a D3 color scale that returns a Color4 for our nodes
-  const scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
+  //Create a D3 color scale using Anu helper functions to map values to Color4 objects with colors based on the 'schemecategory10' palette from D3
+  let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
 
-  //Create a D3 simulation with several forces
-  const simulation = forceSimulation(leMis.nodes, 3)
-                        .force("link", forceLink(leMis.links))
-                        .force("charge", forceManyBody())
-                        .force("collide", forceCollide())
-                        .force("center", forceCenter(0, 0, 0))
-                        .on("tick", ticked)
-                        .on("end", () => simulation.stop());
+  //Create a D3 simulation with several forces, this function mutates the data object we pass in so we make a deep clone of it first
+  let data = JSON.parse(JSON.stringify(leMis));
+  let simulation = d3force.forceSimulation(data.nodes, 3)
+                          .force('link', d3force.forceLink(data.links))
+                          .force('charge', d3force.forceManyBody())
+                          .force('collide', d3force.forceCollide())
+                          .force('center', d3force.forceCenter(0, 0, 0))
+                          .on('tick', ticked)
+                          .on('end', () => simulation.stop());
 
-
-  //Create a Center of Transform TransformNode using create() that serves the parent node for all our meshes that make up our network
-  let CoT = anu.bind("cot", "cot");
-
-  //We will be using instancing, so create a sphere mesh to be the root of our instanced meshes
-  let rootSphere = anu.create('sphere', 'node');
+  //We use Mesh instancing here for better performance, first we create a Mesh that serves as the root Node
+  let rootSphere = anu.create('sphere', 'node', { diameter: 5 });
   rootSphere.isVisible = false;
-  rootSphere.material = new StandardMaterial('mat');
-  rootSphere.material.specularColor = new Color3(0, 0, 0);
-  rootSphere.registerInstancedBuffer('color', 4);
-  rootSphere.instancedBuffers.color = new Color4(0, 0, 0, 1);
+  rootSphere.registerInstancedBuffer('color', 4);   //We need an InstancedBuffer to set the color of instances
+  
+  //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
+  let CoT = anu.create('cot', 'cot');
+  //Select our CoT so that we have it as a Selection object
+  let network = anu.selectName('cot', scene);
 
-  //Create the spheres for our network and set their properties
-  let nodes = CoT.bindInstance(rootSphere, leMis.nodes)
-                       .position((d) => new Vector3(d.x, d.y, d.z))
-                       .scaling(new Vector3(6,6,6))
-                       .id((d) => d.id)
-                       .setInstancedBuffer('color', (d) => scaleC(d.group));
+  //Create instanced sphere meshes from our rootSphere as children of our CoT for each row of our data and set their initial visual encodings using method chaining
+  let nodes = network.bindInstance(rootSphere, data.nodes)
+                       .position((d) => new BABYLON.Vector3(d.x, d.y, d.z))
+                       .setInstancedBuffer('color', (d) => scaleC(d.group))
+                       .id((d) => d.id);
 
-  //We will be using a lineSystem mesh for our edges which takes a two dimension array and draws a line for each sub array.
-  //lineSystems use one draw call for all line meshes and will be the most performant option
-  //This function helps prepare our data for that data structure format.
-  let updateLines = (data) => {
-      let lines = [];
-      data.forEach((v, i) => {
-          let start = new Vector3(v.source.x, v.source.y, v.source.z);
-          let end = new Vector3(v.target.x, v.target.y, v.target.z);
-          lines.push([start, end]);
-      })
-      return lines;
+  //Create a helper function that will return us an array of arrays where each sub-array is the start and end Vector3 of each link
+  function dataToLinks(data) {
+    let lines = [];
+    data.forEach((v, i) => {
+        let start = (new BABYLON.Vector3(v.source.x, v.source.y, v.source.z));
+        let end = (new BABYLON.Vector3(v.target.x, v.target.y, v.target.z));
+        lines.push([start, end]);
+    })
+    return lines;
   }
 
-  //Create our links using our data and function from above
-  let links = CoT.bind("lineSystem", { lines: (d) => updateLines(d), updatable: true }, [leMis.links])
-                 .prop("color", new Color4(1, 1, 1, 1))
-                 .prop("alpha", 0.3);
+  //Create our lineSystem mesh using our data and helper function from above
+  let links = network.bind('lineSystem', { lines: (d) => dataToLinks(d), updatable: true }, [data.links])
+                     .prop('color', new BABYLON.Color4(1, 1, 1, 1));
 
-  //Use the run method to access our root node and call normalizeToUnitCube to scale the visualization down to 1x1x1
-  CoT.run((d, n) => { n.normalizeToUnitCube() });
-
-  //Update the position of the nodes and links each time the simulation ticks.
+  //Update the position of the nodes and links each time the simulation ticks
   function ticked() {
     //For the instanced spheres just set a new position
-    nodes.position((d) => new Vector3(d.x, d.y, d.z));
-
-    //For the links use the run method to replace the lineSystem mesh with a new one.
-    //The option instance takes the old mesh and replaces it with a new mesh.
-    links.run((d, n, i) => anu.create('lineSystem', 'edge', { lines: updateLines(d), instance: n, updatable: true }, d));
+    nodes.position((d) => (new BABYLON.Vector3(d.x, d.y, d.z)));
+    //For the links use the run method to replace the lineSystem mesh with a new one, passing in the mesh into the instance option
+    links.run((d, n, i) => anu.create('lineSystem', 'edge', { lines: dataToLinks(d), instance: n, updatable: true }, d));
   }
 
-  //Stops the simulation when we change pages, which is useful for multi-page apps
-  window.navigation.addEventListener("navigate", (event) => {
-      simulation.stop();
-  })
+  //The network can get quite big in size (spatial size), so here we run a function to scale the entire network down to a 1x1x1 box
+  network.run((d,n,i) => n.normalizeToUnitCube());
 
   return scene;
 }

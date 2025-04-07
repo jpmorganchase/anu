@@ -3,12 +3,10 @@ aside: false
 ---
 <script setup>
 import { details } from '../anu-examples/Details.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Details On Demand
-
-Example demonstrating how to use the .action() method to add [Babylon pointer actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions) and control Babylon GUI elements for details on demand hover interactions. 
+Basic example of how to add [Babylon pointer actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions) to Meshes to control GUI elements to enable tooltips for details on demand.
 
 <singleView :scene="details" />
 

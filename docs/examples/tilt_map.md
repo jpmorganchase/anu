@@ -4,11 +4,10 @@ aside: false
 
 <script setup>
 import { tiltMap } from '../anu-examples/tiltMap.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Tilt Map
-Basic re-implementation of [Tilt Map by Yang et al.](https://arxiv.org/abs/2006.14120) using Anu and Babylon. Grab and tilt the chart in XR or drag the bottom slider on the browser to transition the chart between a bar, prism, and choropleth map based on tilt angle. For the best effect, smoothly change the tilt angle of the chart.
+Basic re-implementation of [Tilt Map by Yang et al.](https://arxiv.org/abs/2006.14120) Grab and tilt the chart in XR or drag the bottom slider on the browser to transition the chart between a bar, prism, and choropleth map based on tilt angle. For the best effect, smoothly change the tilt angle of the chart.
 
 <singleView :scene="tiltMap" />
 

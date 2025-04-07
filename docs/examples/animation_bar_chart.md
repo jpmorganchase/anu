@@ -3,10 +3,10 @@ aside: false
 ---
 <script setup>
 import { animationBarChart } from '../anu-examples/animationBarChart.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Basic Animation
+Basic example using transitions to animate a 3D bar chart on initial load.
 
 <singleView :scene="animationBarChart" />
 
