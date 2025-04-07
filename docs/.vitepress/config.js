@@ -50,7 +50,8 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: 'Mesh, Clones, Instances', link: '/guide/deeper_topics/mesh_clone_instance.md'}, 
-              { text: 'Transitions', link: '/guide/deeper_topics/transitions.md'}
+              { text: 'Transitions', link: '/guide/deeper_topics/transitions.md'},
+              { text: 'Interactions', link: '/guide/deeper_topics/interactions.md'}, 
             ]
           },
           { text: 'Anu Prefabs',
@@ -69,32 +70,12 @@ export default defineConfig({
 
         ]
       },
-      // {
-      //   text: 'Prefabs',
-      //   collapsed: true,
-      //   items: [
-      //     { text: 'WIP', link: '' }
-      //   ]
-      // },
-      // {
-      //   text: 'Interactions',
-      //   collapsed: true,
-      //   items: [
-      //     { text: 'WIP', link: '' }
-      //   ]
-      // },
-      // {
-      //   text: 'Advanced Topics',
-      //   collapsed: true,
-      //   items: [
-      //     { text: 'WIP', link: '' }
-      //   ]
-      // },
       {
         text: 'Contributing',
         collapsed: true,
         items: [
-          { text: 'WIP', link: '' }
+          { text: 'Contributing', link: '/guide/contributing/contributing.md' },
+          { text: 'Maintaining', link: '/guide/contributing/maintaining.md' }
         ]
       },
 
