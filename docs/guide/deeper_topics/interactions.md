@@ -56,7 +56,7 @@ boxes.position(() => Vector3.Random(-2,2))
 
 
 ## Behaviors 
-For more complex and compound interactions Babylon provides the [behavior interface](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/) and several camera and [mesh behaviors](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/meshBehaviors/) that you can attach to nodes to handle interaction such as dragging. You can easily attach behaviors to all meshes in a Selection using behavior().
+For more complex and compound interactions, Babylon provides the [behavior interface](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/) and several camera and [mesh behaviors](https://doc.babylonjs.com/features/featuresDeepDive/behaviors/meshBehaviors/) that you can attach to nodes to handle interaction such as dragging. You can easily attach behaviors to all meshes in a Selection using behavior().
 
 ```js
 boxes.position(() => Vector3.Random(-2,2))
@@ -65,7 +65,7 @@ boxes.position(() => Vector3.Random(-2,2))
 
 <singleView :scene="behaviorDrag" />
 
-Some behaviors have properties that we will want to change to change our interactions, we can do this by expanding our functions like so. 
+Some behaviors have properties that we will want to change to change for our interactions, we can do this by expanding our functions like so. 
 
 ```js
 boxes.position(() => Vector3.Random(-2,2))
