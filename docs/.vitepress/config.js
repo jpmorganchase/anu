@@ -17,7 +17,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/guide/' },
-      { text: 'Examples', link: '/examples-gallery/' },
+      { text: 'Examples', link: '/examples/' },
       { text: 'API', link: '/api/modules.md' },
       { text: 'Tutorial', link: '/tutorial/index.html', target:"_self"}
     ],
@@ -80,7 +80,7 @@ export default defineConfig({
       },
 
     ],
-    "/examples-gallery/": [
+    "/examples/": [
       {
         text: 'The Classics',
         collapsed: false,

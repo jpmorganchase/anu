@@ -90,7 +90,7 @@ inlineView examples share a single Babylon Engine to reduce the resource require
 </multiView>
 ```
 ### Adding to the Gallery
-When adding an example to the gallery, please include a 400x400 thumbnail image. To add the example to the gallery view page you can use the cardImg component, please see the raw source code of [/examples-gallery/index.md](https://raw.githubusercontent.com/jpmorganchase/anu/refs/heads/main/docs/examples/index.md) to see how they are added.
+When adding an example to the gallery, please include a 400x400 thumbnail image. To add the example to the gallery view page you can use the cardImg component, please see the raw source code of [/examples/index.md](https://raw.githubusercontent.com/jpmorganchase/anu/refs/heads/main/docs/examples/index.md) to see how they are added.
 
 
 
