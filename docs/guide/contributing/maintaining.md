@@ -51,7 +51,7 @@ ANU
     └───.vitepress //VitePress configuration and settings
     └───anu-examples //Contains all the examples used in the docs
     └───api //TSDoc API specs auto generated from the Anu API 
-    └───examples-gallery //Markdown for each gallery example and main page
+    └───examples //Markdown for each gallery example and main page
     └───guide //Contains the main documentation section markdown
     └───vue_components //Custom components for displaying examples, etc.
     |   ...
