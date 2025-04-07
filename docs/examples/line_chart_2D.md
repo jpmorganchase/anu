@@ -4,10 +4,10 @@ aside: false
 
 <script setup>
 import { linechart2D } from '../anu-examples/linechart2D.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 2D Line Chart
+Basic 2D timeseries of five stocks and their prices between 2000 and 2010.
 
 <singleView :scene="linechart2D" />
 

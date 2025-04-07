@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 import data from '../../data/stocks.csv';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function linechart2D(engine){
+export function areachart2D(engine){
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -24,21 +24,17 @@ export function linechart2D(engine){
   let parseTime = d3.timeParse('%b %d %Y');
   let dateFormat = d3.timeFormat('%Y');
 
+  //Filter our data to only show a single stock
+  let filteredData = data.filter(d => d.symbol === 'GOOG');
+
   //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
-  let scaleX = d3.scaleTime().domain(d3.extent(data.map((d) => parseTime(d.date)))).range([-1, 1]);
-  let scaleY = d3.scaleLinear().domain([0, Math.max(...data.map(d => d.price))]).range([-1, 1]).nice();
-  //Do the same for color, using Anu helper functions map scale outputs to Color4 objects based on the 'schemecategory10' palette from D3
-  let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
+  let scaleX = d3.scaleTime().domain(d3.extent(filteredData.map((d) => parseTime(d.date)))).range([-1, 1]);
+  let scaleY = d3.scaleLinear().domain([0, Math.max(...filteredData.map(d => d.price))]).range([-1, 1]).nice();
 
-  //Create an array of arrays where each sub-array is an ordered list of Vector3 corresponding to the timeseries for each stock symbol
-  let paths = Object.values(data.reduce((acc, d) => {
-    let position = new BABYLON.Vector3(scaleX(parseTime(d.date)), scaleY(d.price), 0);
-    (acc[d.symbol] = acc[d.symbol] || []).push(position);
-    return acc;
-  }, {} ));
-
-  //For each point in our paths array of arrays, set the color based on the line it belongs to
-  let colors = paths.map((path, i) => path.map(() => scaleC(i)));
+  //Create an array of Vector3 corresponding to the timeseries for our stock symbol
+  let path = filteredData.map((row) => new BABYLON.Vector3(scaleX(parseTime(row.date)), scaleY(row.price), 0));
+  //Because we want to color the area below the line, we create another array at y=0
+  let zeroPath = path.map((value) => new BABYLON.Vector3(value.x, scaleY(0), 0));
 
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
@@ -46,8 +42,18 @@ export function linechart2D(engine){
   let chart = anu.selectName('cot', scene);
 
   //Create a lineSystem mesh as a child of our CoT that will render the paths we had defined
-  let lines = chart.bind('lineSystem', { lines: paths, colors: colors })
-                   .positionZ(-0.01); //Move forward to prevent z-fighting
+  let lines = chart.bind('lineSystem', { lines: [path] })
+                   .attr('color', BABYLON.Color3.Blue())
+                   .positionZ(-0.01);   //Move lineSystem forward to prevent z-fighting
+
+  //Create a ribbon mesh as a child of our CoT that will render area below the line
+  let ribbon = chart.bind('ribbon', { pathArray: [path, zeroPath], sideOrientation: BABYLON.Mesh.DOUBLESIDE })
+                    .material((d,n,i) => {
+                      let mat = new BABYLON.StandardMaterial('ribbonMat');
+                      mat.diffuseColor = BABYLON.Color3.FromHexString('#4287f5');
+                      return mat;
+                  })
+                    .positionZ(-0.01);   //Move ribbon forward to prevent z-fighting
 
   //Use the axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },

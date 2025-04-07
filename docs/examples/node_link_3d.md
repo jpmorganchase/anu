@@ -4,12 +4,10 @@ aside: false
 
 <script setup>
 import { nodelink3d } from '../anu-examples/NodeLink3D.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # 3D Node Link 
-
-This example shows how to make a force direct node link visualization using [d3-force-3d](https://github.com/vasturiano/d3-force-3d)
+Basic example of a 3D node-link diagram simulated using [d3-force-3d](https://github.com/vasturiano/d3-force-3d) of Les Misérables character co-occurrences.
 
 <singleView :scene="nodelink3d"/>
 

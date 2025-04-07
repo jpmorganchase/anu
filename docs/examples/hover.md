@@ -3,12 +3,11 @@ aside: false
 ---
 <script setup>
 import { hover } from '../anu-examples/Hover.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 
 # Pointer Hover
-Example demonstrating how to use the .action() method to add [Babylon pointer actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions) to nodes in a selection.
+Basic example of how to add [Babylon pointer actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions) to Meshes to achieve a hover highlighting effect.
 
 <singleView :scene="hover" />
 

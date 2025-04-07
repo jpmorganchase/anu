@@ -21,6 +21,7 @@ import { linechart3D } from './examples/LineCharts/linechart3D';
 import { scatterplot2D } from './examples/ScatterPlots/Scatterplot2D';
 import { barchart2d } from './examples/BarCharts/barchart2d';
 import { linechart2D } from './examples/LineCharts/linechart2D';
+import { areachart2D } from './examples/LineCharts/areachart2D';
 import { textureMap } from './examples/Geographic/Texture_Map';
 import { textureGlobe } from './examples/Geographic/Texture_Globe';
 import { layout } from './examples/Layouts/layout';
@@ -93,6 +94,7 @@ const scenes = {
   'scatterplot2D': scatterplot2D,
   'barchart2D': barchart2d,
   'linechart2D': linechart2D,
+  'areachart2D': areachart2D,
   'textureMap': textureMap,
   'textureGlobe': textureGlobe,
   'layout': layout,

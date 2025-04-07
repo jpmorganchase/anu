@@ -110,6 +110,7 @@ export default defineConfig({
           { text: '2D Scatter Plot', link: './scatter_plot_2D' },
           { text: '2D Bar Chart', link: './bar_chart_2D' },
           { text: '2D Line Chart', link: './line_chart_2D' },
+          { text: '2D Area Chart', link: './area_chart_2D' },
         ]
       },
       {

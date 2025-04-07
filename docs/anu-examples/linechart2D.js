@@ -2,76 +2,59 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import * as anu from '@jpmorganchase/anu';
+import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import { Scene, HemisphericLight, ArcRotateCamera, Mesh, Vector3, Color3, StandardMaterial } from '@babylonjs/core';
-import stocks from './data/stocks.csv';  //Our data
+import data from './data/stocks.csv';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
 export function linechart2D(engine){
 
   //Create an empty Scene
-  const scene = new Scene(engine);
-
+  const scene = new BABYLON.Scene(engine);
   //Add some lighting
-  new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
-
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, -5), scene);
   //Add a camera that rotates around the origin and adjust its properties
-  const camera = new ArcRotateCamera("Camera", 0, 0, 10, new Vector3(0, 0, 0), scene);
-  camera.wheelPrecision = 20; // Adjust the sensitivity of the mouse wheel's zooming
-  camera.minZ = 0;            // Adjust the distance of the camera's near plane
-  camera.attachControl(true); // Allow the camera to respond to user controls
-  camera.position = new Vector3(0, 0, -3.5);
-
-  //Filter to only show a single stock
-  let data = stocks.filter(d => d.symbol === "GOOG");
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+  camera.position = new BABYLON.Vector3(0, 0, -3);
+  camera.wheelPrecision = 20;
+  camera.minZ = 0;
+  camera.attachControl(true);
   
   //Create D3 functions to parse the time and date
-  let parseTime = d3.timeParse("%b %d %Y");
-  let dateFormat = d3.timeFormat("%Y");
-
-  //Get all of the dates in our dataset into an array
-  let dates = data.map((d) => parseTime(d.date));
+  let parseTime = d3.timeParse('%b %d %Y');
+  let dateFormat = d3.timeFormat('%Y');
 
   //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
-  //In this case, we create scale functions that correspond to the x and y positions
-  let scaleX = d3.scaleTime().domain(d3.extent(dates)).range([-1, 1]);  //Time
+  let scaleX = d3.scaleTime().domain(d3.extent(data.map((d) => parseTime(d.date)))).range([-1, 1]);
   let scaleY = d3.scaleLinear().domain([0, Math.max(...data.map(d => d.price))]).range([-1, 1]).nice();
+  //Do the same for color, using Anu helper functions map scale outputs to Color4 objects based on the 'schemecategory10' palette from D3
+  let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
 
-  //Create an array of Vector3 that correspond to the positions along the stock price timeseries using the scales we created
-  let path = data.map((row) => new Vector3(scaleX(parseTime(row.date)), scaleY(row.price), 0));
+  //Create an array of arrays where each sub-array is an ordered list of Vector3 corresponding to the timeseries for each stock symbol
+  let paths = Object.values(data.reduce((acc, d) => {
+    let position = new BABYLON.Vector3(scaleX(parseTime(d.date)), scaleY(d.price), 0);
+    (acc[d.symbol] = acc[d.symbol] || []).push(position);
+    return acc;
+  }, {} ));
 
-  //Since we also want to color in the area below the line using a ribbon, we create another array of Vector at y=0 that forms a 2D mesh
-  let zeroPath = path.map((value) => new Vector3(value.x, scaleY(0), 0));
+  //For each point in our paths array of arrays, set the color based on the line it belongs to
+  let colors = paths.map((path, i) => path.map(() => scaleC(i)));
 
-  //Create a Center of Transform TransformNode using create() that serves the parent node for all our meshes that make up our chart
-  let CoT = anu.create("cot", "cot");
-  //We need to make an Anu Selection separately, as create() does not return a Section but the created Babylon TransformNode
-  let chart = anu.selectName("cot", scene);
+  //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
+  let CoT = anu.create('cot', 'cot');
+  //Select our CoT so that we have it as a Selection object
+  let chart = anu.selectName('cot', scene);
 
-  //Create the lineSystem that will render the paths we had created
-  let lines = chart.bind("lineSystem", { lines: [path] }) //lines expects an array of arrays of Vector3, where each sub-array is its own line
-                   .attr("color", Color3.Blue())
+  //Create a lineSystem mesh as a child of our CoT that will render the paths we had defined
+  let lines = chart.bind('lineSystem', { lines: paths, colors: colors })
+                   .positionZ(-0.01); //Move forward to prevent z-fighting
 
-  //Create the ribbon that will render the area below the line
-  let ribbon = chart.bind("ribbon",
-    { pathArray: [path, zeroPath],      //pathArray expects an array of arrays of Vector3, where each subarray is the "edge" of a ribbon segment
-      sideOrientation: Mesh.DOUBLESIDE  //Double side so that the ribbon can be seen behind the chart as well
-    })
-    .material((d,n,i) => {              //Set a material to change its color
-      let mat = new StandardMaterial("ribbonMat");
-      mat.diffuseColor = Color3.FromHexString("#4287f5");
-      mat.alpha = 1;
-      return mat;
-  })
-    .positionZ(-0.001);   //Move ribbon forward to prevent z-fighting
-
-  //Use the createAxes() Anu helper function to create the axes for us based on our D3 scale functions
-  //Also adjust its visual properties to properly format the axes labels
-  anu.createAxes("axes", scene, { parent: chart,
-                                  scale: { x: scaleX, y: scaleY },
-                                  domainMaterialOptions: { "color": Color3.Black(), width: 0.05 },
-                                  labelTicks: { x: scaleX.ticks(d3.timeYear) },
-                                  labelFormat: { x: dateFormat, y: (text) => '$' + text }
+  //Use the axes prefab with our two D3 scales with additional customizations
+  anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },
+                             parent: CoT,                         
+                             domainMaterialOptions: { width: 0.025 },
+                             labelTicks: { x: scaleX.ticks(d3.timeYear) },
+                             labelFormat: { x: dateFormat, y: (text) => '$' + text }
   });
 
   return scene;

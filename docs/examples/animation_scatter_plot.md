@@ -3,10 +3,10 @@ aside: false
 ---
 <script setup>
 import { animationScatterPlot } from '../anu-examples/animationScatterPlot.js'
-//import singleView  from '../vue_components/singleView.vue'
 </script>
 
 # Data Dimension Change
+Basic example using transitions to animate a 3D scatter plots between two visual states.
 
 <singleView :scene="animationScatterPlot" />
 

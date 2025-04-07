@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Scene, HemisphericLight, ArcRotateCamera, Material } from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
+import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
 import data from './data/drone-path.json';
 import { XYZ } from 'ol/source';
@@ -10,60 +10,66 @@ import TileLayer from 'ol/layer/Tile';
 
 export function trajectory3D(engine){
 
-  //Babylon boilerplate
-  const scene = new Scene(engine);
-  const light = new HemisphericLight('light1', new Vector3(0, 10, -10), scene)
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  //Create an empty Scene
+  const scene = new BABYLON.Scene(engine);
+  //Add some lighting
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, -10), scene);
+  //Add a camera that rotates around the origin and adjust its properties
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+  camera.position = new BABYLON.Vector3(2, 10, -15);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-  camera.position = new Vector3(2, 10, -15)
-
-  //Create a Texture Map
+  
+  //Use the Texture Map prefab to create a plane with an OpenLayers map canvas as the texture
   let textureMap = anu.createTextureMap('map', 
     {
-      layers: [new TileLayer({ 
-        source: new XYZ({                                           //Here we demonstrate overriding the default OpenStreetMap tile provider with a custom provider
+      layers: [new TileLayer({
+        source: new XYZ({
           crossOrigin: 'anonymous',                                 //Required
-          urls: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"]  //Change these urls to your favorite tile provider that you have permission to use, here we still use OSM since it is free
-        })                                                          //You can easily find these online by searching "XYZ tile providers"
+          urls: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png']  //Update the urls array with an XYZ tile provider of your choice
+        })
       })],
       mapHeight: 1000,                                                                                                      
       mapWidth: 1000
     });
-  let map = textureMap.map;
 
+  //Get the OpenLayers map object from the prefab which we will need to customize its settings
+  let map = textureMap.map;
   //Get the center lon/lat of our dataset
   let center = [
     (Math.min(...data.map(d => d.longitude)) + Math.max(...data.map(d => d.longitude))) / 2,
     (Math.min(...data.map(d => d.latitude)) + Math.max(...data.map(d => d.latitude))) / 2
   ];
-
-  //Position and zoom map
+  //Change the view parameters of the map to focus on our calculated center
   map.getView().setCenter(center);
   map.getView().setZoom(17);
+  
 
-  //After the map has finished loading, render our trajectory
+  //To help create our trajectory, the Texture Map prefab generates scale functions for us to convert lon/lat to positions in Babylon's coordinate space
+  let scaleLon = textureMap.scaleLon;
+  let scaleLat = textureMap.scaleLat;
+  //Create a D3 scale for altitude, our dataset uses sea level so here we'll treat the minimum altitude value as ground level
+  let scaleAlt = d3.scaleLinear().domain([Math.min(...data.map(d => d.altitude)), Math.max(...data.map(d => d.altitude))]).range([0, 2]);
+  //Create a D3 scale for color, using Anu helper functions map scale outputs to Color3 objects based on the 'interpolateOrRd' palette from D3
+  let scaleC = d3.scaleSequential(anu.sequentialChromatic('OrRd').toColor3()).domain([0,Math.max(...data.map(d => d.velocity))]);
+
+  //Select our map object as a Selection object which will serve as our CoT
+  let chart = anu.selectName('map', scene);
+
+  //We want to render our trajectory after the map has finished loading, use OpenLayers' callback functions for this
+  //N.B: Texture Map's scale functions are only created after the map is fully rendered, so we need to use this callback regardless
   map.once('postrender', () => {
-      //Scales
-      let scaleLon = textureMap.scaleLon;     //Use the provided scales from Texture Map
-      let scaleLat = textureMap.scaleLat;     //You can replace these with other d3 scales for non-spatial data
-      let scaleAlt = d3.scaleLinear().domain([Math.min(...data.map(d => d.altitude)), Math.max(...data.map(d => d.altitude))]).range([0, 2]); //Altitude in our dataset is sea level, so the minimum altitude is the ground
-      let scaleC = d3.scaleSequential(anu.sequentialChromatic('OrRd').toColor3()).domain([0,Math.max(...data.map(d => d.velocity))])
+    //Create arrays for our flight path using our scales to convert data values to Vector3 coordinates and Color3 objects
+    let flightPath =  data.map(d => new BABYLON.Vector3(scaleLon([d.longitude, d.latitude]), scaleAlt(d.altitude), scaleLat([d.longitude, d.latitude])));
+    let flightColors = data.map(d => scaleC(d.velocity));
 
-      //Vector3 array of the trajectory
-      let flightPath = data.map(d => new Vector3(scaleLon([d.longitude, d.latitude]), scaleAlt(d.altitude), scaleLat([d.longitude, d.latitude])));
-      //Color3 array of the trajectory for each segment
-      let flightColors = data.map(d => scaleC(d.velocity));
-
-      //Create chart and trajectory
-      let CoT = anu.create("cot", "chart");
-      let chart = anu.selectName("chart", scene);  //Note that greased line works a little different since it has two options params one for mesh and one for material
-      let trajectories = chart.bind('greasedLine', { meshOptions: { points: (d) => d }, materialOptions: { useColors: true, colors: flightColors } }, [flightPath])     //Since we only have one trajectory, we can just pass in an array of Vector3 into the points parameter but lets use the data binding method just incase we want to do something with the data later
-      //   .run((d,n,i) => {                      //If you want to change the material properties after building the mesh use .run() to directly access the mesh 
-      //     n.greasedLineMaterial.useColors = true;      //See for customization options: https://doc.babylonjs.com/typedoc/interfaces/BABYLON.IGreasedLineMaterial
-      //     n.greasedLineMaterial.colors = flightColors;
-      // });
+    //Create a greasedLine as a child of our CoT using the flight path and colors we just calculated
+    let trajectories = chart.bind('greasedLine',
+                                  {
+                                    meshOptions: { points: flightPath },
+                                    materialOptions: { useColors: true, colors: flightColors }
+                                  });
   });
 
   return scene;

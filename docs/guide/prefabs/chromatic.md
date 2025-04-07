@@ -104,7 +104,7 @@ anu.sequentialChromatic(string | string[]).toColor3()
    <option v-for="material in materials" v-bind:value="material.name" :selected="selectedMaterial === material.name"  >{{ material.name }}</option>
   </select>
 
-  <select class="form-control" :required="true" @change="changeLocation" multiple size="5" v-model="selectedScheme">
+  <select class="form-control" :required="true" @change="changeLocation" multiple size="10" v-model="selectedScheme">
    <option v-for="scheme in schemeList" v-bind:value="scheme" :selected="selectedScheme === scheme" >{{ scheme }}</option>
   </select>
 

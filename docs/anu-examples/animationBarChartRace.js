@@ -2,27 +2,25 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import * as anu from '@jpmorganchase/anu';
+import * as BABYLON from '@babylonjs/core';
+import * as GUI from '@babylonjs/gui';
 import * as d3 from 'd3';
-import { Scene, HemisphericLight, ArcRotateCamera, StandardMaterial, Vector3, Color3 } from '@babylonjs/core';
-import * as gui from '@babylonjs/gui';
 import data from './data/category-brands.json' assert {type: 'json'}; //Data from https://interbrand.com/
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
 export function animationBarChartRace(engine) {
 
-  //Babylon boilerplate
-  const scene = new Scene(engine);
-  const light = new HemisphericLight('light1', new Vector3(0, 10, 0), scene);
-  light.intensity = 2;
-  const camera = new ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 3, new Vector3(1.5, 1, 0), scene);
+  //Create an empty Scene
+  const scene = new BABYLON.Scene(engine);
+  //Add some lighting
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, -10), scene);
+  //Add a camera that rotates around the origin and adjust its properties
+  const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(1.5, 1, 0), scene);
+  camera.position = new BABYLON.Vector3(1.5, 1, -3);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
-
-  //Create the chart's Center of Transformation
-  let CoT = anu.create("cot", "cot");
-  let chart = anu.selectName("cot", scene);
-
+  
   //Transform our data in the correct format
   //Based on and adapted from https://observablehq.com/@d3/bar-chart-race-explained by Mike Bostock
   let names = new Set(data.map(d => d.name));
@@ -55,11 +53,11 @@ export function animationBarChartRace(engine) {
   keyframes.push([new Date(kb), rank(name => b.get(name) || 0)]);
   //In our case, sort the companies alphabetically so that the n-th company in the list is always the same one
   keyframes.forEach(kf => kf[1] = kf[1].sort((a, b) => d3.ascending(a.name, b.name)));
-
   
-  //Create D3 scales
+  //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
   let scaleX = d3.scaleLinear().domain([0, Math.max(...keyframes[0][1].map(d => d.value))]).range([0, 3]);
   let scaleY = d3.scaleBand().domain(d3.range(topN + 1)).paddingInner(0.3).range([2, 0]);
+  //Do the same for color, same function as original example
   let scaleC = (d) => {
     const scale = d3.scaleOrdinal(d3.schemeTableau10);
     if (data.some(d => d.category !== undefined)) {
@@ -70,16 +68,22 @@ export function animationBarChartRace(engine) {
     return scale(d.name);
   };
 
-  //Bind our boxes and labels for the very first keyframe
+  //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
+  let CoT = anu.create('cot', 'cot');
+  //Select our CoT so that we have it as a Selection object
+  let chart = anu.selectName('cot', scene);
+
+  //Create box meshes as children of our CoT for each row of our data and set their visual encodings using method chaining for the very first keyframe
   let bars = chart.bind('box', { width: 1, height: 0.15, depth: 0.01 }, keyframes[0][1])
                   .positionX((d,n,i) => scaleX(d.value) / 2)
                   .scalingX((d,n,i) => scaleX(d.value))
                   .positionY((d,n,i) => scaleY(d.rank))
-                  .material((d,n,i) => new StandardMaterial(d.name + 'Mat'))
+                  .material((d,n,i) => new BABYLON.StandardMaterial(d.name + 'Mat'))
                   .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Companies not in the top N are transparent
-                  .diffuseColor((d,n,i) => Color3.FromHexString(scaleC(d)));
+                  .diffuseColor((d,n,i) => BABYLON.Color3.FromHexString(scaleC(d)));
 
-  let labels = chart.bind('planeText', { text: "0", size: 0.1, align: "right"}, keyframes[0][1])
+  //Create Plane Text prefabs as children of our CoT for each row of our data and set their visual encodings using method chaining for the very first keyframe
+  let labels = chart.bind('planeText', { text: '0', size: 0.1, align: 'right'}, keyframes[0][1])
                     .positionX((d,n,i) => scaleX(d.value) - 0.04)   //Offsets to neatly place bar label
                     .positionY((d,n,i) => scaleY(d.rank) - 0.0285)
                     .positionZ(-0.011); //Move slightly in-front of the box
@@ -94,14 +98,14 @@ export function animationBarChartRace(engine) {
   axesOptions.labelFormat.x = (v) => Number(v.toFixed(0)).toLocaleString();
   axesOptions.labelMargin.x = -0.125;
   axesOptions.label.y = false;
-  let axes = anu.createAxes('axes', scene, axesOptions);
+  let axes = anu.createAxes('myAxes', axesOptions);
 
   //Label for the current year at the bottom right
-  let yearLabel = anu.createPlaneText('yearLabel', { text: "0", size: 0.4, parent: chart });
-  yearLabel.position = new Vector3(2.7, 0.1, 0);
+  let yearLabel = anu.createPlaneText('yearLabel', { text: '0', size: 0.4, parent: chart });
+  yearLabel.position = new BABYLON.Vector3(2.7, 0.1, 0);
 
   let timestep = 0;     //Incremental counter to iterate through the keyframe array
-  let interval = 250;   //Time betwen keyframes in milliseconds
+  let interval = 250;   //Time between keyframes in milliseconds
 
   nextTimestep();
 
@@ -115,7 +119,7 @@ export function animationBarChartRace(engine) {
     scaleX = d3.scaleLinear().domain([0, Math.max(...keyframes[timestep][1].map(d => d.value))]).range([0, 3]);
 
     //Animate our bars
-    bars.prop("metadata.data", (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
+    bars.prop('metadata.data', (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
       .transition((d,n,i) => ({
         duration: interval,
         onAnimationEnd: () => {         //When the animation ends, call this function again to begin the animation for the next year
@@ -140,7 +144,7 @@ export function animationBarChartRace(engine) {
       });
     
     //Animate the labels
-    labels.prop("metadata.data", (d,n,i) => keyframes[timestep][1][i])
+    labels.prop('metadata.data', (d,n,i) => keyframes[timestep][1][i])
       .transition((d,n,i) => ({ duration: interval }))
       .tween((d,n,i) => {
         let textTween = d3.interpolateNumber(Number(n.text.split('\n').pop().replace(',', '')), d.value);
@@ -155,7 +159,7 @@ export function animationBarChartRace(engine) {
           //this every frame, therefore we only do it for those in the top N
           if (d.rank < topN) {
             n.isVisible = true;
-            n.updatePlaneText({ text: d.name + "\n" + Number(textTween(t).toFixed(0)).toLocaleString(), opacity: alphaTween(t) });
+            n.updatePlaneText({ text: d.name + '\n' + Number(textTween(t).toFixed(0)).toLocaleString(), opacity: alphaTween(t) });
           }
           else {
             n.isVisible = false;
@@ -166,22 +170,22 @@ export function animationBarChartRace(engine) {
     //Update the year
     yearLabel.text = keyframes[timestep][0].getFullYear();
     
-    //Update our axes with our new scaleX object which has the up-to-date domain
+    //Update the Axes and pass in transition options to enable an animation
     axesOptions.scale.x = scaleX;
-    axes.updateAxes(axesOptions, { duration: interval });   //Second param is transition options, setting a duration will interpolate axis changes
+    axes.updateAxes(axesOptions, { duration: interval });
   }
 
   //Create a button to restart the race
-  let advancedTexture = gui.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  let button = gui.Button.CreateSimpleButton("restartButton", "Restart");
+  let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+  let button = GUI.Button.CreateSimpleButton('restartButton', 'Restart');
   button.width = 0.1;
-  button.height = "40px";
+  button.height = '40px';
   button.cornerRadius = 2;
-  button.color = "white";
+  button.color = 'white';
   button.thickness = 4;
-  button.background = "blue";
-  button.top = "45%";
-  button.left = "42.5%";
+  button.background = 'blue';
+  button.top = '45%';
+  button.left = '42.5%';
   button.onPointerClickObservable.add(() => {
     //If the keyframes have been exhausted, we need to call nextTimestep() again
     if (timestep >= keyframes.length) {
@@ -194,7 +198,6 @@ export function animationBarChartRace(engine) {
     }
   });
   advancedTexture.addControl(button);
-  
   
   return scene;
 }

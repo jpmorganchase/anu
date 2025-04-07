@@ -21,6 +21,7 @@ layout: page
             <cardImg title="2D Scatter Plot" img="/anu/assets/example-images/scatterplot2D.png" link="/anu/examples/scatter_plot_2D"></cardImg>
             <cardImg title="2D Bar Chart" img="/anu/assets/example-images/barchart2D.png" link="/anu/examples/bar_chart_2D"></cardImg>
             <cardImg title="2D Line Chart" img="/anu/assets/example-images/linechart2D.png" link="/anu/examples/line_chart_2D"></cardImg>
+            <cardImg title="2D Area Chart" img="/anu/assets/example-images/areachart2D.png" link="/anu/examples/area_chart_2D"></cardImg>
         </div>
     </div>
     <div class='section'>
