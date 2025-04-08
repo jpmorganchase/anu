@@ -8,10 +8,6 @@ Skip the boring dialogue? Go to the [Getting Started](./getting_started) page!
 
 </div>
 
-## Project Status
-
-Anu is currently in Alpha version. This means that the library's syntax, methods, and functions are still very fluid. As a result, changes may not be backwards compatible with previous versions as we continue to develop and improve the library. This also means that now is the best time to contribute! See our [GitHub repository](https://github.com/jpmorganchase/anu) for more information about the current road map and how to contribute.
-
 
 ## Why the name Anu?
 

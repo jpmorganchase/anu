@@ -10,7 +10,7 @@ In this chapter we will walk through step-by-step how to build a 3D scatter plot
 
 #### Step 1: Create a CoT Selection. 
 
-We want to nest all the meshes in our scatterplot to one parent node so that is convenient to manage in our scene. Transform Nodes are a great for this purpose as they are empty light weight nodes that can apply transforms (position, scale, rotation, etc). Lets create a selection with a single transform node using bind(). 
+We want to nest all the meshes in our scatter plot to one parent node so that is convenient to manage in our scene. Transform Nodes are a great for this purpose as they are empty light weight nodes that can apply transforms (position, scale, rotation, etc). Lets create a selection with a single transform node using bind(). 
 
 ```js
 let cot = anu.bind('cot')

@@ -5,7 +5,7 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   ignoreDeadLinks: true,
-  head: [['link', { rel: 'icon', href: '/assets/favicon-32x32.png' }]],
+  head: [['link', { rel: 'icon', href: './assets/favicon.svg' }]],
   base: '/anu/',
   title: "Anu",
   description: "Immersive Visualizations with Data Drive Babylon",

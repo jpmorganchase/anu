@@ -30,11 +30,11 @@ ANU
 
 ### Test Code
 
-Our test examples used when developing Anu can be found in the ```anu-tests``` folder which contains a node app that is bundled using vite. To use this project navigate to the folder first build a local version of Anu as shown above, then navigate to the folder in your terminal and run ```npm install``` and then ```npm run dev```. This will launch a local host web-server that you can view the examples from by passing the example name you want to view in the url like so ```"http://localhost:XXX/anu/?example=myExample"```.
+Our test examples used when developing Anu can be found in the ```anu-examples``` folder which contains a node app that is bundled using vite. To use this project navigate to the folder first build a local version of Anu as shown above, then navigate to the folder in your terminal and run ```npm install``` and then ```npm run dev```. This will launch a local host web-server that you can view the examples from by passing the example name you want to view in the url like so ```"http://localhost:XXX/anu/?example=myExample"```.
 
 ```
 ANU
-└───anu-tests //Folder containing the tests node app
+└───anu-examples //Folder containing the tests node app
     └───data //The data used in the test examples
     └───examples //contains the example code organized by type
     |   main.js //contains the main logic of the app

@@ -14,11 +14,11 @@ The easiest way to contribute to Anu is to [open issues](https://github.com/jpmo
 If you would like to contribute changes directly to our code-base please follow our development flow as such. 
 
 1. Fork your own copy of the repo, and clone it locally. 
-2. Run ```npm install``` in both the root of the repo and in the "anu-tests" sub folder. 
-3. Create a new test example or use an existing test example in the "anu-tests" folder. 
-4. Import and add your test function to /anu-tests/main.js. 
-5. Run ``npm run dev`` in the "anu-test" folder, and navigate to your example url like so ```"http://localhost:XXX/anu/?example=myExample"```
-6. Make your code changes to the main library files under the "src" folder and run ```npm run build`` at the repo root to build changes. "anu-tests" is configured to use a local version of anu from the "dist" folder so your changes to Anu will be reflected in your test code once the build completes. 
+2. Run ```npm install``` in both the root of the repo and in the "anu-examples" sub folder. 
+3. Create a new test example or use an existing test example in the "anu-examples" folder. 
+4. Import and add your test function to /anu-examples/main.js. 
+5. Run ``npm run dev`` in the "anu-examples" folder, and navigate to your example url like so ```"http://localhost:XXX/anu/?example=myExample"```
+6. Make your code changes to the main library files under the "src" folder and run ```npm run build`` at the repo root to build changes. "anu-examples" is configured to use a local version of anu from the "dist" folder so your changes to Anu will be reflected in your test code once the build completes. 
 
 After making and testing you changes, you can open a pull-request to contribute your changes back to Anu. In general, please keep the scope of each pull-request down to a specific bug fix or feature you wish to contribute. Please be sure to include descriptions about what the contribution is and how we can go about testing your code. 
 

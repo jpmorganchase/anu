@@ -9,7 +9,7 @@ prepareCommands:
 
 
 ## Local Installation and Starter Template
-We recommend following the [Babylon + Vite](https://doc.babylonjs.com/guidedLearning/usingVite) guide to set-up your Babylonjs project.
+We recommend following the [Babylon + Vite](https://doc.babylonjs.com/guidedLearning/usingVite) guide to set-up your Babylon.js project.
 
 Once your project structure is up and running, install Anu.js by building it locally in a different file directory and linking it to your project.
 

@@ -8,6 +8,8 @@ import data from './data/cars.json' assert {type: 'json'};
 import HavokPhysics from "@babylonjs/havok";
 
 export async function imaxes(babylonEngine) {
+
+  //Initiate the havok physics plugin 
   const havokInstance = await HavokPhysics();
   const havokPlugin = new BABYLON.HavokPlugin(true, havokInstance);
 
@@ -20,6 +22,7 @@ export async function imaxes(babylonEngine) {
   camera.minZ = 0;
   camera.attachControl(true);
 
+  //Helper object to keep track of data types
   const key_types = {
     "Name": "string",
     "Miles_per_Gallon": "number",
@@ -32,21 +35,24 @@ export async function imaxes(babylonEngine) {
     "Origin": "string"
   };
 
+  //Storing each column in an array to bind to our axes
   let carsColumns = [];
   Object.keys(key_types).forEach(k => {
     carsColumns.push(data.map(d => d[k]));
   });
 
+  //Define the axes dimensions
   const axes_height = 1;
   const axes_diameter = 0.1;
 
+  //Create a ordinal color scale for the origin 
   let colorScale = d3.scaleOrdinal(anu.ordinalChromatic('d310').toColor4());
   let originList = data.map(d => d.Origin);
 
+  //Create a cylinder mesh for each dimension of our data to be our "imaxes"
   let imAxes = anu.bind("cylinder", { diameter: axes_diameter, height: axes_height }, carsColumns)
-    .name((d, n, i) => Object.keys(key_types)[i])
-    //.behavior((d,n,i) => new PointerDragBehavior({ dragPlaneNormal: Axis.X}))
-    .behavior((d, n, i) => {
+    .name((d, n, i) => Object.keys(key_types)[i]) //Set the name of each axes to it data dimension
+    .behavior((d, n, i) => {   //Attach the SixDof behavior to allow use to grab and move the axes
       let behavior = new BABYLON.SixDofDragBehavior();
       behavior.allowMultiPointer = true;
       behavior.faceCameraOnDragStart = true;
@@ -56,20 +62,26 @@ export async function imaxes(babylonEngine) {
       return behavior;
     });
 
+  //Create a material to visualize our colliders
   let colliderMat = new BABYLON.StandardMaterial('colliderMat');
   colliderMat.alpha = 0.1;
 
+  //Create a material for the histogram bars
   let barMaterial = new BABYLON.StandardMaterial("barMaterial");
   barMaterial.diffuseColor = BABYLON.Color3.Teal();
 
+  //Set a trigger group number if we want to filter out collisions
   const FILTER_GROUP_TRIGGER = 2;
 
+  //Move the axes into place, spaced out 1.5 meters from each other
   imAxes.positionX((d, n, i) => (i * 1.5) - 5).positionY(0.75);
 
+  //Create labels for each axis using plane text and assign that axis as the parent
   let labels = anu.bind("planeText", { text: (d) => d.replaceAll("_", " "), size: 0.25 }, Object.keys(key_types))
     .run((d, n, i) => n.parent = imAxes.selected[i])
     .positionY((axes_height / 2) + 0.1);
 
+  //Create a sphere mesh to act as a trigger. Assign and configure it as a physics aggregate
   let parallel_triggers = imAxes.bind("sphere", { diameter: axes_height + 0.25 })
     .material(colliderMat)
     .prop("isPickable", false)
@@ -86,6 +98,7 @@ export async function imaxes(babylonEngine) {
 
   let parallel_charts = [];
 
+  //Create an observer callback to react when the trigger is entered or exited
   const trigger_observer = havokPlugin.onTriggerCollisionObservable.add((collisionEvent) => {
     let name1 = collisionEvent.collider.transformNode.name.replace("_collider", "");
     let name2 = collisionEvent.collidedAgainst.transformNode.name.replace("_collider", "");
@@ -101,6 +114,7 @@ export async function imaxes(babylonEngine) {
     }
   });
 
+  //Helper function to dispose of the parallel coordinate plots when not needed
   function disposePara(name1, name2) {
     name1 = name1.replace("_collider", "");
     name2 = name2.replace("_collider", "");
@@ -122,10 +136,12 @@ export async function imaxes(babylonEngine) {
     }
   }
 
+  
   Object.keys(key_types).forEach(k => {
     createBarChart(k);
   });
 
+  //Helper function to generate the histogram for each axes
   function createBarChart(axesName) {
     axesName = axesName.replace("_collider", "");
     let axis = anu.selectName(axesName, scene);
@@ -182,6 +198,7 @@ export async function imaxes(babylonEngine) {
     anu.createAxes(axesName + "_hist_axis", scene, axisConfig);
   }
 
+  //Helper function to calculate the position of line points as the axes move. 
   let calcPoints = (data, mesh1, mesh2, scale1, scale2) => {
     let points = [];
     let position1 = mesh1.getAbsolutePosition();
@@ -195,6 +212,7 @@ export async function imaxes(babylonEngine) {
     return points;
   };
 
+  //Helper function that creates the parallel coordinate plots between two axes
   function createParallelCoords(axesName1, axesName2) {
 
     axesName1 = axesName1.replace("_collider", "");
@@ -267,12 +285,14 @@ export async function imaxes(babylonEngine) {
   return scene;
 }
 
+//Helper function that reduces the number of labels to add to an axes for parallel coordinates
 function evenDistributedSlice(arr, n) {
   if (n <= 0) return [];
   const step = (arr.length - 1) / Math.max(n - 1, 1);
   return Array.from({ length: n }, (_, i) => arr[Math.round(i * step)]);
 }
 
+//Helper function that checks if two axes are parallel to each other
 function checkOrientation(mesh1, mesh2) {
   // Get the world matrix of each mesh
   var worldMatrix1 = mesh1.getWorldMatrix();

@@ -47,8 +47,7 @@ Try setting the Y position of each node to its value of "goals" and the Z positi
 boxes.positionX( (d, n, i) => /* your function code */)
 ```
 
-Each box should now have its own unique position in our scene, and if you check the materials in our scene there are only three. 
-
+Each box should now have its own unique position in our scene.
 
 
 

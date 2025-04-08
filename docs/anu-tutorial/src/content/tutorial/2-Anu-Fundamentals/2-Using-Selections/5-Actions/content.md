@@ -10,7 +10,7 @@ While there are many ways to add interaction to our scenes, the easiest is with 
 
 #### Step 1: set a execute code action to our meshes
 
-Lets try this by adding an action to our scene that scales the shapes when we mouse over them, and undos it when we mouse out. 
+Lets try this by adding an action to our scene that scales the shapes when we mouse over them, and undoes it when we mouse out. 
 
 :::tip
 [list of actions](https://doc.babylonjs.com/features/featuresDeepDive/events/actions#available-actions)

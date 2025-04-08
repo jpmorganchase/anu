@@ -71,6 +71,7 @@
 - [\_userThinInstanceBuffersStorage](PlaneText.md#_userthininstancebuffersstorage)
 - [\_waitingData](PlaneText.md#_waitingdata)
 - [\_waitingMaterialId](PlaneText.md#_waitingmaterialid)
+- [\_waitingMorphTargetManagerId](PlaneText.md#_waitingmorphtargetmanagerid)
 - [\_waitingParentId](PlaneText.md#_waitingparentid)
 - [\_waitingParentInstanceIndex](PlaneText.md#_waitingparentinstanceindex)
 - [\_waitingParsedUniqueId](PlaneText.md#_waitingparseduniqueid)
@@ -82,6 +83,7 @@
 - [alwaysSelectAsActiveMesh](PlaneText.md#alwaysselectasactivemesh)
 - [animations](PlaneText.md#animations)
 - [cullingStrategy](PlaneText.md#cullingstrategy)
+- [customMarkAsDirty](PlaneText.md#custommarkasdirty)
 - [decalMap](PlaneText.md#decalmap)
 - [definedFacingForward](PlaneText.md#definedfacingforward)
 - [delayLoadState](PlaneText.md#delayloadstate)
@@ -355,6 +357,7 @@
 - [\_unFreeze](PlaneText.md#_unfreeze)
 - [\_updateBoundingInfo](PlaneText.md#_updateboundinginfo)
 - [\_updateCache](PlaneText.md#_updatecache)
+- [\_updateInstancedBuffers](PlaneText.md#_updateinstancedbuffers)
 - [\_updateNonUniformScalingState](PlaneText.md#_updatenonuniformscalingstate)
 - [\_updateSubMeshesBoundingInfo](PlaneText.md#_updatesubmeshesboundinginfo)
 - [addBehavior](PlaneText.md#addbehavior)
@@ -387,6 +390,7 @@
 - [createOrUpdateSubmeshesOctree](PlaneText.md#createorupdatesubmeshesoctree)
 - [deleteAnimationRange](PlaneText.md#deleteanimationrange)
 - [detachFromBone](PlaneText.md#detachfrombone)
+- [directRender](PlaneText.md#directrender)
 - [disableEdgesRendering](PlaneText.md#disableedgesrendering)
 - [disableFacetData](PlaneText.md#disablefacetdata)
 - [dispose](PlaneText.md#dispose)
@@ -480,6 +484,7 @@
 - [moveWithCollisions](PlaneText.md#movewithcollisions)
 - [normalizeToUnitCube](PlaneText.md#normalizetounitcube)
 - [optimizeIndices](PlaneText.md#optimizeindices)
+- [optimizeIndicesAsync](PlaneText.md#optimizeindicesasync)
 - [refreshBoundingInfo](PlaneText.md#refreshboundinginfo)
 - [registerAfterRender](PlaneText.md#registerafterrender)
 - [registerAfterWorldMatrixUpdate](PlaneText.md#registerafterworldmatrixupdate)
@@ -612,7 +617,7 @@ Mesh.constructor
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:26](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L26)
+[src/prefabs/Text/planeText.ts:26](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L26)
 
 ## Properties
 
@@ -628,7 +633,7 @@ Mesh.\_\_occlusionDataStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:79
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:68
 
 ___
 
@@ -656,7 +661,7 @@ Mesh.\_binaryInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:246
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:311
 
 ___
 
@@ -670,7 +675,7 @@ Mesh.\_bonesTransformMatrices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:527
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:528
 
 ___
 
@@ -684,7 +689,7 @@ Mesh.\_boundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:501
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:502
 
 ___
 
@@ -698,7 +703,7 @@ Mesh.\_boundingInfoIsDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:502
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:503
 
 ___
 
@@ -754,7 +759,7 @@ Mesh.\_creationDataStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:253
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:318
 
 ___
 
@@ -796,7 +801,7 @@ Mesh.\_delayInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:257
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:322
 
 ___
 
@@ -825,7 +830,7 @@ Mesh.\_delayLoadingFunction
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:259
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:324
 
 ___
 
@@ -853,7 +858,7 @@ Mesh.\_edgesRenderer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:498
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:499
 
 ___
 
@@ -867,7 +872,7 @@ Mesh.\_geometry
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:255
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:320
 
 ___
 
@@ -895,7 +900,7 @@ Mesh.\_instanceDataStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:268
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:333
 
 ___
 
@@ -909,7 +914,7 @@ Mesh.\_internalAbstractMeshDataInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:204
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:203
 
 ___
 
@@ -937,7 +942,7 @@ Mesh.\_intersectionsInProgress
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:511
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:512
 
 ___
 
@@ -993,7 +998,7 @@ Mesh.\_lightSources
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:515
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:516
 
 ___
 
@@ -1021,7 +1026,7 @@ Mesh.\_masterMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:500
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:501
 
 ___
 
@@ -1037,7 +1042,7 @@ Mesh.\_occlusionDataStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:84
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:73
 
 ___
 
@@ -1051,7 +1056,7 @@ Mesh.\_occlusionQuery
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:302
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:303
 
 ___
 
@@ -1065,13 +1070,13 @@ Mesh.\_originalBuilderSideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:274
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:339
 
 ___
 
 ### \_parentContainer
 
-• **\_parentContainer**: `AbstractScene`
+• **\_parentContainer**: `IAssetContainer`
 
 #### Inherited from
 
@@ -1181,7 +1186,7 @@ Mesh.\_renderId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:504
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:505
 
 ___
 
@@ -1227,7 +1232,7 @@ Mesh.\_renderingGroup
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:304
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:305
 
 ___
 
@@ -1269,7 +1274,7 @@ Mesh.\_shouldGenerateFlatShading
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:272
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:337
 
 ___
 
@@ -1285,7 +1290,7 @@ Mesh.\_showBoundingBox
 
 #### Defined in
 
-node_modules/@babylonjs/core/Rendering/boundingBoxRenderer.d.ts:29
+node_modules/@babylonjs/core/Rendering/boundingBoxRenderer.d.ts:31
 
 ___
 
@@ -1315,7 +1320,7 @@ Mesh.\_thinInstanceDataStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:270
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:335
 
 ___
 
@@ -1329,7 +1334,7 @@ Mesh.\_transformMatrixTexture
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:529
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:530
 
 ___
 
@@ -1343,7 +1348,7 @@ Mesh.\_unIndexed
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:513
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:514
 
 ___
 
@@ -1360,7 +1365,7 @@ Mesh.\_uniformBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:544
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:545
 
 ___
 
@@ -1384,7 +1389,7 @@ Mesh.\_userInstancedBuffersStorage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:280
+node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:285
 
 ___
 
@@ -1429,7 +1434,7 @@ Mesh.\_waitingData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:521
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:522
 
 ___
 
@@ -1443,7 +1448,21 @@ Mesh.\_waitingMaterialId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:206
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:205
+
+___
+
+### \_waitingMorphTargetManagerId
+
+• **\_waitingMorphTargetManagerId**: `number`
+
+#### Inherited from
+
+Mesh.\_waitingMorphTargetManagerId
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:207
 
 ___
 
@@ -1547,7 +1566,7 @@ Mesh.actionManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:445
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:446
 
 ___
 
@@ -1567,7 +1586,7 @@ Mesh.alphaIndex
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:316
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:317
 
 ___
 
@@ -1583,7 +1602,7 @@ Mesh.alwaysSelectAsActiveMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:436
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:437
 
 ___
 
@@ -1622,7 +1641,31 @@ Mesh.cullingStrategy
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:217
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:218
+
+___
+
+### customMarkAsDirty
+
+• **customMarkAsDirty**: () => `void`
+
+Allow user to specify custom mechanism for mark as dirty
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+Mesh.customMarkAsDirty
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:157
 
 ___
 
@@ -1654,7 +1697,7 @@ Mesh.definedFacingForward
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:300
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:301
 
 ___
 
@@ -1674,7 +1717,7 @@ Mesh.delayLoadState
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:233
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:298
 
 ___
 
@@ -1690,7 +1733,7 @@ Mesh.delayLoadingFile
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:244
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:309
 
 ___
 
@@ -1706,7 +1749,7 @@ Mesh.doNotSyncBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:440
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:441
 
 ___
 
@@ -1726,7 +1769,7 @@ Mesh.edgesColor
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:496
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:497
 
 ___
 
@@ -1758,7 +1801,7 @@ Mesh.edgesShareWithInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:278
+node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:283
 
 ___
 
@@ -1778,7 +1821,7 @@ Mesh.edgesWidth
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:491
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:492
 
 ___
 
@@ -1798,7 +1841,7 @@ Mesh.ellipsoid
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:450
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:451
 
 ___
 
@@ -1818,7 +1861,7 @@ Mesh.ellipsoidOffset
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:455
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:456
 
 ___
 
@@ -1834,7 +1877,7 @@ Mesh.enablePointerMoveEvents
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:352
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:353
 
 ___
 
@@ -1854,7 +1897,7 @@ Mesh.forceRenderingWhenOccluded
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:120
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:109
 
 ___
 
@@ -1890,7 +1933,7 @@ Mesh.ignoreCameraMaxZ
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:302
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:367
 
 ___
 
@@ -1951,7 +1994,7 @@ Mesh.instancedBuffers
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:305
+node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:310
 
 ___
 
@@ -1973,7 +2016,7 @@ Mesh.instances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:240
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:305
 
 ___
 
@@ -1993,7 +2036,7 @@ Mesh.isBlocker
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:348
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:349
 
 ___
 
@@ -2012,7 +2055,7 @@ Mesh.isNearGrabbable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:342
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:343
 
 ___
 
@@ -2028,7 +2071,7 @@ Mesh.isNearPickable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:335
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:336
 
 ___
 
@@ -2048,7 +2091,7 @@ Mesh.isOccluded
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:110
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:99
 
 ___
 
@@ -2068,7 +2111,7 @@ Mesh.isOcclusionQueryInProgress
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:115
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:104
 
 ___
 
@@ -2084,7 +2127,7 @@ Mesh.isPickable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:331
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:332
 
 ___
 
@@ -2114,7 +2157,7 @@ Mesh.name
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L22)
+[src/prefabs/Text/planeText.ts:22](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L22)
 
 ___
 
@@ -2136,7 +2179,7 @@ Mesh.occlusionQueryAlgorithmType
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:105
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:94
 
 ___
 
@@ -2157,7 +2200,7 @@ Mesh.occlusionRetryCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:90
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:79
 
 ___
 
@@ -2180,7 +2223,7 @@ Mesh.occlusionType
 
 #### Defined in
 
-node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:98
+node_modules/@babylonjs/core/Engines/AbstractEngine/abstractEngine.query.d.ts:87
 
 ___
 
@@ -2228,7 +2271,7 @@ Mesh.onCollideObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:284
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:285
 
 ___
 
@@ -2244,7 +2287,7 @@ Mesh.onCollisionPositionChangeObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:290
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:291
 
 ___
 
@@ -2296,7 +2339,7 @@ Mesh.onLODLevelSelection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:251
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:316
 
 ___
 
@@ -2312,7 +2355,7 @@ Mesh.onMaterialChangedObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:296
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:297
 
 ___
 
@@ -2329,7 +2372,7 @@ Mesh.onMeshReadyObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:199
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:264
 
 ___
 
@@ -2375,7 +2418,7 @@ Mesh.onRebuildObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:539
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:540
 
 ___
 
@@ -2385,7 +2428,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:24](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L24)
+[src/prefabs/Text/planeText.ts:24](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L24)
 
 ___
 
@@ -2401,7 +2444,7 @@ Mesh.outlineColor
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:390
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:391
 
 ___
 
@@ -2417,7 +2460,7 @@ Mesh.outlineWidth
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:392
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:393
 
 ___
 
@@ -2433,7 +2476,7 @@ Mesh.overlayAlpha
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:396
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:397
 
 ___
 
@@ -2449,7 +2492,7 @@ Mesh.overlayColor
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:394
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:395
 
 ___
 
@@ -2583,7 +2626,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L23)
+[src/prefabs/Text/planeText.ts:23](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L23)
 
 ___
 
@@ -2599,7 +2642,7 @@ Mesh.showBoundingBox
 
 #### Defined in
 
-node_modules/@babylonjs/core/Rendering/boundingBoxRenderer.d.ts:33
+node_modules/@babylonjs/core/Rendering/boundingBoxRenderer.d.ts:35
 
 ___
 
@@ -2615,7 +2658,7 @@ Mesh.showSubMeshesBoundingBox
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:344
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:345
 
 ___
 
@@ -2651,7 +2694,7 @@ Mesh.subMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:509
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:510
 
 ___
 
@@ -2734,7 +2777,7 @@ Mesh.useOctreeForCollisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:426
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:427
 
 ___
 
@@ -2750,7 +2793,7 @@ Mesh.useOctreeForPicking
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:424
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:425
 
 ___
 
@@ -2766,7 +2809,7 @@ Mesh.useOctreeForRenderingSelection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:422
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:423
 
 ___
 
@@ -2782,7 +2825,7 @@ Mesh.BACKSIDE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:105
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:170
 
 ___
 
@@ -2798,7 +2841,7 @@ Mesh.BOTTOM
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:177
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:242
 
 ___
 
@@ -2830,7 +2873,7 @@ Mesh.CAP\_ALL
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:129
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:194
 
 ___
 
@@ -2846,7 +2889,7 @@ Mesh.CAP\_END
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:125
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:190
 
 ___
 
@@ -2862,7 +2905,7 @@ Mesh.CAP\_START
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:121
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:186
 
 ___
 
@@ -2878,7 +2921,7 @@ Mesh.CENTER
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:161
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:226
 
 ___
 
@@ -2898,7 +2941,7 @@ Mesh.CULLINGSTRATEGY\_BOUNDINGSPHERE\_ONLY
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:168
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:167
 
 ___
 
@@ -2921,7 +2964,7 @@ Mesh.CULLINGSTRATEGY\_OPTIMISTIC\_INCLUSION
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:178
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:177
 
 ___
 
@@ -2944,7 +2987,7 @@ Mesh.CULLINGSTRATEGY\_OPTIMISTIC\_INCLUSION\_THEN\_BSPHERE\_ONLY
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:188
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:187
 
 ___
 
@@ -2964,7 +3007,7 @@ Mesh.CULLINGSTRATEGY\_STANDARD
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:161
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:160
 
 ___
 
@@ -2980,7 +3023,7 @@ Mesh.DEFAULTSIDE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:113
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:178
 
 ___
 
@@ -2996,7 +3039,7 @@ Mesh.DOUBLESIDE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:109
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:174
 
 ___
 
@@ -3012,7 +3055,7 @@ Mesh.FLIP\_N\_ROTATE\_ROW
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:157
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:222
 
 ___
 
@@ -3028,7 +3071,7 @@ Mesh.FLIP\_N\_ROTATE\_TILE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:153
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:218
 
 ___
 
@@ -3044,7 +3087,7 @@ Mesh.FLIP\_ROW
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:145
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:210
 
 ___
 
@@ -3060,7 +3103,7 @@ Mesh.FLIP\_TILE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:137
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:202
 
 ___
 
@@ -3076,7 +3119,7 @@ Mesh.FRONTSIDE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:101
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:166
 
 ___
 
@@ -3092,7 +3135,7 @@ Mesh.INSTANCEDMESH\_SORT\_TRANSPARENT
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:181
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:246
 
 ___
 
@@ -3108,7 +3151,7 @@ Mesh.LEFT
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:165
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:230
 
 ___
 
@@ -3124,7 +3167,7 @@ Mesh.NO\_CAP
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:117
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:182
 
 ___
 
@@ -3140,7 +3183,7 @@ Mesh.NO\_FLIP
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:133
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:198
 
 ___
 
@@ -3156,7 +3199,7 @@ Mesh.OCCLUSION\_ALGORITHM\_TYPE\_ACCURATE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:152
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:151
 
 ___
 
@@ -3172,7 +3215,7 @@ Mesh.OCCLUSION\_ALGORITHM\_TYPE\_CONSERVATIVE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:154
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:153
 
 ___
 
@@ -3188,7 +3231,7 @@ Mesh.OCCLUSION\_TYPE\_NONE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:146
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:145
 
 ___
 
@@ -3204,7 +3247,7 @@ Mesh.OCCLUSION\_TYPE\_OPTIMISTIC
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:148
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:147
 
 ___
 
@@ -3220,7 +3263,7 @@ Mesh.OCCLUSION\_TYPE\_STRICT
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:150
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:149
 
 ___
 
@@ -3236,7 +3279,7 @@ Mesh.RIGHT
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:169
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:234
 
 ___
 
@@ -3252,7 +3295,7 @@ Mesh.ROTATE\_ROW
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:149
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:214
 
 ___
 
@@ -3268,7 +3311,7 @@ Mesh.ROTATE\_TILE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:141
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:206
 
 ___
 
@@ -3284,7 +3327,7 @@ Mesh.TOP
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:173
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:238
 
 ___
 
@@ -3343,7 +3386,7 @@ Mesh.\_GoldbergMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:979
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1065
 
 ___
 
@@ -3372,7 +3415,7 @@ Mesh.\_GreasedLineMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:987
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1073
 
 ___
 
@@ -3401,7 +3444,7 @@ Mesh.\_GreasedLineRibbonMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:991
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1077
 
 ___
 
@@ -3430,7 +3473,7 @@ Mesh.\_GroundMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:975
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1061
 
 ___
 
@@ -3459,7 +3502,7 @@ Mesh.\_LinesMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:983
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1069
 
 ___
 
@@ -3488,7 +3531,7 @@ Mesh.\_TrailMeshParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:995
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1081
 
 ## Accessors
 
@@ -3506,7 +3549,7 @@ Mesh.\_isMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:355
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:427
 
 ___
 
@@ -3524,7 +3567,7 @@ Mesh.\_positions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:844
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:930
 
 ___
 
@@ -3545,7 +3588,7 @@ Mesh.absolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:185
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:190
 
 ___
 
@@ -3566,7 +3609,7 @@ Mesh.absoluteRotationQuaternion
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:195
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:200
 
 ___
 
@@ -3587,7 +3630,7 @@ Mesh.absoluteScaling
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:190
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:195
 
 ___
 
@@ -3633,15 +3676,15 @@ ___
 
 ### align
 
-• `get` **align**(): ``"center"`` \| ``"left"`` \| ``"right"``
+• `get` **align**(): ``"left"`` \| ``"right"`` \| ``"center"``
 
 #### Returns
 
-``"center"`` \| ``"left"`` \| ``"right"``
+``"left"`` \| ``"right"`` \| ``"center"``
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:89](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L89)
+[src/prefabs/Text/planeText.ts:89](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L89)
 
 • `set` **align**(`newAlign`): `void`
 
@@ -3649,7 +3692,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `newAlign` | ``"center"`` \| ``"left"`` \| ``"right"`` |
+| `newAlign` | ``"left"`` \| ``"right"`` \| ``"center"`` |
 
 #### Returns
 
@@ -3657,7 +3700,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:92](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L92)
+[src/prefabs/Text/planeText.ts:92](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L92)
 
 ___
 
@@ -3717,7 +3760,7 @@ Mesh.applyFog
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:416
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:417
 
 • `set` **applyFog**(`value`): `void`
 
@@ -3737,7 +3780,7 @@ Mesh.applyFog
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:417
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:418
 
 ___
 
@@ -3757,7 +3800,7 @@ Mesh.areNormalsFrozen
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:528
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:600
 
 ___
 
@@ -3771,7 +3814,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:73](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L73)
+[src/prefabs/Text/planeText.ts:73](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L73)
 
 • `set` **atlas**(`newAtlas`): `void`
 
@@ -3787,7 +3830,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:76](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L76)
+[src/prefabs/Text/planeText.ts:76](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L76)
 
 ___
 
@@ -3811,7 +3854,7 @@ Mesh.bakedVertexAnimationManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:270
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:271
 
 • `set` **bakedVertexAnimationManager**(`value`): `void`
 
@@ -3831,7 +3874,7 @@ Mesh.bakedVertexAnimationManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:271
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:272
 
 ___
 
@@ -3927,7 +3970,7 @@ Mesh.checkCollisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:914
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:916
 
 • `set` **checkCollisions**(`collisionEnabled`): `void`
 
@@ -3947,7 +3990,7 @@ Mesh.checkCollisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:915
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:917
 
 ___
 
@@ -3969,7 +4012,7 @@ Mesh.cloneMeshMap
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:312
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:377
 
 ___
 
@@ -3993,7 +4036,7 @@ Mesh.collider
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:920
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:922
 
 ___
 
@@ -4014,7 +4057,7 @@ Mesh.collisionGroup
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:474
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:475
 
 • `set` **collisionGroup**(`mask`): `void`
 
@@ -4034,7 +4077,7 @@ Mesh.collisionGroup
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:475
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:476
 
 ___
 
@@ -4055,7 +4098,7 @@ Mesh.collisionMask
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:460
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:461
 
 • `set` **collisionMask**(`mask`): `void`
 
@@ -4075,7 +4118,7 @@ Mesh.collisionMask
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:461
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:462
 
 ___
 
@@ -4098,7 +4141,7 @@ Mesh.collisionResponse
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:468
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:469
 
 • `set` **collisionResponse**(`response`): `void`
 
@@ -4118,7 +4161,7 @@ Mesh.collisionResponse
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:469
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:470
 
 ___
 
@@ -4138,7 +4181,7 @@ Mesh.collisionRetryCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:253
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:254
 
 • `set` **collisionRetryCount**(`retryCount`): `void`
 
@@ -4158,7 +4201,7 @@ Mesh.collisionRetryCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:254
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:255
 
 ___
 
@@ -4172,7 +4215,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:48](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L48)
+[src/prefabs/Text/planeText.ts:48](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L48)
 
 • `set` **color**(`newColor`): `void`
 
@@ -4188,7 +4231,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:52](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L52)
+[src/prefabs/Text/planeText.ts:52](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L52)
 
 ___
 
@@ -4206,7 +4249,7 @@ Mesh.computeBonesUsingShaders
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:200
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:265
 
 • `set` **computeBonesUsingShaders**(`value`): `void`
 
@@ -4226,7 +4269,7 @@ Mesh.computeBonesUsingShaders
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:201
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:266
 
 ___
 
@@ -4286,7 +4329,7 @@ Mesh.enableDistantPicking
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:419
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:420
 
 • `set` **enableDistantPicking**(`value`): `void`
 
@@ -4306,7 +4349,7 @@ Mesh.enableDistantPicking
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:420
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:421
 
 ___
 
@@ -4332,7 +4375,7 @@ Mesh.facetDepthSortFrom
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:250
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:251
 
 • `set` **facetDepthSortFrom**(`location`): `void`
 
@@ -4352,7 +4395,7 @@ Mesh.facetDepthSortFrom
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:251
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:252
 
 ___
 
@@ -4376,7 +4419,7 @@ Mesh.facetNb
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:222
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:223
 
 ___
 
@@ -4390,7 +4433,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L65)
+[src/prefabs/Text/planeText.ts:65](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L65)
 
 • `set` **font**(`newFont`): `void`
 
@@ -4406,7 +4449,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:68](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L68)
+[src/prefabs/Text/planeText.ts:68](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L68)
 
 ___
 
@@ -4420,7 +4463,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:97](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L97)
+[src/prefabs/Text/planeText.ts:97](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L97)
 
 • `set` **fontHeight**(`newFontHeight`): `void`
 
@@ -4436,7 +4479,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:100](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L100)
+[src/prefabs/Text/planeText.ts:100](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L100)
 
 ___
 
@@ -4456,7 +4499,7 @@ Mesh.forceWorldMatrixInstancedBufferUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:331
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:396
 
 • `set` **forceWorldMatrixInstancedBufferUpdate**(`value`): `void`
 
@@ -4476,7 +4519,7 @@ Mesh.forceWorldMatrixInstancedBufferUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:332
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:397
 
 ___
 
@@ -4498,7 +4541,7 @@ Mesh.forcedInstanceCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:265
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:330
 
 • `set` **forcedInstanceCount**(`count`): `void`
 
@@ -4518,7 +4561,7 @@ Mesh.forcedInstanceCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:266
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:331
 
 ___
 
@@ -4538,7 +4581,7 @@ Mesh.forward
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:157
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:162
 
 ___
 
@@ -4558,7 +4601,7 @@ Mesh.geometry
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:410
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:482
 
 ___
 
@@ -4578,7 +4621,7 @@ Mesh.hasBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:738
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:740
 
 ___
 
@@ -4596,7 +4639,7 @@ Mesh.hasInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:227
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:292
 
 ___
 
@@ -4616,7 +4659,7 @@ Mesh.hasLODLevels
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:367
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:439
 
 ___
 
@@ -4634,7 +4677,7 @@ Mesh.hasThinInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:228
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:293
 
 ___
 
@@ -4656,7 +4699,7 @@ Mesh.hasVertexAlpha
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:402
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:403
 
 • `set` **hasVertexAlpha**(`value`): `void`
 
@@ -4676,7 +4719,7 @@ Mesh.hasVertexAlpha
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:403
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:404
 
 ___
 
@@ -4736,7 +4779,7 @@ Mesh.inheritVisibility
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:320
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:321
 
 • `set` **inheritVisibility**(`value`): `void`
 
@@ -4756,7 +4799,7 @@ Mesh.inheritVisibility
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:321
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:322
 
 ___
 
@@ -4776,7 +4819,7 @@ Mesh.isAnInstance
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:783
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:785
 
 ___
 
@@ -4794,7 +4837,7 @@ Mesh.isBlocked
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:517
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:589
 
 ___
 
@@ -4818,7 +4861,7 @@ Mesh.isFacetDataEnabled
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:259
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:260
 
 ___
 
@@ -4838,7 +4881,7 @@ Mesh.isUnIndexed
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:318
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:383
 
 • `set` **isUnIndexed**(`value`): `void`
 
@@ -4858,7 +4901,7 @@ Mesh.isUnIndexed
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:319
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:384
 
 ___
 
@@ -4878,7 +4921,7 @@ Mesh.isVisible
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:326
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:327
 
 • `set` **isVisible**(`value`): `void`
 
@@ -4898,7 +4941,7 @@ Mesh.isVisible
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:327
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:328
 
 ___
 
@@ -4918,7 +4961,7 @@ Mesh.isWorldMatrixFrozen
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:241
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:246
 
 ___
 
@@ -4942,7 +4985,7 @@ Mesh.layerMask
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:431
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:432
 
 • `set` **layerMask**(`value`): `void`
 
@@ -4962,7 +5005,7 @@ Mesh.layerMask
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:432
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:433
 
 ___
 
@@ -4982,7 +5025,7 @@ Mesh.lightSources
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:517
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:518
 
 ___
 
@@ -5002,7 +5045,7 @@ Mesh.manualUpdateOfPreviousWorldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:328
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:393
 
 • `set` **manualUpdateOfPreviousWorldMatrixInstancedBuffer**(`value`): `void`
 
@@ -5022,7 +5065,7 @@ Mesh.manualUpdateOfPreviousWorldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:329
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:394
 
 ___
 
@@ -5042,7 +5085,7 @@ Mesh.manualUpdateOfWorldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:325
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:390
 
 • `set` **manualUpdateOfWorldMatrixInstancedBuffer**(`value`): `void`
 
@@ -5062,7 +5105,7 @@ Mesh.manualUpdateOfWorldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:326
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:391
 
 ___
 
@@ -5080,7 +5123,7 @@ Mesh.material
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:293
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:358
 
 • `set` **material**(`value`): `void`
 
@@ -5100,7 +5143,7 @@ Mesh.material
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:294
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:359
 
 ___
 
@@ -5124,7 +5167,7 @@ Mesh.morphTargetManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:264
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:265
 
 • `set` **morphTargetManager**(`value`): `void`
 
@@ -5144,7 +5187,7 @@ Mesh.morphTargetManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:265
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:266
 
 ___
 
@@ -5170,7 +5213,7 @@ Mesh.mustDepthSortFacets
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:242
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:243
 
 • `set` **mustDepthSortFacets**(`sort`): `void`
 
@@ -5190,7 +5233,7 @@ Mesh.mustDepthSortFacets
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:243
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:244
 
 ___
 
@@ -5210,7 +5253,7 @@ Mesh.nonUniformScaling
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:372
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:380
 
 ___
 
@@ -5230,7 +5273,7 @@ Mesh.numBoneInfluencers
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:413
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:414
 
 • `set` **numBoneInfluencers**(`value`): `void`
 
@@ -5250,7 +5293,7 @@ Mesh.numBoneInfluencers
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:414
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:415
 
 ___
 
@@ -5270,7 +5313,7 @@ Mesh.onAfterRenderObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:213
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:278
 
 ___
 
@@ -5290,7 +5333,7 @@ Mesh.onBeforeBindObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:209
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:274
 
 ___
 
@@ -5316,7 +5359,7 @@ Mesh.onBeforeDraw
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:226
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:291
 
 ___
 
@@ -5336,7 +5379,7 @@ Mesh.onBeforeDrawObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:221
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:286
 
 ___
 
@@ -5356,7 +5399,7 @@ Mesh.onBeforeRenderObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:205
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:270
 
 ___
 
@@ -5376,7 +5419,7 @@ Mesh.onBetweenPassObservable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:217
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:282
 
 ___
 
@@ -5422,7 +5465,7 @@ Mesh.onCollide
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:286
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:287
 
 ___
 
@@ -5448,7 +5491,7 @@ Mesh.onCollisionPositionChange
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:292
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:293
 
 ___
 
@@ -5508,7 +5551,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:81](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L81)
+[src/prefabs/Text/planeText.ts:81](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L81)
 
 • `set` **opacity**(`newOpacity`): `void`
 
@@ -5524,7 +5567,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:84](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L84)
+[src/prefabs/Text/planeText.ts:84](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L84)
 
 ___
 
@@ -5550,7 +5593,7 @@ Mesh.overrideMaterialSideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:286
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:351
 
 • `set` **overrideMaterialSideOrientation**(`value`): `void`
 
@@ -5570,7 +5613,7 @@ Mesh.overrideMaterialSideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:287
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:352
 
 ___
 
@@ -5590,7 +5633,7 @@ Mesh.overrideRenderingFillMode
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:291
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:356
 
 • `set` **overrideRenderingFillMode**(`fillMode`): `void`
 
@@ -5610,7 +5653,7 @@ Mesh.overrideRenderingFillMode
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:292
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:357
 
 ___
 
@@ -5636,7 +5679,7 @@ Mesh.overridenInstanceCount
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:542
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:614
 
 ___
 
@@ -5705,7 +5748,7 @@ Mesh.partitioningBBoxRatio
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:234
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:235
 
 • `set` **partitioningBBoxRatio**(`ratio`): `void`
 
@@ -5725,7 +5768,7 @@ Mesh.partitioningBBoxRatio
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:235
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:236
 
 ___
 
@@ -5749,7 +5792,7 @@ Mesh.partitioningSubdivisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:227
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:228
 
 • `set` **partitioningSubdivisions**(`nb`): `void`
 
@@ -5769,7 +5812,7 @@ Mesh.partitioningSubdivisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:228
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:229
 
 ___
 
@@ -5791,7 +5834,7 @@ Mesh.pointerOverDisableMeshTesting
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:358
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:359
 
 • `set` **pointerOverDisableMeshTesting**(`disable`): `void`
 
@@ -5811,7 +5854,7 @@ Mesh.pointerOverDisableMeshTesting
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:359
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:360
 
 ___
 
@@ -5912,7 +5955,7 @@ Mesh.previousWorldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:323
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:388
 
 ___
 
@@ -5930,7 +5973,7 @@ Mesh.rawBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:279
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:280
 
 • `set` **rawBoundingInfo**(`boundingInfo`): `void`
 
@@ -5950,7 +5993,7 @@ Mesh.rawBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:280
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:281
 
 ___
 
@@ -5974,7 +6017,7 @@ Mesh.receiveShadows
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:387
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:388
 
 • `set` **receiveShadows**(`value`): `void`
 
@@ -5994,7 +6037,7 @@ Mesh.receiveShadows
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:388
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:389
 
 ___
 
@@ -6018,7 +6061,7 @@ Mesh.renderingGroupId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:364
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:365
 
 • `set` **renderingGroupId**(`value`): `void`
 
@@ -6038,7 +6081,7 @@ Mesh.renderingGroupId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:365
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:366
 
 ___
 
@@ -6058,7 +6101,7 @@ Mesh.right
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:165
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:170
 
 ___
 
@@ -6202,7 +6245,7 @@ Mesh.sideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:280
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:345
 
 • `set` **sideOrientation**(`value`): `void`
 
@@ -6222,7 +6265,7 @@ Mesh.sideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:281
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:346
 
 ___
 
@@ -6236,7 +6279,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:57](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L57)
+[src/prefabs/Text/planeText.ts:57](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L57)
 
 • `set` **size**(`newSize`): `void`
 
@@ -6252,7 +6295,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:60](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L60)
+[src/prefabs/Text/planeText.ts:60](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L60)
 
 ___
 
@@ -6270,7 +6313,7 @@ Mesh.skeleton
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:535
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:536
 
 • `set` **skeleton**(`value`): `void`
 
@@ -6296,7 +6339,7 @@ Mesh.skeleton
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:534
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:535
 
 ___
 
@@ -6316,7 +6359,7 @@ Mesh.source
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:306
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:371
 
 ___
 
@@ -6342,7 +6385,7 @@ Mesh.surroundingMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:485
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:486
 
 • `set` **surroundingMeshes**(`meshes`): `void`
 
@@ -6362,7 +6405,7 @@ Mesh.surroundingMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:486
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:487
 
 ___
 
@@ -6376,7 +6419,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:40](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L40)
+[src/prefabs/Text/planeText.ts:40](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L40)
 
 • `set` **text**(`newText`): `void`
 
@@ -6392,7 +6435,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:43](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L43)
+[src/prefabs/Text/planeText.ts:43](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L43)
 
 ___
 
@@ -6412,7 +6455,7 @@ Mesh.up
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:161
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:166
 
 ___
 
@@ -6432,7 +6475,7 @@ Mesh.useBones
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:756
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:758
 
 ___
 
@@ -6452,7 +6495,7 @@ Mesh.useLODScreenCoverage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:193
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:258
 
 • `set` **useLODScreenCoverage**(`value`): `void`
 
@@ -6472,7 +6515,7 @@ Mesh.useLODScreenCoverage
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:194
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:259
 
 ___
 
@@ -6492,7 +6535,7 @@ Mesh.useVertexColors
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:405
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:406
 
 • `set` **useVertexColors**(`value`): `void`
 
@@ -6512,7 +6555,7 @@ Mesh.useVertexColors
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:406
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:407
 
 ___
 
@@ -6532,7 +6575,7 @@ Mesh.visibility
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:308
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:309
 
 • `set` **visibility**(`value`): `void`
 
@@ -6554,7 +6597,7 @@ Mesh.visibility
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:312
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:313
 
 ___
 
@@ -6595,7 +6638,7 @@ Mesh.worldMatrixInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:321
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:386
 
 ___
 
@@ -6615,7 +6658,7 @@ Mesh.BILLBOARDMODE\_ALL
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:200
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:199
 
 ___
 
@@ -6635,7 +6678,7 @@ Mesh.BILLBOARDMODE\_NONE
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:192
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:191
 
 ___
 
@@ -6655,7 +6698,7 @@ Mesh.BILLBOARDMODE\_USE\_POSITION
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:202
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:201
 
 ___
 
@@ -6675,7 +6718,7 @@ Mesh.BILLBOARDMODE\_X
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:194
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:193
 
 ___
 
@@ -6695,7 +6738,7 @@ Mesh.BILLBOARDMODE\_Y
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:196
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:195
 
 ___
 
@@ -6715,7 +6758,7 @@ Mesh.BILLBOARDMODE\_Z
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:198
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:197
 
 ## Methods
 
@@ -6740,7 +6783,7 @@ Mesh.\_activate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:766
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:768
 
 ___
 
@@ -6776,7 +6819,7 @@ Mesh.\_afterComputeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:553
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:625
 
 ___
 
@@ -6803,7 +6846,7 @@ Mesh.\_bind
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:702
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:775
 
 ___
 
@@ -6829,7 +6872,7 @@ Mesh.\_bindDirect
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:706
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:779
 
 ___
 
@@ -6847,7 +6890,7 @@ Mesh.\_buildUniformLayout
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:551
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:552
 
 ___
 
@@ -6871,7 +6914,7 @@ Mesh.\_checkCollision
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:942
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:944
 
 ___
 
@@ -6889,7 +6932,7 @@ Mesh.\_checkDelayState
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:803
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:888
 
 ___
 
@@ -6907,7 +6950,7 @@ Mesh.\_checkOcclusionQuery
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1106
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1114
 
 ___
 
@@ -6933,13 +6976,13 @@ Mesh.\_collideForSubMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:932
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:934
 
 ___
 
 ### \_copySource
 
-▸ **_copySource**(`source`, `doNotCloneChildren?`, `clonePhysicsImpostor?`): `void`
+▸ **_copySource**(`source`, `doNotCloneChildren?`, `clonePhysicsImpostor?`, `cloneThinInstances?`): `void`
 
 #### Parameters
 
@@ -6948,6 +6991,7 @@ ___
 | `source` | `Mesh` |
 | `doNotCloneChildren?` | `boolean` |
 | `clonePhysicsImpostor?` | `boolean` |
+| `cloneThinInstances?` | `boolean` |
 
 #### Returns
 
@@ -6959,7 +7003,7 @@ Mesh.\_copySource
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:333
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:398
 
 ___
 
@@ -6983,7 +7027,7 @@ Mesh.\_createGlobalSubMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:567
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:639
 
 ___
 
@@ -7001,7 +7045,7 @@ Mesh.\_disposeInstanceSpecificData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:866
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:952
 
 ___
 
@@ -7019,7 +7063,7 @@ Mesh.\_disposeThinInstanceSpecificData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:868
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:954
 
 ___
 
@@ -7045,7 +7089,7 @@ Mesh.\_draw
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:710
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:783
 
 ___
 
@@ -7063,7 +7107,7 @@ Mesh.\_freeze
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:760
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:838
 
 ___
 
@@ -7081,7 +7125,7 @@ Mesh.\_generatePointsArray
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:848
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:934
 
 ___
 
@@ -7106,7 +7150,7 @@ Mesh.\_getActionManagerForTrigger
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:580
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:581
 
 ___
 
@@ -7132,7 +7176,7 @@ Mesh.\_getData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:858
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:860
 
 ___
 
@@ -7176,7 +7220,7 @@ Mesh.\_getEffectiveParent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:576
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:577
 
 ___
 
@@ -7201,7 +7245,7 @@ Mesh.\_getInstancesRenderList
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:738
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:811
 
 ___
 
@@ -7225,7 +7269,7 @@ Mesh.\_getRenderingFillMode
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1072
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1158
 
 ___
 
@@ -7243,7 +7287,7 @@ Mesh.\_getWorldMatrixDeterminant
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:779
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:781
 
 ___
 
@@ -7261,7 +7305,7 @@ Mesh.\_initCache
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:180
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:185
 
 ___
 
@@ -7281,7 +7325,7 @@ Mesh.\_invalidateInstanceVertexArrayObject
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:274
+node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:279
 
 ___
 
@@ -7299,7 +7343,7 @@ Mesh.\_isSynchronized
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:178
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:183
 
 ___
 
@@ -7317,7 +7361,7 @@ Mesh.\_markSubMeshesAsAttributesDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:603
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:604
 
 ___
 
@@ -7341,7 +7385,7 @@ Mesh.\_markSubMeshesAsLightDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:601
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:602
 
 ___
 
@@ -7359,7 +7403,7 @@ Mesh.\_markSubMeshesAsMiscDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:605
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:606
 
 ___
 
@@ -7395,7 +7439,7 @@ Mesh.\_postActivate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:555
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:627
 
 ___
 
@@ -7413,7 +7457,7 @@ Mesh.\_preActivate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:544
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:616
 
 ___
 
@@ -7437,7 +7481,7 @@ Mesh.\_preActivateForIntermediateRendering
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:548
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:620
 
 ___
 
@@ -7462,7 +7506,7 @@ Mesh.\_processCollisionsForSubMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:936
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:938
 
 ___
 
@@ -7487,7 +7531,7 @@ Mesh.\_processInstancedBuffers
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:750
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:828
 
 ___
 
@@ -7518,7 +7562,7 @@ Mesh.\_processRendering
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:754
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:832
 
 ___
 
@@ -7542,7 +7586,7 @@ Mesh.\_rebuild
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:758
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:836
 
 ___
 
@@ -7567,7 +7611,7 @@ Mesh.\_refreshBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:848
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:850
 
 ___
 
@@ -7593,7 +7637,7 @@ Mesh.\_refreshBoundingInfoDirect
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:852
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:854
 
 ___
 
@@ -7618,7 +7662,7 @@ Mesh.\_registerInstanceForRenderId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:552
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:624
 
 ___
 
@@ -7661,7 +7705,7 @@ Mesh.\_removeLightSource
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:596
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:597
 
 ___
 
@@ -7689,7 +7733,7 @@ Mesh.\_renderWithInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:742
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:820
 
 ___
 
@@ -7716,7 +7760,7 @@ Mesh.\_renderWithThinInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:746
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:824
 
 ___
 
@@ -7734,7 +7778,7 @@ Mesh.\_resetPointsArrayCache
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:846
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:932
 
 ___
 
@@ -7758,7 +7802,7 @@ Mesh.\_resyncLightSource
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:590
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:591
 
 ___
 
@@ -7776,7 +7820,7 @@ Mesh.\_resyncLightSources
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:586
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:587
 
 ___
 
@@ -7824,7 +7868,7 @@ Mesh.\_setMaterial
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:370
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:371
 
 ___
 
@@ -7866,7 +7910,7 @@ Mesh.\_shouldConvertRHS
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1070
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1156
 
 ___
 
@@ -7884,7 +7928,7 @@ Mesh.\_syncGeometryWithMorphTargetManager
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:971
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1057
 
 ___
 
@@ -8014,7 +8058,7 @@ Mesh.\_unBindEffect
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:363
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:435
 
 ___
 
@@ -8032,7 +8076,7 @@ Mesh.\_unFreeze
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:762
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:840
 
 ___
 
@@ -8050,7 +8094,7 @@ Mesh.\_updateBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:875
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:877
 
 ___
 
@@ -8078,6 +8122,37 @@ node_modules/@babylonjs/core/node.d.ts:248
 
 ___
 
+### \_updateInstancedBuffers
+
+▸ **_updateInstancedBuffers**(`subMesh`, `batch`, `currentInstancesBufferSize`, `engine`, `fillMode?`, `effect?`): `void`
+
+This method will also draw the instances if fillMode and effect are passed
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `subMesh` | `SubMesh` |
+| `batch` | `_InstancesBatch` |
+| `currentInstancesBufferSize` | `number` |
+| `engine` | `AbstractEngine` |
+| `fillMode?` | `number` |
+| `effect?` | `Effect` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Mesh.\_updateInstancedBuffers
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:816
+
+___
+
 ### \_updateNonUniformScalingState
 
 ▸ **_updateNonUniformScalingState**(`value`): `boolean`
@@ -8098,7 +8173,7 @@ Mesh.\_updateNonUniformScalingState
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:277
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:278
 
 ___
 
@@ -8122,7 +8197,7 @@ Mesh.\_updateSubMeshesBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:879
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:881
 
 ___
 
@@ -8163,7 +8238,9 @@ ___
 
 ▸ **addChild**(`mesh`, `preserveScalingSign?`): `this`
 
-Adds the passed mesh as a child to the current mesh
+Adds the passed mesh as a child to the current mesh.
+The node will remain exactly where it is and its position / rotation will be updated accordingly.
+This method is equivalent to calling setParent().
 
 #### Parameters
 
@@ -8184,7 +8261,7 @@ Mesh.addChild
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:360
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:368
 
 ___
 
@@ -8208,7 +8285,7 @@ Mesh.addInstance
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1064
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1150
 
 ___
 
@@ -8241,7 +8318,7 @@ Mesh.addLODLevel
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:384
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:456
 
 ___
 
@@ -8281,7 +8358,7 @@ Mesh.addRotation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:439
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:447
 
 ___
 
@@ -8310,7 +8387,7 @@ Mesh.alignWithNormal
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1104
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1112
 
 ___
 
@@ -8375,7 +8452,7 @@ Mesh.applyDisplacementMap
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:883
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:969
 
 ___
 
@@ -8412,7 +8489,7 @@ Mesh.applyDisplacementMapFromBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:898
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:984
 
 ___
 
@@ -8473,7 +8550,7 @@ Mesh.applySkeleton
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1019
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1105
 
 ___
 
@@ -8502,13 +8579,13 @@ Mesh.attachToBone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:383
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:391
 
 ___
 
 ### bakeCurrentTransformIntoVertices
 
-▸ **bakeCurrentTransformIntoVertices**(`bakeIndependentlyOfChildren?`): `Mesh`
+▸ **bakeCurrentTransformIntoVertices**(`bakeIndependentlyOfChildren?`, `forceUnique?`): `Mesh`
 
 Modifies the mesh geometry according to its own current World Matrix.
 The mesh World Matrix is then reset.
@@ -8520,6 +8597,7 @@ Note that, under the hood, this method sets a new VertexBuffer each call.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `bakeIndependentlyOfChildren?` | `boolean` | indicates whether to preserve all child nodes' World Matrix during baking |
+| `forceUnique?` | `boolean` | indicates whether to force the mesh geometry to be unique |
 
 #### Returns
 
@@ -8537,7 +8615,7 @@ Mesh.bakeCurrentTransformIntoVertices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:842
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:928
 
 ___
 
@@ -8572,7 +8650,7 @@ Mesh.bakeTransformIntoVertices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:832
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:917
 
 ___
 
@@ -8633,7 +8711,7 @@ Mesh.buildBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:746
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:748
 
 ___
 
@@ -8665,7 +8743,7 @@ Mesh.calcMovePOV
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:811
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:813
 
 ___
 
@@ -8696,7 +8774,7 @@ Mesh.calcRotatePOV
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:829
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:831
 
 ___
 
@@ -8719,7 +8797,7 @@ Mesh.cleanMatrixWeights
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:788
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:873
 
 ___
 
@@ -8735,7 +8813,7 @@ This method must not get confused with createInstance()
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name?` | `string` | is a string, the name given to the new mesh |
-| `newParent?` | `Node` | can be any Node object (default `null`) |
+| `newParent?` | `Node` \| `MeshCloneOptions` | can be any Node object (default `null`) or an instance of MeshCloneOptions. If the latter, doNotCloneChildren and clonePhysicsImpostor are unused. |
 | `doNotCloneChildren?` | `boolean` | allows/denies the recursive cloning of the original mesh children if any (default `false`) |
 | `clonePhysicsImpostor?` | `boolean` | allows/denies the cloning in the same time of the original mesh `body` used by the physics engine, if any (default `true`) |
 
@@ -8751,7 +8829,7 @@ Mesh.clone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:858
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:944
 
 ___
 
@@ -8780,7 +8858,7 @@ Mesh.computeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:456
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:464
 
 ___
 
@@ -8804,7 +8882,7 @@ Mesh.convertToFlatShadedMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:907
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:993
 
 ___
 
@@ -8828,7 +8906,7 @@ Mesh.convertToUnIndexedMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:914
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1000
 
 ___
 
@@ -8853,7 +8931,7 @@ Mesh.copyVerticesData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:437
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:509
 
 ___
 
@@ -8913,7 +8991,7 @@ Mesh.createInstance
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:949
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1035
 
 ___
 
@@ -8941,7 +9019,7 @@ Mesh.createNormals
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1097
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1100
 
 ___
 
@@ -9031,7 +9109,34 @@ Mesh.detachFromBone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:389
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:397
+
+___
+
+### directRender
+
+▸ **directRender**(): `Mesh`
+
+Render a complete mesh by going through all submeshes
+
+#### Returns
+
+`Mesh`
+
+the current mesh
+
+**`See`**
+
+ - [simple test](https://playground.babylonjs.com/#5SPY1V#2)
+ - [perf test](https://playground.babylonjs.com/#5SPY1V#5)
+
+#### Inherited from
+
+Mesh.directRender
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:857
 
 ___
 
@@ -9053,7 +9158,7 @@ Mesh.disableEdgesRendering
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1111
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1119
 
 ___
 
@@ -9079,7 +9184,7 @@ Mesh.disableFacetData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1083
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1086
 
 ___
 
@@ -9104,7 +9209,7 @@ Mesh.dispose
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:212](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L212)
+[src/prefabs/Text/planeText.ts:212](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L212)
 
 ___
 
@@ -9139,7 +9244,7 @@ Mesh.enableEdgesRendering
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1121
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1129
 
 ___
 
@@ -9153,7 +9258,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:193](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L193)
+[src/prefabs/Text/planeText.ts:193](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L193)
 
 ___
 
@@ -9182,7 +9287,7 @@ Mesh.flipFaces
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:921
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1007
 
 ___
 
@@ -9204,7 +9309,7 @@ Mesh.forceSharedVertices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:934
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1020
 
 ___
 
@@ -9226,7 +9331,7 @@ Mesh.freezeNormals
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:533
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:605
 
 ___
 
@@ -9255,7 +9360,7 @@ Mesh.freezeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:232
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:237
 
 ___
 
@@ -9277,7 +9382,7 @@ Mesh.getAbsolutePivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:328
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:333
 
 ___
 
@@ -9305,7 +9410,7 @@ Mesh.getAbsolutePivotPointToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:334
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:339
 
 ___
 
@@ -9327,7 +9432,7 @@ Mesh.getAbsolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:246
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:251
 
 ___
 
@@ -9349,7 +9454,7 @@ Mesh.getAnimatables
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:822
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:907
 
 ___
 
@@ -9484,7 +9589,7 @@ Mesh.getBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:723
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:725
 
 ___
 
@@ -9573,7 +9678,7 @@ Mesh.getChildTransformNodes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:516
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:524
 
 ___
 
@@ -9655,7 +9760,7 @@ Mesh.getClassName
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:353
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:425
 
 ___
 
@@ -9692,7 +9797,7 @@ Mesh.getClosestFacetAtCoordinates
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1059
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1062
 
 ___
 
@@ -9729,7 +9834,7 @@ Mesh.getClosestFacetAtLocalCoordinates
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1071
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1074
 
 ___
 
@@ -9751,7 +9856,7 @@ Mesh.getConnectedParticleSystems
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1126
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1134
 
 ___
 
@@ -9840,7 +9945,7 @@ Mesh.getDirection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:287
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:292
 
 ___
 
@@ -9871,7 +9976,7 @@ Mesh.getDirectionToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:296
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:301
 
 ___
 
@@ -9899,7 +10004,7 @@ Mesh.getDistanceToCamera
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:487
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:495
 
 ___
 
@@ -9921,7 +10026,7 @@ Mesh.getEmittedParticleSystems
 
 #### Defined in
 
-node_modules/@babylonjs/core/Particles/particleSystemComponent.d.ts:31
+node_modules/@babylonjs/core/Particles/particleSystemComponent.d.ts:32
 
 ___
 
@@ -9969,7 +10074,7 @@ Mesh.getFacetDataParameters
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1077
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1080
 
 ___
 
@@ -9996,7 +10101,7 @@ Mesh.getFacetLocalNormals
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:993
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:996
 
 ___
 
@@ -10022,7 +10127,7 @@ Mesh.getFacetLocalPartitioning
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1006
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1009
 
 ___
 
@@ -10049,7 +10154,7 @@ Mesh.getFacetLocalPositions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1000
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1003
 
 ___
 
@@ -10082,7 +10187,7 @@ Mesh.getFacetNormal
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1030
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1033
 
 ___
 
@@ -10115,7 +10220,7 @@ Mesh.getFacetNormalToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1038
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1041
 
 ___
 
@@ -10148,7 +10253,7 @@ Mesh.getFacetPosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1014
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1017
 
 ___
 
@@ -10181,7 +10286,7 @@ Mesh.getFacetPositionToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1022
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1025
 
 ___
 
@@ -10215,7 +10320,7 @@ Mesh.getFacetsAtLocalCoordinates
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1047
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1050
 
 ___
 
@@ -10271,7 +10376,7 @@ Mesh.getHierarchyEmittedParticleSystems
 
 #### Defined in
 
-node_modules/@babylonjs/core/Particles/particleSystemComponent.d.ts:36
+node_modules/@babylonjs/core/Particles/particleSystemComponent.d.ts:37
 
 ___
 
@@ -10300,7 +10405,7 @@ Mesh.getIndices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:516
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:588
 
 ___
 
@@ -10333,7 +10438,7 @@ Mesh.getLOD
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:406
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:478
 
 ___
 
@@ -10365,7 +10470,7 @@ Mesh.getLODLevelAtDistance
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:391
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:463
 
 ___
 
@@ -10387,7 +10492,7 @@ Mesh.getLODLevels
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:372
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:444
 
 ___
 
@@ -10415,7 +10520,7 @@ Mesh.getMaterialForRenderPass
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:376
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:377
 
 ___
 
@@ -10437,7 +10542,7 @@ Mesh.getMeshUniformBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:561
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:562
 
 ___
 
@@ -10466,7 +10571,7 @@ Mesh.getNormalsData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:865
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:867
 
 ___
 
@@ -10533,7 +10638,7 @@ Mesh.getPivotMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:214
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:219
 
 ___
 
@@ -10555,7 +10660,7 @@ Mesh.getPivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:317
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:322
 
 ___
 
@@ -10583,7 +10688,7 @@ Mesh.getPivotPointToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:323
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:328
 
 ___
 
@@ -10605,7 +10710,7 @@ Mesh.getPoseMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:176
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:181
 
 ___
 
@@ -10635,7 +10740,7 @@ Mesh.getPositionData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:873
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:875
 
 ___
 
@@ -10657,7 +10762,7 @@ Mesh.getPositionExpressedInLocalSpace
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:263
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:268
 
 ___
 
@@ -10685,7 +10790,7 @@ Mesh.getPositionInCameraSpace
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:481
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:489
 
 ___
 
@@ -10707,7 +10812,7 @@ Mesh.getRawBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:728
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:730
 
 ___
 
@@ -10751,7 +10856,7 @@ Mesh.getTotalIndices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:509
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:581
 
 ___
 
@@ -10773,7 +10878,7 @@ Mesh.getTotalVertices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:415
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:487
 
 ___
 
@@ -10802,7 +10907,7 @@ Mesh.getVertexBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:459
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:531
 
 ___
 
@@ -10833,7 +10938,7 @@ Mesh.getVerticesData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:436
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:508
 
 ___
 
@@ -10861,7 +10966,7 @@ Mesh.getVerticesDataKinds
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:504
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:576
 
 ___
 
@@ -10883,7 +10988,7 @@ Mesh.getWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:777
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:779
 
 ___
 
@@ -10911,7 +11016,7 @@ Mesh.increaseVertices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:928
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1014
 
 ___
 
@@ -10938,7 +11043,7 @@ Mesh.instantiateHierarchy
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:346
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:418
 
 ___
 
@@ -10976,7 +11081,7 @@ Mesh.intersects
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:957
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:959
 
 ___
 
@@ -11006,7 +11111,7 @@ Mesh.intersectsMesh
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:903
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:905
 
 ___
 
@@ -11034,7 +11139,7 @@ Mesh.intersectsPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:909
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:911
 
 ___
 
@@ -11063,7 +11168,7 @@ Mesh.isCompletelyInFrustum
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:895
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:897
 
 ___
 
@@ -11172,7 +11277,7 @@ Mesh.isInFrustum
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:811
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:896
 
 ___
 
@@ -11201,7 +11306,7 @@ Mesh.isReady
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:524
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:596
 
 ___
 
@@ -11308,7 +11413,7 @@ Mesh.isVertexBufferUpdatable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:498
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:570
 
 ___
 
@@ -11337,7 +11442,7 @@ Mesh.isVerticesDataPresent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:479
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:551
 
 ___
 
@@ -11360,7 +11465,7 @@ Mesh.isWorldMatrixCameraDependent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:449
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:457
 
 ___
 
@@ -11388,7 +11493,7 @@ Mesh.locallyTranslate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:269
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:274
 
 ___
 
@@ -11420,7 +11525,7 @@ Mesh.lookAt
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:280
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:285
 
 ___
 
@@ -11442,7 +11547,7 @@ Mesh.makeGeometryUnique
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:669
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:741
 
 ___
 
@@ -11470,7 +11575,7 @@ Mesh.markAsDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:611
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:612
 
 ___
 
@@ -11497,7 +11602,7 @@ Mesh.markVerticesDataAsUpdatable
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:628
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:700
 
 ___
 
@@ -11529,7 +11634,7 @@ Mesh.movePOV
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:801
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:803
 
 ___
 
@@ -11561,7 +11666,7 @@ Mesh.moveWithCollisions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:927
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:929
 
 ___
 
@@ -11591,7 +11696,7 @@ Mesh.normalizeToUnitCube
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:754
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:756
 
 ___
 
@@ -11621,7 +11726,29 @@ Mesh.optimizeIndices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:963
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1049
+
+___
+
+### optimizeIndicesAsync
+
+▸ **optimizeIndicesAsync**(): `Promise`\<`AbstractMesh`\>
+
+Optimize the indices order so that we keep the faces with similar indices together
+
+#### Returns
+
+`Promise`\<`AbstractMesh`\>
+
+the current mesh
+
+#### Inherited from
+
+Mesh.optimizeIndicesAsync
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:1105
 
 ___
 
@@ -11651,7 +11778,7 @@ Mesh.refreshBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:563
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:635
 
 ___
 
@@ -11679,7 +11806,7 @@ Mesh.registerAfterRender
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:728
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:801
 
 ___
 
@@ -11707,7 +11834,7 @@ Mesh.registerAfterWorldMatrixUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:469
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:477
 
 ___
 
@@ -11735,7 +11862,7 @@ Mesh.registerBeforeRender
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:716
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:789
 
 ___
 
@@ -11766,15 +11893,21 @@ Mesh.registerInstancedBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:270
+node_modules/@babylonjs/core/Meshes/instancedMesh.d.ts:275
 
 ___
 
 ### releaseSubMeshes
 
-▸ **releaseSubMeshes**(): `AbstractMesh`
+▸ **releaseSubMeshes**(`immediate?`): `AbstractMesh`
 
-Disposes all the submeshes of the current meshnp
+Disposes all the submeshes of the current mesh
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `immediate?` | `boolean` | should dispose the effects immediately or not |
 
 #### Returns
 
@@ -11788,7 +11921,7 @@ Mesh.releaseSubMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:970
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:973
 
 ___
 
@@ -11849,7 +11982,7 @@ Mesh.removeChild
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:367
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:375
 
 ___
 
@@ -11873,7 +12006,7 @@ Mesh.removeInstance
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1068
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1154
 
 ___
 
@@ -11905,7 +12038,7 @@ Mesh.removeLODLevel
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:398
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:470
 
 ___
 
@@ -11931,7 +12064,7 @@ Mesh.removeVerticesData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:610
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:682
 
 ___
 
@@ -11961,7 +12094,7 @@ Mesh.render
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:780
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:865
 
 ___
 
@@ -11993,13 +12126,13 @@ Mesh.renderWithRenderPassId
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:772
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:850
 
 ___
 
 ### resetDrawCache
 
-▸ **resetDrawCache**(`passId?`): `void`
+▸ **resetDrawCache**(`passId?`, `immediate?`): `void`
 
 Resets the draw wrappers cache for all submeshes of this abstract mesh
 
@@ -12008,6 +12141,7 @@ Resets the draw wrappers cache for all submeshes of this abstract mesh
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `passId?` | `number` | If provided, releases only the draw wrapper corresponding to this render pass id |
+| `immediate?` | `boolean` | If true, the effect will be released immediately, otherwise it will be released at the next frame |
 
 #### Returns
 
@@ -12019,7 +12153,7 @@ Mesh.resetDrawCache
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:616
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:618
 
 ___
 
@@ -12045,7 +12179,7 @@ Mesh.resetLocalMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:461
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:469
 
 ___
 
@@ -12078,7 +12212,7 @@ Mesh.rotate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:401
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:409
 
 ___
 
@@ -12111,7 +12245,7 @@ Mesh.rotateAround
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:412
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:420
 
 ___
 
@@ -12142,7 +12276,7 @@ Mesh.rotatePOV
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:820
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:822
 
 ___
 
@@ -12156,7 +12290,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:116](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L116)
+[src/prefabs/Text/planeText.ts:116](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L116)
 
 ___
 
@@ -12184,7 +12318,7 @@ Mesh.serialize
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:969
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1055
 
 ___
 
@@ -12234,7 +12368,7 @@ Mesh.setAbsolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:252
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:257
 
 ___
 
@@ -12262,7 +12396,7 @@ Mesh.setBoundingInfo
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:734
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:736
 
 ___
 
@@ -12293,7 +12427,7 @@ Mesh.setDirection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:305
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:310
 
 ___
 
@@ -12325,7 +12459,7 @@ ___
 
 ### setIndexBuffer
 
-▸ **setIndexBuffer**(`indexBuffer`, `totalVertices`, `totalIndices`): `void`
+▸ **setIndexBuffer**(`indexBuffer`, `totalVertices`, `totalIndices`, `is32Bits?`): `void`
 
 Sets the index buffer of this mesh.
 
@@ -12336,6 +12470,7 @@ Sets the index buffer of this mesh.
 | `indexBuffer` | `DataBuffer` | Defines the index buffer to use for this mesh |
 | `totalVertices` | `number` | Defines the total number of vertices used by the buffer |
 | `totalIndices` | `number` | Defines the total number of indices in the index buffer |
+| `is32Bits?` | `boolean` | Defines if the indices are 32 bits. If null (default), the value is guessed from the number of vertices |
 
 #### Returns
 
@@ -12347,7 +12482,7 @@ Mesh.setIndexBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:676
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:749
 
 ___
 
@@ -12378,7 +12513,7 @@ Mesh.setIndices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:685
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:758
 
 ___
 
@@ -12410,7 +12545,7 @@ Mesh.setMaterialByID
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1079
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1165
 
 ___
 
@@ -12438,7 +12573,7 @@ Mesh.setMaterialById
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:817
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:902
 
 ___
 
@@ -12465,7 +12600,7 @@ Mesh.setMaterialForRenderPass
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:382
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:383
 
 ___
 
@@ -12487,7 +12622,7 @@ Mesh.setNormalsForCPUSkinning
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1013
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1099
 
 ___
 
@@ -12497,6 +12632,7 @@ ___
 
 Defines the passed node as the parent of the current node.
 The node will remain exactly where it is and its position / rotation will be updated accordingly.
+If you don't want to preserve the current rotation / position, assign the parent through parent accessor.
 Note that if the mesh has a pivot matrix / point defined it will be applied after the parent was updated.
 In that case the node will not remain in the same space as it is, as the pivot will be applied.
 To avoid this, you can set updatePivot to true and the pivot will be updated to identity
@@ -12525,7 +12661,7 @@ Mesh.setParent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:353
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:359
 
 ___
 
@@ -12589,7 +12725,7 @@ Mesh.setPivotMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:208
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:213
 
 ___
 
@@ -12618,7 +12754,7 @@ Mesh.setPivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:312
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:317
 
 ___
 
@@ -12646,7 +12782,7 @@ Mesh.setPositionWithLocalVector
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:258
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:263
 
 ___
 
@@ -12668,7 +12804,7 @@ Mesh.setPositionsForCPUSkinning
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1008
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1094
 
 ___
 
@@ -12696,7 +12832,7 @@ Mesh.setPreTransformMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:201
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:206
 
 ___
 
@@ -12725,7 +12861,7 @@ Mesh.setVerticesBuffer
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:635
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:707
 
 ___
 
@@ -12756,7 +12892,7 @@ Mesh.setVerticesData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:593
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:665
 
 ___
 
@@ -12814,7 +12950,7 @@ Mesh.subdivide
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:572
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:644
 
 ___
 
@@ -12837,7 +12973,7 @@ Mesh.synchronizeInstances
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:955
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1041
 
 ___
 
@@ -13134,7 +13270,7 @@ Mesh.toLeftHanded
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:698
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:771
 
 ___
 
@@ -13162,7 +13298,7 @@ Mesh.toString
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:361
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:433
 
 ___
 
@@ -13182,7 +13318,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:142](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L142)
+[src/prefabs/Text/planeText.ts:142](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L142)
 
 ___
 
@@ -13208,7 +13344,7 @@ Mesh.transferToEffect
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:556
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:557
 
 ___
 
@@ -13239,7 +13375,7 @@ Mesh.translate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:421
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:429
 
 ___
 
@@ -13261,7 +13397,7 @@ Mesh.unfreezeNormals
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:538
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:610
 
 ___
 
@@ -13283,7 +13419,7 @@ Mesh.unfreezeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:237
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:242
 
 ___
 
@@ -13311,7 +13447,7 @@ Mesh.unregisterAfterRender
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:734
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:807
 
 ___
 
@@ -13339,7 +13475,7 @@ Mesh.unregisterAfterWorldMatrixUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:475
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:483
 
 ___
 
@@ -13367,7 +13503,7 @@ Mesh.unregisterBeforeRender
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:722
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:795
 
 ___
 
@@ -13419,7 +13555,7 @@ Mesh.updateFacetData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:986
+node_modules/@babylonjs/core/Meshes/abstractMesh.d.ts:989
 
 ___
 
@@ -13449,7 +13585,7 @@ Mesh.updateIndices
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:693
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:766
 
 ___
 
@@ -13482,7 +13618,7 @@ Mesh.updateMeshPositions
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:664
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:736
 
 ___
 
@@ -13504,7 +13640,7 @@ Updates the PlaneText with new options.
 
 #### Defined in
 
-[src/prefabs/Text/planeText.ts:110](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Text/planeText.ts#L110)
+[src/prefabs/Text/planeText.ts:110](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Text/planeText.ts#L110)
 
 ___
 
@@ -13532,7 +13668,7 @@ Mesh.updatePoseMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:171
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:176
 
 ___
 
@@ -13563,7 +13699,7 @@ Mesh.updateVerticesData
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:656
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:728
 
 ___
 
@@ -13593,7 +13729,7 @@ Mesh.validateSkinning
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:797
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:882
 
 ___
 
@@ -13648,7 +13784,7 @@ Mesh.Center
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1034
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1120
 
 ___
 
@@ -13721,7 +13857,7 @@ Mesh.CreateBox
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1118
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1204
 
 ___
 
@@ -13759,7 +13895,7 @@ Mesh.CreateCapsule
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1464
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1550
 
 ___
 
@@ -13799,7 +13935,7 @@ Mesh.CreateCylinder
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1155
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1241
 
 ___
 
@@ -13838,7 +13974,7 @@ Mesh.CreateDashedLines
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1209
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1295
 
 ___
 
@@ -13877,7 +14013,7 @@ Mesh.CreateDecal
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1455
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1541
 
 ___
 
@@ -13914,7 +14050,7 @@ Mesh.CreateDisc
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1107
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1193
 
 ___
 
@@ -13951,7 +14087,7 @@ Mesh.CreateGround
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1325
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1411
 
 ___
 
@@ -13997,7 +14133,7 @@ Mesh.CreateGroundFromHeightMap
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1364
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1450
 
 ___
 
@@ -14032,7 +14168,7 @@ Mesh.CreateHemisphere
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1140
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1226
 
 ___
 
@@ -14082,7 +14218,7 @@ Mesh.CreateIcoSphere
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1435
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1521
 
 ___
 
@@ -14121,7 +14257,7 @@ Mesh.CreateLathe
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1302
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1388
 
 ___
 
@@ -14157,7 +14293,7 @@ Mesh.CreateLines
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1195
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1281
 
 ___
 
@@ -14193,7 +14329,7 @@ Mesh.CreatePlane
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1313
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1399
 
 ___
 
@@ -14240,7 +14376,7 @@ Mesh.CreatePolygon
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1228
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1314
 
 ___
 
@@ -14296,7 +14432,7 @@ Mesh.CreatePolyhedron
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1407
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1493
 
 ___
 
@@ -14340,7 +14476,7 @@ Mesh.CreateRibbon
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1095
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1181
 
 ___
 
@@ -14377,7 +14513,7 @@ Mesh.CreateSphere
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1130
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1216
 
 ___
 
@@ -14421,7 +14557,7 @@ Mesh.CreateTiledGround
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1340
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1426
 
 ___
 
@@ -14459,7 +14595,7 @@ Mesh.CreateTorus
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1168
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1254
 
 ___
 
@@ -14500,7 +14636,7 @@ Mesh.CreateTorusKnot
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1184
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1270
 
 ___
 
@@ -14547,7 +14683,7 @@ Mesh.CreateTube
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1384
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1470
 
 ___
 
@@ -14580,7 +14716,7 @@ Mesh.ExtendToGoldberg
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1472
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1558
 
 ___
 
@@ -14623,7 +14759,7 @@ Mesh.ExtrudePolygon
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1243
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1329
 
 ___
 
@@ -14670,7 +14806,7 @@ Mesh.ExtrudeShape
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1262
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1348
 
 ___
 
@@ -14719,7 +14855,7 @@ Mesh.ExtrudeShapeCustom
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1284
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1370
 
 ___
 
@@ -14752,7 +14888,7 @@ Mesh.MergeMeshes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1048
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1134
 
 ___
 
@@ -14785,7 +14921,7 @@ Mesh.MergeMeshesAsync
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1059
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1145
 
 ___
 
@@ -14818,7 +14954,7 @@ Mesh.MinMax
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1025
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1111
 
 ___
 
@@ -14848,7 +14984,7 @@ Mesh.Parse
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:1003
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1089
 
 ___
 
@@ -14904,7 +15040,7 @@ Mesh.\_GetDefaultSideOrientation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:188
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:253
 
 ___
 
@@ -14930,7 +15066,7 @@ Mesh.\_PhysicsImpostorParser
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:942
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1028
 
 ___
 
@@ -14955,4 +15091,4 @@ Mesh.\_instancedMeshFactory
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/mesh.d.ts:938
+node_modules/@babylonjs/core/Meshes/mesh.d.ts:1024

@@ -4,7 +4,8 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "clean_ext": "node clean_ext.js"
+    "clean_ext": "node clean_ext.js",
+    "add_coi": "node add_coi.js"
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.4",

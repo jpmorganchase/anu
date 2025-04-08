@@ -44,6 +44,7 @@
 - [\_worldMatrixDeterminantIsDirty](MeshMap.md#_worldmatrixdeterminantisdirty)
 - [animations](MeshMap.md#animations)
 - [cot](MeshMap.md#cot)
+- [customMarkAsDirty](MeshMap.md#custommarkasdirty)
 - [depth](MeshMap.md#depth)
 - [geoJson](MeshMap.md#geojson)
 - [id](MeshMap.md#id)
@@ -230,7 +231,7 @@ TransformNode.constructor
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:25](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L25)
+[src/prefabs/Mapping/MeshMap.ts:25](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L25)
 
 ## Properties
 
@@ -404,7 +405,7 @@ ___
 
 ### \_parentContainer
 
-• **\_parentContainer**: `AbstractScene`
+• **\_parentContainer**: `IAssetContainer`
 
 #### Inherited from
 
@@ -624,7 +625,31 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:21](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L21)
+[src/prefabs/Mapping/MeshMap.ts:21](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L21)
+
+___
+
+### customMarkAsDirty
+
+• **customMarkAsDirty**: () => `void`
+
+Allow user to specify custom mechanism for mark as dirty
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+TransformNode.customMarkAsDirty
+
+#### Defined in
+
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:157
 
 ___
 
@@ -634,7 +659,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:23](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L23)
+[src/prefabs/Mapping/MeshMap.ts:23](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L23)
 
 ___
 
@@ -644,7 +669,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:17](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L17)
+[src/prefabs/Mapping/MeshMap.ts:17](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L17)
 
 ___
 
@@ -727,7 +752,7 @@ TransformNode.name
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:14](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L14)
+[src/prefabs/Mapping/MeshMap.ts:14](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L14)
 
 ___
 
@@ -831,7 +856,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:18](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L18)
+[src/prefabs/Mapping/MeshMap.ts:18](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L18)
 
 ___
 
@@ -889,7 +914,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:15](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L15)
+[src/prefabs/Mapping/MeshMap.ts:15](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L15)
 
 ___
 
@@ -899,7 +924,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:22](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L22)
+[src/prefabs/Mapping/MeshMap.ts:22](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L22)
 
 ___
 
@@ -909,7 +934,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:20](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L20)
+[src/prefabs/Mapping/MeshMap.ts:20](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L20)
 
 ___
 
@@ -919,7 +944,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:16](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L16)
+[src/prefabs/Mapping/MeshMap.ts:16](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L16)
 
 ___
 
@@ -945,7 +970,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:19](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L19)
+[src/prefabs/Mapping/MeshMap.ts:19](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L19)
 
 ___
 
@@ -1124,7 +1149,7 @@ TransformNode.absolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:185
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:190
 
 ___
 
@@ -1145,7 +1170,7 @@ TransformNode.absoluteRotationQuaternion
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:195
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:200
 
 ___
 
@@ -1166,7 +1191,7 @@ TransformNode.absoluteScaling
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:190
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:195
 
 ___
 
@@ -1378,7 +1403,7 @@ TransformNode.forward
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:157
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:162
 
 ___
 
@@ -1438,7 +1463,7 @@ TransformNode.isWorldMatrixFrozen
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:241
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:246
 
 ___
 
@@ -1458,7 +1483,7 @@ TransformNode.nonUniformScaling
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:372
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:380
 
 ___
 
@@ -1669,7 +1694,7 @@ TransformNode.right
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:165
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:170
 
 ___
 
@@ -1811,7 +1836,7 @@ TransformNode.up
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:161
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:166
 
 ___
 
@@ -1868,7 +1893,7 @@ TransformNode.\_afterComputeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:462
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:470
 
 ___
 
@@ -1937,7 +1962,7 @@ TransformNode.\_getEffectiveParent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:443
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:451
 
 ___
 
@@ -1973,7 +1998,7 @@ TransformNode.\_initCache
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:180
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:185
 
 ___
 
@@ -1991,7 +2016,7 @@ TransformNode.\_isSynchronized
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:178
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:183
 
 ___
 
@@ -2141,7 +2166,7 @@ TransformNode.\_updateNonUniformScalingState
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:376
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:384
 
 ___
 
@@ -2182,7 +2207,9 @@ ___
 
 ▸ **addChild**(`mesh`, `preserveScalingSign?`): `this`
 
-Adds the passed mesh as a child to the current mesh
+Adds the passed mesh as a child to the current mesh.
+The node will remain exactly where it is and its position / rotation will be updated accordingly.
+This method is equivalent to calling setParent().
 
 #### Parameters
 
@@ -2203,7 +2230,7 @@ TransformNode.addChild
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:360
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:368
 
 ___
 
@@ -2243,7 +2270,7 @@ TransformNode.addRotation
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:439
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:447
 
 ___
 
@@ -2329,7 +2356,7 @@ TransformNode.attachToBone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:383
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:391
 
 ___
 
@@ -2390,7 +2417,7 @@ TransformNode.clone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:495
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:503
 
 ___
 
@@ -2419,7 +2446,7 @@ TransformNode.computeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:456
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:464
 
 ___
 
@@ -2461,7 +2488,7 @@ ___
 
 #### Defined in
 
-[src/prefabs/Mapping/MeshMap.ts:46](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Mapping/MeshMap.ts#L46)
+[src/prefabs/Mapping/MeshMap.ts:46](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Mapping/MeshMap.ts#L46)
 
 ___
 
@@ -2516,7 +2543,7 @@ TransformNode.detachFromBone
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:389
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:397
 
 ___
 
@@ -2543,7 +2570,7 @@ TransformNode.dispose
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:522
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:530
 
 ___
 
@@ -2572,7 +2599,7 @@ TransformNode.freezeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:232
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:237
 
 ___
 
@@ -2594,7 +2621,7 @@ TransformNode.getAbsolutePivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:328
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:333
 
 ___
 
@@ -2622,7 +2649,7 @@ TransformNode.getAbsolutePivotPointToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:334
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:339
 
 ___
 
@@ -2644,7 +2671,7 @@ TransformNode.getAbsolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:246
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:251
 
 ___
 
@@ -2843,7 +2870,7 @@ TransformNode.getChildTransformNodes
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:516
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:524
 
 ___
 
@@ -3014,7 +3041,7 @@ TransformNode.getDirection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:287
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:292
 
 ___
 
@@ -3045,7 +3072,7 @@ TransformNode.getDirectionToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:296
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:301
 
 ___
 
@@ -3073,7 +3100,7 @@ TransformNode.getDistanceToCamera
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:487
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:495
 
 ___
 
@@ -3170,7 +3197,7 @@ TransformNode.getPivotMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:214
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:219
 
 ___
 
@@ -3192,7 +3219,7 @@ TransformNode.getPivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:317
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:322
 
 ___
 
@@ -3220,7 +3247,7 @@ TransformNode.getPivotPointToRef
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:323
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:328
 
 ___
 
@@ -3242,7 +3269,7 @@ TransformNode.getPoseMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:176
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:181
 
 ___
 
@@ -3264,7 +3291,7 @@ TransformNode.getPositionExpressedInLocalSpace
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:263
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:268
 
 ___
 
@@ -3292,7 +3319,7 @@ TransformNode.getPositionInCameraSpace
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:481
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:489
 
 ___
 
@@ -3367,7 +3394,7 @@ TransformNode.instantiateHierarchy
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:223
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:228
 
 ___
 
@@ -3576,7 +3603,7 @@ TransformNode.isWorldMatrixCameraDependent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:449
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:457
 
 ___
 
@@ -3604,7 +3631,7 @@ TransformNode.locallyTranslate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:269
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:274
 
 ___
 
@@ -3636,7 +3663,7 @@ TransformNode.lookAt
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:280
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:285
 
 ___
 
@@ -3664,7 +3691,7 @@ TransformNode.markAsDirty
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:340
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:345
 
 ___
 
@@ -3694,7 +3721,7 @@ TransformNode.normalizeToUnitCube
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:530
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:538
 
 ___
 
@@ -3722,7 +3749,7 @@ TransformNode.registerAfterWorldMatrixUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:469
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:477
 
 ___
 
@@ -3783,7 +3810,7 @@ TransformNode.removeChild
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:367
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:375
 
 ___
 
@@ -3809,7 +3836,7 @@ TransformNode.resetLocalMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:461
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:469
 
 ___
 
@@ -3842,7 +3869,7 @@ TransformNode.rotate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:401
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:409
 
 ___
 
@@ -3875,7 +3902,7 @@ TransformNode.rotateAround
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:412
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:420
 
 ___
 
@@ -3903,7 +3930,7 @@ TransformNode.serialize
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:501
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:509
 
 ___
 
@@ -3953,7 +3980,7 @@ TransformNode.setAbsolutePosition
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:252
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:257
 
 ___
 
@@ -3984,7 +4011,7 @@ TransformNode.setDirection
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:305
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:310
 
 ___
 
@@ -4020,6 +4047,7 @@ ___
 
 Defines the passed node as the parent of the current node.
 The node will remain exactly where it is and its position / rotation will be updated accordingly.
+If you don't want to preserve the current rotation / position, assign the parent through parent accessor.
 Note that if the mesh has a pivot matrix / point defined it will be applied after the parent was updated.
 In that case the node will not remain in the same space as it is, as the pivot will be applied.
 To avoid this, you can set updatePivot to true and the pivot will be updated to identity
@@ -4048,7 +4076,7 @@ TransformNode.setParent
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:353
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:359
 
 ___
 
@@ -4077,7 +4105,7 @@ TransformNode.setPivotMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:208
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:213
 
 ___
 
@@ -4106,7 +4134,7 @@ TransformNode.setPivotPoint
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:312
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:317
 
 ___
 
@@ -4134,7 +4162,7 @@ TransformNode.setPositionWithLocalVector
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:258
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:263
 
 ___
 
@@ -4162,7 +4190,7 @@ TransformNode.setPreTransformMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:201
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:206
 
 ___
 
@@ -4193,7 +4221,7 @@ TransformNode.translate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:421
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:429
 
 ___
 
@@ -4215,7 +4243,7 @@ TransformNode.unfreezeWorldMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:237
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:242
 
 ___
 
@@ -4243,7 +4271,7 @@ TransformNode.unregisterAfterWorldMatrixUpdate
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:475
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:483
 
 ___
 
@@ -4295,7 +4323,7 @@ TransformNode.updatePoseMatrix
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:171
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:176
 
 ___
 
@@ -4389,7 +4417,7 @@ TransformNode.Parse
 
 #### Defined in
 
-node_modules/@babylonjs/core/Meshes/transformNode.d.ts:509
+node_modules/@babylonjs/core/Meshes/transformNode.d.ts:517
 
 ___
 

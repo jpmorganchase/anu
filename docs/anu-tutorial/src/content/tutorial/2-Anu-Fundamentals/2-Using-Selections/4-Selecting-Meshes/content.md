@@ -24,7 +24,7 @@ we can call selectID() from anu or a Selection to search either the whole scene 
 
 ```js
 //selectName(name: String | String[], scene: Scene): Selection
-let sphereSelection = anu.selectID('sphere-ID', scene)
+let sphereSelection = anu.selectId('sphere-ID', scene)
 
 sphereSelection.positionY(-2)
 ```

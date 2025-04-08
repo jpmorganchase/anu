@@ -54,7 +54,7 @@ Constructs an AxesConfig instance with the given scales.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:178](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L178)
+[src/prefabs/Axis/AxisOptions.ts:178](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L178)
 
 ## Properties
 
@@ -66,7 +66,7 @@ Texture atlas for the labels.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:172](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L172)
+[src/prefabs/Axis/AxisOptions.ts:172](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L172)
 
 ___
 
@@ -84,7 +84,7 @@ Render the background or not. Can be a boolean or an object specifying each axis
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:89](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L89)
+[src/prefabs/Axis/AxisOptions.ts:89](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L89)
 
 ___
 
@@ -102,7 +102,7 @@ Initial options for the background planes.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:95](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L95)
+[src/prefabs/Axis/AxisOptions.ts:95](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L95)
 
 ___
 
@@ -128,7 +128,7 @@ Position of the background planes.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:107](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L107)
+[src/prefabs/Axis/AxisOptions.ts:107](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L107)
 
 ___
 
@@ -146,7 +146,7 @@ Properties of the background planes.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:101](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L101)
+[src/prefabs/Axis/AxisOptions.ts:101](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L101)
 
 ___
 
@@ -164,7 +164,7 @@ Render the domain or not. Can be a boolean or an object specifying each axis.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:65](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L65)
+[src/prefabs/Axis/AxisOptions.ts:65](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L65)
 
 ___
 
@@ -182,7 +182,7 @@ Initial options of the GreasedLine material.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:77](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L77)
+[src/prefabs/Axis/AxisOptions.ts:77](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L77)
 
 ___
 
@@ -200,7 +200,7 @@ Initial options of the GreasedLine mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:71](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L71)
+[src/prefabs/Axis/AxisOptions.ts:71](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L71)
 
 ___
 
@@ -218,7 +218,7 @@ Properties of the GreasedLine mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:83](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L83)
+[src/prefabs/Axis/AxisOptions.ts:83](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L83)
 
 ___
 
@@ -236,7 +236,7 @@ Render the grid lines or not. Can be a boolean or an object specifying each axis
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:113](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L113)
+[src/prefabs/Axis/AxisOptions.ts:113](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L113)
 
 ___
 
@@ -254,7 +254,7 @@ Initial options of the LineSystem mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:119](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L119)
+[src/prefabs/Axis/AxisOptions.ts:119](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L119)
 
 ___
 
@@ -272,7 +272,7 @@ Properties of the LineSystem mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:125](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L125)
+[src/prefabs/Axis/AxisOptions.ts:125](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L125)
 
 ___
 
@@ -298,7 +298,7 @@ Array of values for ticks to be drawn.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:131](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L131)
+[src/prefabs/Axis/AxisOptions.ts:131](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L131)
 
 ___
 
@@ -316,7 +316,7 @@ Render the labels or not. Can be a boolean or an object specifying each axis.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:137](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L137)
+[src/prefabs/Axis/AxisOptions.ts:137](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L137)
 
 ___
 
@@ -342,7 +342,7 @@ A function that formats the label text.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:161](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L161)
+[src/prefabs/Axis/AxisOptions.ts:161](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L161)
 
 ___
 
@@ -368,7 +368,7 @@ Margin for the labels.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:167](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L167)
+[src/prefabs/Axis/AxisOptions.ts:167](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L167)
 
 ___
 
@@ -386,7 +386,7 @@ Initial options of the PlaneText mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:143](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L143)
+[src/prefabs/Axis/AxisOptions.ts:143](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L143)
 
 ___
 
@@ -404,7 +404,7 @@ Properties of the PlaneText mesh.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:149](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L149)
+[src/prefabs/Axis/AxisOptions.ts:149](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L149)
 
 ___
 
@@ -430,19 +430,19 @@ Array of values for ticks to be drawn.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:155](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L155)
+[src/prefabs/Axis/AxisOptions.ts:155](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L155)
 
 ___
 
 ### parent
 
-• `Optional` **parent**: `Node` \| [`Selection`](Selection.md)
+• `Optional` **parent**: [`Selection`](Selection.md) \| `Node`
 
 Selection that defines the parent node. If not set, a parent node will be created at the root of the scene graph.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:59](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L59)
+[src/prefabs/Axis/AxisOptions.ts:59](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L59)
 
 ___
 
@@ -462,4 +462,4 @@ The scale(s) of the axes you want to render. At least one is required.
 
 #### Defined in
 
-[src/prefabs/Axis/AxisOptions.ts:54](https://github.com/jpmorganchase/anu/blob/a8fa57b8/src/prefabs/Axis/AxisOptions.ts#L54)
+[src/prefabs/Axis/AxisOptions.ts:54](https://github.com/jpmorganchase/anu/blob/b8a5d66c/src/prefabs/Axis/AxisOptions.ts#L54)

@@ -10,14 +10,14 @@ While anu supports wrapper methods for most of the mesh properties you will need
 
 #### Step 1: Use prop()
 
-Using prop() is simple. It works like the wrapper methods from before, except it expects one more arugment being the string of the property path you want to modify. If you are familiar with D3 prop() is essentially the attr() method.
+Using prop() is simple. It works like the wrapper methods from before, except it expects one more argument being the string of the property path you want to modify. If you are familiar with D3 prop() is essentially the attr() method.
 
 Try using the prop() method to replace the wrapper methods in this lesson.
 
 ```js
 // prop(path: String, value: any | (d,n,i)=> any): Selection
 
-boxes.prop('position', 2).prop('rotation.x', (d) => d.goals);
+boxes.prop('position.x', 2).prop('rotation.x', (d) => d.goals);
 ```
 
 #### Step 2: Use props()
@@ -30,5 +30,5 @@ Try replacing the multiple prop() methods with one props() method instead.
 ```js
 // props({path: value | (d,n,i) => value})
 
-boxes.props({ 'position': 2, 'rotation.x': (d) => goals });
+boxes.props({ 'position.x': 2, 'rotation.x': (d) => d.goals });
 ```
