@@ -15,18 +15,17 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        "@babylonjs/core",
+        /@babylonjs\/core/,
         "ol"
       ],
       output: {
         globals: {
-           "@babylonjs/core": "BABYLON",
            "ol": "ol"
           },
         },
     },
   },
-  plugins: [dts({rollupTypes: true}), 
+  plugins: [dts({rollupTypes: true, outputDir: 'dist', insertTypesEntry: true, tsConfigFilePath: "./tsconfig.json"}), 
             externalizeDeps(),
           ],
 });
