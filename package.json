@@ -1,13 +1,13 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "",
   "type": "module",
   "files": [
     "dist"
   ],
   "main": "./dist/anu.umd.cjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/anu.d.ts",
   "module": "./dist/anu.js",
   "exports": {
     ".": {
