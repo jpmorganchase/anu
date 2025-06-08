@@ -88,5 +88,20 @@ export const text = function(engine){
   centerText.position.y = 4;
   rightText.position.y = 3;
 
+  // -------------
+
+  // Update text as a child of a parent that is not at the origin
+  let parent = anu.create('cot');
+  let childText = anu.createPlaneText('movedText', { text: "I am a child!"}, scene);
+  childText.parent = parent;
+  childText.position = new Vector3(5, 1, 0);
+  childText.rotation = new Vector3(Math.PI / 2, 0, -Math.PI / 4);
+  parent.position = new Vector3(1, 2, 0);
+  parent.rotation = new Vector3(0, Math.PI / 4, 0, 0);
+  setTimeout(() => {
+    childText.text = "I just moved!"
+    childText.size = 2
+  }, 1000)
+
   return scene;
 };

@@ -140,6 +140,11 @@ export class PlaneText extends Mesh {
   }
 
   private transferFromMesh(sourceMesh: Mesh) {
+    
+    //Store and remove the parent, we will set this back later
+    const originalParent = this.parent;
+    this.parent = null;
+
     //Store the start position and rotation so that the PlaneText stays where it is
     const startPos = this.position;
     const startRot = this.rotation;
@@ -188,6 +193,9 @@ export class PlaneText extends Mesh {
     //Reset the PlaneText to its starting position
     this.position = startPos;
     this.rotation = startRot;
+
+    //Restore the original parent
+    this.parent = originalParent;
   }
 
   private fixScaleAndPivot() {
