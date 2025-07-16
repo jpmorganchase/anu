@@ -308,7 +308,7 @@ export function thinInstanceColorAt(
     node instanceof Mesh
       ? node.hasThinInstances
         ? (() => {
-            let evaluated = value instanceof Function ? value((node.metadata.data[index]  {}), node, index) : value;
+            let evaluated = value instanceof Function ? value((node.metadata.data[index] ?? {}), node, index) : value;
             node.thinInstanceSetAttributeAt('color', index, [evaluated.r, evaluated.g, evaluated.b, evaluated.a]);
           })()
         : console.warn(node + 'has no thin instances, skipping')
