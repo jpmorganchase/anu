@@ -13,7 +13,7 @@ import { Selection } from '../index';
 export function filter(this: Selection, method: (d: any, n: Node, i: number) => boolean) {
   let filtered: Node[] = [];
   this.selected.forEach((node, i) => {
-    if (method((node.metadata.data ??= {}), node, i)) filtered.push(node);
+    if (method((node.metadata.data ?? {}), node, i)) filtered.push(node);
   });
 
   return new Selection(filtered, this.scene);
