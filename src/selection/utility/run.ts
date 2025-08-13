@@ -7,7 +7,7 @@ import { Selection } from '../index';
 export function run(this: Selection, method: (d: any, node: Node, i: number) => any) {
   let values: Object[] = [];
   this.selected.forEach((node, i) => {
-    method((node.metadata.data ??= {}), node, i);
+    method((node.metadata?.data ?? {}), node, i);
   });
   return this;
 }
