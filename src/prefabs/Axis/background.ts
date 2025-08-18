@@ -91,7 +91,11 @@ function backgroundBuilder(config: backgroundConfig): Selection {
                         "material": new StandardMaterial(config.name + "_background_material_x"),
                         "metadata.data": config.options
                       })
-                      .props(config.properties);
+                      .props(config.properties)
+                      .run((d, n: Mesh) => {
+                        n.doNotSyncBoundingInfo = true;
+                        n.isPickable = false;
+                      });
 
   return background;
 }
