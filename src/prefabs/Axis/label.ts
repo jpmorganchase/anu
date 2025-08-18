@@ -16,9 +16,10 @@ export function labelAlt(this: Axes) {
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
 
   //scale label size to 0.05% selection height + width
-  let { min, max } = this.CoT.selected[0].getHierarchyBoundingVectors();
+  let { min, max } = this.parent.getHierarchyBoundingVectors();
   let bounds = new BoundingInfo(min, max).boundingBox;
   let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
+  scaleMultiplier = (scaleMultiplier === -Infinity) ? 1 : scaleMultiplier;
   let textHeight = scaleMultiplier * 0.05;
 
   let ticks = buildTicks(this.scales, this.options.labelTicks);
@@ -109,7 +110,11 @@ function labelBuilder(config: labelConfig, ticks: any[]): Selection {
       "position": config.position,
       "rotation": config.rotation
     })
-    .props(config.properties);
+    .props(config.properties)
+    .run((d, n: Mesh) => {
+      n.doNotSyncBoundingInfo = true;
+      n.isPickable = false;
+    });
 
   return labelMesh
 }

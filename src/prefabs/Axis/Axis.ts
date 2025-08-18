@@ -30,8 +30,8 @@ export class Axes extends TransformNode {
     this.parent = (this.options.parent instanceof Selection ? (this.options.parent.selected[0]) : this.options.parent);
     this.CoT = new Selection([this], scene);
     this.scales = this.setScales();
-    this.domain = this.setDomain();
-    this.background =  this.setBackground()
+    this.domain = this.options.domain ? this.setDomain(): undefined;
+    this.background =  this.options.background ? this.setBackground(): {};
     this.grid = this.options.grid ? this.setGrid() : undefined;
     this.label = this.options.label ? this.setLabel() : {};
   }

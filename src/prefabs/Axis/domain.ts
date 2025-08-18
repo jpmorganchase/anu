@@ -66,6 +66,11 @@ export function domain(this: Axes): Selection {
 
   greasedLine.metadata = {data: {}};
 
+
+  //Performance Optimization Settings
+  greasedLine.doNotSyncBoundingInfo = true;
+  greasedLine.isPickable = false;
+
   let domain = new Selection([greasedLine], this._scene);
 
   domain.prop('name', this.name + '_domain');
@@ -75,17 +80,9 @@ export function domain(this: Axes): Selection {
 
 
 export function updateDomain(axes: Axes, transitionOptions: TransitionOptions) {
-  let scaleX = axes.scales.x.scale;
-  let rangeX = axes.scales.x.range;
-  let domainX = axes.scales.x.domain;
-
-  let scaleY = axes.scales.y.scale;
-  let rangeY = axes.scales.y.range;
-  let domainY = axes.scales.y.domain;
-
-  let scaleZ = axes.scales.z.scale;
-  let rangeZ = axes.scales.z.range;
-  let domainZ = axes.scales.z.domain;
+  const rangeX = axes.scales.x.range;
+  const rangeY = axes.scales.y.range;
+  const rangeZ = axes.scales.z.range;
 
   let path: Vector3[] = [];
 
