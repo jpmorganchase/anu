@@ -14,32 +14,31 @@ import clone from 'lodash-es/clone';
 export function labelAlt(this: Axes) {
 
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
-
-  //scale label size to 2.5% selection height + width
-  let { min, max } = this.parent.getHierarchyBoundingVectors();
-  let bounds = new BoundingInfo(min, max).boundingBox;
-  let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
-  scaleMultiplier = (scaleMultiplier === -Infinity) ? 1 : scaleMultiplier;
-  let textHeight = scaleMultiplier * 0.025;
-
+ 
+  //Scale label size to 1.5% of total ranges
+  let scaleMultiplier = (this.scales?.x != undefined ? Math.abs(this.scales.range.x[1] - this.scales.range.x[0]) : 0) +
+                        (this.scales?.y != undefined ? Math.abs(this.scales.range.y[1] - this.scales.range.y[0]) : 0) +
+                        (this.scales?.z != undefined ? Math.abs(this.scales.range.z[1] - this.scales.range.z[0]) : 0)
+  let textHeight = scaleMultiplier * 0.015;
+  
   let ticks = buildTicks(this.scales, this.options.labelTicks);
   
-    //Check what labels if any we want to render
-    let createLabel = (typeof this.options.label === "object") ? this.options.label :
-    this.options.label === true ? {x: true, y: true, z: true} : false;
-  
-    //If no labels, return now
-    if (!createLabel) return undefined;
-  
-    if (createLabel.x && this.options.scale?.x != undefined){
-      selections.x = labelBuilder(labelXDefaults(this, textHeight), ticks.x);
-    }
-    if (createLabel.y && this.options.scale?.y != undefined){
-      selections.y = labelBuilder(labelYDefaults(this, textHeight), ticks.y)
-    }
-    if (createLabel.z && this.options.scale?.z != undefined){
-      selections.z = labelBuilder(labelZDefaults(this, textHeight), ticks.z)
-    }
+  //Check what labels if any we want to render
+  let createLabel = (typeof this.options.label === "object") ? this.options.label :
+  this.options.label === true ? {x: true, y: true, z: true} : false;
+
+  //If no labels, return now
+  if (!createLabel) return undefined;
+
+  if (createLabel.x && this.options.scale?.x != undefined){
+    selections.x = labelBuilder(labelXDefaults(this, textHeight), ticks.x);
+  }
+  if (createLabel.y && this.options.scale?.y != undefined){
+    selections.y = labelBuilder(labelYDefaults(this, textHeight), ticks.y)
+  }
+  if (createLabel.z && this.options.scale?.z != undefined){
+    selections.z = labelBuilder(labelZDefaults(this, textHeight), ticks.z)
+  }
 
   return selections;
 }
@@ -144,11 +143,16 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
 
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
 
-  //scale label size to 2.5% selection height + width
-  let { min, max } = axes.CoT.selected[0].getHierarchyBoundingVectors();
-  let bounds = new BoundingInfo(min, max).boundingBox;
-  let scaleMultiplier = bounds.extendSize.y + bounds.extendSize.x + bounds.extendSize.z;
-  let textHeight = scaleMultiplier * 0.025;
+  //Scale label size to 1.5% of total ranges
+  let scaleMultiplier = (axes.scales?.x != undefined ? Math.abs(axes.scales.range.x[1] - axes.scales.range.x[0]) : 0) +
+                        (axes.scales?.y != undefined ? Math.abs(axes.scales.range.y[1] - axes.scales.range.y[0]) : 0) +
+                        (axes.scales?.z != undefined ? Math.abs(axes.scales.range.z[1] - axes.scales.range.z[0]) : 0)
+  let textHeight = scaleMultiplier * 0.015;
+
+  let scaleMultiplierPrev = (axes.tempScales?.x != undefined ? Math.abs(axes.tempScales.range.x[1] - axes.tempScales.range.x[0]) : 0) +
+                            (axes.tempScales?.y != undefined ? Math.abs(axes.tempScales.range.y[1] - axes.tempScales.range.y[0]) : 0) +
+                            (axes.tempScales?.z != undefined ? Math.abs(axes.tempScales.range.z[1] - axes.tempScales.range.z[0]) : 0)
+  let textHeightPrev = scaleMultiplierPrev * 0.015;
 
   let ticksPrev = buildTicks(axes.tempScales, axes.options.labelTicks);
   let ticks = buildTicks(axes.scales, axes.options.labelTicks);
@@ -167,7 +171,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
     })
       
       if (transitionOptions) {
-        const startConfig = labelXDefaults(axes.tempAxes, textHeight)
+        const startConfig = labelXDefaults(axes.tempAxes, textHeightPrev)
         const endConfig = labelXDefaults(axes, textHeight)
         selections.x = labelBuilder(startConfig, ticks.x);
         selections.x.transition(transitionOptions).tween((d,n,i) => {
@@ -191,7 +195,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
       })
 
       if (transitionOptions) {
-        const startConfig = labelYDefaults(axes.tempAxes, textHeight)
+        const startConfig = labelYDefaults(axes.tempAxes, textHeightPrev)
         const endConfig = labelYDefaults(axes, textHeight)
         selections.y = labelBuilder(startConfig, ticks.y);
         selections.y.transition(transitionOptions).tween((d,n,i) => {
@@ -215,7 +219,7 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
       })
 
       if (transitionOptions) {
-        const startConfig = labelZDefaults(axes.tempAxes, textHeight)
+        const startConfig = labelZDefaults(axes.tempAxes, textHeightPrev)
         const endConfig = labelZDefaults(axes, textHeight)
         selections.z = labelBuilder(startConfig, ticks.z);
         selections.z.transition(transitionOptions).tween((d,n,i) => {
