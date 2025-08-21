@@ -77,7 +77,7 @@ export async function imaxes(babylonEngine) {
   imAxes.positionX((d, n, i) => (i * 1.5) - 5).positionY(0.75);
 
   //Create labels for each axis using plane text and assign that axis as the parent
-  let labels = anu.bind("planeText", { text: (d) => d.replaceAll("_", " "), size: 0.25 }, Object.keys(key_types))
+  let labels = anu.bind("planeText", { text: (d) => d.replaceAll("_", " "), size: 0.1 }, Object.keys(key_types))
     .run((d, n, i) => n.parent = imAxes.selected[i])
     .positionY((axes_height / 2) + 0.1);
 
@@ -192,8 +192,8 @@ export async function imaxes(babylonEngine) {
     axisConfig.domainMaterialOptions = { width: 0.01 };
     axisConfig.labelTicks = { y: d3.extent(bandScale.domain()) };
     axisConfig.labelFormat = label_format;
-    axisConfig.labelOptions = { y: { size: 0.15 }, x: { size: 0.1 } };
-    axisConfig.labelMargin = { x: 0.05 };
+    axisConfig.labelOptions = { x: { size: 0.05 }, y: { size: 0.08 } };
+    axisConfig.labelMargin = { x: 0.05, y: 0.125 };
 
     anu.createAxes(axesName + "_hist_axis", scene, axisConfig);
   }
@@ -266,7 +266,7 @@ export async function imaxes(babylonEngine) {
     axisConfig1.domainMaterialOptions = { width: 0.01 };
     axisConfig1.labelTicks = { y: (scale1.domain().length > 10) ? evenDistributedSlice(scale1.domain(), 10) : undefined };
     // axisConfig.labelFormat = label_format
-    axisConfig1.labelOptions = { y: { size: 0.15, align: "center" } };
+    axisConfig1.labelOptions = { y: { size: 0.08, align: "center" } };
     axisConfig1.labelProperties = { y: { "position.x": 0, "position.z": -axes_diameter / 2 } };
     anu.createAxes(axesName1 + "_para_axis", scene, axisConfig1);
 
@@ -276,7 +276,7 @@ export async function imaxes(babylonEngine) {
     axisConfig2.grid = false;
     axisConfig2.domainMaterialOptions = { width: 0.01 };
     axisConfig2.labelTicks = { y: (scale2.domain().length > 10) ? evenDistributedSlice(scale2.domain(), 10) : undefined };
-    axisConfig2.labelOptions = { y: { size: 0.15, align: "center" } };
+    axisConfig2.labelOptions = { y: { size: 0.08, align: "center" } };
     axisConfig2.labelProperties = { y: { "position.x": 0, "position.z": -axes_diameter / 2 } };
     anu.createAxes(axesName2 + "_para_axis", scene, axisConfig2);
 

@@ -44,13 +44,15 @@ Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 | Property       |      Value      |  Default |
 | ------------- | ------------- | ------------- |
 |   text   | (string) text to be rendered | 'undefined' |
-| size     |   (number) scaling factor to be applied to the Mesh, same as scaling    |   1 |
-| opacity |   (number) opacity value between 0 and 1   |    1 |
-| align |    (string) horizontal alignment of the text, either 'left, 'center', or 'right'    |    'center'    |
-| color |   (Color3) color value of the mesh material   |    Color3.White() |
 | font |   (json) json spec of the MSDF text font    |    roboto-standard.json |
 | atlas |   (png) texture atlas of the MSDF text font   |    roboto-standard.png |
-| fontHeight    |   (number) max height of all chars in the json spec of the MSDF text font. Do not change if using default font. If using custom font, either calculate the max height value from the font's json spec or leave undefined to automatically calculate at runtime |   undefined   |
+| align |    (string) horizontal alignment of the text, either 'left, 'center', or 'right'    |    'center'    |
+| vAlign |    (string) vertical alignment of the text, either 'top, 'middle', or 'bottom'    |    'middle'    |
+| color |   (Color3) color value of the text   |    Color3.White() |
+| strokeColor |   (Color3) color value of the text's stroke   |    Color3.Black() |
+| strokeWidth |   (number) width of the text's stroke between 0 and 1   |    0 |
+| opacity |   (number) opacity value between 0 and 1   |    1 |
+| size     |   (number) scaling factor to be applied to the Mesh, same as scaling    |   1 |
 
 ## Methods and Properties 
 
@@ -59,13 +61,15 @@ Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 | ------------- | ------------- | 
 |   updatePlaneText(options)  |  updates the plane text with all the specified options in a single pass. Undeclared options will not be modified  |
 |   text  |  (string) gets or sets the rendered text  |
-|   size  |  (number) gets or sets the scaling factor  |
-|   opacity  |  (number) gets or sets the opacity value  |
-|   align  |  (string) gets or sets the horizontal alignment of the text  |
-|   color  |  (color3) gets or sets the color value of the mesh material  |
 |   font  |  (json) gets or sets the json spec of the MSDF text font |
 |   atlas  |  (png) gets or sets the texture atlas of the MSDF text font |
-|   fontHeight  |  (number) gets or sets the max height of the json spec |
+|   align  |  (string) gets or sets the horizontal alignment of the text  |
+|   vAlign  |  (string) gets or sets the vertical alignment of the text  |
+|   color  |  (color3) gets or sets the color value of the text  |
+|   strokeColor  |  (color3) gets or sets the stroke color value of the text  |
+|   strokeWidth  |  (number) gets or sets the stroke width value of the text  |
+|   opacity  |  (number) gets or sets the opacity value  |
+|   size  |  (number) gets or sets the scaling factor  |
 
 ## Examples
 
