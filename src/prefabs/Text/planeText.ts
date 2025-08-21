@@ -42,22 +42,6 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
-  public get color() {
-    return this.options.color;
-  }
-  public set color(newColor: Color3) {
-    this.options.color = newColor;
-    this.run();
-  }
-
-  public get size() {
-    return this.options.size;
-  }
-  public set size(newSize: number) {
-    this.options.size = newSize;
-    this.run();
-  }
-
   public get font() {
     return this.options.font;
   }
@@ -74,6 +58,46 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
+  public get align() {
+    return this.options.align;
+  }
+  public set align(newAlign: 'left' | 'center' | 'right') {
+    this.options.align = newAlign;
+    this.run();
+  }
+
+  public get vAlign() {
+    return this.options.vAlign;
+  }
+  public set vAlign(newVAlign: 'top' | 'middle' | 'bottom') {
+    this.options.vAlign = newVAlign;
+    this.run();
+  }
+
+  public get color() {
+    return this.options.color;
+  }
+  public set color(newColor: Color3) {
+    this.options.color = newColor;
+    this.run();
+  }
+
+  public get strokeColor() {
+    return this.options.strokeColor;
+  }
+  public set strokeColor(newStrokeColor: Color3) {
+    this.options.strokeColor = newStrokeColor;
+    this.run();
+  }
+
+  public get strokeWidth() {
+    return this.options.strokeWidth;
+  }
+  public set strokeWidth(newStrokeWidth: number) {
+    this.options.strokeWidth = newStrokeWidth;
+    this.run();
+  }
+
   public get opacity() {
     return this.options.opacity;
   }
@@ -82,13 +106,14 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
-  public get align() {
-    return this.options.align;
+  public get size() {
+    return this.options.size;
   }
-  public set align(newAlign: 'left' | 'right' | 'center') {
-    this.options.align = newAlign;
+  public set size(newSize: number) {
+    this.options.size = newSize;
     this.run();
   }
+
 
   /**
    * Updates the PlaneText with new options.
