@@ -50,7 +50,7 @@ Selection.run((d,n,i) => n.updatePlaneText(options: {}));
 | vAlign |    (string) vertical alignment of the text, either 'top, 'middle', or 'bottom'    |    'middle'    |
 | color |   (Color3) color value of the text   |    Color3.White() |
 | strokeColor |   (Color3) color value of the text's stroke   |    Color3.Black() |
-| strokeWidth |   (number) width of the text's stroke between 0 and 1   |    0.2 |
+| strokeWidth |   (number) width of the text's stroke between 0 and 1   |    0 |
 | opacity |   (number) opacity value between 0 and 1   |    1 |
 | size     |   (number) scaling factor to be applied to the Mesh, same as scaling    |   1 |
 

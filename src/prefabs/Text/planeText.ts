@@ -254,7 +254,7 @@ export function createPlaneText(name: string, options: PlaneTextOptions, scene: 
     vAlign: options.vAlign ?? 'middle',
     color: options.color ?? Color3.White(),
     strokeColor: options.strokeColor ?? Color3.Black(),
-    strokeWidth: options.strokeWidth ?? 0.2,
+    strokeWidth: options.strokeWidth ?? 0,
     opacity: options.opacity ?? 1,
     size: options.size ?? 1,
   };
