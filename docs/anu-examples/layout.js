@@ -110,47 +110,47 @@ export function layout(engine) {
 
   let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
-  let selectBox = new GUI.SelectionPanel('sp', [rowsGroup, curveGroup, marginXgroup, marginYgroup, layoutGroup]);
-  selectBox.width = 0.2;
-  selectBox.height = 1.5;
-  selectBox.scaleX = 0.6;
-  selectBox.scaleY = 0.6;
-  selectBox.background = '#FFFFFF';
-  selectBox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  selectBox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-  selectBox.fontFamily = 'times new roman';
-  selectBox.fontSize = '14pt';
+  // let selectBox = new GUI.SelectionPanel('sp', [rowsGroup, curveGroup, marginXgroup, marginYgroup, layoutGroup]);
+  // selectBox.width = 0.2;
+  // selectBox.height = 1.5;
+  // selectBox.scaleX = 0.6;
+  // selectBox.scaleY = 0.6;
+  // selectBox.background = '#FFFFFF';
+  // selectBox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+  // selectBox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+  // selectBox.fontFamily = 'times new roman';
+  // selectBox.fontSize = '14pt';
 
-  let rect2 = GUI.Button.CreateSimpleButton('button1', 'add chart');
-  rect2.width = 0.2; // 0.2 = 20%
-  rect2.height = '40px';
-  rect2.cornerRadius = 20;
-  rect2.color = 'white';
-  rect2.thickness = 4;
-  rect2.background = 'blue';
+  // let rect2 = GUI.Button.CreateSimpleButton('button1', 'add chart');
+  // rect2.width = 0.2; // 0.2 = 20%
+  // rect2.height = '40px';
+  // rect2.cornerRadius = 20;
+  // rect2.color = 'white';
+  // rect2.thickness = 4;
+  // rect2.background = 'blue';
 
-  rect2.top = 200; //200 px
-  rect2.left = '10%';
-  rect2.onPointerClickObservable.add(() => {
-      addChart(scene);
-  });
+  // rect2.top = 200; //200 px
+  // rect2.left = '10%';
+  // rect2.onPointerClickObservable.add(() => {
+  //     addChart(scene);
+  // });
 
-  let rect1 = GUI.Button.CreateSimpleButton('button2', 'remove chart');
-  rect1.width = 0.2; // 0.2 = 20%
-  rect1.height = '40px';
-  rect1.cornerRadius = 20;
-  rect1.color = 'white';
-  rect1.thickness = 4;
-  rect1.background = 'blue';
+  // let rect1 = GUI.Button.CreateSimpleButton('button2', 'remove chart');
+  // rect1.width = 0.2; // 0.2 = 20%
+  // rect1.height = '40px';
+  // rect1.cornerRadius = 20;
+  // rect1.color = 'white';
+  // rect1.thickness = 4;
+  // rect1.background = 'blue';
 
-  rect1.top = 250; //200 px
-  rect1.left = '10%';
-  rect1.onPointerClickObservable.add(() => {
-      removeChart(scene);
-  });
-  advancedTexture.addControl(rect1);
-  advancedTexture.addControl(rect2);
-  advancedTexture.addControl(selectBox);
+  // rect1.top = 250; //200 px
+  // rect1.left = '10%';
+  // rect1.onPointerClickObservable.add(() => {
+  //     removeChart(scene);
+  // });
+  // advancedTexture.addControl(rect1);
+  // advancedTexture.addControl(rect2);
+  // advancedTexture.addControl(selectBox);
 
   return scene;
 }
