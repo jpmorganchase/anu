@@ -49,7 +49,7 @@ export function barchart2d(engine){
                   .positionZ(-0.01) //Adjust the z position slightly to prevent Z-fighting
                   .scalingY((d) => scaleY(d.Horsepower))
                   .positionY((d) => scaleY(d.Horsepower) / 2)
-                  .material((d, i) => scaleC(d.Miles_per_Gallon));  //We set material directly as scaleC() was configured to return a StandardMaterial
+                  .material((d) => scaleC(d.Miles_per_Gallon));  //We set material directly as scaleC() was configured to return a StandardMaterial
 
   //Use the Axes prefab with our two D3 scales
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY }, parent: chart });
