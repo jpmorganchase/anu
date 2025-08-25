@@ -87,7 +87,7 @@ export default defineConfig({
         items: [
           { text: '2D Scatter Plot', link: './scatter_plot_2D' },
           { text: '3D Scatter Plot', link: './scatter_plot_3D' },
-          { text: 'Embellished Chart', link: './embellished_chart' },
+          // { text: 'Embellished Chart', link: './embellished_chart' },
           { text: 'Dimensionality Reduction Plot', link: './dimensionality_reduction_plot' },
         ]
       },
@@ -172,46 +172,55 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/jpmorganchase/anu' }
     ]
   },
-      vite: {
-        // worker: {
-        //   format: "es"
-        // },
-        rollupOptions: {
-          external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
+  vite: {
+    // worker: {
+    //   format: "es"
+    // },
+    rollupOptions: {
+      external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
+    },
+    optimizeDeps: { // 👈 optimizedeps
+      esbuildOptions: {
+        target: "esnext", 
+        // Node.js global to browser globalThis
+        define: {
+          global: 'globalThis'
         },
-        optimizeDeps: { // 👈 optimizedeps
-          esbuildOptions: {
-            target: "esnext", 
-            // Node.js global to browser globalThis
-            define: {
-              global: 'globalThis'
-            },
-            supported: { 
-              bigint: true 
-            }, 
-          },
-          exclude: ['@babylonjs/havok']
+        supported: { 
+          bigint: true 
         }, 
-        // server: {
-        //     // watch: {
-        //     //     followSymlinks: false,
-        //     // },
-        //   // headers: {
-        //   //   'Cross-Origin-Embedder-Policy': 'require-corp',
-        //   //   'Cross-Origin-Opener-Policy': 'same-origin',
-        //   // },
+      },
+      exclude: ['@babylonjs/havok']
+    }, 
+    // server: {
+    //     // watch: {
+    //     //     followSymlinks: false,
+    //     // },
+    //   // headers: {
+    //   //   'Cross-Origin-Embedder-Policy': 'require-corp',
+    //   //   'Cross-Origin-Opener-Policy': 'same-origin',
+    //   // },
+    // },
+    plugins: [
+        dsv(),
+        dynamicImport(),
+        // {
+        //   name: 'disable-vp-static-data-plugin',
+        //   configResolved(config) {
+        //     // @ts-ignore
+        //     config.plugins.splice(
+        //       config.plugins.findIndex((p) => p.name === 'vitepress:data'),
+        //       1
+        //     );
+        //   },
         // },
-        plugins: [
-            dsv(),
-            dynamicImport(),
-
-          // {configureServer(server) {
-          //         server.middlewares.use((_req, res, next) => {
-          //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-          //             res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
-          //             next();
-          //         });
-          //}
-        ]
-      }
+      // {configureServer(server) {
+      //         server.middlewares.use((_req, res, next) => {
+      //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+      //             res.setHeader("Cross-Origin-Opener-Policy", "same-origin")
+      //             next();
+      //         });
+      //}
+    ]
+  }
 })

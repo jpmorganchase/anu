@@ -17,7 +17,7 @@ layout: page
         <div class="cards">
             <cardImg title="2D Scatter Plot" img="/anu/assets/example-images/scatterplot2D.webp" link="/anu/examples/scatter_plot_2D"></cardImg>
             <cardImg title="3D Scatter Plot"  img="/anu/assets/example-images/scatterplot3D.webp" link="/anu/examples/scatter_plot_3D"></cardImg>
-            <cardImg title="Embellished Chart"  img="/anu/assets/example-images/embellishedChart.webp" link="/anu/examples/embellished_chart"></cardImg>
+            <!-- <cardImg title="Embellished Chart"  img="/anu/assets/example-images/embellishedChart.webp" link="/anu/examples/embellished_chart"></cardImg> -->
             <cardImg title="Dimensionality Reduction Plot" img="/anu/assets/example-images/dimensionalityReductionPlot.webp" link="/anu/examples/dimensionality_reduction_plot"></cardImg>
         </div>
     </div>

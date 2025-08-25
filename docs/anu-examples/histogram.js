@@ -15,7 +15,7 @@ export function histogram(engine) {
   new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
   //Add a camera that rotates around the origin and adjust its properties
   const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0.5, 0), scene);
-  camera.position = new BABYLON.Vector3(0, 0.5, -1.75)
+  camera.position = new BABYLON.Vector3(0, 0.5, -2)
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);

@@ -1,4 +1,4 @@
----
+<!-- ---
 aside: false
 ---
 <script setup>
@@ -12,4 +12,4 @@ Visualization of the properties of fake planes using 3D models of planes as embe
 
 ::: code-group
 <<< @/./anu-examples/embellishedChart.js 
-:::
+::: -->

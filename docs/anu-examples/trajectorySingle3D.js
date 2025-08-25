@@ -13,7 +13,7 @@ export function trajectorySingle3D(engine){
   new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, -10), scene);
   //Add a camera that rotates around the origin and adjust its properties
   const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
-  camera.position = new BABYLON.Vector3(0, 2, -5);
+  camera.position = new BABYLON.Vector3(2, 1, -4);
   camera.wheelPrecision = 20;
   camera.minZ = 0;
   camera.attachControl(true);
