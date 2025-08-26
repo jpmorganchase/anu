@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 import data from './data/stocks.csv';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function linechart2D(engine){
+export function linechart2DTubes(engine){
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -38,17 +38,21 @@ export function linechart2D(engine){
     return acc;
   }, {} ));
 
-  //For each point in our paths array of arrays, set the color based on the line it belongs to
-  let colors = paths.map((path, i) => path.map(() => scaleC(i)));
-
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
   //Select our CoT so that we have it as a Selection object
   let chart = anu.selectName('cot', scene);
 
-  //Create a lineSystem mesh as a child of our CoT that will render the paths we had defined
-  let lines = chart.bind('lineSystem', { lines: paths, colors: colors })
-                   .positionZ(-0.01); //Move forward to prevent z-fighting
+  //Create tubes as children of our CoT that will render the paths we had defined, one tube for each path
+  let lines = chart.bind('tube', { path: (d) => d, radius: 0.0075 }, paths)
+                   .material((d,n,i) => {
+                    //Set a material for each tube which is what determines its color
+                    const material = new BABYLON.StandardMaterial('LineMaterial' + i);
+                    material.diffuseColor = scaleC(i);    //Set base color
+                    material.emissiveColor = scaleC(i).multiplyByFloats(0.25, 0.25, 0.25);  //Make a bit brighter, using full values will blow out the color
+                    material.specularColor = BABYLON.Color3.Black();  //Disable reflections
+                    return material;
+                   });
 
   //Use the axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },

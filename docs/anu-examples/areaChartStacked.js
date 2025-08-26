@@ -82,5 +82,8 @@ export function areaChartStacked(engine){
   //Adjust the legend position
   legend.position(new BABYLON.Vector3(1.5, -1, 0));
 
+  //Shift the entire chart to the left to center it in the default camera view
+  chart.positionX(-0.25)
+
   return scene;
 }
