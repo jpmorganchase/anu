@@ -11,7 +11,7 @@ export function behavior(this: Selection, behavior: Behavior<Node> | ((d: any, n
   this.selected.forEach((node, i) => {
     node instanceof Node
       ? behavior instanceof Function
-        ? node?.addBehavior(behavior(node.metadata.data ?? {}, node, i))
+        ? node?.addBehavior(behavior(node.metadata?.data ?? {}, node, i))
         : node?.addBehavior(behavior)
       : console.log('Node not a mesh, skipping.');
   });
