@@ -118,6 +118,7 @@ export default defineConfig({
           { text: '2D Area Chart', link: './area_chart_2D' },
           { text: '2D Stacked Area Chart', link: './area_chart_stacked' },
           { text: 'Pie Chart', link: './pie_chart' },
+          { text: 'Donut Chart', link: './donut_chart' },
           { text: 'Surface Chart', link: './surface_chart' }
         ]
       },

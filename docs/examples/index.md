@@ -4,7 +4,7 @@ layout: page
 
 <script setup>
  import cardImg from '../vue_components/cardImg.vue'
-  import multiView from '../vue_components/multiView.vue'
+ import multiView from '../vue_components/multiView.vue'
 </script>
 
 <multiView>
@@ -48,6 +48,7 @@ layout: page
             <cardImg title="2D Area Chart" img="/anu/assets/example-images/areachart2D.webp" link="/anu/examples/area_chart_2D"></cardImg>
             <cardImg title="2D Stacked Area Chart" img="/anu/assets/example-images/areachartStacked.webp" link="/anu/examples/area_chart_stacked"></cardImg>
             <cardImg title="Pie Chart"  img="/anu/assets/example-images/pieChart.webp" link="/anu/examples/pie_chart"></cardImg>
+            <cardImg title="Donut Chart"  img="/anu/assets/example-images/donutChart.webp" link="/anu/examples/donut_chart"></cardImg>
             <cardImg title="Surface Chart"  img="/anu/assets/example-images/surfaceChart.webp" link="/anu/examples/surface_chart"></cardImg>
         </div>
     </div>

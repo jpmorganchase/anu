@@ -39,6 +39,7 @@ export function pieChart(engine){
   let pieSegments = chart.bind('cylinder',
     {
       arc: (d,n,i) => (d.endAngle - d.startAngle) / (Math.PI * 2),  //Babylon cylinders use percentages, so we have to convert this value
+      diameter: 1,
       height: 0.1,
       enclose: true   //Only strictly necessary to set to true if the pie segments are separated from each other
     },

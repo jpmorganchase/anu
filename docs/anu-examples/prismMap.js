@@ -38,13 +38,13 @@ export function prismMap(engine) {
   }, {});
 
   //Create a D3 scale to map the airport counts with the height of the prisms
-  let scaleY = d3.scaleLinear().domain([0, d3.max(Object.values(counts))]).range([0, 0.25]);
+  let scaleY = d3.scaleLinear().domain([0, d3.max(Object.values(counts))]).range([0, -0.25]); //Negative range because our map is technically upside down
  
   //Our geoJSON uses full state names but our airport data uses abbreviations
   const stateAbbreviations = { "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY" };
 
-  //Assign each state a Material and therefore, their color, based on the number of airports
-  states.scalingY((d) => -scaleY(counts[stateAbbreviations[d.NAME]]))
-  
+  //Adjust the height of each state based on the number of airports
+  states.scalingY((d) => scaleY(counts[stateAbbreviations[d.NAME]]))
+
   return scene;
 }
