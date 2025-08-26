@@ -38,13 +38,16 @@ export function linechart2DTubes(engine){
     return acc;
   }, {} ));
 
+  //Smooth out the paths so that they are less jagged, which causes rendering issues with Tubes
+  paths = paths.map(path => BABYLON.Curve3.CreateCatmullRomSpline(path, 20, false).getPoints());
+
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
   //Select our CoT so that we have it as a Selection object
   let chart = anu.selectName('cot', scene);
 
   //Create tubes as children of our CoT that will render the paths we had defined, one tube for each path
-  let lines = chart.bind('tube', { path: (d) => d, radius: 0.0075 }, paths)
+  let lines = chart.bind('tube', { path: (d) => d, radius: 0.005 }, paths)
                    .material((d,n,i) => {
                     //Set a material for each tube which is what determines its color
                     const material = new BABYLON.StandardMaterial('LineMaterial' + i);

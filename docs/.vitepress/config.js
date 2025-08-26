@@ -87,7 +87,7 @@ export default defineConfig({
         items: [
           { text: '2D Scatter Plot', link: './scatter_plot_2D' },
           { text: '3D Scatter Plot', link: './scatter_plot_3D' },
-          // { text: 'Embellished Chart', link: './embellished_chart' },
+          { text: 'Embellished Chart', link: './embellished_chart' },
           { text: 'Dimensionality Reduction Plot', link: './dimensionality_reduction_plot' },
         ]
       },
@@ -204,16 +204,16 @@ export default defineConfig({
     plugins: [
         dsv(),
         dynamicImport(),
-        // {
-        //   name: 'disable-vp-static-data-plugin',
-        //   configResolved(config) {
-        //     // @ts-ignore
-        //     config.plugins.splice(
-        //       config.plugins.findIndex((p) => p.name === 'vitepress:data'),
-        //       1
-        //     );
-        //   },
-        // },
+        {
+          name: 'disable-vp-static-data-plugin',  //See: https://github.com/vuejs/vitepress/issues/4482
+          configResolved(config) {
+            // @ts-ignore
+            config.plugins.splice(
+              config.plugins.findIndex((p) => p.name === 'vitepress:data'),
+              1
+            );
+          },
+        },
       // {configureServer(server) {
       //         server.middlewares.use((_req, res, next) => {
       //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");

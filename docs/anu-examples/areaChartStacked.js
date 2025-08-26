@@ -56,7 +56,7 @@ export function areaChartStacked(engine){
   //Create ribbon meshes as children of our CoT for each series
   let ribbons = chart.bind('ribbon', { pathArray: (d) => seriesToPath(d), sideOrientation: BABYLON.Mesh.DOUBLESIDE }, series)
     .material((d) => scaleC(d.key))
-    .positionZ(-0.001);   //Move ribbon forward to prevent z-fighting
+    .positionZ(-0.002);   //Move ribbon forward to prevent z-fighting
 
   //Use the Axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },
