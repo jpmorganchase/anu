@@ -41,11 +41,16 @@ export function domain(this: Axes): Selection {
     path.push(new Vector3(rangeX[1], rangeY[0], rangeZ[0]), new Vector3(rangeX[1], rangeY[0], rangeZ[1]));
   }
 
+  let scaleMultiplier = (scaleX != undefined ? Math.abs(rangeX[1] - rangeX[0]) : 0) +
+                        (scaleY != undefined ? Math.abs(rangeY[1] - rangeY[0]) : 0) +
+                        (scaleZ != undefined ? Math.abs(rangeZ[1] - rangeZ[0]) : 0)
+  let domainSize = scaleMultiplier * 0.005;
+
   let default_options: GreasedLineMeshBuilderOptions = { points: path, updatable: true};
 
   let default_material: GreasedLineMaterialBuilderOptions = {
     createAndAssignMaterial: true,
-    width: 0.05,
+    width: domainSize,
     sizeAttenuation: false,
     materialType: 0,
     color: Color3.White(),
