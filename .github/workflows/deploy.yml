@@ -50,7 +50,7 @@ jobs:
           cd docs
           npm ci
           npm run docs:build
-          cd .vitepress/dist
+          cd .vitepress
           ls
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
