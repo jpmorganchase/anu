@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
+    "docs:build": "vitepress build node --experimental-specifier-resolution=node",
     "docs:preview": "vitepress preview",
     "clean_ext": "node clean_ext.js",
     "add_coi": "node add_coi.js"
