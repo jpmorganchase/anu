@@ -21,11 +21,12 @@ export function bind<MeshType extends keyof MeshTypes>(
   this: Selection,
   shape: MeshType,
   options: Property<MeshTypes, MeshType> = {},
-  data: Array<any> = [{}],
+  data: Array<any> | ((d: any, n: Node, i: number) => Array<any>) = (d) => [d],
 ): Selection {
   let meshes: Node[] = [];
-  this.selected.forEach((node) => {
-    data.forEach((element, i) => {
+  this.selected.forEach((node, nodeIndex) => {
+    const dataArray = typeof data === 'function' ? data(node?.metadata?.data ?? 0, node, nodeIndex) : data;
+    dataArray.forEach((element, i) => {
       var mesh = create(shape, shape, options, element, this.scene);
       mesh.parent = node;
       meshes.push(mesh as Mesh);
