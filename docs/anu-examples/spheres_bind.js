@@ -12,6 +12,7 @@ export const spheresBind = function(engine){
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
   const camera = new ArcRotateCamera("Camera", -(Math.PI / 2), (Math.PI / 2), 5, new Vector3(0, 0, 0), scene);
+  camera.position = new Vector3(0,4,-8)
   camera.attachControl(true)
 
   //Use a top level bind to create a Selection containing 
@@ -32,7 +33,7 @@ export const spheresBind = function(engine){
   //Each sphere under cot will now be the parent of a box mesh.
   let boxes = spheres.bind('box')
 
-  boxes.positionY(-1)
+  boxes.positionZ(d => d)
 
   // Inspector.Show(scene, {
   //   embedMode: true,
