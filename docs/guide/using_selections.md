@@ -163,9 +163,10 @@ let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0, 2])
                  .positionX(d => d);
 
-//Calling bind() on our Selection of spheres will bind new Nodes as children of each sphere and by default will inherit the data bound to its parent
+//Calling bind() on our Selection of spheres will bind new Nodes as children 
+//of each sphere and by default will inherit the data bound to its parent
 let boxes = spheres.bind('box');
-                   .positionY(d=>d);
+                   .positionY(d => d);
 ```
 :::
 
