@@ -83,6 +83,7 @@ layout: page
             <cardImg title="Multiple Interactions" img="/anu/assets/example-images/multipleInteractions.webp" link="/anu/examples/multiple_interactions"></cardImg>
             <cardImg title="Single Selection" img="/anu/assets/example-images/brushingLinkingSingle.webp" link="/anu/examples/brushing_linking_single"></cardImg>
             <cardImg title="Multiple Selection" img="/anu/assets/example-images/brushingLinkingMultiple.webp" link="/anu/examples/brushing_linking_multiple"></cardImg>
+            <cardImg title="Filtering Selection" img="/anu/assets/example-images/brushing_linking_filter.webp" link="/anu/examples/brushing_linking_filter"></cardImg>
             <cardImg title="Layouts" img="/anu/assets/example-images/layout.webp" link="/anu/examples/layout"></cardImg>
             <cardImg title="ImAxes Simplified" img="/anu/assets/example-images/imaxes.webp" link="/anu/examples/imaxes_simplified"></cardImg>
         </div>
