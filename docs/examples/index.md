@@ -66,10 +66,11 @@ layout: page
         </div>
     </div>
     <div class='section'>
-        <h2>Networks</h2>
+        <h2>Networks and Hierarchies</h2>
         <hr>
         <div class="cards">
             <cardImg title="Node Link 3D" img="/anu/assets/example-images/nodeLink3D.webp" link="/anu/examples/node_link_3d"></cardImg>
+            <cardImg title="Treemap" img="/anu/assets/example-images/treemap.webp" link="/anu/examples/treemap"></cardImg>
         </div>
     </div>
     <div class='section'>

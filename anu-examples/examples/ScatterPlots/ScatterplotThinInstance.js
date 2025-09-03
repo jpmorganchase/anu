@@ -50,44 +50,44 @@ export const scatterplotThinInstance = function(engine){
   let root = anu.create('box', 'root', {size: 1});
   //root.scaling = new Vector3(0.1,0.1,0.1);
 
-  let thinInstance2 = anu.bindThinInstance(root, iris)
-                        .thinInstanceSetBuffer('matrix', (d,n,i) => {
-                          var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
-                          d.forEach((e, i) => {
-                           let matrix = Matrix.Scaling(0.1,0.1,0.1)
-                           matrix.copyToArray(bufferMatrices, i * 16);
-                          });
-                          return bufferMatrices;
+  // let thinInstance2 = anu.bindThinInstance(root, iris)
+  //                       .thinInstanceSetBuffer('matrix', (d,n,i) => {
+  //                         var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
+  //                         d.forEach((e, i) => {
+  //                          let matrix = Matrix.Scaling(0.1,0.1,0.1)
+  //                          matrix.copyToArray(bufferMatrices, i * 16);
+  //                         });
+  //                         return bufferMatrices;
 
-                        })
-                        .thinInstanceSetBuffer('matrix', (d,n,i) => {
-                          var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
-                          let matricies = n.thinInstanceGetWorldMatrices();
-                          d.forEach((e, i) => {
-                           let matrix = matricies[i].multiply( Matrix.Translation(scaleX(e.sepalLength), scaleY(e.petalLength), scaleZ(e.sepalWidth)))
-                           matrix.copyToArray(bufferMatrices, i * 16);
-                          });
-                          return bufferMatrices;
-                        })
+  //                       })
+  //                       .thinInstanceSetBuffer('matrix', (d,n,i) => {
+  //                         var bufferMatrices = new Float32Array(n.thinInstanceCount * 16 * 3);
+  //                         let matricies = n.thinInstanceGetWorldMatrices();
+  //                         d.forEach((e, i) => {
+  //                          let matrix = matricies[i].multiply( Matrix.Translation(scaleX(e.sepalLength), scaleY(e.petalLength), scaleZ(e.sepalWidth)))
+  //                          matrix.copyToArray(bufferMatrices, i * 16);
+  //                         });
+  //                         return bufferMatrices;
+  //                       })
 
   
   let thinInstance = chart.bindThinInstance(root, iris)
-      .thinInstanceScaling(new Vector3(0.05,0.05,0.05))    
+      .thinInstanceScaling(() => new Vector3(Math.random(), Math.random(), Math.random()))    
       .thinInstancePosition((d,n,i) => new Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth))) 
-      .thinInstanceRotation(() => Vector3.Random())
-      //.thinInstanceColor((d,n,i) => scaleC(d.species))
-      .thinInstanceRegisterAttribute("color", 4)
-      .thinInstanceSetAttribute("color", [0.5,0.5,0.5,1])
-      .thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
-      .thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
-      .thinInstancePositionFor((d,n,i) => d.species == "setosa", new Vector3(1,1,1))
-      .thinInstanceScalingFor((d,n,i) => d.species == "setosa", new Vector3(0.1,0.1,0.1))
-      .thinInstanceRotationFor((d,n,i) => d.species == "setosa", new Vector3(0,0,0))
-      .thinInstanceColorFor((d,n,i) => d.species == "virginica", new Color4(0,0,0, 1))
-      .thinInstancePositionAt(0, new Vector3(-1,-1,-1))
-      .thinInstanceScalingAt(0, new Vector3(1,1,1))
-      .thinInstanceRotationAt(0, new Vector3(0,0,0))
-      .thinInstanceColorAt(0, new Color4(0,0,0,1))
+      // .thinInstanceRotation(() => Vector3.Random())
+      // //.thinInstanceColor((d,n,i) => scaleC(d.species))
+      // .thinInstanceRegisterAttribute("color", 4)
+      // .thinInstanceSetAttribute("color", [0.5,0.5,0.5,1])
+      // .thinInstanceMatrixAt(0, (d,n,i) => Matrix.Translation(-1,-1,-1).multiply(n.thinInstanceGetWorldMatrices()[i]))
+      // .thinInstanceMatrixFor((d,n,i) => d.species == "setosa", Matrix.Translation(1,1,1))
+      // .thinInstancePositionFor((d,n,i) => d.species == "setosa", new Vector3(1,1,1))
+      // .thinInstanceScalingFor((d,n,i) => new Vector3(Math.random(), Math.random(), Math.random()))
+      // .thinInstanceRotationFor((d,n,i) => d.species == "setosa", new Vector3(0,0,0))
+      // .thinInstanceColorFor((d,n,i) => d.species == "virginica", new Color4(0,0,0, 1))
+      // .thinInstancePositionAt(0, new Vector3(-1,-1,-1))
+      // .thinInstanceScalingAt(0, new Vector3(1,1,1))
+      // .thinInstanceRotationAt(0, new Vector3(0,0,0))
+      // .thinInstanceColorAt(0, new Color4(0,0,0,1))
 
   let data = [{id:"a"},{id:"b"},{id:"c"},{id:"d"},{id:"e"}]
 
