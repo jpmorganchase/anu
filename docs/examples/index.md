@@ -19,6 +19,7 @@ layout: page
             <cardImg title="3D Scatter Plot"  img="/anu/assets/example-images/scatterplot3D.webp" link="/anu/examples/scatter_plot_3D"></cardImg>
             <cardImg title="Embellished Chart"  img="/anu/assets/example-images/embellishedChart.webp" link="/anu/examples/embellished_chart"></cardImg>
             <cardImg title="Dimensionality Reduction Plot" img="/anu/assets/example-images/dimensionalityReductionPlot.webp" link="/anu/examples/dimensionality_reduction_plot"></cardImg>
+            <cardImg title="Vector Field"  img="/anu/assets/example-images/vectorField.webp" link="/anu/examples/vector_field"></cardImg>
         </div>
     </div>
     <div class='section'>
@@ -27,6 +28,7 @@ layout: page
         <div class="cards">
             <cardImg title="2D Bar Chart" img="/anu/assets/example-images/barchart2D.webp" link="/anu/examples/bar_chart_2D"></cardImg>
             <cardImg title="3D Bar Chart"  img="/anu/assets/example-images/barchart3D.webp" link="/anu/examples/bar_chart_3D"></cardImg>
+            <cardImg title="2D Stacked Bar Chart" img="/anu/assets/example-images/barchart2DStacked.webp" link="/anu/examples/bar_chart_2D_stacked"></cardImg>
             <cardImg title="Histogram"  img="/anu/assets/example-images/histogram.webp" link="/anu/examples/histogram"></cardImg>
             <cardImg title="Multiple Histograms"  img="/anu/assets/example-images/histogramMultiple.webp" link="/anu/examples/histogram_multiple"></cardImg>
         </div>
@@ -83,7 +85,7 @@ layout: page
             <cardImg title="Multiple Interactions" img="/anu/assets/example-images/multipleInteractions.webp" link="/anu/examples/multiple_interactions"></cardImg>
             <cardImg title="Single Selection" img="/anu/assets/example-images/brushingLinkingSingle.webp" link="/anu/examples/brushing_linking_single"></cardImg>
             <cardImg title="Multiple Selection" img="/anu/assets/example-images/brushingLinkingMultiple.webp" link="/anu/examples/brushing_linking_multiple"></cardImg>
-            <cardImg title="Filtering Selection" img="/anu/assets/example-images/brushing_linking_filter.webp" link="/anu/examples/brushing_linking_filter"></cardImg>
+            <cardImg title="Filtering Selection" img="/anu/assets/example-images/brushingLinkingFilter.webp" link="/anu/examples/brushing_linking_filter"></cardImg>
             <cardImg title="Layouts" img="/anu/assets/example-images/layout.webp" link="/anu/examples/layout"></cardImg>
             <cardImg title="ImAxes Simplified" img="/anu/assets/example-images/imaxes.webp" link="/anu/examples/imaxes_simplified"></cardImg>
         </div>

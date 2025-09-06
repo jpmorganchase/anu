@@ -89,6 +89,7 @@ export default defineConfig({
           { text: '3D Scatter Plot', link: './scatter_plot_3D' },
           { text: 'Embellished Chart', link: './embellished_chart' },
           { text: 'Dimensionality Reduction Plot', link: './dimensionality_reduction_plot' },
+          { text: 'Vector Field', link: './vector_field' }
         ]
       },
       {
@@ -97,6 +98,7 @@ export default defineConfig({
         items: [
           { text: '2D Bar Chart', link: './bar_chart_2D' },
           { text: '3D Bar Chart', link: './bar_chart_3D' },
+          { text: '2D Stacked Bar Chart', link: './bar_chart_2D_stacked' },
           { text: 'Histogram', link: './histogram' },
           { text: 'Multiple Histograms', link: './histogram_multiple' }
         ]
@@ -136,10 +138,11 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Networks',
+        text: 'Networks and Hierarchies',
         collapsed: false,
         items: [
           { text: 'Node Link 3D', link: './node_link_3d' },
+          { text: 'Treemap', link: './treemap' },
         ]
       },
       {

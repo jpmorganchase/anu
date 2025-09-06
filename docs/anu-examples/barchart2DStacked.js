@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 import data from './data/us-employment.csv';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function areaChartStacked(engine){
+export function barchart2DStacked(engine){
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -23,9 +23,25 @@ export function areaChartStacked(engine){
   //Get the names of all the employment categories
   let categories = Object.keys(data[0]).splice(1, data.length);
   
-  //Create D3 functions to help parse and format time
+  //Create D3 functions to help parse time
   let parseTime = d3.timeParse('%Y-%m-%d');
-  let dateFormat = d3.timeFormat('%Y');
+
+  //Aggregate our data by year
+  let yearsRollup = d3.rollup(
+    data,
+    v => {
+      let result = {};
+      categories.forEach((key) => {
+        result[key] = d3.sum(v, d => d[key] || 0)
+      })
+      return result;
+    },
+    d => parseTime(d.month).getFullYear()
+  );
+  let aggregated = Array.from(yearsRollup, ([year, values]) => ({
+    year: +year,
+    ...values
+  }));
 
   //Create a D3 stack generator
   let stack = d3.stack()
@@ -34,40 +50,43 @@ export function areaChartStacked(engine){
       .offset(d3.stackOffsetNone);
 
   //Stack the data into individual series for each employment category
-  let series = stack(data);
+  let series = stack(aggregated);
+
+  //Add the key for each series as a property to each data point within said series, so we can easily color them later
+  series.forEach(series => {
+    series.forEach(point => {
+      point.key = series.key;
+    });
+  });
 
 
   //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
-  let scaleX = d3.scaleTime().domain(d3.extent(data.map((d) => parseTime(d.month)))).range([-1.25, 1.25]);
-  let scaleY = d3.scaleLinear().domain([0, d3.max(series[series.length - 1].map(d => d[1]))]).range([-1, 1]).nice();  //Take the largest value from the top-most stack
+  let scaleX = d3.scaleBand().domain(Array.from(d3.group(data, (d) => parseTime(d.month).getFullYear()).keys())).range([-1, 1]).paddingInner(1).paddingOuter(0.5);
+  let scaleY = d3.scaleLinear().domain([0, d3.max(series[series.length - 1].map(d => d[1]))]).range([0, 2]).nice();  //Take the largest value from the top-most stack
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial(categories.length)).domain(categories);
 
-  //Create a function that will map each series to Vector3 coordinates
-  let seriesToPath = (series) => {
-    return [
-      series.map(d => new BABYLON.Vector3(scaleX(parseTime(d.data.month)), scaleY(d[0]), 0)),
-      series.map(d => new BABYLON.Vector3(scaleX(parseTime(d.data.month)), scaleY(d[1]), 0))
-    ]
-  };
 
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
   //Select our CoT so that we have it as a Selection object
   let chart = anu.selectName('cot', scene);
   
-  //Create ribbon meshes as children of our CoT for each series
-  let ribbons = chart.bind('ribbon', { pathArray: (d) => seriesToPath(d), sideOrientation: BABYLON.Mesh.DOUBLESIDE }, series)
-    .material((d) => scaleC(d.key))
-    .positionZ(-0.002);   //Move ribbon forward to prevent z-fighting
+  //Create empty CoTs for each series in our dataset
+  let groups = chart.bind('cot', { }, series);
+  
+  //Create plane meshes for each series CoT we just created, inheriting the bound data to create a plane for each element in each series
+  let bars = groups.bind('plane', { height: 1, width: 0.15, sideOrientation: 2 }, (d) => d)
+    .positionX((d) => scaleX(d.data.year))
+    .positionY((d) => scaleY((d[1] + d[0]) / 2))
+    .scalingY((d) => scaleY(d[1] - d[0]))
+    .positionZ(-0.002) //Adjust the z position slightly to prevent Z-fighting
+    .material((d, n, i) => scaleC(d.key))
 
   //Use the Axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', {
     scale: { x: scaleX, y: scaleY },
     parent: CoT,                         
-    background: false,
-    labelProperties: { x: { 'rotation.z': Math.PI / 2 }},
-    labelTicks: { x: scaleX.ticks(d3.timeYear) },
-    labelFormat: { x: dateFormat, y: (text) => text }
+    background: false
   });
   
   //Create a CoT as a child of our chart that will hold our legend
@@ -83,10 +102,11 @@ export function areaChartStacked(engine){
     .position((d,n,i) => new BABYLON.Vector3(0.09, i * 0.09, 0));
 
   //Adjust the legend position
-  legend.position(new BABYLON.Vector3(1.5, -1, 0));
+  legend.positionX(1.25);
 
-  //Shift the entire chart to the left to center it in the default camera view
+  //Shift the entire chart to center it in the default camera view
   chart.positionX(-0.25)
+    .positionY(-1);
 
   return scene;
 }
