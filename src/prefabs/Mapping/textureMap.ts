@@ -113,7 +113,7 @@ export class TextureMap extends TransformNode {
     ground.setParent(this);
     let materialGround = new StandardMaterial(
       this.name + '_material',
-      this.scene != undefined ? this.scene : undefined,
+      this.scene,
     );
 
     materialGround.diffuseTexture = this.texture;
