@@ -16,7 +16,7 @@ import {
   Quaternion,
   Space,
 } from '@babylonjs/core';
-import { Selection, create } from '../../index';
+import { Selection, createSelection, create } from '../../index';
 
 interface positionUIOptions {
   name?: string;
@@ -79,7 +79,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
     boundingMesh.isPickable = false;
     boundingMesh.billboardMode = billboard;
 
-    let boundingSelection = new Selection([boundingMesh], this.scene);
+    let boundingSelection = createSelection([boundingMesh], this.scene);
 
     let grab = boundingSelection
       .bind('capsule', { height: width, radius: radius })
@@ -168,7 +168,7 @@ export function scaleUI(this: Selection, options: scaleUIOptions = {}): Selectio
     boundingMesh.isPickable = false;
     boundingMesh.billboardMode = billboard;
 
-    let boundingSelection = new Selection([boundingMesh], this.scene);
+    let boundingSelection = createSelection([boundingMesh], this.scene);
 
     let scale = boundingSelection
       .bind('sphere', { diameter: diameter })
@@ -277,7 +277,7 @@ export function rotateUI(this: Selection, options: rotateUIOptions = {}): Select
     boundingMesh.isPickable = false;
     boundingMesh.billboardMode = billboard;
 
-    let boundingSelection = new Selection([boundingMesh], this.scene);
+    let boundingSelection = createSelection([boundingMesh], this.scene);
 
     let scale = boundingSelection
       .bind('torus', { diameter: diameter, thickness: thickness }, data)

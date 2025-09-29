@@ -54,24 +54,120 @@ import {
   thinInstanceColorFor,
 } from './property/thin';
 import { transition, Transition, tween, stopTransitions, resetTransitions, restartTransitions, endTransitions, resetStopTransitions, pauseTransitions, stopTweens} from './animation/transition';
+import { DynamicProperties } from './base-types';
 
-/*
-    The core class of anujs. All functions should return 
-    an instance of selection which contains the current scene
-    and either a node, mesh, or list of meshes. 
-    The selection class also exposes all of anus core functions. 
-*/
+/**
+ * The core Selection class of Anu that provides proxy functionality and all the specific
+ * method implementations. All functions should return an instance of Selection which 
+ * contains the current scene and either a node, mesh, or list of meshes. 
+ * The Selection class exposes all of Anu's core functions and enables dynamic 
+ * method creation for any property that exists on the selected Babylon.js nodes.
+ */
 export class Selection {
   selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
   scene?: Scene;
   transitions: Transition[];
 
+  // Index signature to allow dynamic properties
+  [K: string]: any;
+
   constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
     this.transitions = [];
+
+    // Return a Proxy that intercepts property access, cast to include dynamic properties
+    const proxy = new Proxy(this, {
+      get(target: Selection, prop: string | symbol, receiver: any) {
+        // If the property exists on the Selection class, return it normally
+        if (prop in target || typeof prop === 'symbol') {
+          return Reflect.get(target, prop, receiver);
+        }
+
+        // Check if the property exists on any of the selected nodes
+        const hasProperty = target.selected.some(node => 
+          node && typeof node === 'object' && prop in node
+        );
+
+        if (hasProperty && typeof prop === 'string') {
+          // Create a function that handles method calls
+          const dynamicMethod = function(...args: any[]) {
+            console.log("Dynamic method called with args:", args);
+            // If called with arguments, set the property value
+            if (args.length > 0) {
+              const value = args[0];
+              target.selected.forEach((node, i) => {
+                if (node && typeof node === 'object' && prop in node) {
+                  // Calculate the actual value (support functions like prop() does)
+                  const actualValue = value instanceof Function ? 
+                    value((node.metadata?.data ?? {}), node, i) : value;
+                  
+                  // Get property descriptor to understand the property type
+                  const descriptor = Object.getOwnPropertyDescriptor(node, prop) || 
+                                   Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), prop);
+                  
+                  // Get the current value to determine expected type
+                  const currentValue = (node as any)[prop];
+                  const expectedType = typeof currentValue;
+                  
+                  // Type validation - only if current value exists and isn't a function
+                  if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
+                    const actualType = typeof actualValue;
+                    
+                    // Return early if types don't match (no conversion)
+                    if (expectedType !== actualType && expectedType !== 'object') {
+                      console.warn(`Type mismatch for property '${prop}' on node. Expected ${expectedType}, got ${actualType}. Value: ${actualValue}. Skipping assignment.`);
+                      return receiver; // Return early without setting the value
+                    }
+                  }
+                  
+                  // Set the value without conversion
+                  if (descriptor && descriptor.set) {
+                    (node as any)[prop] = actualValue;
+                  } else if (typeof (node as any)[prop] === 'function') {
+                    (node as any)[prop](actualValue);
+                  } else {
+                    (node as any)[prop] = actualValue;
+                  }
+                }
+              });
+              return receiver; // Return proxy object for chaining
+            } else {
+              // If called with no arguments, return array of property values
+              return target.selected
+                .filter(node => node && typeof node === 'object' && prop in node)
+                .map(node => {
+                  const value = (node as any)[prop];
+                  return typeof value === 'function' ? value.bind(node) : value;
+                });
+            }
+          };
+
+          return dynamicMethod;
+        }
+
+        // Return undefined for properties that don't exist
+        return undefined;
+      },
+
+      // set(target: Selection, prop: string | symbol, value: any, receiver: any) {
+      //   // Only allow setting properties that exist on the Selection class
+      //   if (prop in target || typeof prop === 'symbol') {
+      //     return Reflect.set(target, prop, value, receiver);
+      //   }
+
+      //   // For unknown properties, set them on the Selection instance
+      //   return Reflect.set(target, prop, value, receiver);
+      // }
+    });
+
+    // Explicitly return the proxy with proper typing
+    return proxy as DynamicSelection;
   }
 
+  /**
+   * Updates the transitions array with a new transition
+   */
   public updateTransitions(transition: Transition) {
     this.transitions.push(transition);
   }
@@ -160,3 +256,29 @@ export class Selection {
   public bindClone = bindClone;
 
 }
+
+// Declaration merging to add dynamic properties to Selection class
+export interface Selection extends DynamicProperties {}
+
+// Create a new interface that extends Selection with DynamicProperties
+export interface DynamicSelection extends Selection, DynamicProperties {}
+
+// Type alias for Selection with dynamic properties - use the interface for better IntelliSense
+
+
+/**
+ * Factory function to create a properly typed Selection with dynamic properties.
+ * This ensures that TypeScript recognizes the dynamic properties from Babylon.js nodes.
+ */
+export function createSelection(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene): DynamicSelection {
+  return new Selection(nodes, scene) as DynamicSelection;
+}
+
+// Re-export types for convenience
+export type { 
+  DynamicProperties, 
+  PropertyAccessor, 
+  DynamicPropertyFunction,
+  AllBabylonProperties 
+} from './base-types';
+

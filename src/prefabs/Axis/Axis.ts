@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { TransformNode, Scene, Engine} from '@babylonjs/core';
-import { Selection } from '../../selection';
+import { Selection, createSelection } from '../../selection';
 import { labelAlt, updateLabel } from './label';
 import { backgroundNew, updateBackground } from './background';
 import { grid, updateGrid } from './grid';
@@ -28,7 +28,7 @@ export class Axes extends TransformNode {
     this.name = name;
     this.options = options;
     this.parent = (this.options.parent instanceof Selection ? (this.options.parent.selected[0]) : this.options.parent);
-    this.CoT = new Selection([this], scene);
+    this.CoT = createSelection([this], scene);
     this.scales = this.setScales();
     this.domain = this.options.domain ? this.setDomain(): undefined;
     this.background =  this.options.background ? this.setBackground(): {};

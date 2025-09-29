@@ -33,10 +33,23 @@ export function scatterplot3D(engine){
   //Select our CoT so that we have it as a Selection object
   let chart = anu.selectName('cot', scene);
 
+  
+
   //Create sphere meshes as children of our CoT for each row of our data and set their visual encodings using method chaining
   let spheres = chart.bind('sphere', { diameter: (d) => scaleSize(d['Body Mass (g)'] ?? 0) }, data)
                      .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
-                     .material((d) => scaleC(d.Species));   //We set material directly as scaleC() was configured to return a StandardMaterial
+                     .material((d) => scaleC(d.Species)) //We set material directly as scaleC() was configured to return a StandardMaterial
+
+                    
+
+//spheres.prop('isVisible', (d) => d.Species === 'Adelie');
+const start = performance.now();
+const end = performance.now();
+const duration = end - start;
+console.log(`Method execution time: ${duration} ms`);
+                    //console.log(spheres.isVisible());
+                    
+                    //Only show the "Adelie Penguin" species for clarity;
 
   //Use the Axes prefab with our three D3 scales
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY, z: scaleZ }, parent: chart });

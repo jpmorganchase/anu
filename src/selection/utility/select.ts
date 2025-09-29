@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Node, Tags } from '@babylonjs/core';
-import { Selection } from '../index';
+import { Selection, createSelection, DynamicSelection } from '../index';
 
 /**
  *Select all nodes from the children graph(s) of selected
@@ -13,25 +13,25 @@ import { Selection } from '../index';
  *#\<ID> : select by ID
  *$\<Tags> : select by tags
  */
-export function select(this: Selection, name: string): Selection {
+export function select(this: Selection, name: string): DynamicSelection {
   let indicator = name[0];
   let text = name.slice(1);
   let selected: any = [];
 
   if (indicator === '.') {
     this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.name == text, false))));
-    return new Selection(selected, this.scene);
+    return createSelection(selected, this.scene);
   } else if (indicator === '#') {
     this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == text, false))));
-    return new Selection(selected, this.scene);
+    return createSelection(selected, this.scene);
   } else if (indicator === '$') {
     this.selected.forEach(
       (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, text) == true, false))),
     );
-    return new Selection(selected, this.scene);
+    return createSelection(selected, this.scene);
   }
 
-  return new Selection([], this.scene);
+  return createSelection([], this.scene);
 }
 
 /**
@@ -40,7 +40,7 @@ export function select(this: Selection, name: string): Selection {
  * @param name A string or array of strings of the names of the nodes to be selected.
  * @returns A new instance of Selection with the selected nodes.
  */
-export function selectName(this: Selection, name: string | string[]): Selection {
+export function selectName(this: Selection, name: string | string[]): DynamicSelection {
   let selected: Node[] = [];
   Array.isArray(name)
     ? name.forEach((e, i) =>
@@ -51,7 +51,7 @@ export function selectName(this: Selection, name: string | string[]): Selection 
     : this.selected.forEach(
         (element) => (selected = selected.concat(element?.getChildren((node) => node.name == name, false))),
       );
-  return new Selection(selected, this.scene);
+  return createSelection(selected, this.scene);
 }
 
 /**
@@ -60,14 +60,14 @@ export function selectName(this: Selection, name: string | string[]): Selection 
  * @param id A string or array of strings of ids of nodes to be selected.
  * @returns A new instance of Selection with the selected nodes.
  */
-export function selectId(this: Selection, id: string | string[]): Selection {
+export function selectId(this: Selection, id: string | string[]): DynamicSelection {
   let selected: Node[] = [];
   Array.isArray(id)
     ? id.forEach((e, i) =>
         this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == e, false)))),
       )
     : this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == id, false))));
-  return new Selection(selected, this.scene);
+  return createSelection(selected, this.scene);
 }
 
 /**
@@ -76,7 +76,7 @@ export function selectId(this: Selection, id: string | string[]): Selection {
  * @param tag A string or array of strings of tags or tag unions of nodes to be selected.
  * @returns A new instance of Selection with the selected nodes.
  */
-export function selectTag(this: Selection, tag: string | string[]): Selection {
+export function selectTag(this: Selection, tag: string | string[]): DynamicSelection {
   let selected: Node[] = [];
   Array.isArray(tag)
     ? tag.forEach((e, i) =>
@@ -87,7 +87,7 @@ export function selectTag(this: Selection, tag: string | string[]): Selection {
     : this.selected.forEach(
         (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, tag) == true))),
       );
-  return new Selection(selected, this.scene);
+  return createSelection(selected, this.scene);
 }
 
 /**
@@ -98,7 +98,7 @@ export function selectTag(this: Selection, tag: string | string[]): Selection {
  * @param useAndLogic If true, all keys and values must exist and match to be selected. Defaults to false.
  * @returns A new instance of Selection with the selected nodes.
  */
-export function selectData(this: Selection, key: string | string[], value: string | number | string[] | number[], useAndLogic?: boolean): Selection {
+export function selectData(this: Selection, key: string | string[], value: string | number | string[] | number[], useAndLogic?: boolean): DynamicSelection {
   let selected: Node[] = [];
   useAndLogic ??= false;
 
@@ -129,5 +129,5 @@ export function selectData(this: Selection, key: string | string[], value: strin
                     .filter((node) => node.metadata != null && node.metadata.data[key as string] == value))
     );
   }
-  return new Selection(selected, this.scene);
+  return createSelection(selected, this.scene);
 }

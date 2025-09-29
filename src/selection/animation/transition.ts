@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Animation, EasingFunction, Node, Animatable, Observer, Scene } from '@babylonjs/core';
-import { Selection } from '../index';
+import { Selection, createSelection, DynamicSelection } from '../index';
 import get from 'lodash-es/get';
 import hasIn  from 'lodash-es/hasIn';
 
@@ -47,11 +47,11 @@ export class Transition {
 export function transition(
   this: Selection,
   options: TransitionOptions | ((d: any, n: Node, i: number) => TransitionOptions),
-) {
+): DynamicSelection {
   let executedOptions = new Array<TransitionOptions>();
   let transitionSelection: Selection;
   if (this.transitions.length === 0) {
-    transitionSelection = new Selection(this.selected, this.scene);
+    transitionSelection = createSelection(this.selected, this.scene);
   } else {
     transitionSelection = this;
   }
@@ -62,7 +62,7 @@ export function transition(
   let transition = new Transition(this.transitions.length, executedOptions);
   transitionSelection.updateTransitions(transition);
 
-  return transitionSelection;
+  return transitionSelection as DynamicSelection;
 }
 
 /**

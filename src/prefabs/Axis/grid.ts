@@ -8,7 +8,7 @@ import { Axes } from './Axis';
 import assign from 'lodash-es/assign';
 import { TransitionOptions } from '../../selection/animation/transition';
 import { create } from '../../create';
-import { Selection } from '../../selection';
+import { Selection, createSelection } from '../../selection';
 import { interpolateNumberArray } from 'd3-interpolate';
 
 export function grid(this: Axes) {
@@ -36,7 +36,7 @@ export function grid(this: Axes) {
     }
   }
 
-  return new Selection(girdSelections, this._scene);
+  return createSelection(girdSelections, this._scene);
 }
 
 export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
@@ -80,7 +80,7 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
           }
         }
     
-        let gridSelection = new Selection(gridSelections, axes._scene);
+        let gridSelection = createSelection(gridSelections, axes._scene);
         
         axes.grid = gridSelection;
           
@@ -111,7 +111,7 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
           }
         }
     
-        let gridSelection = new Selection(gridSelections, axes._scene);
+        let gridSelection = createSelection(gridSelections, axes._scene);
 
         gridSelection.run((d, n: Mesh) => {
           n.doNotSyncBoundingInfo = true;

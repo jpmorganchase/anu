@@ -12,7 +12,7 @@ import {
 } from '@babylonjs/core';
 import { assign } from 'lodash-es';
 import { Axes } from './Axis';
-import { Selection } from '../../selection';
+import { Selection, createSelection } from '../../selection';
 import { interpolateNumberArray } from 'd3-interpolate';
 import { TransitionOptions } from '../../selection/animation/transition';
 
@@ -76,7 +76,7 @@ export function domain(this: Axes): Selection {
   greasedLine.doNotSyncBoundingInfo = true;
   greasedLine.isPickable = false;
 
-  let domain = new Selection([greasedLine], this._scene);
+  let domain = createSelection([greasedLine], this._scene);
 
   domain.prop('name', this.name + '_domain');
 

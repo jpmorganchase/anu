@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Node, ActionManager, Tags, Mesh, Scene, InstancedMesh, Matrix } from '@babylonjs/core';
-import { Selection } from './index';
+import { Selection, createSelection, DynamicSelection } from './selection/index';
 import { create, MeshTypes } from './create';
 type Property<T, MeshType extends keyof T> = T[MeshType];
 
@@ -22,13 +22,13 @@ export function bind<MeshType extends keyof MeshTypes>(
   options?: Property<MeshTypes, MeshType>,
   data: Array<any> = [{}],
   scene?: Scene,
-): Selection {
+): DynamicSelection {
   let meshes: Node[] = [];
   data.forEach((element, i) => {
     var mesh = create(shape, shape, options, element, scene);
     meshes.push(mesh);
   });
-  return new Selection(meshes, meshes[0].getScene());
+  return createSelection(meshes, meshes[0].getScene());
 }
 
 /**
@@ -40,7 +40,7 @@ export function bind<MeshType extends keyof MeshTypes>(
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindClone(mesh: Mesh, data: Array<any> = [{}], scene?: Scene): Selection {
+export function bindClone(mesh: Mesh, data: Array<any> = [{}], scene?: Scene): DynamicSelection {
   scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
     data.forEach((element, i) => {
@@ -51,7 +51,7 @@ export function bindClone(mesh: Mesh, data: Array<any> = [{}], scene?: Scene): S
       meshes.push(clone);
   });
 
-  return new Selection(meshes, scene);
+  return createSelection(meshes, scene);
 }
 
 /**
@@ -63,7 +63,7 @@ export function bindClone(mesh: Mesh, data: Array<any> = [{}], scene?: Scene): S
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): Selection {
+export function bindInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): DynamicSelection {
   scene = (scene !== undefined) ? scene : mesh.getScene();
   let meshes: Node[] = [];
   data.forEach((element, i) => {
@@ -74,7 +74,7 @@ export function bindInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene
     meshes.push(instance as InstancedMesh);
   });
 
-  return new Selection(meshes, scene);
+  return createSelection(meshes, scene);
 }
 
 /**
@@ -86,7 +86,7 @@ export function bindInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene
  * @returns An instance of Selection, a class containing a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function bindThinInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): Selection {
+export function bindThinInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: Scene): DynamicSelection {
   scene = scene != undefined ? scene : mesh.getScene();
   Tags.EnableFor(mesh);
   mesh.actionManager = new ActionManager(scene);
@@ -101,5 +101,5 @@ export function bindThinInstance(mesh: Mesh, data: Array<any>  = [{}], scene?: S
 
   mesh.thinInstanceSetBuffer('matrix', matrices, 16, false);
 
-  return new Selection([mesh], scene);
+  return createSelection([mesh], scene);
 }
