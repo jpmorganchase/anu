@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, TransformNode, AbstractMesh, Node, Camera, Light} from '@babylonjs/core';
+import { Mesh, TransformNode, AbstractMesh, Node, Light} from '@babylonjs/core';
 
 // Use all properties from Babylon.js types without any exclusions first
-export type AllBabylonProperties = Mesh & TransformNode & AbstractMesh & Camera & Light;
+export type AllBabylonProperties = Mesh & TransformNode & AbstractMesh & Node & Light;
 
 
 // Define the function signature for dynamic properties

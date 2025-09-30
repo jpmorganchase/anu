@@ -31,7 +31,8 @@ export function scatterplot3D(engine){
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
   //Select our CoT so that we have it as a Selection object
-  let chart = anu.selectName('cot', scene);
+  let chart = anu.selectName('cot', scene)
+  
 
   
 
@@ -40,9 +41,7 @@ export function scatterplot3D(engine){
                      .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
                      .material((d) => scaleC(d.Species)) //We set material directly as scaleC() was configured to return a StandardMaterial
 
-
-  let cam = new anu.Selection([camera], scene);
-  cam.transition({duration: 5000}).position(new BABYLON.Vector3(0,0,-3));
+  spheres.setEnabled((d) => d.Species === 'Adelie');
 
 //spheres.prop('isVisible', (d) => d.Species === 'Adelie');
 const start = performance.now();
