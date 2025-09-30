@@ -37,7 +37,7 @@ export interface SelectionMethods {
   position: any; positionX: any; positionY: any; positionZ: any;
   rotation: any; rotationX: any; rotationY: any; rotationZ: any;
   scaling: any; scalingX: any; scalingY: any; scalingZ: any;
-  translate: any;
+  
   
   // Material and visual properties
   material: any; ambientColor: any; diffuseColor: any; emissiveColor: any; specularColor: any;

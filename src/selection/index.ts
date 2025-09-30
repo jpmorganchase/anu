@@ -93,41 +93,66 @@ export class Selection {
           // Create a function that handles method calls
           const dynamicMethod = function(...args: any[]) {
             console.log("Dynamic method called with args:", args);
-            // If called with arguments, set the property value
+            // If called with arguments, set the property value or call method
             if (args.length > 0) {
-              const value = args[0];
               target.selected.forEach((node, i) => {
                 if (node && typeof node === 'object' && prop in node) {
-                  // Calculate the actual value (support functions like prop() does)
-                  const actualValue = value instanceof Function ? 
-                    value((node.metadata?.data ?? {}), node, i) : value;
+                  const nodeProperty = (node as any)[prop];
                   
-                  // Get property descriptor to understand the property type
-                  const descriptor = Object.getOwnPropertyDescriptor(node, prop) || 
-                                   Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), prop);
-                  
-                  // Get the current value to determine expected type
-                  const currentValue = (node as any)[prop];
-                  const expectedType = typeof currentValue;
-                  
-                  // Type validation - only if current value exists and isn't a function
-                  if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
-                    const actualType = typeof actualValue;
-                    
-                    // Return early if types don't match (no conversion)
-                    if (expectedType !== actualType && expectedType !== 'object') {
-                      console.warn(`Type mismatch for property '${prop}' on node. Expected ${expectedType}, got ${actualType}. Value: ${actualValue}. Skipping assignment.`);
-                      return receiver; // Return early without setting the value
+                  // If the property is a function (method), call it with all arguments
+                  if (typeof nodeProperty === 'function') {
+                    try {
+                      // Process each argument - can be a function or direct value
+                      const processedArgs = args.map(arg => {
+                        return arg instanceof Function ? 
+                          arg((node.metadata?.data ?? {}), node, i) : arg;
+                      });
+                      
+                      // Call the method with all processed arguments
+                      nodeProperty.apply(node, processedArgs);
+                    } catch (error) {
+                      console.error(`Error calling method '${prop}' on node ${node.name || node.id || 'unnamed'}:`, error);
+                      console.error(`Arguments passed:`, args);
+                      console.error(`Node:`, node);
+                      // Re-throw the error so the user can handle it if needed
+                      throw new Error(`Failed to call method '${prop}' on node: ${error instanceof Error ? error.message : String(error)}`);
                     }
-                  }
-                  
-                  // Set the value without conversion
-                  if (descriptor && descriptor.set) {
-                    (node as any)[prop] = actualValue;
-                  } else if (typeof (node as any)[prop] === 'function') {
-                    (node as any)[prop](actualValue);
                   } else {
-                    (node as any)[prop] = actualValue;
+                    // For properties (not methods), only use the first argument
+                    try {
+                      const value = args[0];
+                      const actualValue = value instanceof Function ? 
+                        value((node.metadata?.data ?? {}), node, i) : value;
+                      
+                      // Get property descriptor to understand the property type
+                      const descriptor = Object.getOwnPropertyDescriptor(node, prop) || 
+                                       Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), prop);
+                      
+                      // Get the current value to determine expected type
+                      const currentValue = (node as any)[prop];
+                      const expectedType = typeof currentValue;
+                      
+                      // Type validation - only if current value exists and isn't a function
+                      if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
+                        const actualType = typeof actualValue;
+                        
+                        // Return early if types don't match (no conversion)
+                        if (expectedType !== actualType && expectedType !== 'object') {
+                          console.warn(`Type mismatch for property '${prop}' on node ${node.name || node.id || 'unnamed'}. Expected ${expectedType}, got ${actualType}. Value: ${actualValue}. Skipping assignment.`);
+                          return receiver; // Return early without setting the value
+                        }
+                      }
+                      
+                      // Set the value without conversion
+                      (node as any)[prop] = actualValue;
+                     
+                    } catch (error) {
+                      console.error(`Error setting property '${prop}' on node ${node.name || node.id || 'unnamed'}:`, error);
+                      console.error(`Value passed:`, args[0]);
+                      console.error(`Node:`, node);
+                      // Re-throw the error so the user can handle it if needed
+                      throw new Error(`Failed to set property '${prop}' on node: ${error instanceof Error ? error.message : String(error)}`);
+                    }
                   }
                 }
               });
@@ -184,7 +209,7 @@ export class Selection {
   public positionX = positionX;
   public positionY = positionY;
   public positionZ = positionZ;
-  public translate = translate;
+  //public translate = translate;
   public rotation = rotation;
   public rotationX = rotationX;
   public rotationY = rotationY;

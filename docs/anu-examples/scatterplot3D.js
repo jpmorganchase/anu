@@ -41,12 +41,13 @@ export function scatterplot3D(engine){
                      .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
                      .material((d) => scaleC(d.Species)) //We set material directly as scaleC() was configured to return a StandardMaterial
 
-  spheres.setEnabled((d) => d.Species === 'Adelie');
+  spheres.translate(new BABYLON.Vector3(0, 0, 1), 1); //Translate all spheres by 0.5 in the Z direction so that they are not clipped by the axes
 
 //spheres.prop('isVisible', (d) => d.Species === 'Adelie');
 const start = performance.now();
+  spheres.translate(() => new BABYLON.Vector3(0, 0, 1), 1); //Translate all spheres by 0.5 in the Z direction so that they are not clipped by the axes
 const end = performance.now();
-const duration = end - start;
+const duration = end - start; 
 console.log(`Method execution time: ${duration} ms`);
                     //console.log(spheres.isVisible());
                     
