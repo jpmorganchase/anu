@@ -39,9 +39,10 @@ export function scatterplot3D(engine){
   let spheres = chart.bind('sphere', { diameter: (d) => scaleSize(d['Body Mass (g)'] ?? 0) }, data)
                      .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
                      .material((d) => scaleC(d.Species)) //We set material directly as scaleC() was configured to return a StandardMaterial
-          
-      console.log(spheres)
-                    
+
+
+  let cam = new anu.Selection([camera], scene);
+  cam.transition({duration: 5000}).position(new BABYLON.Vector3(0,0,-3));
 
 //spheres.prop('isVisible', (d) => d.Species === 'Adelie');
 const start = performance.now();

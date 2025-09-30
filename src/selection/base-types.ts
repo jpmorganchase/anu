@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Mesh, TransformNode, AbstractMesh, Node, Material } from '@babylonjs/core';
+import { Mesh, TransformNode, AbstractMesh, Node, Camera, Light} from '@babylonjs/core';
 
 // Use all properties from Babylon.js types without any exclusions first
-export type AllBabylonProperties = Mesh & TransformNode & AbstractMesh;
+export type AllBabylonProperties = Mesh & TransformNode & AbstractMesh & Camera & Light;
 
 
 // Define the function signature for dynamic properties
@@ -20,7 +20,7 @@ export function isDynamicFunction<T>(value: PropertyAccessor<T>): value is Dynam
 
 // Forward declaration for BaseSelection to avoid circular dependency
 export interface BaseSelectionInterface {
-  selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
+  selected: Node[];
   scene?: any;
   transitions: any[];
   updateTransitions(transition: any): void;
@@ -53,11 +53,11 @@ export interface SelectionMethods {
   transition: any; tween: any;
 }
 
+
+
 // Type for dynamic properties - maps each Babylon.js property to Selection methods
-// This preserves the exact type information from Babylon.js in the IntelliSense
 export type DynamicProperties = {
   readonly [K in keyof Omit<AllBabylonProperties, keyof BaseSelectionInterface | keyof SelectionMethods>]: {
-    // Overloaded function signatures for proper type resolution
     (): AllBabylonProperties[K][];
     (value: AllBabylonProperties[K]): Selection;
     (value: (data: any, node: any, index: number) => AllBabylonProperties[K]): Selection;

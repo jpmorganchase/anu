@@ -64,14 +64,14 @@ import { DynamicProperties } from './base-types';
  * method creation for any property that exists on the selected Babylon.js nodes.
  */
 export class Selection {
-  selected: Node[] | TransformNode[] | Mesh[] | AbstractMesh[];
+  selected: Node[];
   scene?: Scene;
   transitions: Transition[];
 
   // Index signature to allow dynamic properties
   [K: string]: any;
 
-  constructor(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene) {
+  constructor(nodes: Node[], scene?: Scene) {
     this.selected = nodes;
     this.scene = scene;
     this.transitions = [];
@@ -219,8 +219,8 @@ export class Selection {
   public filter = filter;
   public props = props;
   public prop = prop;
-  public name = name;
-  public id = id;
+  //public name = name;
+  //public id = id;
   public metadata = metadata;
   public positionUI = positionUI;
   public scaleUI = scaleUI;
