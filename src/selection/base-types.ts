@@ -59,7 +59,7 @@ export type DynamicProperties = {
   readonly [K in keyof Omit<AllBabylonProperties, keyof BaseSelectionInterface | keyof SelectionMethods>]: {
     // Overloaded function signatures for proper type resolution
     (): AllBabylonProperties[K][];
-    (value: AllBabylonProperties[K]): any;
-    (value: (data: any, node: any, index: number) => AllBabylonProperties[K]): any;
+    (value: AllBabylonProperties[K]): Selection;
+    (value: (data: any, node: any, index: number) => AllBabylonProperties[K]): Selection;
   }
 };

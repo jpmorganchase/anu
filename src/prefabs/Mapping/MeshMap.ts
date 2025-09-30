@@ -8,7 +8,7 @@ import * as topojsonSimplify from 'topojson-simplify';
 import * as topojsonServer from 'topojson-server';
 import earcut from 'earcut';
 import { geoProject } from 'd3-geo-projection';
-import { Selection, createSelection } from '../../selection';
+import { Selection } from '../../selection';
 
 export class MeshMap extends TransformNode {
   name: string;
@@ -101,7 +101,7 @@ export class MeshMap extends TransformNode {
       },
     );
 
-    return createSelection(states, this.scene);
+    return new Selection(states, this.scene);
   }
 }
 

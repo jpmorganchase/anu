@@ -41,7 +41,8 @@ export function barchart2d(engine){
   //Create a Center of Transform TransformNode that serves the parent node for all our meshes that make up our chart
   let CoT = anu.create('cot', 'cot');
   //Select our CoT so that we have it as a Selection object
-  let chart = anu.selectName('cot', scene);
+  let chart = anu.selectName('cot', scene).bind('cot');
+
 
   //Create plane meshes as children of our CoT for our rolled-up data and set their visual encodings using method chaining
   let bars = chart.bind('plane', { height: 1, width: 0.3, sideOrientation:2 }, carsRollup)
@@ -50,6 +51,8 @@ export function barchart2d(engine){
                   .scalingY((d) => scaleY(d.Horsepower))
                   .positionY((d) => scaleY(d.Horsepower) / 2)
                   .material((d) => scaleC(d.Miles_per_Gallon));  //We set material directly as scaleC() was configured to return a StandardMaterial
+
+
 
   //Use the Axes prefab with our two D3 scales
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY }, parent: chart });

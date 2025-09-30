@@ -150,15 +150,15 @@ export class Selection {
         return undefined;
       },
 
-      // set(target: Selection, prop: string | symbol, value: any, receiver: any) {
-      //   // Only allow setting properties that exist on the Selection class
-      //   if (prop in target || typeof prop === 'symbol') {
-      //     return Reflect.set(target, prop, value, receiver);
-      //   }
+      set(target: Selection, prop: string | symbol, value: any, receiver: any) {
+        // Only allow setting properties that exist on the Selection class
+        if (prop in target || typeof prop === 'symbol') {
+          return Reflect.set(target, prop, value, receiver);
+        }
 
-      //   // For unknown properties, set them on the Selection instance
-      //   return Reflect.set(target, prop, value, receiver);
-      // }
+        // Explicitly disallow setting dynamic properties
+        throw new Error(`Cannot assign to property '${String(prop)}'. Use method calls like .${String(prop)}(value) instead.`);
+      }
     });
 
     // Explicitly return the proxy with proper typing
@@ -263,16 +263,6 @@ export interface Selection extends DynamicProperties {}
 // Create a new interface that extends Selection with DynamicProperties
 export interface DynamicSelection extends Selection, DynamicProperties {}
 
-// Type alias for Selection with dynamic properties - use the interface for better IntelliSense
-
-
-/**
- * Factory function to create a properly typed Selection with dynamic properties.
- * This ensures that TypeScript recognizes the dynamic properties from Babylon.js nodes.
- */
-export function createSelection(nodes: Node[] | TransformNode[] | Mesh[] | AbstractMesh[], scene?: Scene): DynamicSelection {
-  return new Selection(nodes, scene) as DynamicSelection;
-}
 
 // Re-export types for convenience
 export type { 

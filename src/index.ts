@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-export { Selection, createSelection } from './selection/index';
-export type { DynamicSelection, DynamicSelection as SelectionWithDynamicProperties } from './selection/index';
+export { Selection } from './selection/index';
 export { AxesConfig } from './prefabs/Axis/AxisOptions';
 export { Axes as Axis } from './prefabs/Axis/Axis';
 export { PlaneText } from './prefabs/Text/planeText';
