@@ -13,7 +13,7 @@ export function thinInstanceSetBuffer(
       ? node.hasThinInstances
         ? node.thinInstanceSetBuffer(
             attribute,
-            value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+            value instanceof Function ? value((node.metadata?.data ?? [{}]), node, i) : value,
             stride,
             staticBuffer,
           )
@@ -35,7 +35,7 @@ export function thinInstancePosition(
         ? (() => {
             let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
             let matrices = node.thinInstanceGetWorldMatrices();
-            let data = (node.metadata.data ??= {});
+            let data = (node.metadata?.data ?? [{}]);
             data.forEach((e, j) => {
               let evaluated = value instanceof Function ? value(e, node, j) : value;
               let matrix = matrices[j].setTranslation(evaluated);
@@ -61,7 +61,7 @@ export function thinInstanceScaling(
         ? (() => {
             let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
             let matrices = node.thinInstanceGetWorldMatrices();
-            let data = (node.metadata.data ??= {});
+            let data = (node.metadata?.data ?? [{}]);
             data.forEach((e, j) => {
               let evaluated = value instanceof Function ? value(e, node, j) : value;
               let previousMatrix = matrices[j];
@@ -93,7 +93,7 @@ export function thinInstanceRotation(
         ? (() => {
             let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
             let matrices = node.thinInstanceGetWorldMatrices();
-            let data = (node.metadata.data ??= {});
+            let data = (node.metadata?.data ?? [{}]);
             data.forEach((e, j) => {
               let evaluated = value instanceof Function ? value(e, node, j) : value;
               let previousMatrix = matrices[j];
@@ -125,7 +125,7 @@ export function thinInstanceColor(
     if (node instanceof Mesh && node.hasThinInstances) {
       let colorMatrices = new Float32Array(node.thinInstanceCount * 4);
       if (value instanceof Function) {
-        let data = (node.metadata.data ??= {});
+        let data = (node.metadata?.data ?? [{}]);
         data.forEach((e, j) => {
           let evaluated = value(e, node, j);
           colorMatrices[j * 4 + 0] = evaluated.r;
@@ -170,11 +170,11 @@ export function thinInstanceSetAttribute(
   this.selected.forEach((node, i) => {
     node instanceof Mesh
       ? node.hasThinInstances
-        ? (node.metadata.data ??= {}).forEach((d, k) => {
+        ? (node.metadata?.data ?? [{}]).forEach((d, k) => {
             node.thinInstanceSetAttributeAt(
               attribute,
               k,
-              value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+              value instanceof Function ? value((node.metadata?.data ?? [{}]), node, i) : value,
             );
           })
         : console.warn(node + 'has no thin instances, skipping')
@@ -191,14 +191,14 @@ export function thinInstanceAttributeAt(
   value: any | ((d: any, n: Node, i: number) => any),
 ): Selection {
   this.selected.forEach((node, i) => {
-    let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+    let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
 
     node instanceof Mesh
       ? node.hasThinInstances
         ? node.thinInstanceSetAttributeAt(
             attribute,
             index,
-            value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+            value instanceof Function ? value((node.metadata?.data ?? [{}]), node, i) : value,
           )
         : console.warn(node + 'has no thin instances, skipping')
       : console.warn(node + 'Node is not a mesh, skipping');
@@ -213,7 +213,7 @@ export function thinInstanceMatrixAt(
   value: Matrix | ((d: any, n: Node, i: number) => Matrix),
 ): Selection {
   this.selected.forEach((node, i) => {
-    let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+    let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
     node instanceof Mesh
       ? node.hasThinInstances
         ? node.thinInstanceSetMatrixAt(index, evaluated)
@@ -233,7 +233,7 @@ export function thinInstancePositionAt(
     node instanceof Mesh
       ? node.hasThinInstances
         ? (() => {
-            let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+            let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
             let previousMatrix = node.thinInstanceGetWorldMatrices()[index];
             let matrix = previousMatrix.setTranslation(evaluated);
             node.thinInstanceSetMatrixAt(index, matrix);
@@ -254,7 +254,7 @@ export function thinInstanceScalingAt(
     node instanceof Mesh
       ? node.hasThinInstances
         ? (() => {
-            let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+            let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
             let previousMatrix = node.thinInstanceGetWorldMatrices()[index];
             let matrix = Matrix.ComposeToRef(
               evaluated,
@@ -280,7 +280,7 @@ export function thinInstanceRotationAt(
     node instanceof Mesh
       ? node.hasThinInstances
         ? (() => {
-            let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+            let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
             let previousMatrix = node.thinInstanceGetWorldMatrices()[index];
             let previousScale = new Vector3();
             previousMatrix.decompose(previousScale);
@@ -308,7 +308,7 @@ export function thinInstanceColorAt(
     node instanceof Mesh
       ? node.hasThinInstances
         ? (() => {
-            let evaluated = value instanceof Function ? value((node.metadata.data[index] ??= {}), node, index) : value;
+            let evaluated = value instanceof Function ? value((node.metadata?.data[index] ?? [{}]), node, index) : value;
             node.thinInstanceSetAttributeAt('color', index, [evaluated.r, evaluated.g, evaluated.b, evaluated.a]);
           })()
         : console.warn(node + 'has no thin instances, skipping')
@@ -325,12 +325,12 @@ export function thinInstanceMatrixFor(
 ): Selection {
   this.selected.forEach((node, i) => {
     if (node instanceof Mesh && node.hasThinInstances) {
-      let data = (node.metadata.data ??= {});
+      let data = (node.metadata?.data ?? [{}]);
       data.forEach((d, k) => {
         if (method(d, node, k)) {
           node.thinInstanceSetMatrixAt(
             k,
-            value instanceof Function ? value((node.metadata.data ??= {}), node, k) : value,
+            value instanceof Function ? value((node.metadata?.data ?? [{}]), node, k) : value,
             false,
           );
         }
@@ -351,7 +351,7 @@ export function thinInstancePositionFor(
     if (node instanceof Mesh && node.hasThinInstances) {
       let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
       let matrices = node.thinInstanceGetWorldMatrices();
-      let data = (node.metadata.data ??= {});
+      let data = (node.metadata?.data ?? [{}]);
       data.forEach((e, j) => {
         if (method(e, node, j)) {
           let evaluated = value instanceof Function ? value(e, node, j) : value;
@@ -376,7 +376,7 @@ export function thinInstanceRotationFor(
     if (node instanceof Mesh && node.hasThinInstances) {
       let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
       let matrices = node.thinInstanceGetWorldMatrices();
-      let data = (node.metadata.data ??= {});
+      let data = (node.metadata?.data ?? [{}]);
       data.forEach((e, j) => {
         if (method(e, node, j)) {
           let evaluated = value instanceof Function ? value(e, node, j) : value;
@@ -408,7 +408,7 @@ export function thinInstanceScalingFor(
     if (node instanceof Mesh && node.hasThinInstances) {
       let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
       let matrices = node.thinInstanceGetWorldMatrices();
-      let data = (node.metadata.data ??= {});
+      let data = (node.metadata?.data ?? [{}]);
       data.forEach((e, j) => {
         if (method(e, node, j)) {
           let evaluated = value instanceof Function ? value(e, node, j) : value;
@@ -438,7 +438,7 @@ export function thinInstanceColorFor(
     if (node instanceof Mesh && node.hasThinInstances) {
       let bufferMatrices = new Float32Array(node.thinInstanceCount * 16);
       let matrices = node.thinInstanceGetWorldMatrices();
-      let data = (node.metadata.data ??= {});
+      let data = (node.metadata?.data ?? [{}]);
       data.forEach((e, j) => {
         if (method(e, node, j)) {
           let evaluated = value instanceof Function ? value(e, node, j) : value;

@@ -59,9 +59,9 @@ export function linkedScatterPlots(engine){
     //Create axes
     const axesOptions = new anu.AxesConfig({ x: scaleX, y: scaleY });
     axesOptions.parent = chart;
-    axesOptions.grid = false;
-    axesOptions.domain = false;
-    axesOptions.labelProperties = { size : 0.15 };
+    axesOptions.grid = false,
+    axesOptions.domainMaterialOptions = { width: 0.01 },
+    axesOptions.labelOptions = { size : 0.1 };
     const axes = anu.createAxes(`axes-${id}`, axesOptions);
 
     //Position chart

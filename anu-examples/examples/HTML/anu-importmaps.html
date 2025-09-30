@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon.js Starter App</title>
+</head>
+<body>
+    <canvas id="renderCanvas" touch-action="none"></canvas> <!-- Canvas for Babylon.js rendering -->
+
+    <script type="importmap">
+        {
+            "imports": {
+                "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.js/+esm",
+                "@babylonjs/core": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.22.0/index.js",
+                "@babylonjs/core/Misc": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.22.0/Misc/index.js",
+                "@babylonjs/core/Engines": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.22.0/Engines/index.js",
+                "@babylonjs/core/Misc/tags": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.22.0/Misc/tags.js",
+                "anu": "https://cdn.jsdelivr.net/npm/@jpmorganchase/anu@0.5.4/dist/anu.js"
+            
+
+            }
+        }
+        </script>
+        <style>
+            /* Ensure the canvas takes up the entire page */
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+        </style>
+    <script type="module">
+        import * as BABYLON from '@babylonjs/core';
+        import * as anu from 'anu';
+        import {extent, scaleLinear, scaleOrdinal} from 'd3'
+
+    
+        // Get the canvas element
+        const canvas = document.getElementById('renderCanvas');
+
+        // Create the Babylon.js engine
+        const engine = new BABYLON.Engine(canvas, true);
+
+        // Create the scene
+        const createScene = async () => {
+            const scene = new BABYLON.Scene(engine);
+
+            // Create a camera
+            const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2, 4, BABYLON.Vector3.Zero(), scene);
+            camera.position = new BABYLON.Vector3(5,0,-20)
+            
+            camera.attachControl(canvas, true);
+
+            // Create a light
+            const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0), scene);
+
+            // Create a sphere
+            //const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+            let penguins = await (await fetch('https://raw.githubusercontent.com/vega/vega-datasets/refs/heads/main/data/penguins.json')).json();
+
+
+            let scaleX = scaleLinear().domain(extent([...penguins.map(item => item["Beak Length (mm)"])])).range([-5,5])
+
+            let scaleY  = scaleLinear().domain(extent([...penguins.map(item => item["Flipper Length (mm)"])])).range([-5,5])
+
+            let scaleZ = scaleLinear().domain(extent([...penguins.map(item => item["Beak Depth (mm)"])])).range([-5,5])
+
+            let scaleSize = scaleLinear().domain(extent([...penguins.map(item => item["Body Mass (g)"])])).range([0.1, 0.5])
+
+            let materials = anu.ordinalChromatic('d310').toStandardMaterial();
+            let colorScale = scaleOrdinal(materials)
+
+            let cot = anu.bind('cot');
+
+            let marks = cot.bind('sphere', {segments: 16}, penguins);
+
+            marks.positionX((d) => scaleX(d["Beak Length (mm)"]))
+         .positionY((d) => scaleY(d["Flipper Length (mm)"]))
+         .positionZ((d) => scaleZ(d["Beak Depth (mm)"]))
+         .scaling((d) => {
+            let scaleFactor = scaleSize(d["Body Mass (g)"])
+            return new BABYLON.Vector3(scaleFactor,scaleFactor,scaleFactor)
+         })
+         .material((d) => colorScale(d["Species"]))
+
+	let text = anu.create("planeText", "hover-label", {text: "blank"})
+    text.isVisible = false; //Create our text mesh and set it to be invisible
+
+    let pointOverAction = (d,n,i) => new BABYLON.ExecuteCodeAction(
+                            BABYLON.ActionManager.OnPointerOverTrigger,
+                            () => {
+                                n.renderOutline = true;
+                                n.outlineWidth = 0.2;
+
+                                //Update text text, position, and set to be visible
+                                text.updatePlaneText({text: `${d["Species"]}: ${d["Island"]}`})
+                                text.position = n.position.clone().addInPlaceFromFloats(0.5, 0.5, 0)
+                                text.isVisible = true;
+                            }
+                        );
+
+        let pointOutAction = (d,n,i) => new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPointerOutTrigger,
+                                () => {
+                                    n.renderOutline = false;
+                                    text.isVisible = false;
+                                }
+                            );
+
+        marks.action((d,n,i) => pointOverAction(d,n,i))
+            .action((d,n,i) => pointOutAction(d,n,i))
+    
+        let axes = anu.createAxes("myAxes", scene, {
+            scale: {x: scaleX, y: scaleX, z: scaleZ},
+            parent: cot
+        })
+
+        let labelX = cot.bind("planeText", {text: "Beak Length (mm)"})
+                        .position(new BABYLON.Vector3(0, -6, -5))
+
+        let labelY = cot.bind("planeText", {text: "Flipper Length (mm)"})
+            .position(new BABYLON.Vector3(-6, 0, -5))
+            .rotationZ(90 * (3.14/180))
+
+        let labelZ = cot.bind("planeText", {text: "Flipper Depth (mm)"})
+            .position(new BABYLON.Vector3(5, -6, 0))
+            .rotationY(-90 * (3.14/180))
+
+
+            // camera.setTarget(cot.selected[0])
+
+            return scene;
+        };
+
+        // Create the scene
+        const scene = await createScene();
+
+        // Run the render loop
+        engine.runRenderLoop(() => {
+            scene.render();
+        });
+
+        // Resize the engine on window resize
+        window.addEventListener('resize', () => {
+            engine.resize();
+        });
+    </script>
+</body>
+</html>

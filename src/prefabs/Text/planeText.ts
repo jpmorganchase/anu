@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh, Matrix, PlaneBlock, TransformNode, SubMesh, Material,VertexBuffer, Texture } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh, Matrix, PlaneBlock, TransformNode, SubMesh, Material,VertexBuffer, Texture, BabylonFileLoaderConfiguration } from '@babylonjs/core';
 import fnt from '../../assets/roboto-regular.json';
 import png from '../../assets/roboto-regular.png';
 import { createTextMesh } from 'babylon-msdf-text';
@@ -9,13 +9,15 @@ import assign from 'lodash-es/assign';
 
 export interface PlaneTextOptions {
   text: string;
-  size: number;
   font: any;
   atlas: any;
-  opacity: number;
-  align: 'left' | 'right' | 'center';
+  align: 'left' | 'center' | 'right' ;
+  vAlign: 'top' | 'middle' | 'bottom';
   color: Color3;
-  fontHeight: number;
+  strokeColor: Color3;
+  strokeWidth: number,
+  opacity: number;
+  size: number;
 }
 
 export class PlaneText extends Mesh {
@@ -25,11 +27,6 @@ export class PlaneText extends Mesh {
 
   constructor(name: string, options: PlaneTextOptions, scene: Scene) {
     super(name, scene);
-
-    if (options.fontHeight === undefined) {
-      //Set the known font height of the default height, otherwise search for it in the font's json
-      options.fontHeight = (options.font.pages[0] !== "roboto-regular.png") ? Math.max(...fnt.chars.map(c => c.height)) : 84;
-    }
 
     this.name = name;
     this.options = options;
@@ -42,23 +39,6 @@ export class PlaneText extends Mesh {
   }
   public set text(newText: string) {
     this.options.text = newText;
-    this.run();
-  }
-
-  public get color() {
-    return this.options.color;
-  }
-
-  public set color(newColor: Color3) {
-    this.options.color = newColor;
-    this.run();
-  }
-
-  public get size() {
-    return this.options.size;
-  }
-  public set size(newSize: number) {
-    this.options.size = newSize;
     this.run();
   }
 
@@ -78,6 +58,46 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
+  public get align() {
+    return this.options.align;
+  }
+  public set align(newAlign: 'left' | 'center' | 'right') {
+    this.options.align = newAlign;
+    this.run();
+  }
+
+  public get vAlign() {
+    return this.options.vAlign;
+  }
+  public set vAlign(newVAlign: 'top' | 'middle' | 'bottom') {
+    this.options.vAlign = newVAlign;
+    this.run();
+  }
+
+  public get color() {
+    return this.options.color;
+  }
+  public set color(newColor: Color3) {
+    this.options.color = newColor;
+    this.run();
+  }
+
+  public get strokeColor() {
+    return this.options.strokeColor;
+  }
+  public set strokeColor(newStrokeColor: Color3) {
+    this.options.strokeColor = newStrokeColor;
+    this.run();
+  }
+
+  public get strokeWidth() {
+    return this.options.strokeWidth;
+  }
+  public set strokeWidth(newStrokeWidth: number) {
+    this.options.strokeWidth = newStrokeWidth;
+    this.run();
+  }
+
   public get opacity() {
     return this.options.opacity;
   }
@@ -86,21 +106,14 @@ export class PlaneText extends Mesh {
     this.run();
   }
 
-  public get align() {
-    return this.options.align;
+  public get size() {
+    return this.options.size;
   }
-  public set align(newAlign: 'left' | 'right' | 'center') {
-    this.options.align = newAlign;
+  public set size(newSize: number) {
+    this.options.size = newSize;
     this.run();
   }
 
-  public get fontHeight() {
-    return this.options.fontHeight;
-  }
-  public set fontHeight(newFontHeight: number) {
-    this.options.fontHeight = newFontHeight;
-    this.run();
-  }
 
   /**
    * Updates the PlaneText with new options.
@@ -123,23 +136,27 @@ export class PlaneText extends Mesh {
       texture.name = this.options.font.pages[0];
     }
     this.options.atlas = texture;
-
-    let textMesh = createTextMesh({
-      text: this.options.text.toString(),
-      color: this.options.color,
-      opacity: this.options.opacity,
-      align: this.options.align,
-      font: this.options.font,
-      scene: this.scene,
-      atlas: this.options.atlas,
-      lineHeight: 1,
-      fontHeight: this.options.fontHeight
-    });
     
+    let textMesh = createTextMesh(this.name, {
+      text: this.options.text.toString(),
+      font: this.options.font,
+      atlas: this.options.atlas,
+      align: this.options.align,
+      color: this.options.color,
+      strokeColor: this.options.strokeColor,
+      strokeWidth: this.options.strokeWidth,
+      opacity: this.options.opacity,
+    }, this.scene);
+
     this.transferFromMesh(textMesh);
   }
 
   private transferFromMesh(sourceMesh: Mesh) {
+    
+    //Store and remove the parent, we will set this back later
+    const originalParent = this.parent;
+    this.parent = null;
+
     //Store the start position and rotation so that the PlaneText stays where it is
     const startPos = this.position;
     const startRot = this.rotation;
@@ -183,29 +200,34 @@ export class PlaneText extends Mesh {
     sourceMesh.dispose(false, false);
 
     //Correct the scale and pivot point of the PlaneText so that it is easier to handle
-    this.fixScaleAndPivot();
+    this.fixPivotAndScale();
 
     //Reset the PlaneText to its starting position
     this.position = startPos;
     this.rotation = startRot;
+
+    //Restore the original parent
+    this.parent = originalParent;
   }
 
-  private fixScaleAndPivot() {
-    this.computeWorldMatrix(true);
-
-    //Scale is based on the fontHeight declared in the fonts json file
-    const scale = 1 / this.options.fontHeight;
-    this.scaling.scaleInPlace(scale);
-
-    let alignment =
-      this.options.align == 'left' ? 0 : this.options.align == 'center' ? 1 : this.options.align == 'right' ? 2 : null;
-
+  private fixPivotAndScale() {
     //Move the PlaneText such that the world origin aligns with where we want its new pivot point to be, and bake this new transform
-    const boundingBox = this.getBoundingInfo().boundingBox;
-    this.position = new Vector3(-boundingBox.center.x * this.scaling.x * alignment, -(boundingBox.center.y + boundingBox.extendSize.y) * this.scaling.y, 0);
+    //babylon-msdf-text generates text at a 1:1 scale as the values found in font.common (e.g., lineHeight of 84 means the text is 84 units tall)
+    const hAlignment = this.options.align === 'left' ? 0 : this.options.align === 'center' ? 1 : this.options.align === 'right' ? 2 : null;
+    const xPos = -this.getBoundingInfo().boundingBox.center.x * hAlignment;
+    const yPos = this.options.vAlign === 'top' ? -this.options.font.common.lineHeight :
+                 this.options.vAlign === 'middle' ? -this.options.font.common.base + this.options.font.common.lineHeight / 2 :
+                 this.options.vAlign === 'bottom' ? this.options.font.common.base : null;
+    this.position = new Vector3(xPos, yPos, 0);
+    this.bakeCurrentTransformIntoVertices();
+
+    //Now we scale the PlaneText such that its height is a standard 1 unit tall
+    const scale = 1 / this.options.font.common.lineHeight;
+    this.scaling = new Vector3(this.scaling.x * scale, this.scaling.y * scale, 1);
     this.bakeCurrentTransformIntoVertices();
     this.computeWorldMatrix(true);
 
+    //Set any user defined scaling
     this.scaling = new Vector3(this.options.size, this.options.size, this.options.size);
   }
 
@@ -226,13 +248,15 @@ export class PlaneText extends Mesh {
 export function createPlaneText(name: string, options: PlaneTextOptions, scene: Scene) {
   const ops = {
     text: options.text ?? "undefined",
-    size: options.size ?? 1,
-    opacity: options.opacity ?? 1,
-    align: options.align ?? 'center',
-    color: options.color ?? Color3.White(),
     font: options.font ?? fnt,
     atlas: options.atlas ?? png,
-    fontHeight: options.fontHeight ?? undefined
+    align: options.align ?? 'center',
+    vAlign: options.vAlign ?? 'middle',
+    color: options.color ?? Color3.White(),
+    strokeColor: options.strokeColor ?? Color3.Black(),
+    strokeWidth: options.strokeWidth ?? 0,
+    opacity: options.opacity ?? 1,
+    size: options.size ?? 1,
   };
 
   let plane = new PlaneText(name, ops, scene);

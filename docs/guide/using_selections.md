@@ -154,7 +154,7 @@ let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0, 2])
 
 <inlineView scene="cot_bind" :inspector="true" />
 
-If we call bind() on a Selection with more than one Node, it will repeat the method for each Node in the Selection. This is how the majority of Selection methods function. Here we call bind() on our Selection of spheres. This will create a box Mesh as a child of each sphere.
+If we call bind() on a Selection with more than one Node, it will repeat the method for each Node in the Selection. This is how the majority of Selection methods function. Here we call bind() on our Selection of spheres. This will create a box Mesh as a child of each sphere with each box inheriting its parent spheres data by default. We can override this behavior by passing a new data array to our bind method `bind('mesh-type', {options}, [new data])` or using a function that returns a new data array as with other operators `bind('mesh-type', {options}, (d,n,i) => [new data])`
 
 ::: code-group
 ```js [js]
@@ -163,9 +163,10 @@ let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', { diameter: 1 }, [-2, 0, 2])
                  .positionX(d => d);
 
-//Calling bind() on our Selection of spheres will bind new Nodes as children of each sphere
+//Calling bind() on our Selection of spheres will bind new Nodes as children 
+//of each sphere and by default will inherit the data bound to its parent
 let boxes = spheres.bind('box');
-                   .positionY(-1);
+                   .positionY(d => d);
 ```
 :::
 

@@ -41,11 +41,16 @@ export function domain(this: Axes): Selection {
     path.push(new Vector3(rangeX[1], rangeY[0], rangeZ[0]), new Vector3(rangeX[1], rangeY[0], rangeZ[1]));
   }
 
+  let scaleMultiplier = (scaleX != undefined ? Math.abs(rangeX[1] - rangeX[0]) : 0) +
+                        (scaleY != undefined ? Math.abs(rangeY[1] - rangeY[0]) : 0) +
+                        (scaleZ != undefined ? Math.abs(rangeZ[1] - rangeZ[0]) : 0)
+  let domainSize = scaleMultiplier * 0.005;
+
   let default_options: GreasedLineMeshBuilderOptions = { points: path, updatable: true};
 
   let default_material: GreasedLineMaterialBuilderOptions = {
     createAndAssignMaterial: true,
-    width: 0.05,
+    width: domainSize,
     sizeAttenuation: false,
     materialType: 0,
     color: Color3.White(),
@@ -66,6 +71,11 @@ export function domain(this: Axes): Selection {
 
   greasedLine.metadata = {data: {}};
 
+
+  //Performance Optimization Settings
+  greasedLine.doNotSyncBoundingInfo = true;
+  greasedLine.isPickable = false;
+
   let domain = new Selection([greasedLine], this._scene);
 
   domain.prop('name', this.name + '_domain');
@@ -75,17 +85,9 @@ export function domain(this: Axes): Selection {
 
 
 export function updateDomain(axes: Axes, transitionOptions: TransitionOptions) {
-  let scaleX = axes.scales.x.scale;
-  let rangeX = axes.scales.x.range;
-  let domainX = axes.scales.x.domain;
-
-  let scaleY = axes.scales.y.scale;
-  let rangeY = axes.scales.y.range;
-  let domainY = axes.scales.y.domain;
-
-  let scaleZ = axes.scales.z.scale;
-  let rangeZ = axes.scales.z.range;
-  let domainZ = axes.scales.z.domain;
+  const rangeX = axes.scales.x.range;
+  const rangeY = axes.scales.y.range;
+  const rangeZ = axes.scales.z.range;
 
   let path: Vector3[] = [];
 

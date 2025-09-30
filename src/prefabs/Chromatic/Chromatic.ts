@@ -3,6 +3,7 @@ import {
   Color4,
   PBRMetallicRoughnessMaterial,
   PBRSpecularGlossinessMaterial,
+  Scene,
   StandardMaterial,
   float,
   int,
@@ -30,25 +31,25 @@ export class OrdinalChromatic {
       .map((v: string) => Color4.FromHexString(v));
   }
 
-  public toStandardMaterial(steps: int = this.scheme.length) {
+  public toStandardMaterial(steps: int = this.scheme.length, scene?: Scene) {
     return chroma
       .scale(this.scheme)
       .colors(steps)
-      .map((v: string) => makeStandardMaterial(v));
+      .map((v: string) => makeStandardMaterial(v, scene));
   }
 
-  public toPBRMaterialRough(steps: int = this.scheme.length) {
+  public toPBRMaterialRough(steps: int = this.scheme.length, scene?: Scene) {
     return chroma
       .scale(this.scheme)
       .colors(steps)
-      .map((v: string) => makePBRMaterialRough(v));
+      .map((v: string) => makePBRMaterialRough(v, scene));
   }
 
-  public toPBRMaterialGlossy(steps: int = this.scheme.length) {
+  public toPBRMaterialGlossy(steps: int = this.scheme.length, scene?: Scene) {
     return chroma
       .scale(this.scheme)
       .colors(steps)
-      .map((v: string) => makePBRMaterialGlossy(v));
+      .map((v: string) => makePBRMaterialGlossy(v, scene));
   }
 }
 
@@ -71,22 +72,22 @@ export class SequentialChromatic {
       : (d: float) => Color4.FromHexString(chroma.scale(this.scheme).classes(steps)(d).hex());
   }
 
-  public toStandardMaterial(steps: int | undefined | number[] = undefined) {
+  public toStandardMaterial(steps: int | undefined | number[] = undefined, scene?: Scene) {
     return steps === undefined
-      ? (d: float) => makeStandardMaterial(chroma.scale(this.scheme)(d).hex())
+      ? (d: float) => makeStandardMaterial(chroma.scale(this.scheme)(d).hex(), scene)
       : (d: float) => makeStandardMaterial(chroma.scale(this.scheme).classes(steps)(d).hex());
   }
 
-  public toPBRMaterialRough(steps: int | undefined | number[] = undefined) {
+  public toPBRMaterialRough(steps: int | undefined | number[] = undefined, scene?: Scene) {
     return steps === undefined
-      ? (d: float) => makePBRMaterialRough(chroma.scale(this.scheme)(d).hex())
+      ? (d: float) => makePBRMaterialRough(chroma.scale(this.scheme)(d).hex(), scene)
       : (d: float) => makePBRMaterialRough(chroma.scale(this.scheme).classes(steps)(d).hex());
   }
 
-  public toPBRMaterialGlossy(steps: int | undefined | number[] = undefined) {
+  public toPBRMaterialGlossy(steps: int | undefined | number[] = undefined, scene?: Scene) {
     return steps === undefined
-      ? (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme)(d).hex())
-      : (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme).classes(steps)(d).hex());
+      ? (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme)(d).hex(), scene)
+      : (d: float) => makePBRMaterialGlossy(chroma.scale(this.scheme).classes(steps)(d).hex(), scene);
   }
 }
 
@@ -111,20 +112,20 @@ let linear: StringByAny = {
   ...chroma.brewer,
 };
 
-function makeStandardMaterial(hex: string) {
-  let material = new StandardMaterial(hex);
+function makeStandardMaterial(hex: string, scene?: Scene) {
+  let material = new StandardMaterial(hex, scene);
   material.diffuseColor = Color3.FromHexString(hex);
   return material;
 }
 
-function makePBRMaterialRough(hex: string) {
-  let material = new PBRMetallicRoughnessMaterial(hex);
+function makePBRMaterialRough(hex: string, scene?: Scene) {
+  let material = new PBRMetallicRoughnessMaterial(hex, scene);
   material.baseColor = Color3.FromHexString(hex);
   return material;
 }
 
-function makePBRMaterialGlossy(hex: string) {
-  let material = new PBRSpecularGlossinessMaterial(hex);
+function makePBRMaterialGlossy(hex: string,  scene?: Scene) {
+  let material = new PBRSpecularGlossinessMaterial(hex, scene);
   material.diffuseColor = Color3.FromHexString(hex);
   material.specularColor = Color3.FromHexString(hex);
   return material;

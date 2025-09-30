@@ -4,8 +4,8 @@ outline: deep
 
 <script setup>
   //import singleView from  "../../vue_components/singleView.vue"
-  import { textureMap } from  "../../anu-examples/Texture_Map.js"
-  import { textureGlobe } from  "../../anu-examples/Texture_Globe.js"
+  import { textureMap } from  "../../anu-examples/textureMap.js"
+  import { textureGlobe } from  "../../anu-examples/textureGlobe.js"
 </script>
 
 
@@ -97,7 +97,7 @@ let textureMap = anu.createTextureMap('map',
 <singleView :scene="textureGlobe" />
 
 ::: code-group
-<<< @/./anu-examples/Texture_Map.js
+<<< @/./anu-examples/textureMap.js
 
-<<< @/./anu-examples/Texture_Globe.js
+<<< @/./anu-examples/textureGlobe.js
 :::

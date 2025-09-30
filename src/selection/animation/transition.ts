@@ -56,7 +56,7 @@ export function transition(
     transitionSelection = this;
   }
   transitionSelection.selected.forEach((node, i) => {
-    executedOptions.push(options instanceof Function ? options((node.metadata.data ??= {}), node, i) : options || {});
+    executedOptions.push(options instanceof Function ? options((node.metadata?.data ?? {}), node, i) : options || {});
   });
 
   let transition = new Transition(this.transitions.length, executedOptions);
@@ -83,7 +83,7 @@ export function createTransition(selection: Selection, accessor: string, value: 
       let frames: number = fps * duration;
       let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT;
       let ease: EasingFunction = transitionOptions.easingFunction || undefined;
-      let wait: boolean = (transitionOptions.sequence ??= true);
+      let wait: boolean = (transitionOptions.sequence ?? true);
       let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
       
       const transition = selection.transitions[sequence];
@@ -107,7 +107,7 @@ export function createTransition(selection: Selection, accessor: string, value: 
           fps,
           frames,
           get(node, accessor),
-          value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+          value instanceof Function ? value((node.metadata?.data ?? {}), node, i) : value,
           loop,
           ease,
           onEnd,
@@ -145,7 +145,7 @@ export function createTransitions(selection: Selection,  properties: {}) {
         let frames: number = fps * duration;
         let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT;
         let ease: EasingFunction = transitionOptions.easingFunction || undefined;
-        let wait: boolean = (transitionOptions.sequence ??= true);
+        let wait: boolean = (transitionOptions.sequence ?? true);
         let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
 
         const transition = selection.transitions[sequence];
@@ -169,7 +169,7 @@ export function createTransitions(selection: Selection,  properties: {}) {
             fps,
             frames,
             get(node, accessor),
-            value instanceof Function ? value((node.metadata.data ??= {}), node, i) : value,
+            value instanceof Function ? value((node.metadata?.data ?? {}), node, i) : value,
             loop,
             ease,
             onEnd,
@@ -205,9 +205,9 @@ export function tween(this: Selection, value: (d, n, i) => (t) => void) {
     let delay: number = transitionOptions.delay || 0;
     //let loop: number = transitionOptions.loopMode || Animation.ANIMATIONLOOPMODE_CONSTANT
     let ease: EasingFunction = transitionOptions.easingFunction || undefined;
-    let wait: boolean = (transitionOptions.sequence ??= true);
+    let wait: boolean = (transitionOptions.sequence ?? true);
     let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
-    let func = value((node.metadata.data ??= {}), node, i);
+    let func = value((node.metadata?.data ?? {}), node, i);
     let startTime = null;
     //let accumulatedTime = 0;
 

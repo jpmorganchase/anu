@@ -3,7 +3,7 @@ outline: deep
 ---
 
 <script setup>
-  import { meshMap } from  "../../anu-examples/Mesh_Map.js"
+  import { meshMap } from  "../../anu-examples/meshMap.js"
 </script>
 
 # Mesh Map
@@ -53,5 +53,5 @@ let selection = map.selection
 <singleView :scene="meshMap" />
 
 ::: code-group
-<<< @/./anu-examples/Mesh_Map.js 
+<<< @/./anu-examples/meshMap.js 
 :::
