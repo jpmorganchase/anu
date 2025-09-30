@@ -84,7 +84,7 @@ axes.updateAxes(axesOptions, {duration: 250})
 | labelProperties         | (PlaneTextProperties \| { x?: PlaneTextProperties; y?: PlaneTextProperties; z?: PlaneTextProperties } \| {}) properties of the PlaneText mesh | {}          |
 | labelTicks              | ({ x?: (string \| number)[]; y?: (string \| number)[]; z?: (string \| number)[] }) array of values for ticks to be drawn               | {}          |
 | labelFormat             | ({ x?: (d: string) => string; y?: (d: string) => string; z?: (d: string) => string }) a function that formats the label text           | {}          |
-| labelMargin             | ({ x?: number; y?: number; z?: number }) margin for the labels                                                                         | { x\: 0, y: 0, z: 0 } |
+| labelMargin             | ({ x?: number; y?: number; z?: number }) margin for the labels                                                                         | { x\: 0.1, y: 0.1, z: 0.1 } |
 | atlas                   | (Texture) texture atlas for the labels                                                                                                 | undefined   |
 
 

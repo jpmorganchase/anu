@@ -93,7 +93,7 @@ export function tiltMap(engine){
 
   //Create labels for each state
   let labels = anu.selectName('barChart', scene)
-                  .bind('planeText', { text: (d) => d.state, size: 0.075, parent: barChart, color: BABYLON.Color3.Black() }, population)
+                  .bind('planeText', { text: (d) => d.state, size: 0.0375, parent: barChart, color: BABYLON.Color3.White(), strokeWidth: 0.25 }, population)
                   .position((d,n,i) => new BABYLON.Vector3(scaleX(d.state), -0.05, 0));
 
   //We want to be a bit fancier with our axes, so we create our own axes instead of using the Axis prefab
@@ -112,7 +112,7 @@ export function tiltMap(engine){
                    .positionY(0.25)
                    .scalingY(0.5);
   //Create and position labels for the axes
-  legends.bind('planeText', { text: (d) => d, size: 0.1 }, [ '0M', '10M', '20M', '30M', '40M'])
+  legends.bind('planeText', { text: (d) => d, size: 0.075 }, [ '0M', '10M', '20M', '30M', '40M'])
          .positionX((d,n,i) => n.parent.name.startsWith('left') ? -0.1 : 0.1)
          .positionY((d,n,i) => n.parent.name.startsWith('left') ? i * 0.25 - 0.5 : (i - 5) * 0.25 - 0.5);
 
@@ -204,7 +204,8 @@ export function tiltMap(engine){
         let geoPos = new BABYLON.Vector3(proj[0], scaleY(d.population) + 0.05, proj[1]);
         let chartPos = new BABYLON.Vector3(scaleX(d.state), -0.05, 0);
         return BABYLON.Vector3.Lerp(geoPos, chartPos, t);
-      });
+      })
+        .rotationX(BABYLON.Scalar.Lerp(Math.PI / 2, 0, t));
     }
     //Bar chart
     else {
@@ -215,13 +216,6 @@ export function tiltMap(engine){
       bars.position((d,n,i) => new BABYLON.Vector3(scaleX(d.state), scaleY(d.population) / 2, 0));
       labels.position((d,n,i) => new BABYLON.Vector3(scaleX(d.state), -0.05, 0));
     }
-  });
-
-  //Billboard the state labels every frame. mesh.billboardMode can do this, though it causes erratic behavior with our PlaneText prefab
-  scene.onBeforeRenderObservable.add(() => {
-    labels.run((d,n,i) => {
-      n.lookAt(BABYLON.Vector3.Zero().subtract(camera.position), undefined, undefined, undefined, 1);
-    });
   });
 
   //Add a slider to control the angle of TiltMap (mainly meant for desktop)

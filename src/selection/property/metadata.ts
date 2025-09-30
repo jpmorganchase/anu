@@ -42,8 +42,8 @@ export function metadata(this: Selection, key: string, value: {} | ((d: any, n: 
           node,
           'metadata',
           value instanceof Function
-            ? { ...node.metadata, key: value(node.metadata.data, node, i) }
-            : { ...node.metadata, key: value },
+            ? { ...node.metadata, [key]: value(node.metadata?.data, node, i) }
+            : { ...node.metadata, [key]: value },
         )
       : console.error('metadata not a property of ' + node);
   });

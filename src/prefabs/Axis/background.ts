@@ -88,7 +88,7 @@ function backgroundBuilder(config: backgroundConfig): Selection {
                         "name": config.name,
                         "position": config.position,
                         "rotation": config.rotation,
-                        "material": new StandardMaterial(config.name + "_background_material_x"),
+                        "material": new StandardMaterial(config.name + "_background_material_x", config.cot.scene),
                         "metadata.data": config.options
                       })
                       .props(config.properties)

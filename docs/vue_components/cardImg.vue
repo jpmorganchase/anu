@@ -3,7 +3,7 @@
         <a :href="props.link">
             <img :src="props.img">
         </a>
-        <span>{{ props.title }}</span>
+        <span><a :href="props.link">{{ props.title }}</a></span>
     </div>
 </template>
 

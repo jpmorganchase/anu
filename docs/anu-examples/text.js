@@ -27,6 +27,8 @@ export const text = function(engine){
 
     options.text = "Goodbye World";
     options.color = Color3.Red();
+    options.strokeColor = Color3.Blue();
+    options.strokeWidth = 0.5;
     options.size = 1.5;
     
     scene.onPointerDown = (pointer) => myText.updatePlaneText(options);

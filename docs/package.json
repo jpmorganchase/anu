@@ -2,13 +2,14 @@
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
+    "docs:build": "cross-env NODE_OPTIONS=\"--import=extensionless/register\" vitepress build",
     "docs:preview": "vitepress preview",
     "clean_ext": "node clean_ext.js",
     "add_coi": "node add_coi.js"
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.4",
+    "cross-env": "^10.0.0",
     "vue": "^3.3.4"
   },
   "dependencies": {
@@ -22,6 +23,8 @@
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",
     "earcut": "^3.0.1",
+    "extensionless": "^1.9.9",
+    "manifold-3d": "^3.2.1",
     "vite-plugin-dynamic-import": "^1.5.0",
     "vitepress": "^1.0.1"
   }

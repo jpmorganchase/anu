@@ -115,7 +115,7 @@ export const barchartRace = function(engine) {
     scaleX = d3.scaleLinear().domain([0, Math.max(...keyframes[timestep][1].map(d => d.value))]).range([0, 3]);
 
     //Animate our bars
-    bars.prop("metadata.data", (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
+    bars.metadata("data", (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
       .transition((d,n,i) => ({
         duration: interval,
         onAnimationEnd: () => {         //When the animation ends, call this function again to begin the animation for the next year
@@ -140,7 +140,7 @@ export const barchartRace = function(engine) {
       });
     
     //Animate the labels
-    labels.prop("metadata.data", (d,n,i) => keyframes[timestep][1][i])
+    labels.metadata("data", (d,n,i) => keyframes[timestep][1][i])
       .transition((d,n,i) => ({ duration: interval }))
       .tween((d,n,i) => {
         let textTween = d3.interpolateNumber(Number(n.text.split('\n').pop().replace(',', '')), d.value);

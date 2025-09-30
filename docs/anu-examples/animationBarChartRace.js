@@ -83,9 +83,9 @@ export function animationBarChartRace(engine) {
                   .diffuseColor((d,n,i) => BABYLON.Color3.FromHexString(scaleC(d)));
 
   //Create Plane Text prefabs as children of our CoT for each row of our data and set their visual encodings using method chaining for the very first keyframe
-  let labels = chart.bind('planeText', { text: '0', size: 0.1, align: 'right'}, keyframes[0][1])
-                    .positionX((d,n,i) => scaleX(d.value) - 0.04)   //Offsets to neatly place bar label
-                    .positionY((d,n,i) => scaleY(d.rank) - 0.0285)
+  let labels = chart.bind('planeText', { text: '0', size: 0.07, align: 'right', strokeWidth: 0}, keyframes[0][1])
+                    .positionX((d,n,i) => scaleX(d.value) - 0.03)   //Offsets to neatly place bar label
+                    .positionY((d,n,i) => scaleY(d.rank) - 0.04)
                     .positionZ(-0.011); //Move slightly in-front of the box
 
   //Customize and create our the axes
@@ -95,6 +95,7 @@ export function animationBarChartRace(engine) {
   axesOptions.domainMaterialOptions = { width: 0.01 };
   axesOptions.background.x = false;
   axesOptions.background.y = false;
+  axesOptions.labelOptions.x = { size: 0.06 };
   axesOptions.labelFormat.x = (v) => Number(v.toFixed(0)).toLocaleString();
   axesOptions.labelMargin.x = -0.125;
   axesOptions.label.y = false;
@@ -102,7 +103,7 @@ export function animationBarChartRace(engine) {
 
   //Label for the current year at the bottom right
   let yearLabel = anu.createPlaneText('yearLabel', { text: '0', size: 0.4, parent: chart });
-  yearLabel.position = new BABYLON.Vector3(2.7, 0.1, 0);
+  yearLabel.position = new BABYLON.Vector3(2.5, 0.15, 0);
 
   let timestep = 0;     //Incremental counter to iterate through the keyframe array
   let interval = 250;   //Time between keyframes in milliseconds
@@ -119,7 +120,7 @@ export function animationBarChartRace(engine) {
     scaleX = d3.scaleLinear().domain([0, Math.max(...keyframes[timestep][1].map(d => d.value))]).range([0, 3]);
 
     //Animate our bars
-    bars.prop('metadata.data', (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
+    bars.metadata('data', (d,n,i) => keyframes[timestep][1][i])  //Bind new data to the Meshes
       .transition((d,n,i) => ({
         duration: interval,
         onAnimationEnd: () => {         //When the animation ends, call this function again to begin the animation for the next year
@@ -144,12 +145,12 @@ export function animationBarChartRace(engine) {
       });
     
     //Animate the labels
-    labels.prop('metadata.data', (d,n,i) => keyframes[timestep][1][i])
+    labels.metadata('data', (d,n,i) => keyframes[timestep][1][i])
       .transition((d,n,i) => ({ duration: interval }))
       .tween((d,n,i) => {
         let textTween = d3.interpolateNumber(Number(n.text.split('\n').pop().replace(',', '')), d.value);
-        let posXTween = d3.interpolateNumber(n.position.x, scaleX(d.value) - 0.04);   //Offsets to neatly place bar label
-        let posYTween = d3.interpolateNumber(n.position.y, scaleY(d.rank) - 0.0285);
+        let posXTween = d3.interpolateNumber(n.position.x, scaleX(d.value) - 0.03);   //Offsets to neatly place bar label
+        let posYTween = d3.interpolateNumber(n.position.y, scaleY(d.rank) - 0.04);
         let alphaTween = d3.interpolateNumber(n.opacity, (d.rank) < topN ? 1 : 0);
 
         return (t) => {

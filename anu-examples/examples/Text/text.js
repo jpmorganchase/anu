@@ -2,13 +2,9 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 //Import everything we need to create our babylon scene and write our visualization code. 
-import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation
-import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
-import { VertexBuffer, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder} from '@babylonjs/core'; 
+import * as anu from '@jpmorganchase/anu' //Anu for Scene-Graph Manipulation=
+import { VertexBuffer, HemisphericLight, Vector3, Scene, ArcRotateCamera, TransformNode, ActionManager, InterpolateValueAction, StandardMaterial, Color3, MeshBuilder, AbstractAudioBus} from '@babylonjs/core'; 
 // import {extent, scaleOrdinal, scaleLinear, schemeCategory10, map} from "d3";
-import { createTextMesh } from "babylon-msdf-text";
-import fnt from "../../fonts/roboto-regular.json";
-import png from "../../fonts/roboto-regular.png";
 
 
 //import { Mesh } from 'anu';
@@ -23,16 +19,16 @@ export const text = function(engine){
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 
   //Add a camera that rotates around the origin 
-  const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
+  const camera = new ArcRotateCamera("Camera", 0, 0, 10, new Vector3(0, 0, 0), scene);
   camera.attachControl(true)
-  camera.position = new Vector3(25,0,-15);
-
+  camera.position = new Vector3(0,0,-15);
+  
   //Basic function
   let options1 = {
     text: 'USA',
     color: Color3.Red()
   }
-  let text1 = anu.createPlaneText('myText1', options1, scene)
+  let text1 = anu.createPlaneText('myText1', options1, scene);
 
   //------------
 
@@ -47,9 +43,8 @@ export const text = function(engine){
 
   options2.text = "Asia";
   options2.color = Color3.Green();
-  options2.size = 1;
-  setTimeout(() => text2.updatePlaneText(options2), 2000);
-  setTimeout(() => text2.updatePlaneText({ text: "Europe", color: Color3.Black(), size: 1.5 }), 3000);
+  setTimeout(() => text2.updatePlaneText(options2), 1000);
+  setTimeout(() => text2.updatePlaneText({ text: "Europe", color: Color3.Black() }), 3000);
   setTimeout(() => {
     console.log(text2.text)
     text2.text = "Africa";

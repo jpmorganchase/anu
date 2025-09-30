@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.5.6",
+  "version": "0.6.3",
   "description": "",
   "type": "module",
   "files": [
@@ -33,7 +33,7 @@
     "@babylonjs/core": "5.x || 6.x || 7.x || 8.x"
   },
   "dependencies": {
-    "babylon-msdf-text": "^0.0.4",
+    "babylon-msdf-text": "^1.0.0",
     "chroma-js": "^2.4.2",
     "d3-geo": "^3.1.1",
     "d3-geo-projection": "^4.0.0",

@@ -59,6 +59,7 @@ export class TextureMap extends TransformNode {
     let scale = this.createScales();
     this.scaleLon = (c: Coordinate) => scale[0](this.map.getPixelFromCoordinate(c)[0]);
     this.scaleLat = (c: Coordinate) => scale[1](this.map.getPixelFromCoordinate(c)[1]);
+    this.scene = scene;
   }
 
   createContainer() {
@@ -113,7 +114,7 @@ export class TextureMap extends TransformNode {
     ground.setParent(this);
     let materialGround = new StandardMaterial(
       this.name + '_material',
-      this.scene != undefined ? this.scene : undefined,
+      this.scene,
     );
 
     materialGround.diffuseTexture = this.texture;
