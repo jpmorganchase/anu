@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright : J.P. Morgan Chase & Co.
+// Copyr// Test method calling on nested properties
+
+// Test getting scaling values
 
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
@@ -34,20 +36,26 @@ export function scatterplot3D(engine){
   let chart = anu.selectName('cot', scene)
   
 
-  
+  //box.scaling.scaleInPlace(20);
 
   //Create sphere meshes as children of our CoT for each row of our data and set their visual encodings using method chaining
   let spheres = chart.bind('sphere', { diameter: (d) => scaleSize(d['Body Mass (g)'] ?? 0) }, data)
                      .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
                      .material((d) => scaleC(d.Species)) //We set material directly as scaleC() was configured to return a StandardMaterial
 
-  spheres.translate(new BABYLON.Vector3(0, 0, 1), 1); //Translate all spheres by 0.5 in the Z direction so that they are not clipped by the axes
 
-//spheres.prop('isVisible', (d) => d.Species === 'Adelie');
+
 const start = performance.now();
-  spheres.translate(() => new BABYLON.Vector3(0, 0, 1), 1); //Translate all spheres by 0.5 in the Z direction so that they are not clipped by the axes
+
+spheres.position.x(1)
+.position.scaleInPlace(2)
+.rotation.y(Math.PI / 4)
+.scaling.set(() => Math.random() * 2, () => Math.random() * 2, () => Math.random() * 2);
+
 const end = performance.now();
 const duration = end - start; 
+
+
 console.log(`Method execution time: ${duration} ms`);
                     //console.log(spheres.isVisible());
                     
