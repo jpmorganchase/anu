@@ -65,6 +65,7 @@ import { largeThinInstance } from './examples/Advanced/largeThinInstance';
 import { greasedLine } from './examples/GreasedLine/greasedLine';
 import { imaxes } from './examples/Advanced/imaxesSimple';
 import { box_clone } from './examples/FirstSteps/Box_Clone';
+import { selectionTest } from './examples/Selections/selectionTest';
 
 
 const queryString = window.location.search;
@@ -74,6 +75,7 @@ const urlParams = new URLSearchParams(queryString);
 const app = document.querySelector('#app');
 //Create a canvas element and appened it to #app div
 const canvas = document.createElement('canvas');
+canvas.id = "renderCanvas";
 app.appendChild(canvas);
 
 //initialize babylon engine, passing in our target canvas element, and create a new scene
@@ -136,7 +138,8 @@ const scenes = {
   'pitches': pitches,
   'largeThinInstance': largeThinInstance,
   'clone': box_clone,
-  'linkedScatterPlots': linkedScatterPlots
+  'linkedScatterPlots': linkedScatterPlots, 
+  'selectionTest': selectionTest,
 }
 
 
@@ -145,11 +148,11 @@ let scene = await scenes[urlParams.get('example')](babylonEngine);
 let screenshot = urlParams.get('thumbnail') || false;
 // scene.clearColor = new Color3(30/256,30/256,32/256)
 
-let env = scene.createDefaultEnvironment();
-//let sky = scene.createDefaultSkybox(scene.environmentTexture, true, (scene.activeCamera.maxZ - scene.activeCamera.minZ)/2, 0.3, false);
+// let env = scene.createDefaultEnvironment();
+// //let sky = scene.createDefaultSkybox(scene.environmentTexture, true, (scene.activeCamera.maxZ - scene.activeCamera.minZ)/2, 0.3, false);
 
-env.setMainColor(Color3.FromHexString('#14161a'))
-env.ground.position = new Vector3(0,-0.3,0)
+// env.setMainColor(Color3.FromHexString('#14161a'))
+// env.ground.position = new Vector3(0,-0.3,0)
 
 
 
@@ -192,12 +195,20 @@ babylonEngine.runRenderLoop(() => {
   scene.render()
 })
 
+
+scene.onReadyObservable.add(() => {
+  // Add data-ready attribute to canvas when scene is ready
+  if (canvas) {
+    canvas.setAttribute('data-ready', '1');
+  }
+});
+
 //Listen for window size changes and resize the scene accordingly 
 window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-scene.debugLayer.show();
+//scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
