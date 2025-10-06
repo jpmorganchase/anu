@@ -66,6 +66,7 @@ import { greasedLine } from './examples/GreasedLine/greasedLine';
 import { imaxes } from './examples/Advanced/imaxesSimple';
 import { box_clone } from './examples/FirstSteps/Box_Clone';
 import { selectionTest } from './examples/Selections/selectionTest';
+import { proxyTest } from './examples/Selections/proxyTest';
 
 
 const queryString = window.location.search;
@@ -140,6 +141,7 @@ const scenes = {
   'clone': box_clone,
   'linkedScatterPlots': linkedScatterPlots, 
   'selectionTest': selectionTest,
+  'proxyTest': proxyTest,
 }
 
 

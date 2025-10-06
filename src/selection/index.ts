@@ -332,11 +332,11 @@ export class Selection {
   public hasTags = hasTags;
   public action = action;
   public behavior = behavior;
-  public material = material;
-  public diffuseColor = diffuseColor;
-  public specularColor = specularColor;
-  public emissiveColor = emissiveColor;
-  public ambientColor = ambientColor;
+  //public material = material;
+  // public diffuseColor = diffuseColor;
+  // public specularColor = specularColor;
+  // public emissiveColor = emissiveColor;
+  // public ambientColor = ambientColor;
   public registerInstancedBuffer = registerInstancedBuffer;
   public setInstancedBuffer = setInstancedBuffer;
   public dispose = dispose;
