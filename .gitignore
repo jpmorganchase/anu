@@ -15,3 +15,6 @@ anu-examples/package-lock.json
 anu-examples/package.json
 anu-examples/vite.config.js
 .vscode
+/template
+/test-results
+/playwright-report
