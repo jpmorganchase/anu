@@ -208,11 +208,11 @@ window.addEventListener("resize", function () {
   babylonEngine.resize();
 });
 
-//scene.debugLayer.show();
+// scene.debugLayer.show();
 // hide/show the Inspector
 window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
-    if (ev.shiftKey && ev.ctrlKey && ev.altKey && ev.keyCode === 73) {
+    if (ev.key === "I") {
         if (scene.debugLayer.isVisible()) {
             scene.debugLayer.hide();
         } else {
