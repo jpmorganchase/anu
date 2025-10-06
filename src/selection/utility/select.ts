@@ -42,15 +42,23 @@ export function select(this: Selection, name: string): Selection {
  */
 export function selectName(this: Selection, name: string | string[]): Selection {
   let selected: Node[] = [];
-  Array.isArray(name)
-    ? name.forEach((e, i) =>
-        this.selected.forEach(
-          (element) => (selected = selected.concat(element?.getChildren((node) => node.name == e, false))),
-        ),
-      )
-    : this.selected.forEach(
-        (element) => (selected = selected.concat(element?.getChildren((node) => node.name == name, false))),
-      );
+  
+  if (Array.isArray(name)) {
+    // Create a Set for O(1) lookup and automatic deduplication
+    const nameSet = new Set(name);
+    
+    // Get all children from selected elements and filter by names in the set
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => nameSet.has(node.name), false) || [];
+      selected = selected.concat(children);
+    });
+  } else {
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => node.name === name, false) || [];
+      selected = selected.concat(children);
+    });
+  }
+  
   return new Selection(selected, this.scene);
 }
 
@@ -62,11 +70,23 @@ export function selectName(this: Selection, name: string | string[]): Selection 
  */
 export function selectId(this: Selection, id: string | string[]): Selection {
   let selected: Node[] = [];
-  Array.isArray(id)
-    ? id.forEach((e, i) =>
-        this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == e, false)))),
-      )
-    : this.selected.forEach((element) => (selected = selected.concat(element?.getChildren((node) => node.id == id, false))));
+  
+  if (Array.isArray(id)) {
+    // Create a Set for O(1) lookup and automatic deduplication
+    const idSet = new Set(id);
+    
+    // Get all children from selected elements and filter by IDs in the set
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => idSet.has(node.id), false) || [];
+      selected = selected.concat(children);
+    });
+  } else {
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => node.id === id, false) || [];
+      selected = selected.concat(children);
+    });
+  }
+  
   return new Selection(selected, this.scene);
 }
 
@@ -78,15 +98,25 @@ export function selectId(this: Selection, id: string | string[]): Selection {
  */
 export function selectTag(this: Selection, tag: string | string[]): Selection {
   let selected: Node[] = [];
-  Array.isArray(tag)
-    ? tag.forEach((e, i) =>
-        this.selected.forEach(
-          (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, e) == true))),
-        ),
-      )
-    : this.selected.forEach(
-        (element) => (selected = selected.concat(element?.getChildren((node) => Tags.MatchesQuery(node, tag) == true))),
-      );
+  
+  if (Array.isArray(tag)) {
+    // Create a Set for O(1) lookup and automatic deduplication
+    const tagSet = new Set(tag);
+    
+    // Get all children from selected elements and filter by tags in the set
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => 
+        Array.from(tagSet).some(tagValue => Tags.MatchesQuery(node, tagValue))
+      , false) || [];
+      selected = selected.concat(children);
+    });
+  } else {
+    this.selected.forEach(element => {
+      const children = element?.getChildren((node) => Tags.MatchesQuery(node, tag), false) || [];
+      selected = selected.concat(children);
+    });
+  }
+  
   return new Selection(selected, this.scene);
 }
 
@@ -102,32 +132,43 @@ export function selectData(this: Selection, key: string | string[], value: strin
   let selected: Node[] = [];
   useAndLogic ??= false;
 
+  // Get all nodes from selected elements and their children
+  const getAllNodes = (): Node[] => {
+    return [...this.selected, ...this.selected.flatMap((element) => element.getChildren(undefined, false))];
+  };
+
   if (Array.isArray(key) && Array.isArray(value)) {
     if (useAndLogic) {
+      // AND logic: all key-value pairs must match
       const kvps = Object.fromEntries(key.map((key, index) => [key, value[index]]));
-      let nodes = [...this.selected, ...this.selected.flatMap((element) => [element, ...element.getChildren(undefined, false)])];
-      nodes.forEach((node, idx) => {
-        if (node.metadata != null && Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v)) {
-          selected.push(node);
-        }
+      selected = getAllNodes().filter(node => {
+        if (node.metadata?.data == null) return false;
+        return Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v);
+      });
+    } else {
+      // OR logic: any key-value pair can match
+      const kvPairs = key.map((k, index) => ({ key: k, value: value[index] }));
+      
+      selected = getAllNodes().filter(node => {
+        if (node.metadata?.data == null) return false;
+        return kvPairs.some(({ key: k, value: v }) => node.metadata.data[k] === v);
       });
     }
-    else {
-      let nodes = [...this.selected, ...this.selected.flatMap((element) => [element, ...element.getChildren(undefined, false)])];
-      key.forEach((e, i) => {
-        for (let j = nodes.length - 1; j >= 0; j--) {
-          if (nodes[j].metadata != null && nodes[j].metadata.data[e] == value[i]) {
-            selected.push(...nodes.splice(j, 1));
-          }
-        }
-      });
-    }
+  } else if (Array.isArray(value)) {
+    // Single key with multiple values
+    const valueSet = new Set<string | number>(value);
+    
+    selected = getAllNodes().filter(node => {
+      if (node.metadata?.data == null) return false;
+      return valueSet.has(node.metadata.data[key as string]);
+    });
+  } else {
+    // Single key-value pair
+    selected = getAllNodes().filter(node => {
+      if (node.metadata?.data == null) return false;
+      return node.metadata.data[key as string] === value;
+    });
   }
-  else {
-    this.selected.forEach((element) =>
-      (selected = [...selected, ...element.getChildren(undefined, false)]
-                    .filter((node) => node.metadata != null && node.metadata.data[key as string] == value))
-    );
-  }
+  
   return new Selection(selected, this.scene);
 }

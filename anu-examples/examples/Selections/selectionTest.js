@@ -42,22 +42,25 @@ export const selectionTest = function(engine){
     .positionX((d, node, i) => i * 1.0 - 1.0)
     .positionY(0)
     .positionZ(0)
-    .material(() => redMaterial);
+    .material(() => redMaterial)
+    .id((d) => d.id)
+    .name((d) => d.name)
+    .addTags((d) => `${d.category} ${d.type} sphere-tag`);
 
-  // Set up metadata for spheres
-  spheres.selected.forEach((mesh, i) => {
-    const data = sphereData[i];
-    mesh.id = data.id;
-    mesh.name = data.name;
-    mesh.metadata = { 
-      anujsData: data,
-      category: data.category,
-      type: data.type,
-      value: data.value
-    };
-    // Add tags for tag-based selection
-    mesh.tags = `${data.category} ${data.type} sphere-tag`;
-  });
+//   // Set up metadata for spheres
+//   spheres.selected.forEach((mesh, i) => {
+//     const data = sphereData[i];
+//     mesh.id = data.id;
+//     mesh.name = data.name;
+//     mesh.metadata = { 
+//       anujsData: data,
+//       category: data.category,
+//       type: data.type,
+//       value: data.value
+//     };
+//     // Add tags for tag-based selection
+//     mesh.addTags(`${data.category} ${data.type} sphere-tag`);
+//   });
 
   // Create boxes with comprehensive metadata
   let boxData = testData.filter(d => d.name === 'box');
@@ -68,22 +71,25 @@ export const selectionTest = function(engine){
     .positionX((d, node, i) => i * 1.0 - 0.5)
     .positionY(1.0)
     .positionZ(0)
-    .material(() => blueMaterial);
+    .material(() => blueMaterial)
+     .id((d) => d.id)
+    .name((d) => d.name)
+    .addTags((d) => `${d.category} ${d.type} box-tag`);
 
-  // Set up metadata for boxes
-  boxes.selected.forEach((mesh, i) => {
-    const data = boxData[i];
-    mesh.id = data.id;
-    mesh.name = data.name;
-    mesh.metadata = { 
-      anujsData: data,
-      category: data.category,
-      type: data.type,
-      value: data.value
-    };
-    // Add tags for tag-based selection
-    mesh.tags = `${data.category} ${data.type} box-tag`;
-  });
+//   // Set up metadata for boxes
+//   boxes.selected.forEach((mesh, i) => {
+//     const data = boxData[i];
+//     mesh.id = data.id;
+//     mesh.name = data.name;
+//     mesh.metadata = { 
+//       anujsData: data,
+//       category: data.category,
+//       type: data.type,
+//       value: data.value
+//     };
+//     // Add tags for tag-based selection
+//     mesh.addTags(`${data.category} ${data.type} box-tag`);
+//   });
 
   // Create cylinder with metadata
   let cylinderData = testData.filter(d => d.name === 'cylinder');
@@ -94,23 +100,26 @@ export const selectionTest = function(engine){
     .positionX(0)
     .positionY(-1.0)
     .positionZ(0)
-    .material(() => greenMaterial);
+    .material(() => greenMaterial)
+     .id((d) => d.id)
+    .name((d) => d.name)
+    .addTags((d) => `${d.category} ${d.type} cylinder-tag`);
 
 
-  // Set up metadata for cylinder
-  cylinder.selected.forEach((mesh, i) => {
-    const data = cylinderData[i];
-    mesh.id = data.id;
-    mesh.name = data.name;
-    mesh.metadata = { 
-      anujsData: data,
-      category: data.category,
-      type: data.type,
-      value: data.value
-    };
-    // Add tags for tag-based selection
-    mesh.tags = `${data.category} ${data.type} cylinder-tag`;
-  });
+//   // Set up metadata for cylinder
+//   cylinder.selected.forEach((mesh, i) => {
+//     const data = cylinderData[i];
+//     mesh.id = data.id;
+//     mesh.name = data.name;
+//     mesh.metadata = { 
+//       anujsData: data,
+//       category: data.category,
+//       type: data.type,
+//       value: data.value
+//     };
+//     // Add tags for tag-based selection
+//     mesh.addTags(`${data.category} ${data.type} cylinder-tag`);
+//   });
 
   // Create hierarchical structure for chaining tests
   let group1 = anu.create("cot", "group1", {}, {}, scene);
@@ -120,8 +129,8 @@ export const selectionTest = function(engine){
   group2.setParent(root);
   
   // Create selections for the groups
-  let group1Selection = anu.selectName("group1", scene);
-  let group2Selection = anu.selectName("group2", scene);
+  let group1Selection = anu.selectName("group1", scene).addTags("group");
+  let group2Selection = anu.selectName("group2", scene).addTags("group");
   
   // Add child spheres to groups
   let yellowMaterial = new StandardMaterial("yellowMaterial", scene);
@@ -131,19 +140,23 @@ export const selectionTest = function(engine){
     .positionX(-2)
     .positionY(2)
     .positionZ(0)
-    .material(() => yellowMaterial);
-    
-  childSphere1.selected.forEach((mesh, i) => {
-    mesh.id = 'child-1';
-    mesh.name = 'child-sphere';
-    mesh.metadata = { 
-      anujsData: {id: 'child-1', name: 'child-sphere', category: 'child', type: 'nested', value: 100},
-      category: 'child',
-      type: 'nested',
-      value: 100
-    };
-    mesh.tags = 'child nested child-tag';
-  });
+    .material(() => yellowMaterial)
+     .id((d) => d.id)
+    .name((d) => d.name)
+    .addTags((d) => `child nested child-tag`);
+
+
+//   childSphere1.selected.forEach((mesh, i) => {
+//     mesh.id = 'child-1';
+//     mesh.name = 'child-sphere';
+//     mesh.metadata = { 
+//       anujsData: {id: 'child-1', name: 'child-sphere', category: 'child', type: 'nested', value: 100},
+//       category: 'child',
+//       type: 'nested',
+//       value: 100
+//     };
+//     mesh.addTags('child nested child-tag');
+//   });
 
   let purpleMaterial = new StandardMaterial("purpleMaterial", scene);
   purpleMaterial.diffuseColor = Color3.Purple();
@@ -152,19 +165,22 @@ export const selectionTest = function(engine){
     .positionX(2)
     .positionY(2)
     .positionZ(0)
-    .material(() => purpleMaterial);
+    .material(() => purpleMaterial)
+     .id((d) => d.id)
+    .name((d) => d.name)
+    .addTags((d) => `child nested child-tag`);
     
-  childSphere2.selected.forEach((mesh, i) => {
-    mesh.id = 'child-2';
-    mesh.name = 'child-sphere';
-    mesh.metadata = { 
-      anujsData: {id: 'child-2', name: 'child-sphere', category: 'child', type: 'nested', value: 200},
-      category: 'child',
-      type: 'nested',
-      value: 200
-    };
-    mesh.tags = 'child nested child-tag';
-  });
+//   childSphere2.selected.forEach((mesh, i) => {
+//     mesh.id = 'child-2';
+//     mesh.name = 'child-sphere';
+//     mesh.metadata = { 
+//       anujsData: {id: 'child-2', name: 'child-sphere', category: 'child', type: 'nested', value: 200},
+//       category: 'child',
+//       type: 'nested',
+//       value: 200
+//     };
+//     mesh.addTags('child nested child-tag');
+//   });
 
   // Make global variables available for testing
   window.scene = scene;

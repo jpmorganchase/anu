@@ -45,9 +45,18 @@ export function select(name: string, scene: Scene): Selection {
  */
 export function selectName(name: string | string[], scene: Scene) {
   let selected: Node[] = [];
-  Array.isArray(name)
-    ? name.forEach((e, i) => (selected = [...selected, ...scene.getNodes().filter((node) => node.name == e)]))
-    : (selected = scene.getNodes().filter((node) => node.name == name));
+  
+  if (Array.isArray(name)) {
+    // Create a Map for O(1) lookup and automatic deduplication
+        const nameSet = new Set(name);
+
+    
+    // Single pass through nodes
+    selected = scene.getNodes().filter(node => nameSet.has(node.name));
+  } else {
+    selected = scene.getNodes().filter(node => node.name === name);
+  }
+  
   return new Selection(selected, scene);
 }
 
@@ -62,9 +71,17 @@ export function selectName(name: string | string[], scene: Scene) {
  */
 export function selectId(id: string | string[], scene: Scene) {
   let selected: Node[] = [];
-  Array.isArray(id)
-    ? id.forEach((e, i) => (selected = [...selected, ...scene.getNodes().filter((node) => node.name == e)]))
-    : (selected = scene.getNodes().filter((node) => node.id == id));
+  
+  if (Array.isArray(id)) {
+    // Create a Set for O(1) lookup and automatic deduplication
+    const idSet = new Set(id);
+    
+    // Single pass through nodes
+    selected = scene.getNodes().filter(node => idSet.has(node.id));
+  } else {
+    selected = scene.getNodes().filter(node => node.id === id);
+  }
+  
   return new Selection(selected, scene);
 }
 
@@ -79,11 +96,19 @@ export function selectId(id: string | string[], scene: Scene) {
  */
 export function selectTag(tag: string | string[], scene: Scene) {
   let selected: Node[] = [];
-  Array.isArray(tag)
-    ? tag.forEach(
-        (e, i) => (selected = [...selected, ...scene.getNodes().filter((node) => Tags.MatchesQuery(node, e) == true)]),
-      )
-    : (selected = scene.getNodes().filter((node) => Tags.MatchesQuery(node, tag) == true));
+  
+  if (Array.isArray(tag)) {
+    // Create a Set for O(1) lookup and automatic deduplication
+    const tagSet = new Set(tag);
+    
+    // Single pass through nodes, checking if any tag matches
+    selected = scene.getNodes().filter(node => 
+      Array.from(tagSet).some(tagValue => Tags.MatchesQuery(node, tagValue))
+    );
+  } else {
+    selected = scene.getNodes().filter(node => Tags.MatchesQuery(node, tag));
+  }
+  
   return new Selection(selected, scene);
 }
 
@@ -103,29 +128,38 @@ export function selectData(key: string | string[], value: string | number | stri
   useAndLogic ??= false; 
 
   let selected: Node[] = [];
+  
   if (Array.isArray(key) && Array.isArray(value)) {
     if (useAndLogic) {
+      // AND logic: all key-value pairs must match
       const kvps = Object.fromEntries(key.map((key, index) => [key, value[index]]));
-      scene.getNodes().forEach((node, idx) => {
-        if (node.metadata != null && Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v)) {
-          selected.push(node);
-        }
+      selected = scene.getNodes().filter(node => {
+        if (node.metadata?.data == null) return false;
+        return Object.entries(kvps).every(([k, v]) => node.metadata.data[k] === v);
+      });
+    } else {
+      // OR logic: any key-value pair can match
+      const kvPairs = key.map((k, index) => ({ key: k, value: value[index] }));
+      
+      selected = scene.getNodes().filter(node => {
+        if (node.metadata?.data == null) return false;
+        return kvPairs.some(({ key: k, value: v }) => node.metadata.data[k] === v);
       });
     }
-    else {
-      let nodes = scene.getNodes().reverse();
-      key.forEach((e, i) => {
-        for (let j = nodes.length - 1; j >= 0; j--) {
-          if (nodes[j].metadata != null && nodes[j].metadata.data[e] == value[i]) {
-            selected.push(...nodes.splice(j, 1));
-          }
-        }
-      });
-    }
-  }
-  else {
-    selected = scene.getNodes()
-                    .filter((node) => node.metadata != null && node.metadata.data[key as string] == value);
+  } else if (Array.isArray(value)) {
+    // Single key with multiple values
+    const valueSet = new Set<string | number>(value);
+    
+    selected = scene.getNodes().filter(node => {
+      if (node.metadata?.data == null) return false;
+      return valueSet.has(node.metadata.data[key as string]);
+    });
+  } else {
+    // Single key-value pair
+    selected = scene.getNodes().filter(node => {
+      if (node.metadata?.data == null) return false;
+      return node.metadata.data[key as string] === value;
+    });
   }
   
   return new Selection(selected, scene);
