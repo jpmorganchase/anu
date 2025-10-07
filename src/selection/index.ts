@@ -71,13 +71,6 @@ export class Selection {
   // Temp store for last accessed property values
   values: any[] = [];
 
-  // Performance optimization: Cache transition state
-  private _hasActiveTransitions: boolean = false;
-  private _transitionsVersion: number = 0;
-
-  // Static optimization constants
-  private static readonly commonProperties = new Set(['position', 'rotation', 'scaling', 'material']);
-
   // Index signature to allow dynamic properties
   [K: string]: any;
 
@@ -107,16 +100,58 @@ export class Selection {
           const dynamicMethod = new Proxy(function(...args: any[]) {
             // If called with arguments, set the property value or call method
             if (args.length > 0) {
-              // Optimized transition check - use cached value
-              const hasActiveTransitions = target.getHasActiveTransitions();
+              target.selected.forEach((node, i) => {
+                if (node && typeof node === 'object' && prop in node) {
+                  const nodeProperty = (node as any)[prop];
+                  
+                  // If the property is a function (method), call it with all arguments
+                  if (typeof nodeProperty === 'function') {
+                    
+                      // Process each argument - can be a function or direct value
+                      const processedArgs = args.map(arg => {
+                        return arg instanceof Function ? 
+                          arg((node.metadata?.data ?? {}), node, i) : arg;
+                      });
+                      
+                      // Call the method with all processed arguments
+                      nodeProperty.apply(node, processedArgs);
               
-              if (hasActiveTransitions) {
-                // Use transition-aware path
-                return target.handleProxyWithTransitions(prop, args, proxyRef);
-              } else {
-                // Use direct path for better performance
-                return target.handleProxyDirect(prop, args, proxyRef);
-              }
+                  } else {
+                    // For properties (not methods), only use the first argument
+                    
+                      const value = args[0];
+                      const actualValue = value instanceof Function ? 
+                        value((node.metadata?.data ?? {}), node, i) : value;
+                      
+                      // Get property descriptor to understand the property type
+                      const descriptor = Object.getOwnPropertyDescriptor(node, prop) || 
+                                       Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), prop);
+                      
+                      // Get the current value to determine expected type
+                      const currentValue = (node as any)[prop];
+                      const expectedType = typeof currentValue;
+                      
+                      // Type validation - only if current value exists and isn't a function
+                      if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
+                        const actualType = typeof actualValue;
+                        
+                        // Return early if types don't match (no conversion)
+                        if (expectedType !== actualType && expectedType !== 'object') {
+                          console.warn(`Type mismatch for property '${prop}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
+                          return proxyRef; // Return early without setting the value
+                        }
+                      }
+                      
+                      // Set the value without conversion
+                      (node as any)[prop] = actualValue;
+                     
+                 
+                  }
+                }
+              });
+              // Clear values array after any method call with arguments
+              target.values = [];
+              return proxyRef; // Return proxy object for chaining
             } else {
               // If called with no arguments, store property values and return array
               const propertyValues = target.selected
@@ -262,157 +297,11 @@ export class Selection {
     return proxyRef;
   }
 
-  // ==========================================
-  // PERFORMANCE & TRANSITION OPTIMIZATIONS
-  // ==========================================
-  
-  /**
-   * Optimized transition state checking with caching
-   * Addresses performance concern: avoids checking transition state on every proxy call
-   */
-  private getHasActiveTransitions(): boolean {
-    // Check if transitions array has changed
-    const currentVersion = this.transitions.length;
-    
-    if (this._transitionsVersion !== currentVersion) {
-      this._transitionsVersion = currentVersion;
-      this._hasActiveTransitions = this.transitions.length > 0;
-    }
-    
-    return this._hasActiveTransitions;
-  }
-
-  /**
-   * Optimized direct proxy handling for non-transition cases
-   */
-  private handleProxyDirect(prop: string, args: any[], proxyRef: DynamicSelection): DynamicSelection {
-    // Inline the most common operations for better performance
-    const firstArg = args[0];
-    const isFunction = typeof firstArg === 'function';
-    
-    if (isFunction) {
-      // Function path - needs per-node processing
-      this.selected.forEach((node, i) => {
-        if (node && typeof node === 'object' && prop in node) {
-          const nodeProperty = (node as any)[prop];
-          
-          if (typeof nodeProperty === 'function') {
-            const processedArgs = args.map(arg => 
-              typeof arg === 'function' ? 
-                arg(node.metadata?.data ?? {}, node, i) : arg
-            );
-            nodeProperty.apply(node, processedArgs);
-          } else {
-            const actualValue = firstArg(node.metadata?.data ?? {}, node, i);
-            (node as any)[prop] = actualValue;
-          }
-        }
-      });
-    } else {
-      // Direct value path - optimized with type validation
-      this.selected.forEach(node => {
-        if (node && typeof node === 'object' && prop in node) {
-          const nodeProperty = (node as any)[prop];
-          
-          if (typeof nodeProperty === 'function') {
-            nodeProperty.apply(node, args);
-          } else {
-            // Type validation for properties
-            const currentValue = (node as any)[prop];
-            const expectedType = typeof currentValue;
-            
-            // Type validation - only if current value exists and isn't a function
-            if (currentValue !== undefined && typeof currentValue !== 'function' && firstArg !== undefined) {
-              const actualType = typeof firstArg;
-              
-              // Return early if types don't match (no conversion)
-              if (expectedType !== actualType && expectedType !== 'object') {
-                console.warn(`Type mismatch for property '${prop}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
-                return; // Skip this node
-              }
-            }
-            
-            (node as any)[prop] = firstArg;
-          }
-        }
-      });
-    }
-    
-    this.values = [];
-    return proxyRef;
-  }
-
-  /**
-   * Transition-aware proxy handling
-   * Addresses method vs property distinction: Methods are queued for after transitions,
-   * properties are integrated into the transition system
-   */
-  private handleProxyWithTransitions(prop: string, args: any[], proxyRef: DynamicSelection): DynamicSelection {
-    // Route through transition system - can be more complex
-    // but only called when transitions are active
-    
-    this.selected.forEach((node, i) => {
-      if (node && typeof node === 'object' && prop in node) {
-        const nodeProperty = (node as any)[prop];
-        
-        if (typeof nodeProperty === 'function') {
-          // METHODS: Handle differently - queue for after transition or execute immediately
-          this.queueMethodForTransition(node, prop, nodeProperty, args, i);
-        } else {
-          // PROPERTIES: Integrate with transition system for smooth animations
-          const actualValue = typeof args[0] === 'function' ? 
-            args[0](node.metadata?.data ?? {}, node, i) : args[0];
-          
-          // Use a lightweight transition call
-          this.createPropertyTransition(node, prop, actualValue);
-        }
-      }
-    });
-    
-    this.values = [];
-    return proxyRef;
-  }
-
-  /**
-   * Lightweight property transition creation
-   */
-  private createPropertyTransition(node: any, propName: string, value: any) {
-    // Create a temporary single-node selection to use existing prop method
-    const tempSelection = Object.create(Selection.prototype);
-    tempSelection.selected = [node];
-    tempSelection.scene = this.scene;
-    tempSelection.transitions = this.transitions;
-    
-    // Use existing prop method which handles transitions
-    this.prop.call(tempSelection, propName, value);
-  }
-
-  /**
-   * Queue method calls for after transitions
-   */
-  private queueMethodForTransition(node: any, prop: string, method: Function, args: any[], index: number) {
-    const processedArgs = args.map(arg => 
-      typeof arg === 'function' ? 
-        arg(node.metadata?.data ?? {}, node, index) : arg
-    );
-    
-    const currentTransition = this.transitions[this.transitions.length - 1];
-    if (currentTransition) {
-      // For now, execute immediately as we don't have access to transition internals
-      // This could be enhanced when we have proper transition callback support
-      method.apply(node, processedArgs);
-    } else {
-      // No active animation, execute immediately
-      method.apply(node, processedArgs);
-    }
-  }
-
   /**
    * Updates the transitions array with a new transition
    */
   public updateTransitions(transition: Transition) {
     this.transitions.push(transition);
-    this._transitionsVersion++; // Invalidate cache
   }
 
   public select = select;
@@ -443,11 +332,11 @@ export class Selection {
   public hasTags = hasTags;
   public action = action;
   public behavior = behavior;
-  // public material = material;
-  public diffuseColor = diffuseColor;
-  public specularColor = specularColor;
-  public emissiveColor = emissiveColor;
-  public ambientColor = ambientColor;
+  //public material = material;
+  // public diffuseColor = diffuseColor;
+  // public specularColor = specularColor;
+  // public emissiveColor = emissiveColor;
+  // public ambientColor = ambientColor;
   public registerInstancedBuffer = registerInstancedBuffer;
   public setInstancedBuffer = setInstancedBuffer;
   public dispose = dispose;
