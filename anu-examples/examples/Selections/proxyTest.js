@@ -2,7 +2,6 @@ import * as anu from '@jpmorganchase/anu';
 import { Scene, HemisphericLight, ArcRotateCamera} from '@babylonjs/core';
 import { Vector3, Color3 } from '@babylonjs/core/Maths';
 import { StandardMaterial } from '@babylonjs/core/Materials';
-import { extent, scaleOrdinal, scaleLinear, map } from 'd3';
 import iris from '../../data/iris.json' assert {type: 'json'}; //Our data
 
 export function proxyTest(engine) {
@@ -17,13 +16,12 @@ new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
 //Add a camera
 const camera = new ArcRotateCamera("Camera", -(Math.PI / 4) * 3, Math.PI / 4, 10, new Vector3(0, 0, 0), scene);
 camera.attachControl(true)
-camera.position = new Vector3(3, 3, -5);
- 
-
+camera.position = new Vector3(20, 3, -15);
  
   
   //Create a transform node to use as the parent node for all our meshes
-  let CoT = anu.create("cot", "cot");
+  let CoT = anu.create("cot", "cot", {childObserver: true});
+
 
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
@@ -41,6 +39,15 @@ camera.position = new Vector3(3, 3, -5);
     .scaling(new Vector3(1, 2, 3))
     .rotation(new Vector3(0, 2, 3))
     .material(testMaterial);
+
+    //Test getting values from boxes1
+  let boxes1Values = {
+    position: boxes1.position(),
+    scaling: boxes1.scaling(),
+    rotation: boxes1.rotation(),
+    material: boxes1.material(),
+    color: boxes1.material.diffuseColor()
+  }
 
 //Map iris data to boxes2 to test proxy object dynamic property setting by function
   let boxes2 = chart.bind('box', {size: 1}, iris)
@@ -78,12 +85,21 @@ camera.position = new Vector3(3, 3, -5);
     .rotation.z((d, n, i) => -i)
     .material((d,n,i) => { let mat = new StandardMaterial("mat4_" + i); mat.diffuseColor = Color3.Yellow(); return mat; });
 
+//Map iris data to boxes5 to test proxy object method calls on properties
+  let boxes5 = chart.bind('box', {size: 1}, iris)
+    .id("box5")
+    .translate(new Vector3(0,1,0), (d,n,i) => d.petalWidth)
+    .setEnabled((d,n,i) => (i % 2) === 0)
+    .rotation.setAll(2)
+
     // Make global variables available for testing
     window.data = iris;
     window.scene = scene;
+    window.boxes1Values = boxes1Values;
     window.anu = anu;
     window.BABYLON = { Scene, Vector3, Color3, HemisphericLight, ArcRotateCamera, StandardMaterial };
     window.engine = engine;
+
 
 return scene;
 }

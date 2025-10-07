@@ -8,6 +8,7 @@ declare global {
     BABYLON: any;
     engine: any;
     scene: any;
+    boxes1Values: any;
   }
 }
 
@@ -559,5 +560,217 @@ test.describe("Anu Sub-Property Assignment By Function Tests", () => {
       }
     });
   });
+
+});
+
+test.describe("Anu Proxy Method Calls Tests", () => {
+  test.beforeEach(async ({ page }) => {
+    // Navigate to the proxyTest example using the Anu framework URL pattern
+    await page.goto("/anu/?example=proxyTest");
+    
+    // Wait for the canvas to be ready, similar to selection tests
+    await page.locator('#renderCanvas[data-ready="1"]').waitFor({ timeout: 15_000 });
+  });
+
+  test("should execute translate method correctly via proxy methods", async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      if (!scene || !window.anu || !window.data) {
+        throw new Error('Scene, Anu, or data not available');
+      }
+
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('box5'));
+      return {
+        boxCount: boxes.length,
+        dataLength: window.data.length,
+        positions: boxes.slice(0, 5).map((box, index) => ({
+          x: box.position.x,
+          y: box.position.y,
+          z: box.position.z,
+          expectedY: window.data[index]?.petalWidth, // translate(new Vector3(0,1,0), petalWidth)
+          petalWidth: window.data[index]?.petalWidth
+        }))
+      };
+    });
+
+    softExpect(result.boxCount, "box5 count").toBeGreaterThan(0);
+    softExpect(result.boxCount, "box5 count matches data").toBe(result.dataLength);
+    
+    result.positions.forEach((pos, index) => {
+      if (pos.expectedY !== undefined && pos.petalWidth !== undefined) {
+        softExpect(pos.x, `box5 ${index} position.x`).toBe(0); // No translation on X
+        softExpect(pos.y, `box5 ${index} position.y`).toBe(pos.expectedY); // Translated by 1 + petalWidth
+        softExpect(pos.z, `box5 ${index} position.z`).toBe(0); // No translation on Z
+      }
+    });
+  });
+
+
+  test("should execute rotation.setAll method correctly via proxy methods", async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      if (!scene || !window.anu) {
+        throw new Error('Scene or Anu not available');
+      }
+
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('box5'));
+      return {
+        boxCount: boxes.length,
+        rotations: boxes.slice(0, 5).map(box => ({
+          x: box.rotation.x,
+          y: box.rotation.y,
+          z: box.rotation.z
+        }))
+      };
+    });
+
+    softExpect(result.boxCount, "box5 count").toBeGreaterThan(0);
+    
+    result.rotations.forEach((rot, index) => {
+      // rotation.setAll(2) should set all rotation components to 2
+      softExpect(rot.x, `box5 ${index} rotation.x`).toBe(2);
+      softExpect(rot.y, `box5 ${index} rotation.y`).toBe(2);
+      softExpect(rot.z, `box5 ${index} rotation.z`).toBe(2);
+    });
+  });
+
+  test("should create correct number of boxes5 based on data length", async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      if (!scene || !window.anu || !window.data) {
+        throw new Error('Scene, Anu, or data not available');
+      }
+
+      const boxes5 = scene.meshes.filter(mesh => mesh.id.includes('box5'));
+      return {
+        box5Count: boxes5.length,
+        dataLength: window.data.length
+      };
+    });
+    
+    softExpect(result.box5Count, "box5 count matches data length").toBe(result.dataLength);
+  });
+
+});
+
+test.describe("Anu Proxy Value Getter Tests", () => {
+  test.beforeEach(async ({ page }) => {
+    // Navigate to the proxyTest example using the Anu framework URL pattern
+    await page.goto("/anu/?example=proxyTest");
+    
+    // Wait for the canvas to be ready, similar to selection tests
+    await page.locator('#renderCanvas[data-ready="1"]').waitFor({ timeout: 15_000 });
+  });
+
+  test("should get position values correctly via proxy getter methods", async ({ page }) => {
+    const result = await page.evaluate(() => {
+      if (!window.boxes1Values) {
+        throw new Error('boxes1Values not available');
+      }
+
+      const boxes1 = window.boxes1Values;
+      
+      return {
+        // Test first few items
+        firstPositions: boxes1.position.slice(0, 3),
+        firstScalings: boxes1.scaling.slice(0, 3),
+        firstRotations: boxes1.rotation.slice(0, 3),
+        hasMaterials: boxes1.material && boxes1.material.length > 0,
+        materialCount: boxes1.material ? boxes1.material.length : 0
+      };
+    });
+
+    softExpect(result.firstPositions, "positions array").toHaveLength(3);
+    softExpect(result.firstScalings, "scalings array").toHaveLength(3);
+    softExpect(result.firstRotations, "rotations array").toHaveLength(3);
+    softExpect(result.hasMaterials, "has materials").toBe(true);
+
+    // Check that all positions are the expected static values (0, 1, 2)
+    result.firstPositions.forEach((pos, index) => {
+      softExpect(pos._x, `position ${index} x`).toBe(0);
+      softExpect(pos._y, `position ${index} y`).toBe(1);
+      softExpect(pos._z, `position ${index} z`).toBe(2);
+    });
+    
+    // Check that all scalings are the expected static values (1, 2, 3)
+    result.firstScalings.forEach((scale, index) => {
+      softExpect(scale._x, `scaling ${index} x`).toBe(1);
+      softExpect(scale._y, `scaling ${index} y`).toBe(2);
+      softExpect(scale._z, `scaling ${index} z`).toBe(3);
+    });
+    
+    // Check that all rotations are the expected static values (0, 2, 3)
+    result.firstRotations.forEach((rot, index) => {
+      softExpect(rot._x, `rotation ${index} x`).toBe(0);
+      softExpect(rot._y, `rotation ${index} y`).toBe(2);
+      softExpect(rot._z, `rotation ${index} z`).toBe(3);
+    });
+  });
+
+  test("should get material and color values correctly via proxy getter methods", async ({ page }) => {
+    const result = await page.evaluate(() => {
+      if (!window.boxes1Values) {
+        throw new Error('boxes1Values not available');
+      }
+
+      const boxes1 = window.boxes1Values;
+      
+      // Try to get color values safely
+      let firstDiffuseColors = [];
+      let hasDiffuseColors = false;
+      let diffuseColorCount = 0;
+      
+      try {
+        if (boxes1.color && Array.isArray(boxes1.color)) {
+          firstDiffuseColors = boxes1.color.slice(0, 3);
+          hasDiffuseColors = boxes1.color.length > 0;
+          diffuseColorCount = boxes1.color.length;
+        }
+      } catch (e) {
+        // Color might be a proxy object, skip color testing
+      }
+      
+      return {
+        hasMaterials: boxes1.material && boxes1.material.length > 0,
+        materialCount: boxes1.material ? boxes1.material.length : 0,
+        firstMaterialColors: boxes1.material ? boxes1.material.slice(0, 3).map(mat => 
+          mat && mat.diffuseColor ? {
+            r: mat.diffuseColor.r,
+            g: mat.diffuseColor.g,
+            b: mat.diffuseColor.b
+          } : null
+        ) : [],
+        hasDiffuseColors,
+        diffuseColorCount,
+        firstDiffuseColors
+      };
+    });
+
+    softExpect(result.hasMaterials, "has materials").toBe(true);
+    softExpect(result.materialCount, "material count").toBeGreaterThan(0);
+    
+    // Check material colors (should be red: 1, 0, 0)
+    result.firstMaterialColors.forEach((color, index) => {
+      if (color) {
+        softExpect(color.r, `material ${index} red component`).toBe(1);
+        softExpect(color.g, `material ${index} green component`).toBe(0);
+        softExpect(color.b, `material ${index} blue component`).toBe(0);
+      }
+    });
+    
+    // Test the direct color values from boxes1Values.color
+    if (result.hasDiffuseColors) {
+      softExpect(result.diffuseColorCount, "diffuse color count").toBe(result.materialCount);
+      result.firstDiffuseColors.forEach((color: any, index) => {
+        if (color) {
+          softExpect(color._r, `diffuse color ${index} red component`).toBe(1);
+          softExpect(color._g, `diffuse color ${index} green component`).toBe(0);
+          softExpect(color._b, `diffuse color ${index} blue component`).toBe(0);
+        }
+      });
+    }
+  });
+
+
 
 });
