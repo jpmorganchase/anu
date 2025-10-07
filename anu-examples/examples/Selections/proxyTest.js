@@ -99,7 +99,6 @@ camera.position = new Vector3(20, 3, -15);
     window.anu = anu;
     window.BABYLON = { Scene, Vector3, Color3, HemisphericLight, ArcRotateCamera, StandardMaterial };
     window.engine = engine;
-
-
+    
 return scene;
 }
