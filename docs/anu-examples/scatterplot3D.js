@@ -33,9 +33,9 @@ export function scatterplot3D(engine){
   let chart = anu.selectName('cot', scene);
 
   //Create sphere meshes as children of our CoT for each row of our data and set their visual encodings using method chaining
-  let spheres = chart.bind('sphere', { diameter: (d) => scaleSize(d['Body Mass (g)'] ?? 0) }, data)
-                     .position((d) => new BABYLON.Vector3(scaleX(d['Beak Length (mm)']), scaleY(d['Flipper Length (mm)']), scaleZ(d['Beak Depth (mm)']),))
-                     .material((d) => scaleC(d.Species));   //We set material directly as scaleC() was configured to return a StandardMaterial
+  let spheres = chart.bind('sphere', { diameter: 0.05 }, data)
+                     .position((d) => new BABYLON.Vector3(scaleX(d.sepalLength), scaleY(d.petalLength), scaleZ(d.sepalWidth)))
+                     .material((d) => scaleC(d.species));   //We set material directly as scaleC() was configured to return a StandardMaterial
 
   //Use the Axes prefab with our three D3 scales
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY, z: scaleZ }, parent: chart });
