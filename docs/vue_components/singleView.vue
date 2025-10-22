@@ -204,7 +204,7 @@ onMounted(async () => {
             const xrCamera = defaultXRExperience.baseExperience.camera;
             if (xrCamera) {
               // Simply move camera back 3 units on Z-axis
-              xrCamera.position = new Vector3(0, 1.6, 3);
+              xrCamera.position = new Vector3(0, 0.5, -1.5);
               console.log('XR Camera positioned at:', xrCamera.position);
             }
           });
