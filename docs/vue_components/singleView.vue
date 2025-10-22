@@ -45,6 +45,7 @@ let xrSessionActive = ref(false);
 let babylonEngine;
 let currentScene;
 let defaultXRExperience;
+let sceneEnvironment;
 
  function resize() {
     babylonEngine?.resize();
@@ -63,15 +64,71 @@ async function startVRSession() {
 async function startARSession() {
   if (defaultXRExperience && currentScene) {
     try {
-      // Disable environment for AR (we want to see the real world)
-      const env = currentScene.environmentHelper;
-      if (env) {
-        env.setEnabled(false);
+      console.log('Attempting to start AR session...');
+      
+      // Check if AR is supported
+      if (!navigator.xr) {
+        console.error('WebXR not supported');
+        return;
       }
       
-      await defaultXRExperience.baseExperience.enterXRAsync('immersive-ar', 'local-floor');
+      const arSupported = await navigator.xr.isSessionSupported('immersive-ar');
+      if (!arSupported) {
+        console.error('AR not supported on this device/browser');
+        alert('AR is not supported on this device or browser. Try using Chrome on an Android device or Safari on iOS.');
+        return;
+      }
+      
+      console.log('AR is supported, proceeding with session...');
+      
+      // Disable environment for AR (we want to see the real world)
+      if (sceneEnvironment) {
+        sceneEnvironment.setEnabled(false);
+        // Also hide skybox specifically
+        if (sceneEnvironment.skybox) {
+          sceneEnvironment.skybox.setEnabled(false);
+        }
+        // Hide ground
+        if (sceneEnvironment.ground) {
+          sceneEnvironment.ground.setEnabled(false);
+        }
+        console.log('Environment disabled for AR');
+      }
+      
+      // Try different reference spaces for AR
+      const referenceSpaces = ['local-floor', 'local', 'viewer'];
+      let sessionStarted = false;
+      
+      for (const refSpace of referenceSpaces) {
+        try {
+          console.log(`Trying AR with reference space: ${refSpace}`);
+          await defaultXRExperience.baseExperience.enterXRAsync('immersive-ar', refSpace);
+          sessionStarted = true;
+          console.log(`AR session started successfully with ${refSpace}`);
+          break;
+        } catch (refSpaceError) {
+          console.warn(`Failed with ${refSpace}:`, refSpaceError);
+        }
+      }
+      
+      if (!sessionStarted) {
+        throw new Error('Failed to start AR with any reference space');
+      }
+      
     } catch (error) {
       console.error('Failed to start AR session:', error);
+      alert(`AR Session Error: ${error.message}`);
+      
+      // Re-enable environment if AR failed
+      if (sceneEnvironment) {
+        sceneEnvironment.setEnabled(true);
+        if (sceneEnvironment.skybox) {
+          sceneEnvironment.skybox.setEnabled(true);
+        }
+        if (sceneEnvironment.ground) {
+          sceneEnvironment.ground.setEnabled(true);
+        }
+      }
     }
   }
 }
@@ -82,9 +139,14 @@ async function exitXRSession() {
       await defaultXRExperience.baseExperience.exitXRAsync();
       
       // Re-enable environment when exiting XR
-      const env = currentScene.environmentHelper;
-      if (env) {
-        env.setEnabled(true);
+      if (sceneEnvironment) {
+        sceneEnvironment.setEnabled(true);
+        if (sceneEnvironment.skybox) {
+          sceneEnvironment.skybox.setEnabled(true);
+        }
+        if (sceneEnvironment.ground) {
+          sceneEnvironment.ground.setEnabled(true);
+        }
       }
     } catch (error) {
       console.error('Failed to exit XR session:', error);
@@ -99,15 +161,19 @@ onMounted(async () => {
   let scene = await props.scene(babylonEngine);
   currentScene = scene;
 
-  const env = scene.createDefaultEnvironment();
-  env.setMainColor(Color3.FromHexString('#0e0e17'));
-  env.ground.position = new Vector3(0, -2, 0);
+  sceneEnvironment = scene.createDefaultEnvironment();
+  sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
+  sceneEnvironment.ground.position = new Vector3(0, -2, 0);
 
   try {
     //{ floorMeshes: [env.ground] }
     defaultXRExperience = await scene.createDefaultXRExperienceAsync({
       // Enable multiview for better VR performance and hand tracking
-      optionalFeatures: true
+      optionalFeatures: true,
+      // Ensure AR compatibility
+      uiOptions: {
+        sessionMode: 'immersive-vr'  // Default to VR, we'll handle AR manually
+      }
     });
     xrSupported.value = true;
 
@@ -125,6 +191,34 @@ onMounted(async () => {
       defaultXRExperience.baseExperience.onStateChangedObservable.add((state) => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
+          
+          // Position XR camera at a fixed distance from scene content
+          const xrCamera = defaultXRExperience.baseExperience.camera;
+          if (xrCamera) {
+            // Calculate scene bounds to determine optimal camera position
+            const meshes = scene.meshes.filter(mesh => mesh.isVisible && mesh.name !== '__root__');
+            if (meshes.length > 0) {
+              const boundingInfo = scene.getBoundingBoxRenderer().frontBoundingBoxMesh?.getBoundingInfo();
+              if (boundingInfo) {
+                const center = boundingInfo.boundingBox.center;
+                const size = boundingInfo.boundingBox.maximum.subtract(boundingInfo.boundingBox.minimum);
+                const maxDimension = Math.max(size.x, size.y, size.z);
+                
+                // Position camera at a distance based on scene size
+                const distance = maxDimension * 2; // Adjust multiplier as needed
+                xrCamera.position = new Vector3(center.x, center.y + 1.6, center.z + distance);
+              } else {
+                // Fallback position if bounds calculation fails
+                xrCamera.position = new Vector3(0, 1.6, 3);
+              }
+            } else {
+              // Default position if no meshes found
+              xrCamera.position = new Vector3(0, 1.6, 3);
+            }
+            
+            console.log('XR Camera positioned at:', xrCamera.position);
+          }
+          
           //Special exceptions for certain scenes
           switch (scene.metadata?.name) {
             case "thinInstances":
@@ -142,8 +236,8 @@ onMounted(async () => {
       } else {
 //         // Enable multiview for better VR performance
 //         try {
-//           const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest" /* or latest */, {
-//   preferMultiviewOnInit: true,
+//           const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest", { preferMultiviewOnInit: true }, true, false);
+
 // });
 //           if (multiview) {
 //             console.log('Multiview enabled successfully');
