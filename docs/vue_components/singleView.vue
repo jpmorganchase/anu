@@ -63,6 +63,12 @@ async function startVRSession() {
 async function startARSession() {
   if (defaultXRExperience && currentScene) {
     try {
+      // Disable environment for AR (we want to see the real world)
+      const env = currentScene.environmentHelper;
+      if (env) {
+        env.setEnabled(false);
+      }
+      
       await defaultXRExperience.baseExperience.enterXRAsync('immersive-ar', 'local-floor');
     } catch (error) {
       console.error('Failed to start AR session:', error);
@@ -74,6 +80,12 @@ async function exitXRSession() {
   if (defaultXRExperience && defaultXRExperience.baseExperience) {
     try {
       await defaultXRExperience.baseExperience.exitXRAsync();
+      
+      // Re-enable environment when exiting XR
+      const env = currentScene.environmentHelper;
+      if (env) {
+        env.setEnabled(true);
+      }
     } catch (error) {
       console.error('Failed to exit XR session:', error);
     }
@@ -128,51 +140,51 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-        // Enable multiview for better VR performance
-        try {
-          const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest" /* or latest */, {
-  preferMultiviewOnInit: true,
-});
-          if (multiview) {
-            console.log('Multiview enabled successfully');
-          } else {
-            console.log('Multiview not supported or failed to enable');
-          }
-        } catch (error) {
-          console.warn('Multiview not supported:', error);
-        }
+//         // Enable multiview for better VR performance
+//         try {
+//           const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest" /* or latest */, {
+//   preferMultiviewOnInit: true,
+// });
+//           if (multiview) {
+//             console.log('Multiview enabled successfully');
+//           } else {
+//             console.log('Multiview not supported or failed to enable');
+//           }
+//         } catch (error) {
+//           console.warn('Multiview not supported:', error);
+//         }
 
-        // Enable hand tracking with proper error handling
-        try {
-          const handTracking = featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, 'latest', {
-            xrInput: defaultXRExperience.input,
-            jointMeshes: {
-              enablePhysics: false,
-              sourceMeshes: null, // Use default hand mesh
-              handMeshes: {
-                left: null,
-                right: null
-              }
-            }
-          });
+        // // Enable hand tracking with proper error handling
+        // try {
+        //   const handTracking = featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, 'latest', {
+        //     xrInput: defaultXRExperience.input,
+        //     jointMeshes: {
+        //       enablePhysics: false,
+        //       sourceMeshes: null, // Use default hand mesh
+        //       handMeshes: {
+        //         left: null,
+        //         right: null
+        //       }
+        //     }
+        //   });
 
-          if (handTracking) {
-            console.log('Hand tracking enabled successfully');
+        //   if (handTracking) {
+        //     console.log('Hand tracking enabled successfully');
             
-            // Optional: Add hand tracking event listeners
-            handTracking.onHandAddedObservable.add((hand) => {
-              console.log(`${hand.handedness} hand added`);
-            });
+        //     // Optional: Add hand tracking event listeners
+        //     handTracking.onHandAddedObservable.add((hand) => {
+        //       console.log(`${hand.handedness} hand added`);
+        //     });
             
-            handTracking.onHandRemovedObservable.add((hand) => {
-              console.log(`${hand.handedness} hand removed`);
-            });
-          } else {
-            console.warn('Hand tracking failed to enable');
-          }
-        } catch (error) {
-          console.warn('Hand tracking not supported or failed to enable:', error);
-        }
+        //     handTracking.onHandRemovedObservable.add((hand) => {
+        //       console.log(`${hand.handedness} hand removed`);
+        //     });
+        //   } else {
+        //     console.warn('Hand tracking failed to enable');
+        //   }
+        // } catch (error) {
+        //   console.warn('Hand tracking not supported or failed to enable:', error);
+        // }
 
 
       }
