@@ -83,14 +83,17 @@ async function startARSession() {
       
       // Disable environment for AR (we want to see the real world)
       if (sceneEnvironment) {
-        sceneEnvironment.setEnabled(false);
-        // Also hide skybox specifically
+        // Disable skybox
         if (sceneEnvironment.skybox) {
           sceneEnvironment.skybox.setEnabled(false);
         }
-        // Hide ground
+        // Disable ground
         if (sceneEnvironment.ground) {
           sceneEnvironment.ground.setEnabled(false);
+        }
+        // Disable environment texture if it exists
+        if (sceneEnvironment.rootMesh) {
+          sceneEnvironment.rootMesh.setEnabled(false);
         }
         console.log('Environment disabled for AR');
       }
@@ -121,12 +124,14 @@ async function startARSession() {
       
       // Re-enable environment if AR failed
       if (sceneEnvironment) {
-        sceneEnvironment.setEnabled(true);
         if (sceneEnvironment.skybox) {
           sceneEnvironment.skybox.setEnabled(true);
         }
         if (sceneEnvironment.ground) {
           sceneEnvironment.ground.setEnabled(true);
+        }
+        if (sceneEnvironment.rootMesh) {
+          sceneEnvironment.rootMesh.setEnabled(true);
         }
       }
     }
@@ -140,12 +145,14 @@ async function exitXRSession() {
       
       // Re-enable environment when exiting XR
       if (sceneEnvironment) {
-        sceneEnvironment.setEnabled(true);
         if (sceneEnvironment.skybox) {
           sceneEnvironment.skybox.setEnabled(true);
         }
         if (sceneEnvironment.ground) {
           sceneEnvironment.ground.setEnabled(true);
+        }
+        if (sceneEnvironment.rootMesh) {
+          sceneEnvironment.rootMesh.setEnabled(true);
         }
       }
     } catch (error) {
@@ -192,32 +199,15 @@ onMounted(async () => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
           
-          // Position XR camera at a fixed distance from scene content
-          const xrCamera = defaultXRExperience.baseExperience.camera;
-          if (xrCamera) {
-            // Calculate scene bounds to determine optimal camera position
-            const meshes = scene.meshes.filter(mesh => mesh.isVisible && mesh.name !== '__root__');
-            if (meshes.length > 0) {
-              const boundingInfo = scene.getBoundingBoxRenderer().frontBoundingBoxMesh?.getBoundingInfo();
-              if (boundingInfo) {
-                const center = boundingInfo.boundingBox.center;
-                const size = boundingInfo.boundingBox.maximum.subtract(boundingInfo.boundingBox.minimum);
-                const maxDimension = Math.max(size.x, size.y, size.z);
-                
-                // Position camera at a distance based on scene size
-                const distance = maxDimension * 2; // Adjust multiplier as needed
-                xrCamera.position = new Vector3(center.x, center.y + 1.6, center.z + distance);
-              } else {
-                // Fallback position if bounds calculation fails
-                xrCamera.position = new Vector3(0, 1.6, 3);
-              }
-            } else {
-              // Default position if no meshes found
+          // Position XR camera back 3 units on Z-axis after XR session is ready
+          defaultXRExperience.baseExperience.sessionManager.onXRFrameObservable.addOnce(() => {
+            const xrCamera = defaultXRExperience.baseExperience.camera;
+            if (xrCamera) {
+              // Simply move camera back 3 units on Z-axis
               xrCamera.position = new Vector3(0, 1.6, 3);
+              console.log('XR Camera positioned at:', xrCamera.position);
             }
-            
-            console.log('XR Camera positioned at:', xrCamera.position);
-          }
+          });
           
           //Special exceptions for certain scenes
           switch (scene.metadata?.name) {
