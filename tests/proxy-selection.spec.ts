@@ -762,10 +762,11 @@ test.describe("Anu Proxy Value Getter Tests", () => {
     if (result.hasDiffuseColors) {
       softExpect(result.diffuseColorCount, "diffuse color count").toBe(result.materialCount);
       result.firstDiffuseColors.forEach((color: any, index) => {
+        console.log("Diffuse color", index, color);
         if (color) {
-          softExpect(color._r, `diffuse color ${index} red component`).toBe(1);
-          softExpect(color._g, `diffuse color ${index} green component`).toBe(0);
-          softExpect(color._b, `diffuse color ${index} blue component`).toBe(0);
+          softExpect(color.r, `diffuse color ${index} red component`).toBe(1);
+          softExpect(color.g, `diffuse color ${index} green component`).toBe(0);
+          softExpect(color.b, `diffuse color ${index} blue component`).toBe(0);
         }
       });
     }

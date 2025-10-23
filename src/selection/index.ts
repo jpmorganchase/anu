@@ -68,8 +68,8 @@ export class Selection {
   scene?: Scene;
   transitions: Transition[];
   
-  // Temp store for last accessed property values
-  values: any[] = [];
+  // Temp store for property path string for chaining
+  propertyPath: string = '';
 
   // Index signature to allow dynamic properties
   [K: string]: any;
@@ -90,190 +90,172 @@ export class Selection {
           return Reflect.get(target, prop, receiver);
         }
 
-        // Check if the property exists on any of the selected nodes first
-        const hasProperty = target.selected.some(node => 
-          node && typeof node === 'object' && prop in node
-        );
+        // Helper function to evaluate property path on a node
+        const evaluatePropertyPath = (node: any, path: string) => {
+          const parts = path.split('.');
+          let current = node;
+          for (const part of parts) {
+            if (current && typeof current === 'object' && part in current) {
+              current = current[part];
+            } else {
+              return undefined;
+            }
+          }
+          return current;
+        };
 
-        if (hasProperty && typeof prop === 'string') {
-          // Create a proxy function that handles method calls and property access
-          const dynamicMethod = new Proxy(function(...args: any[]) {
-            // If called with arguments, set the property value or call method
-            if (args.length > 0) {
-              target.selected.forEach((node, i) => {
-                if (node && typeof node === 'object' && prop in node) {
-                  const nodeProperty = (node as any)[prop];
+        // Helper function to check if property path exists on nodes
+        const hasPropertyPath = (path: string) => {
+          return target.selected.some(node => {
+            return evaluatePropertyPath(node, path) !== undefined;
+          });
+        };
+
+        // If we have a stored property path, check if this prop extends it
+        if (target.propertyPath && typeof prop === 'string') {
+          const newPath = `${target.propertyPath}.${prop}`;
+          
+          // Check if the new path exists on any selected nodes
+          if (hasPropertyPath(newPath)) {
+            // Create a proxy function for the extended path
+            const pathMethod = new Proxy(function(...args: any[]) {
+              if (args.length > 0) {
+                // Function call - evaluate the path and set/call
+                target.selected.forEach((node, i) => {
+                  const pathParts = newPath.split('.');
+                  const lastProp = pathParts.pop()!;
+                  const parentPath = pathParts.join('.');
                   
-                  // If the property is a function (method), call it with all arguments
-                  if (typeof nodeProperty === 'function') {
+                  const parent = parentPath ? evaluatePropertyPath(node, parentPath) : node;
+                  
+                  if (parent && typeof parent === 'object' && lastProp in parent) {
+                    const targetProperty = parent[lastProp];
                     
-                      // Process each argument - can be a function or direct value
+                    if (typeof targetProperty === 'function') {
+                      // Process arguments and call method
                       const processedArgs = args.map(arg => {
                         return arg instanceof Function ? 
                           arg((node.metadata?.data ?? {}), node, i) : arg;
                       });
-                      
-                      // Call the method with all processed arguments
-                      nodeProperty.apply(node, processedArgs);
-              
-                  } else {
-                    // For properties (not methods), only use the first argument
+                      targetProperty.apply(parent, processedArgs);
+                    } else {
+                      // Set property value
+                      const value = args[0];
+                      const actualValue = value instanceof Function ? 
+                        value((node.metadata?.data ?? {}), node, i) : value;
+                      parent[lastProp] = actualValue;
+                    }
+                  }
+                });
+                
+                // Clear property path and return proxy for chaining
+                target.propertyPath = '';
+                return proxyRef;
+              } else {
+                // Property access - evaluate and return values
+                const propertyValues = target.selected
+                  .map(node => evaluatePropertyPath(node, newPath))
+                  .filter(value => value !== undefined);
+                
+                // Clear property path
+                target.propertyPath = '';
+                return propertyValues;
+              }
+            }, {
+              get(methodTarget: any, nestedProp: string | symbol) {
+                if (typeof nestedProp === 'symbol') {
+                  return methodTarget[nestedProp];
+                }
+                
+                // Extend the path further
+                target.propertyPath = newPath;
+                return proxy[nestedProp];
+              }
+            });
+
+            return pathMethod;
+          } else {
+            // Path doesn't exist, clear it and return undefined
+            target.propertyPath = '';
+            throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
+          }
+        }
+
+        // Check if the property exists on any of the selected nodes (start of new path)
+        if (typeof prop === 'string') {
+          const hasProperty = target.selected.some(node => 
+            node && typeof node === 'object' && prop in node
+          );
+
+          if (hasProperty) {
+            // Create a proxy function that handles method calls and property access
+            const dynamicMethod = new Proxy(function(...args: any[]) {
+              if (args.length > 0) {
+                // Function call - operate directly on the property
+                target.selected.forEach((node, i) => {
+                  if (node && typeof node === 'object' && prop in node) {
+                    const nodeProperty = (node as any)[prop];
                     
+                    if (typeof nodeProperty === 'function') {
+                      // Process arguments and call method
+                      const processedArgs = args.map(arg => {
+                        return arg instanceof Function ? 
+                          arg((node.metadata?.data ?? {}), node, i) : arg;
+                      });
+                      nodeProperty.apply(node, processedArgs);
+                    } else {
+                      // Set property value
                       const value = args[0];
                       const actualValue = value instanceof Function ? 
                         value((node.metadata?.data ?? {}), node, i) : value;
                       
-                      // Get property descriptor to understand the property type
-                      const descriptor = Object.getOwnPropertyDescriptor(node, prop) || 
-                                       Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), prop);
-                      
-                      // Get the current value to determine expected type
+                      // Type validation
                       const currentValue = (node as any)[prop];
                       const expectedType = typeof currentValue;
                       
-                      // Type validation - only if current value exists and isn't a function
                       if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
                         const actualType = typeof actualValue;
                         
-                        // Return early if types don't match (no conversion)
                         if (expectedType !== actualType && expectedType !== 'object') {
                           console.warn(`Type mismatch for property '${prop}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
-                          return proxyRef; // Return early without setting the value
+                          return proxyRef;
                         }
                       }
                       
-                      // Set the value without conversion
                       (node as any)[prop] = actualValue;
-                     
-                 
+                    }
                   }
+                });
+                
+                // Clear property path and return proxy for chaining
+                target.propertyPath = '';
+                return proxyRef;
+              } else {
+                // Property access without function call - return values
+                const propertyValues = target.selected
+                  .filter(node => node && typeof node === 'object' && prop in node)
+                  .map(node => {
+                    const value = (node as any)[prop];
+                    return typeof value === 'function' ? value.bind(node) : value;
+                  });
+                
+                // Clear property path
+                target.propertyPath = '';
+                return propertyValues;
+              }
+            }, {
+              get(methodTarget: any, nestedProp: string | symbol) {
+                if (typeof nestedProp === 'symbol') {
+                  return methodTarget[nestedProp];
                 }
-              });
-              // Clear values array after any method call with arguments
-              target.values = [];
-              return proxyRef; // Return proxy object for chaining
-            } else {
-              // If called with no arguments, store property values and return array
-              const propertyValues = target.selected
-                .filter(node => node && typeof node === 'object' && prop in node)
-                .map(node => {
-                  const value = (node as any)[prop];
-                  return typeof value === 'function' ? value.bind(node) : value;
-                });
-              
-              target.values = propertyValues;
-              return propertyValues;
-            }
-          }, {
-            get(methodTarget: any, nestedProp: string | symbol) {
-              if (typeof nestedProp === 'symbol') {
-                return methodTarget[nestedProp];
+                
+                // Store the property path for chaining
+                target.propertyPath = prop;
+                return proxy[nestedProp];
               }
+            });
 
-              // Store the property values when accessing nested properties
-              const propertyValues = target.selected
-                .filter(node => node && typeof node === 'object' && prop in node)
-                .map(node => {
-                  const value = (node as any)[prop];
-                  return typeof value === 'function' ? value.bind(node) : value;
-                });
-              
-              target.values = propertyValues;
-
-              // Check if this nested property exists on ALL stored values
-              const hasPropertyOnValues = target.values.every(value => 
-                value && typeof value === 'object' && nestedProp in value
-              );
-
-              if (hasPropertyOnValues) {
-                // Return a function that operates on the stored values
-                return function(...args: any[]) {
-                  if (args.length > 0) {
-                    // Check if nested property is a method or property on each value
-                    target.values.forEach((value: any, i: number) => {
-                      if (value && typeof value === 'object' && nestedProp in value) {
-                        const nestedPropertyValue = (value as any)[nestedProp];
-                        
-                        // If it's a method, call it with processed arguments
-                        if (typeof nestedPropertyValue === 'function') {
-                          const processedArgs = args.map(arg => {
-                            return typeof arg === 'function' 
-                              ? arg(target.selected[i]?.metadata?.data, target.selected[i], i)
-                              : arg;
-                          });
-                          
-                          // Call the method on the value object
-                          nestedPropertyValue.apply(value, processedArgs);
-                        } else {
-                          // If it's a property, assign the first argument to it
-                          const processedArg = typeof args[0] === 'function' 
-                            ? args[0](target.selected[i]?.metadata?.data, target.selected[i], i)
-                            : args[0];
-                          
-                          (value as any)[nestedProp] = processedArg;
-                        }
-                      }
-                    });
-                    // Clear the values array after operation and return Selection for chaining
-                    target.values = [];
-                    return proxyRef;
-                  } else {
-                    // No arguments: extract the property values from stored values
-                    const newValues = target.values.map((value: any) => {
-                      return value && typeof value === 'object' && nestedProp in value ? (value as any)[nestedProp] : undefined;
-                    });
-                    target.values = newValues;
-                    return proxyRef;
-                  }
-                };
-              } else {
-                // Property doesn't exist on ALL stored values - this is invalid
-                throw new Error(`Property '${nestedProp}' is not valid for the current property '${prop}'. Ensure '${prop}' returns objects that have the '${nestedProp}' property.`);
-              }
-            }
-          });
-
-          return dynamicMethod;
-        }
-
-        // Check if we should operate on the stored values array (only if property doesn't exist on nodes)
-        if (target.values && target.values.length > 0 && typeof prop === 'string') {
-          // Check if the property exists on ALL values in the array
-          const hasPropertyOnValues = target.values.every(value => 
-            value && typeof value === 'object' && prop in value
-          );
-
-          if (hasPropertyOnValues) {
-            // Create a method that operates on the stored values
-            const valueChainMethod = function(...args: any[]) {
-              if (args.length > 0) {
-                // Set the property on each value in the array
-                target.values.forEach((value: any, i: number) => {
-                  if (value && typeof value === 'object' && prop in value) {
-                    const processedArg = typeof args[0] === 'function' 
-                      ? args[0](target.selected[i]?.metadata?.data, target.selected[i], i)
-                      : args[0];
-                    
-                    value[prop] = processedArg;
-                  }
-                });
-                // Clear the values array after operation and return Selection for chaining
-                target.values = [];
-                return proxyRef;
-              } else {
-                // No arguments: extract the property values from stored values
-                const newValues = target.values.map((value: any) => {
-                  return value && typeof value === 'object' && prop in value ? value[prop] : undefined;
-                });
-                target.values = newValues;
-                return proxyRef;
-              }
-            };
-            
-            return valueChainMethod;
-          } else {
-            // Property doesn't exist on ALL stored values - this is invalid
-            throw new Error(`Property '${prop}' is not valid for the current stored values. Ensure the previous method call returned objects that have this property.`);
+            return dynamicMethod;
           }
         }
 
