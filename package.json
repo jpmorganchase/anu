@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "",
   "type": "module",
   "files": [
@@ -10,10 +10,9 @@
   "types": "./dist/anu.d.ts",
   "module": "./dist/anu.js",
   "exports": {
-    ".": {
+      "types": "./dist/anu.d.ts",
       "import": "./dist/anu.js",
       "require": "./dist/anu.umd.cjs"
-    }
   },
   "scripts": {
     "compile": "vite build",
