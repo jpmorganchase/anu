@@ -2,7 +2,12 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { test, expect } from '@playwright/test';
-import { Vector3 } from '@babylonjs/core';
+
+declare global {
+  interface Window {
+    scene: any;
+  }
+}
 
 // Always do soft assertions.
 const softExpect = expect.configure({ soft: true });
@@ -17,18 +22,17 @@ test.describe('Transition System Tests', () => {
     await page.locator('#renderCanvas[data-ready="1"]').waitFor({ timeout: 15_000 });
   });
 
-  test('should apply transitions to position', async ({ page }) => {
+  test('should render transitionTest example correctly after all transitions complete', async ({ page }) => {
+    // Take a screenshot to verify the visual output after transitions
+    await expect(page.locator("#renderCanvas")).toHaveScreenshot("transition-test-complete.png", { 
+      timeout: 15_000 
+    });
+  });
+
+  test('should apply transitions to position using new proxy method', async ({ page }) => {
     const result = await page.evaluate(() => {
       const scene = window.scene;
-      if (!scene || !window.anu) {
-        throw new Error('Scene or Anu not available');
-      }
-
-      const boxes = scene.meshes.filter(mesh => mesh.id.includes('box'));
-      const selection = window.anu.select(boxes);
-
-      // Apply a transition to position
-      selection.transition({ duration: 1000 }).position(new Vector3(5, 5, 5));
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('test1-box'));
 
       return boxes.map(box => ({
         x: box.position.x,
@@ -37,50 +41,66 @@ test.describe('Transition System Tests', () => {
       }));
     });
 
-    result.forEach((pos, index) => {
+    result.forEach((pos) => {
       softExpect(pos.x).toBe(5);
       softExpect(pos.y).toBe(5);
       softExpect(pos.z).toBe(5);
     });
   });
 
-  test('should apply transitions to nested properties', async ({ page }) => {
+  test('should apply transitions to nested property position.x using new proxy method', async ({ page }) => {
     const result = await page.evaluate(() => {
       const scene = window.scene;
-      if (!scene || !window.anu) {
-        throw new Error('Scene or Anu not available');
-      }
-
-      const spheres = scene.meshes.filter(mesh => mesh.id.includes('sphere'));
-      const selection = window.anu.select(spheres);
-
-      // Apply a transition to position.x
-      selection.transition({ duration: 1000 }).position.x(10);
+      const spheres = scene.meshes.filter(mesh => mesh.id.includes('test2-sphere'));
 
       return spheres.map(sphere => ({
         x: sphere.position.x
       }));
     });
 
-    result.forEach((pos, index) => {
+    result.forEach((pos) => {
       softExpect(pos.x).toBe(10);
     });
   });
 
-  test('should chain multiple transitions', async ({ page }) => {
+  test('should apply transitions using old props method with position vector', async ({ page }) => {
     const result = await page.evaluate(() => {
       const scene = window.scene;
-      if (!scene || !window.anu) {
-        throw new Error('Scene or Anu not available');
-      }
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('test3-box'));
 
-      const cylinders = scene.meshes.filter(mesh => mesh.id.includes('cylinder'));
-      const selection = window.anu.select(cylinders);
+      return boxes.map(box => ({
+        x: box.position.x,
+        y: box.position.y,
+        z: box.position.z
+      }));
+    });
 
-      // Chain transitions
-      selection
-        .transition({ duration: 500 }).position(new Vector3(1, 1, 1))
-        .transition({ duration: 500, delay: 500 }).scaling(new Vector3(2, 2, 2));
+    result.forEach((pos) => {
+      softExpect(pos.x).toBe(7);
+      softExpect(pos.y).toBe(7);
+      softExpect(pos.z).toBe(7);
+    });
+  });
+
+  test('should apply transitions using old props method with nested property', async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      const spheres = scene.meshes.filter(mesh => mesh.id.includes('test4-sphere'));
+
+      return spheres.map(sphere => ({
+        x: sphere.position.x
+      }));
+    });
+
+    result.forEach((pos) => {
+      softExpect(pos.x).toBe(15);
+    });
+  });
+
+  test('should chain multiple transitions using new proxy method', async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      const cylinders = scene.meshes.filter(mesh => mesh.id.includes('test5-cylinder'));
 
       return cylinders.map(cylinder => ({
         x: cylinder.position.x,
@@ -92,7 +112,7 @@ test.describe('Transition System Tests', () => {
       }));
     });
 
-    result.forEach((cyl, index) => {
+    result.forEach((cyl) => {
       softExpect(cyl.x).toBe(1);
       softExpect(cyl.y).toBe(1);
       softExpect(cyl.z).toBe(1);
@@ -102,19 +122,44 @@ test.describe('Transition System Tests', () => {
     });
   });
 
-  test('should stop transitions', async ({ page }) => {
+  test('should apply multiple property transitions using old props method', async ({ page }) => {
     const result = await page.evaluate(() => {
       const scene = window.scene;
-      if (!scene || !window.anu) {
-        throw new Error('Scene or Anu not available');
-      }
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('test6-box'));
 
-      const boxes = scene.meshes.filter(mesh => mesh.id.includes('box'));
-      const selection = window.anu.select(boxes);
+      return boxes.map(box => ({
+        x: box.position.x,
+        y: box.position.y,
+        scaleX: box.scaling.x
+      }));
+    });
 
-      // Start a transition and then stop it
-      selection.transition({ duration: 1000 }).position(new Vector3(5, 5, 5));
-      selection.stopTransitions();
+    result.forEach((box) => {
+      softExpect(box.x).toBe(3);
+      softExpect(box.y).toBe(2);
+      softExpect(box.scaleX).toBe(1.5);
+    });
+  });
+
+  test('should apply tweening', async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      const spheres = scene.meshes.filter(mesh => mesh.id.includes('test7-sphere'));
+
+      return spheres.map(sphere => ({
+        x: sphere.position.x
+      }));
+    });
+
+    result.forEach((pos) => {
+      softExpect(pos.x).toBe(10);
+    });
+  });
+
+  test('should stop transitions when stopTransitions is called', async ({ page }) => {
+    const result = await page.evaluate(() => {
+      const scene = window.scene;
+      const boxes = scene.meshes.filter(mesh => mesh.id.includes('test8-box'));
 
       return boxes.map(box => ({
         x: box.position.x,
@@ -123,35 +168,11 @@ test.describe('Transition System Tests', () => {
       }));
     });
 
-    result.forEach((pos, index) => {
-      softExpect(pos.x).not.toBe(5);
-      softExpect(pos.y).not.toBe(5);
-      softExpect(pos.z).not.toBe(5);
-    });
-  });
-
-  test('should apply tweening', async ({ page }) => {
-    const result = await page.evaluate(() => {
-      const scene = window.scene;
-      if (!scene || !window.anu) {
-        throw new Error('Scene or Anu not available');
-      }
-
-      const spheres = scene.meshes.filter(mesh => mesh.id.includes('sphere'));
-      const selection = window.anu.select(spheres);
-
-      // Apply a tween
-      selection.transition({ duration: 1000 }).tween((d, n, i) => (t) => {
-        n.position.x = t * 10;
-      });
-
-      return spheres.map(sphere => ({
-        x: sphere.position.x
-      }));
-    });
-
-    result.forEach((pos, index) => {
-      softExpect(pos.x).toBe(10);
+    result.forEach((pos) => {
+      // Position should not have reached the final value (20, 20, 20)
+      // Should be somewhere between initial (-5, 0, 0) and final (20, 20, 20)
+      softExpect(pos.x).toBeLessThan(20);
+      softExpect(pos.x).toBeGreaterThan(-5);
     });
   });
 
