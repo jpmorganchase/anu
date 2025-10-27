@@ -53,7 +53,7 @@ import {
   thinInstanceRotationFor,
   thinInstanceColorFor,
 } from './property/thin';
-import { transition, Transition, tween, stopTransitions, resetTransitions, restartTransitions, endTransitions, resetStopTransitions, pauseTransitions, stopTweens} from './animation/transition';
+import { transition, Transition, tween, stopTransitions, resetTransitions, restartTransitions, endTransitions, resetStopTransitions, pauseTransitions, stopTweens, createTransition } from './animation/transition';
 import { DynamicProperties } from './base-types';
 
 /**
@@ -111,6 +111,11 @@ export class Selection {
           });
         };
 
+        // Helper function to check if we should use transitions
+        const shouldUseTransition = () => {
+          return target.transitions.length > 0;
+        };
+
         // If we have a stored property path, check if this prop extends it
         if (target.propertyPath && typeof prop === 'string') {
           const newPath = `${target.propertyPath}.${prop}`;
@@ -120,6 +125,14 @@ export class Selection {
             // Create a proxy function for the extended path
             const pathMethod = new Proxy(function(...args: any[]) {
               if (args.length > 0) {
+                // Check if we should use transitions
+                if (shouldUseTransition()) {
+                  // Use createTransition for animated property changes
+                  createTransition(target as Selection, newPath, args[0]);
+                  target.propertyPath = '';
+                  return proxyRef;
+                }
+                
                 // Function call - evaluate the path and set/call
                 target.selected.forEach((node, i) => {
                   const pathParts = newPath.split('.');
@@ -191,6 +204,14 @@ export class Selection {
             // Create a proxy function that handles method calls and property access
             const dynamicMethod = new Proxy(function(...args: any[]) {
               if (args.length > 0) {
+                // Check if we should use transitions
+                if (shouldUseTransition()) {
+                  // Use createTransition for animated property changes
+                  createTransition(target as Selection, prop, args[0]);
+                  target.propertyPath = '';
+                  return proxyRef;
+                }
+                
                 // Function call - operate directly on the property
                 target.selected.forEach((node, i) => {
                   if (node && typeof node === 'object' && prop in node) {

@@ -24,38 +24,39 @@ export const animate = function(engine){
   //let boxSelection = new anu.Selection(nodes.selected, scene, new Animatable(scene, box))
 
 
-  let transitions = nodes
-    .material(() => new StandardMaterial())
-    .transition({duration: 1000})
-    .tween((d,n,i) => { 
-      let inter = interpolateBrBG
-      return (t) => {
-        let rgb = color(inter(t)).rgb();
-        n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
-      }
-    })
-    .transition()
-    .tween((d,n,i) => { 
-      let inter = interpolate(0,2)
-      return (t) => {
-        n.position.x = inter(t)  
-      }
-    })
+  // let transitions = nodes
+  //   .material(() => new StandardMaterial())
+  //   .transition({duration: 1000})
+  //   .tween((d,n,i) => { 
+  //     let inter = interpolateBrBG
+  //     return (t) => {
+  //       let rgb = color(inter(t)).rgb();
+  //       n.material.diffuseColor = new Color3(rgb.r / 255, rgb.g /255, rgb.b /255);
+  //     }
+  //   })
+  //   .transition()
+  //   .tween((d,n,i) => { 
+  //     let inter = interpolate(0,2)
+  //     return (t) => {
+  //       n.position.x = inter(t)  
+  //     }
+  //   })
 
     // let transitions = nodes.transition({duration: 1000, delay: 500}).props({'position.x': ()=> {
     //   console.log("position")
+
     //   return 2;
     // }}).transition().props({"position.x": 1, "rotation.y": 2})
 
-    // let transitions = nodes.transition((d,n,i) => ({duration: 1000})).positionX(2).rotationZ(1).rotationY(1)
+    // let transitions = nodes.transition((d,n,i) => ({duration: 1000})).position((d,n,i) => n.position.add(new Vector3(2,0,0)))
     //                        .transition((d,n,i) => ({duration: 1000 * i})).positionX(1).positionY(1)
                           
                             
                             
  
     // setTimeout(() => {
-    //   transitions.stopTransitions()
-    // }, 1500)
+    //   transitions.pauseTransitions()
+    // }, 500)
 
     //    setTimeout(() => {
     //   transitions.restartTransitions()

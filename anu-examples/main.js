@@ -67,6 +67,7 @@ import { imaxes } from './examples/Advanced/imaxesSimple';
 import { box_clone } from './examples/FirstSteps/Box_Clone';
 import { selectionTest } from './examples/Selections/selectionTest';
 import { proxyTest } from './examples/Selections/proxyTest';
+import { transitionTest } from './examples/Animation/transitionTest';
 
 
 const queryString = window.location.search;
@@ -142,6 +143,7 @@ const scenes = {
   'linkedScatterPlots': linkedScatterPlots, 
   'selectionTest': selectionTest,
   'proxyTest': proxyTest,
+  'transitionTest': transitionTest,
 }
 
 

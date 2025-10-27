@@ -40,8 +40,6 @@ camera.position = new Vector3(20, 3, -15);
     .rotation(new Vector3(0, 2, 3))
     .material(testMaterial);
 
-    console.log(boxes1.material.diffuseColor());
-
     //Test getting values from boxes1
   let boxes1Values = {
     position: boxes1.position(),
