@@ -1,36 +1,28 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package Beta
-
-on:
-  release:
-    types: [created]
+name: Publish Package to npmjs
+on: workflow_dispatch
+  
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Configure CI Git User
+        run: |
+          git config --global user.name '@jpmorganchase'
+          git config --global user.email 'jpmorganchase@users.noreply.github.com'
+      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish --tag beta
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@jpmorganchase'
+      - run: |
+          npm ci
+          npm run build
+          npm publish --access public --tag beta
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
