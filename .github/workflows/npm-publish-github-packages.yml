@@ -8,7 +8,7 @@ name: Node.js Package
 #     types: [created]
 
 on:
-  workflow_run: 
+  workflow_dispatch: 
 
 jobs:
   build:
