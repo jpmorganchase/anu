@@ -43,8 +43,8 @@ export class Layout {
     let margin = this.options.margin || new Vector2(0, 0);
     let chartnum = this.options.selection.selected.length;
     let boundingBox = this.boundingBoxLocal(this.options.selection);
-    let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-    let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+    let widthX = boundingBox.boundingBox.extendSize.x;
+    let widthY = boundingBox.boundingBox.extendSize.y;
     let colnum = this.options.columns || chartnum;
 
     colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
@@ -73,8 +73,8 @@ export class Layout {
     let chartnum = this.options.selection.selected.length;
     let boundingBox = this.boundingBoxLocal(this.options.selection);
     let radius = this.options.radius || 5;
-    let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-    let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+    let widthX = boundingBox.boundingBox.extendSize.x;
+    let widthY = boundingBox.boundingBox.extendSize.y;
     let colnum = this.options.columns || chartnum;
 
     colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
@@ -111,8 +111,8 @@ export class Layout {
     let chartnum = this.options.selection.selected.length;
     let boundingBox = this.boundingBoxLocal(this.options.selection);
     let radius = this.options.radius || 5;
-    let widthX = boundingBox.boundingBox.maximumWorld.x - boundingBox.boundingBox.minimumWorld.x;
-    let widthY = boundingBox.boundingBox.maximumWorld.y - boundingBox.boundingBox.minimumWorld.y;
+    let widthX = boundingBox.boundingBox.extendSize.x;
+    let widthY = boundingBox.boundingBox.extendSize.y;
     let colnum = this.options.columns || chartnum;
 
     colnum = chartnum % rownum == 0 ? chartnum / rownum : Math.floor(chartnum / rownum) + 1;
@@ -244,22 +244,26 @@ export class Layout {
   }
 
   private boundingBoxLocal(selection: Selection): BoundingInfo {
+    // The min and max bounding box for the entire selection
     let selectionMin = new Vector3(0, 0, 0);
     let selectionMax = new Vector3(0, 0, 0);
 
+    // For each node in the selection, get the min and max bounding box of it and its children
     selection.selected.forEach((node, i) => {
-      let meshes = node.getChildMeshes();
-      meshes.forEach((mesh, j) => {
-        mesh.computeWorldMatrix(true); //without this the bounding box is calulcated at the mesh creation position...TODO investigate.
-        let nodeMin = mesh
-          .getBoundingInfo()
-          .boundingBox.minimumWorld.subtract((node as TransformNode).getAbsolutePosition());
-        let nodeMax = mesh
-          .getBoundingInfo()
-          .boundingBox.maximumWorld.subtract((node as TransformNode).getAbsolutePosition());
-        selectionMin = Vector3.Minimize(selectionMin, nodeMin);
-        selectionMax = Vector3.Maximize(selectionMax, nodeMax);
+      let nodeMin = new Vector3(0, 0, 0);
+      let nodeMax = new Vector3(0, 0, 0);
+
+      let children = node.getChildMeshes();
+      children.forEach((child, j) => {
+        child.computeWorldMatrix(true); 
+        let childMin = child.getBoundingInfo().boundingBox.minimum;
+        let childMax = child.getBoundingInfo().boundingBox.maximum;
+        nodeMin = Vector3.Minimize(nodeMin, childMin);
+        nodeMax = Vector3.Maximize(nodeMax, childMax);
       });
+
+      selectionMin = Vector3.Minimize(selectionMin, nodeMin);
+      selectionMax = Vector3.Maximize(selectionMax, nodeMax);
     });
 
     return new BoundingInfo(selectionMin, selectionMax);

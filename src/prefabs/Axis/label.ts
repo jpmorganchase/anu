@@ -111,7 +111,6 @@ function labelBuilder(config: labelConfig, ticks: any[]): Selection {
     })
     .props(config.properties)
     .run((d, n: Mesh) => {
-      n.doNotSyncBoundingInfo = true;
       n.isPickable = false;
     });
 

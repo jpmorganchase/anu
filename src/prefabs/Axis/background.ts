@@ -93,7 +93,6 @@ function backgroundBuilder(config: backgroundConfig): Selection {
                       })
                       .props(config.properties)
                       .run((d, n: Mesh) => {
-                        n.doNotSyncBoundingInfo = true;
                         n.isPickable = false;
                       });
 

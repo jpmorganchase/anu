@@ -30,7 +30,7 @@ export function layout(babylonEngine){
     var rot_state;
     scene.onPointerDown = function() {
         const pick = scene.pick(scene.pointerX, scene.pointerY);
-        if (pick.pickedMesh.name == "menuPanel") {
+        if (pick.pickedMesh?.name == "menuPanel") {
             picked = true;
             rot_state = {x:camera.alpha , y:camera.beta};
         }
@@ -256,7 +256,7 @@ function make2Dchart(scene, id){
                                                       .map((v) => v / 255)
                                             return new Color3(...rgb)}) 
 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY}});
+    anu.createAxes('test', { parent: chart, scale: {x: scaleX, y: scaleY} }, scene);
    
     chart.name('cot');
     return chart;
@@ -299,7 +299,7 @@ function make3Dchart(scene, id){
                     .material((d, i) => scaleC(d.Miles_per_Gallon)) 
                     //.diffuseColor((d) => scaleC(d.Miles_per_Gallon)) 
 
-    anu.createAxes('test', scene, {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ}});
+    anu.createAxes('test', {parent: chart, scale: {x: scaleX, y: scaleY, z: scaleZ } }, scene);
 
     chart.name('cot');
 
