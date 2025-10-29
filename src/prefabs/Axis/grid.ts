@@ -114,7 +114,6 @@ export function updateGrid(axes: Axes, transitionOptions: TransitionOptions){
         let gridSelection = new Selection(gridSelections, axes._scene);
 
         gridSelection.run((d, n: Mesh) => {
-          n.doNotSyncBoundingInfo = true;
           n.isPickable = false;
         })
         

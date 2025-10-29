@@ -73,7 +73,6 @@ export function domain(this: Axes): Selection {
 
 
   //Performance Optimization Settings
-  greasedLine.doNotSyncBoundingInfo = true;
   greasedLine.isPickable = false;
 
   let domain = new Selection([greasedLine], this._scene);

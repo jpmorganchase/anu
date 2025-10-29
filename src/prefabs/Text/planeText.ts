@@ -208,6 +208,10 @@ export class PlaneText extends Mesh {
 
     //Restore the original parent
     this.parent = originalParent;
+
+    //Update the world matrix and bounding info one last time
+    this.computeWorldMatrix(true);
+    this.refreshBoundingInfo();
   }
 
   private fixPivotAndScale() {
