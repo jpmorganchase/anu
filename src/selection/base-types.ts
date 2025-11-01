@@ -34,16 +34,12 @@ export interface SelectionMethods {
   bind: any; run: any; bindInstance: any;
   
   // Transform properties that have custom implementations
-  position: any; positionX: any; positionY: any; positionZ: any;
-  rotation: any; rotationX: any; rotationY: any; rotationZ: any;
-  scaling: any; scalingX: any; scalingY: any; scalingZ: any;
-  
-  
-  // Material and visual properties
-  material: any; ambientColor: any; diffuseColor: any; emissiveColor: any; specularColor: any;
+  positionX: any; positionY: any; positionZ: any;
+  rotationX: any; rotationY: any; rotationZ: any;
+  scalingX: any; scalingY: any; scalingZ: any;
   
   // Metadata and utility
-  name: any; id: any; metadata: any; dispose: any;
+  metadata: any; dispose: any;
   
   // Instance and thin instance methods
   registerInstancedBuffer: any; setInstancedBuffer: any;
@@ -56,10 +52,14 @@ export interface SelectionMethods {
 
 
 // Type for dynamic properties - maps each Babylon.js property to Selection methods
+// We use a conditional type to maintain the correct return type through the chain
 export type DynamicProperties = {
-  readonly [K in keyof Omit<AllBabylonProperties, keyof BaseSelectionInterface | keyof SelectionMethods>]: {
-    (): AllBabylonProperties[K][];
-    (value: AllBabylonProperties[K]): Selection;
-    (value: (data: any, node: any, index: number) => AllBabylonProperties[K]): Selection;
-  }
+  [K in keyof Omit<AllBabylonProperties, keyof BaseSelectionInterface | keyof SelectionMethods>]: DynamicPropertyMethod<AllBabylonProperties[K]>;
+};
+
+// Helper type for dynamic property methods that return the correct type
+type DynamicPropertyMethod<T> = {
+  (): T[];
+  <This>(this: This, value: T): This;
+  <This>(this: This, value: (data: any, node: any, index: number) => T): This;
 };

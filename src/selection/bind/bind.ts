@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Node, ActionManager, Tags, Mesh, InstancedMesh, Matrix } from '@babylonjs/core';
-import { Selection } from '../index';
+import { Selection, DynamicSelection } from '../index';
 import { create, MeshTypes } from '../../create';
 
 type Property<T, MeshType extends keyof T> = T[MeshType];
@@ -22,7 +22,7 @@ export function bind<MeshType extends keyof MeshTypes>(
   shape: MeshType,
   options: Property<MeshTypes, MeshType> = {},
   data: Array<any> | ((d: any, n: Node, i: number) => Array<any>) = (d) => [d],
-): Selection {
+): DynamicSelection {
   let meshes: Node[] = [];
   this.selected.forEach((node, nodeIndex) => {
     const dataArray = typeof data === 'function' ? data(node?.metadata?.data ?? 0, node, nodeIndex) : data;
@@ -49,7 +49,7 @@ export function bind<MeshType extends keyof MeshTypes>(
 export function bindClone(this: Selection, 
     mesh: Mesh, 
     data: Array<any> | ((d: any, n: Node, i: number) => Array<any>) = (d) => [d]
-  ): Selection {
+  ): DynamicSelection {
   let meshes: Node[] = [];
   this.selected.forEach((node, nodeIndex) => {
     const dataArray = typeof data === 'function' ? data(node?.metadata?.data ?? 0, node, nodeIndex) : data;
@@ -79,7 +79,7 @@ export function bindClone(this: Selection,
 export function bindInstance(this: Selection, 
     mesh: Mesh,
     data: Array<any> | ((d: any, n: Node, i: number) => Array<any>) = (d) => [d]
-  ): Selection {
+  ): DynamicSelection {
   let meshes: Node[] = [];
   this.selected.forEach((node, nodeIndex) => {
     const dataArray = typeof data === 'function' ? data(node?.metadata?.data ?? 0, node, nodeIndex) : data;
@@ -108,7 +108,7 @@ export function bindInstance(this: Selection,
 export function bindThinInstance(this: Selection, 
     mesh: Mesh, 
     data: Array<any> | ((d: any, n: Node, i: number) => Array<any>) = (d) => [d]
-  ): Selection {
+  ): DynamicSelection {
   let meshes: Node[] = [];
   this.selected.forEach((node, i) => {
     const dataArray = typeof data === 'function' ? data(node?.metadata?.data ?? 0, node, i) : data;

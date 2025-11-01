@@ -5,7 +5,7 @@ import { Engine } from '@babylonjs/core/Engines';
 import { Node } from '@babylonjs/core/node';
 import { Scene } from '@babylonjs/core/scene';
 import { Tags } from '@babylonjs/core/Misc/tags';
-import { Selection } from './selection/index';
+import { Selection, DynamicSelection } from './selection/index';
 
 /**
  * Select all nodes from the scene graph matching the indicator and return them as a
@@ -16,7 +16,7 @@ import { Selection } from './selection/index';
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function select(name: string, scene: Scene): Selection {
+export function select(name: string, scene: Scene): DynamicSelection {
   let indicator = name[0];
   let text = name.slice(1);
   let selected = [];
@@ -43,7 +43,7 @@ export function select(name: string, scene: Scene): Selection {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectName(name: string | string[], scene: Scene): Selection {
+export function selectName(name: string | string[], scene: Scene): DynamicSelection {
   let selected: Node[] = [];
   
   if (Array.isArray(name)) {
@@ -69,7 +69,7 @@ export function selectName(name: string | string[], scene: Scene): Selection {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectId(id: string | string[], scene: Scene): Selection {
+export function selectId(id: string | string[], scene: Scene): DynamicSelection {
   let selected: Node[] = [];
   
   if (Array.isArray(id)) {
@@ -94,7 +94,7 @@ export function selectId(id: string | string[], scene: Scene): Selection {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectTag(tag: string | string[], scene: Scene): Selection {
+export function selectTag(tag: string | string[], scene: Scene): DynamicSelection {
   let selected: Node[] = [];
   
   if (Array.isArray(tag)) {
@@ -123,7 +123,7 @@ export function selectTag(tag: string | string[], scene: Scene): Selection {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean): Selection {
+export function selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean): DynamicSelection {
   scene ??= Engine.LastCreatedScene;
   useAndLogic ??= false; 
 
