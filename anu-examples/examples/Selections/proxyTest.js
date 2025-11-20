@@ -26,10 +26,10 @@ camera.position = new Vector3(20, 3, -15);
   //Select our center or transform with Anu to give us a selection obj CoT.
   let chart = anu.selectName('cot', scene);
 
-  const testMaterial = new StandardMaterial()
+  const testMaterial = new StandardMaterial("mat1", scene);
   testMaterial.diffuseColor = Color3.Red();
 
-  const testMaterial2 = new StandardMaterial()
+  const testMaterial2 = new StandardMaterial("mat2");
   testMaterial2.diffuseColor = Color3.Green();
 
   //Map iris data to boxes1 to test proxy object dynamic property setting by value
@@ -46,7 +46,7 @@ camera.position = new Vector3(20, 3, -15);
     scaling: boxes1.scaling(),
     rotation: boxes1.rotation(),
     material: boxes1.material(),
-    color: boxes1.material.diffuseColor()
+    color: boxes1.material.diffuseColor(),
   }
 
 //Map iris data to boxes2 to test proxy object dynamic property setting by function

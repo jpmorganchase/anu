@@ -5,10 +5,9 @@ import { Node, Mesh, TransformNode, AbstractMesh } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance, bindClone} from './bind/bind';
-import { position, positionX, positionY, positionZ } from './property/position';
-import { translate } from './bind/translate';
-import { rotation, rotationX, rotationY, rotationZ } from './property/rotation';
-import { scaling, scalingX, scalingY, scalingZ } from './property/scaling';
+import { positionX, positionY, positionZ } from './property/position';
+import { rotationX, rotationY, rotationZ } from './property/rotation';
+import { scalingX, scalingY, scalingZ } from './property/scaling';
 import { get } from './utility/get';
 import { addTags, hasTags, removeTags } from './property/tags';
 import { action } from './property/actions';
@@ -17,7 +16,6 @@ import {
   ambientColor,
   diffuseColor,
   emissiveColor,
-  material,
   specularColor,
   ambientTexture,
   diffuseTexture,
@@ -31,7 +29,7 @@ import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
 import { boundingBox } from './utility/boundingBox';
 import { filter } from './utility/filter';
-import { name, id, metadata } from './property/metadata';
+import { metadata } from './property/metadata';
 import { positionUI, rotateUI, scaleUI } from '../prefabs/Interactions/facetPosition';
 import {
   thinInstanceSetBuffer,
@@ -54,7 +52,7 @@ import {
   thinInstanceColorFor,
 } from './property/thin';
 import { transition, Transition, tween, stopTransitions, resetTransitions, restartTransitions, endTransitions, resetStopTransitions, pauseTransitions, stopTweens, createTransition } from './animation/transition';
-import { DynamicProperties } from './base-types';
+import type { DynamicProperties } from './base-types';
 
 /**
  * The core Selection class of Anu that provides proxy functionality and all the specific
@@ -80,13 +78,13 @@ export class Selection {
     this.transitions = [];
 
     // Create the proxy reference that will be returned  
-    let proxyRef: DynamicSelection;
+    let proxyRef: Selection;
     
     // Return a Proxy that intercepts property access, cast to include dynamic properties  
     const proxy = new Proxy(this, {
       get(target: Selection, prop: string | symbol, receiver: any) {
-        // If the property exists on the Selection class, return it normally
-        if (prop in target || typeof prop === 'symbol') {
+        // Handle symbols first
+        if (typeof prop === 'symbol') {
           return Reflect.get(target, prop, receiver);
         }
 
@@ -107,7 +105,21 @@ export class Selection {
         // Helper function to check if property path exists on nodes
         const hasPropertyPath = (path: string) => {
           return target.selected.some(node => {
-            return evaluatePropertyPath(node, path) !== undefined;
+            const value = evaluatePropertyPath(node, path);
+            // Consider the path valid if we can evaluate it, even if the value is null/undefined
+            // This allows accessing nested properties on nullable types
+            const parts = path.split('.');
+            let current = node;
+            for (let i = 0; i < parts.length; i++) {
+              if (current && typeof current === 'object' && parts[i] in current) {
+                current = current[parts[i]];
+              } else {
+                // Property doesn't exist in the chain
+                return false;
+              }
+            }
+            // If we made it through all parts, the path is valid (even if final value is null)
+            return true;
           });
         };
 
@@ -116,7 +128,9 @@ export class Selection {
           return target.transitions.length > 0;
         };
 
-        // If we have a stored property path, check if this prop extends it
+        // IMPORTANT: Check for stored property path BEFORE checking Selection class properties
+        // This allows nested paths like .material.diffuseColor to work even when diffuseColor
+        // is also a method on the Selection class
         if (target.propertyPath && typeof prop === 'string') {
           const newPath = `${target.propertyPath}.${prop}`;
           
@@ -166,9 +180,12 @@ export class Selection {
                 return proxyRef;
               } else {
                 // Property access - evaluate and return values
-                const propertyValues = target.selected
-                  .map(node => evaluatePropertyPath(node, newPath))
-                  .filter(value => value !== undefined);
+                const propertyValues = target.selected.map(node => {
+                  // Evaluate the nested property path
+                  const value = evaluatePropertyPath(node, newPath);
+                  // Return the value even if it's null/undefined (important for nullable properties like material)
+                  return value;
+                });
                 
                 // Clear property path
                 target.propertyPath = '';
@@ -180,9 +197,20 @@ export class Selection {
                   return methodTarget[nestedProp];
                 }
                 
-                // Extend the path further
-                target.propertyPath = newPath;
-                return proxy[nestedProp];
+                // Build the extended path
+                const extendedPath = `${newPath}.${nestedProp}`;
+                
+                // Check if this extended path exists
+                if (hasPropertyPath(extendedPath)) {
+                  // Set the property path and recursively create another proxy method
+                  target.propertyPath = newPath;
+                  // Return the proxy, which will trigger the main get handler with the extended path
+                  return proxy[nestedProp];
+                } else {
+                  // Path doesn't exist, return undefined
+                  target.propertyPath = '';
+                  return undefined;
+                }
               }
             });
 
@@ -280,6 +308,12 @@ export class Selection {
           }
         }
 
+        // If the property exists on the Selection class, return it
+        // This check comes AFTER nested path and dynamic property checks
+        if (prop in target) {
+          return Reflect.get(target, prop, receiver);
+        }
+
         // Return undefined for properties that don't exist
         return undefined;
       },
@@ -296,7 +330,7 @@ export class Selection {
     });
 
     // Store reference and return the proxy with proper typing
-    proxyRef = proxy as DynamicSelection;
+    proxyRef = proxy as Selection;
     return proxyRef;
   }
 
@@ -315,16 +349,14 @@ export class Selection {
   public bind = bind;
   public run = run;
   public bindInstance = bindInstance;
-  //public position = position;
   public positionX = positionX;
   public positionY = positionY;
   public positionZ = positionZ;
-  //public translate = translate;
-  //public rotation = rotation;
+
   public rotationX = rotationX;
   public rotationY = rotationY;
   public rotationZ = rotationZ;
-  //public scaling = scaling;
+
   public scalingX = scalingX;
   public scalingY = scalingY;
   public scalingZ = scalingZ;
@@ -335,11 +367,11 @@ export class Selection {
   public hasTags = hasTags;
   public action = action;
   public behavior = behavior;
-  //public material = material;
-  // public diffuseColor = diffuseColor;
-  // public specularColor = specularColor;
-  // public emissiveColor = emissiveColor;
-  // public ambientColor = ambientColor;
+
+  public diffuseColor = diffuseColor;
+  public specularColor = specularColor;
+  public emissiveColor = emissiveColor;
+  public ambientColor = ambientColor;
   public registerInstancedBuffer = registerInstancedBuffer;
   public setInstancedBuffer = setInstancedBuffer;
   public dispose = dispose;
@@ -354,8 +386,7 @@ export class Selection {
   public filter = filter;
   public props = props;
   public prop = prop;
-  //public name = name;
-  //public id = id;
+
   public metadata = metadata;
   public positionUI = positionUI;
   public scaleUI = scaleUI;
@@ -393,11 +424,8 @@ export class Selection {
 }
 
 // Declaration merging to add dynamic properties to Selection class
-export interface Selection extends DynamicProperties {}
-
-// Create a new interface that extends Selection with DynamicProperties
-export interface DynamicSelection extends Selection, DynamicProperties {}
-
+// The generic parameter refers to the complete Selection type (after merging)
+export interface Selection extends DynamicProperties<Selection> {}
 
 // Re-export types for convenience
 export type { 
