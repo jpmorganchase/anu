@@ -18,3 +18,7 @@ anu-examples/vite.config.js
 /template
 /test-results
 /playwright-report
+
+# Ignore package-lock.json for all projects
+package-lock.json
+**/package-lock.json
