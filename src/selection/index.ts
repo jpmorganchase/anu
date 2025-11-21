@@ -222,6 +222,13 @@ export class Selection {
           }
         }
 
+        // IMPORTANT: Check if the property exists on the Selection class FIRST
+        // This ensures Selection methods like tween, transition, etc. are not intercepted
+        // even if they coincidentally exist on Babylon nodes
+        if (typeof prop === 'string' && prop in target) {
+          return Reflect.get(target, prop);
+        }
+
         // Check if the property exists on any of the selected nodes (start of new path)
         if (typeof prop === 'string') {
           const hasProperty = target.selected.some(node => 
@@ -232,9 +239,9 @@ export class Selection {
             // Create a proxy function that handles method calls and property access
             const dynamicMethod = new Proxy(function(...args: any[]) {
               if (args.length > 0) {
-                // Check if we should use transitions
+                // Check if we should use transitions for node property changes
                 if (shouldUseTransition()) {
-                  // Use createTransition for animated property changes
+                  // Use createTransition for animated property changes on node properties only
                   createTransition(target as Selection, prop, args[0]);
                   target.propertyPath = '';
                   return proxyRef;
@@ -306,12 +313,6 @@ export class Selection {
 
             return dynamicMethod;
           }
-        }
-
-        // If the property exists on the Selection class, return it
-        // This check comes AFTER nested path and dynamic property checks
-        if (prop in target) {
-          return Reflect.get(target, prop, receiver);
         }
 
         // Return undefined for properties that don't exist

@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/anu",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "",
   "type": "module",
   "files": [
@@ -10,9 +10,9 @@
   "types": "./dist/anu.d.ts",
   "module": "./dist/anu.js",
   "exports": {
-      "types": "./dist/anu.d.ts",
-      "import": "./dist/anu.js",
-      "require": "./dist/anu.umd.cjs"
+    "types": "./dist/anu.d.ts",
+    "import": "./dist/anu.js",
+    "require": "./dist/anu.umd.cjs"
   },
   "scripts": {
     "compile": "vite build",
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@babylonjs/core": "^8.1.1",
+    "@playwright/test": "^1.56.1",
     "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
     "@types/earcut": "^2.1.4",

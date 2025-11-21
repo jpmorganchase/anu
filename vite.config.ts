@@ -6,6 +6,8 @@ import { externalizeDeps } from "vite-plugin-externalize-deps";
 
 export default defineConfig({
   build: {
+    sourcemap: true, // Enable source maps
+    minify: false, // Use esbuild for minification
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
