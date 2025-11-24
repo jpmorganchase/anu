@@ -1,6 +1,6 @@
 <template>
   <div class="singleView-container">
-    <canvas ref="canvas" class="singleView-canvas" id="singleView-canvas"></canvas>
+    <canvas ref="canvas" :class="['singleView-canvas', { fullscreen: fullscreen }]" id="singleView-canvas"></canvas>
     <div class="xr-controls">
       <button 
         @click="startVRSession" 
@@ -36,6 +36,10 @@ import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState} from '@babylon
 
 const props = defineProps({
   scene: Function,
+  fullscreen: {
+    type: Boolean,
+    default: false
+  }
 });
 
 let canvas = ref();
@@ -168,9 +172,12 @@ onMounted(async () => {
   let scene = await props.scene(babylonEngine);
   currentScene = scene;
 
-  sceneEnvironment = scene.createDefaultEnvironment();
-  sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
-  sceneEnvironment.ground.position = new Vector3(0, -2, 0);
+  // Only create default environment if scene doesn't opt out
+  if (!scene.metadata?.noDefaultEnvironment) {
+    sceneEnvironment = scene.createDefaultEnvironment();
+    sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
+    sceneEnvironment.ground.position = new Vector3(0, -2, 0);
+  }
 
   try {
     //{ floorMeshes: [env.ground] }
@@ -367,5 +374,9 @@ onBeforeUnmount(() => {
 .singleView-canvas {
   width: 100%;
   height: 50vh;
+}
+
+.singleView-canvas.fullscreen {
+  height: calc(100vh - 62px); /* Subtract navbar height (typically 64px in VitePress) */
 }
 </style>
