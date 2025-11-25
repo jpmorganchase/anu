@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, EngineInstrumentation } from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3 } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Button, TextBlock, StackPanel, Control, ScrollViewer } from '@babylonjs/gui';
 import * as anu from '@jpmorganchase/anu'
 
@@ -14,7 +14,8 @@ export const benchmark = function(babylonEngine){
   // Mark this scene to not use default environment and set custom XR camera position
   scene.metadata = { 
     noDefaultEnvironment: true,
-    xrCameraPosition: new Vector3(0, 60, 110) 
+    xrCameraPosition: new Vector3(0, 60, 110),
+    xrDisableControllers: true
   };
 
   //Add lights and a camera
@@ -24,10 +25,6 @@ export const benchmark = function(babylonEngine){
   camera.upperRadiusLimit = 300;
   camera.attachControl(true)
 
-  // Initialize Engine Instrumentation for GPU metrics
-  const engineInstrumentation = new EngineInstrumentation(babylonEngine);
-  engineInstrumentation.captureGPUFrameTime = true;
-
   // Benchmark state
   let currentSelection = null;
   let benchmarkData = null;
@@ -36,7 +33,7 @@ export const benchmark = function(babylonEngine){
   // Benchmark configurations
   const INITIAL_CUBE_COUNT = 1000; // Starting cube count
   const MAX_CUBE_COUNT = 10000000; // Maximum cube count (10 million)
-  const EXPONENTIAL_BASE = 1.5; // Base for exponential growth: y = base^x
+  const EXPONENTIAL_BASE = 1.25; // Base for exponential growth: y = base^x
   const FPS_SAMPLE_FRAMES = 60; // Number of frames to measure FPS
   const FPS_THRESHOLD = 30; // Stop when FPS drops below this for 2 consecutive tests
   const BENCHMARK_METHODS = ['bind', 'bindClone', 'bindInstance', 'bindThinInstance'];
@@ -258,27 +255,21 @@ export const benchmark = function(babylonEngine){
       case 'bind':
         // Creates separate mesh for each cube
         selection = anu.bind('box', { size: 0.5 }, data);
-        selection.positionX(d => d.x)
-                .positionY(d => d.y)
-                .positionZ(d => d.z);
+        selection.position(d => new Vector3(d.x, d.y, d.z));
         break;
         
       case 'bindClone':
         // Creates one mesh and clones it
         const cloneMesh = anu.create('box', 'box', { size: 0.5 });
         selection = anu.bindClone(cloneMesh, data);
-        selection.positionX(d => d.x)
-                .positionY(d => d.y)
-                .positionZ(d => d.z);
+        selection.position(d => new Vector3(d.x, d.y, d.z));
         break;
         
       case 'bindInstance':
         // Creates instances (GPU optimized, same material)
         const instanceMesh = anu.create('box', 'box', { size: 0.5 });
         selection = anu.bindInstance(instanceMesh, data);
-        selection.positionX(d => d.x)
-                .positionY(d => d.y)
-                .positionZ(d => d.z);
+        selection.position(d => new Vector3(d.x, d.y, d.z));
         break;
         
       case 'bindThinInstance':
@@ -298,26 +289,14 @@ export const benchmark = function(babylonEngine){
     return new Promise((resolve) => {
       let frameCount = 0;
       const fpsReadings = [];
-      const cpuFrameTimeReadings = [];
-      const gpuFrameTimeReadings = [];
       
       const measureFrame = () => {
         // Render the scene
         scene.render();
         
-        // Collect performance data from Babylon.js
+        // Collect FPS data
         const fps = babylonEngine.getFps();
         fpsReadings.push(fps);
-        
-        // Get CPU frame time from Babylon's instrumentation (deltaTime)
-        const cpuFrameTime = scene.getEngine().getDeltaTime();
-        cpuFrameTimeReadings.push(cpuFrameTime);
-        
-        // Get GPU frame time from instrumentation
-        const gpuFrameTime = engineInstrumentation.gpuFrameTimeCounter.lastSecAverage;
-        if (gpuFrameTime > 0) {
-          gpuFrameTimeReadings.push(gpuFrameTime);
-        }
         
         frameCount++;
         
@@ -334,13 +313,9 @@ export const benchmark = function(babylonEngine){
         if (frameCount < FPS_SAMPLE_FRAMES) {
           requestAnimationFrame(measureFrame);
         } else {
-          // Calculate averages
+          // Calculate average FPS
           const avgFPS = fpsReadings.reduce((a, b) => a + b, 0) / fpsReadings.length;
-          const avgCPUTime = cpuFrameTimeReadings.reduce((a, b) => a + b, 0) / cpuFrameTimeReadings.length;
-          const avgGPUTime = gpuFrameTimeReadings.length > 0 
-            ? gpuFrameTimeReadings.reduce((a, b) => a + b, 0) / gpuFrameTimeReadings.length 
-            : null;
-          resolve({ fps: avgFPS, cpuTime: avgCPUTime, gpuTime: avgGPUTime });
+          resolve({ fps: avgFPS });
         }
       };
       
@@ -349,18 +324,6 @@ export const benchmark = function(babylonEngine){
         requestAnimationFrame(measureFrame);
       }, 500);
     });
-  }
-
-  // Measure memory usage if available
-  function getMemoryUsage() {
-    if (performance.memory) {
-      return {
-        usedJSHeapSize: (performance.memory.usedJSHeapSize / 1048576).toFixed(2), // Convert to MB
-        totalJSHeapSize: (performance.memory.totalJSHeapSize / 1048576).toFixed(2),
-        jsHeapSizeLimit: (performance.memory.jsHeapSizeLimit / 1048576).toFixed(2)
-      };
-    }
-    return null;
   }
 
   // Run single benchmark test
@@ -376,14 +339,6 @@ export const benchmark = function(babylonEngine){
     // Wait a moment to ensure cleanup is complete
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    // Force garbage collection if available (Chrome with --enable-precise-memory-info flag)
-    if (window.gc) {
-      window.gc();
-    }
-    
-    // Measure memory before
-    const memoryBefore = getMemoryUsage();
-    
     // Create data outside of timing
     benchmarkData = createCubeData(count);
     
@@ -392,15 +347,6 @@ export const benchmark = function(babylonEngine){
     createCubes(method, benchmarkData);
     const creationTime = performance.now() - startTime;
     
-    // Measure memory after creation
-    const memoryAfter = getMemoryUsage();
-    
-    // Calculate memory delta
-    let memoryUsed = null;
-    if (memoryBefore && memoryAfter) {
-      memoryUsed = (memoryAfter.usedJSHeapSize - memoryBefore.usedJSHeapSize).toFixed(2);
-    }
-    
     // Measure FPS
     const fpsData = await measureFPS();
     
@@ -408,11 +354,7 @@ export const benchmark = function(babylonEngine){
       method,
       count,
       creationTime: creationTime.toFixed(2),
-      avgFPS: fpsData.fps.toFixed(2),
-      cpuTime: fpsData.cpuTime.toFixed(2),
-      gpuTime: fpsData.gpuTime ? fpsData.gpuTime.toFixed(2) : 'N/A',
-      memoryUsed: memoryUsed,
-      memoryTotal: memoryAfter ? memoryAfter.usedJSHeapSize : null
+      avgFPS: fpsData.fps.toFixed(2)
     };
   }
 
@@ -543,47 +485,23 @@ export const benchmark = function(babylonEngine){
     
     let text = 'BENCHMARK RESULTS\n\n';
     
-    // Check if memory info is available
-    const hasMemory = benchmarkResults[BENCHMARK_METHODS[0]]?.[0]?.memoryUsed !== null;
-    
     for (const method of BENCHMARK_METHODS) {
       if (!benchmarkResults[method] || benchmarkResults[method].length === 0) continue;
       
       text += `\n${method.toUpperCase()}\n`;
-      text += '─'.repeat(hasMemory ? 95 : 70) + '\n';
-      
-      if (hasMemory) {
-        text += 'Cubes     Create(ms)  FPS      CPU(ms)  GPU(ms)  Memory(MB)  Total(MB)\n';
-      } else {
-        text += 'Cubes     Create(ms)  FPS      CPU(ms)  GPU(ms)\n';
-      }
-      text += '─'.repeat(hasMemory ? 95 : 70) + '\n';
+      text += '─'.repeat(45) + '\n';
+      text += 'Cubes     Create(ms)  FPS\n';
+      text += '─'.repeat(45) + '\n';
       
       for (const result of benchmarkResults[method]) {
         const cubeStr = String(result.count).padEnd(10);
         const timeStr = String(result.creationTime).padEnd(12);
-        const fpsStr = String(result.avgFPS).padEnd(9);
-        const cpuStr = String(result.cpuTime).padEnd(9);
-        const gpuStr = String(result.gpuTime).padEnd(9);
-        
-        if (hasMemory && result.memoryUsed !== null) {
-          const memStr = String(result.memoryUsed).padEnd(12);
-          const totalStr = String(result.memoryTotal);
-          text += `${cubeStr}${timeStr}${fpsStr}${cpuStr}${gpuStr}${memStr}${totalStr}\n`;
-        } else {
-          text += `${cubeStr}${timeStr}${fpsStr}${cpuStr}${gpuStr}\n`;
-        }
+        const fpsStr = String(result.avgFPS);
+        text += `${cubeStr}${timeStr}${fpsStr}\n`;
       }
       text += '\n';
     }
     
-    if (!hasMemory) {
-      text += '\nNote: Memory measurement not available.\n';
-      text += 'For Chrome: Run with --enable-precise-memory-info flag\n';
-    }
-    
-    text += '\nCPU(ms) = CPU frame time (from Engine.getDeltaTime)\n';
-    text += 'GPU(ms) = GPU frame time (from EngineInstrumentation)\n';
     text += '\nPress G to toggle GUI visibility\n';
     
     resultsText.text = text;
@@ -598,19 +516,8 @@ export const benchmark = function(babylonEngine){
     
     // Parse the results text to extract data
     const lines = resultsText.text.split('\n');
-    let csvContent = '';
+    let csvContent = 'Method,Cubes,Create(ms),FPS\n';
     let currentMethod = '';
-    let hasMemory = false;
-    
-    // Determine if memory data is available
-    hasMemory = lines.some(line => line.includes('Memory(MB)'));
-    
-    // Create CSV header
-    if (hasMemory) {
-      csvContent = 'Method,Cubes,Create(ms),FPS,CPU(ms),GPU(ms),Memory(MB),Total(MB)\n';
-    } else {
-      csvContent = 'Method,Cubes,Create(ms),FPS,CPU(ms),GPU(ms)\n';
-    }
     
     // Parse each line
     for (let i = 0; i < lines.length; i++) {
@@ -624,8 +531,6 @@ export const benchmark = function(babylonEngine){
       
       // Skip separator lines, headers, and notes
       if (line.startsWith('─') || line.startsWith('Cubes') || 
-          line.startsWith('Note:') || line.startsWith('For Chrome:') ||
-          line.startsWith('CPU(ms)') || line.startsWith('GPU(ms)') ||
           line.startsWith('Press G') ||
           line === 'BENCHMARK RESULTS' || line === '') {
         continue;
@@ -634,21 +539,12 @@ export const benchmark = function(babylonEngine){
       // Parse data lines - split by whitespace
       const parts = line.split(/\s+/).filter(p => p);
       
-      if (parts.length >= 5 && currentMethod) {
+      if (parts.length >= 3 && currentMethod) {
         // Extract values
         const cubes = parts[0];
         const createTime = parts[1];
         const fps = parts[2];
-        const cpuTime = parts[3];
-        const gpuTime = parts[4];
-        
-        if (hasMemory && parts.length >= 7) {
-          const memoryUsed = parts[5];
-          const memoryTotal = parts[6];
-          csvContent += `${currentMethod},${cubes},${createTime},${fps},${cpuTime},${gpuTime},${memoryUsed},${memoryTotal}\n`;
-        } else {
-          csvContent += `${currentMethod},${cubes},${createTime},${fps},${cpuTime},${gpuTime}\n`;
-        }
+        csvContent += `${currentMethod},${cubes},${createTime},${fps}\n`;
       }
     }
     

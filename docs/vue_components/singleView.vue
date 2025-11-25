@@ -238,53 +238,28 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-//         // Enable multiview for better VR performance
-//         try {
-//           const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest", { preferMultiviewOnInit: true }, true, false);
-
-// });
-//           if (multiview) {
-//             console.log('Multiview enabled successfully');
-//           } else {
-//             console.log('Multiview not supported or failed to enable');
-//           }
-//         } catch (error) {
-//           console.warn('Multiview not supported:', error);
-//         }
-
-        // // Enable hand tracking with proper error handling
-        // try {
-        //   const handTracking = featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, 'latest', {
-        //     xrInput: defaultXRExperience.input,
-        //     jointMeshes: {
-        //       enablePhysics: false,
-        //       sourceMeshes: null, // Use default hand mesh
-        //       handMeshes: {
-        //         left: null,
-        //         right: null
-        //       }
-        //     }
-        //   });
-
-        //   if (handTracking) {
-        //     console.log('Hand tracking enabled successfully');
-            
-        //     // Optional: Add hand tracking event listeners
-        //     handTracking.onHandAddedObservable.add((hand) => {
-        //       console.log(`${hand.handedness} hand added`);
-        //     });
-            
-        //     handTracking.onHandRemovedObservable.add((hand) => {
-        //       console.log(`${hand.handedness} hand removed`);
-        //     });
-        //   } else {
-        //     console.warn('Hand tracking failed to enable');
-        //   }
-        // } catch (error) {
-        //   console.warn('Hand tracking not supported or failed to enable:', error);
-        // }
-
-
+        // Check scene metadata for disabling hand tracking and controllers
+       
+        const disableControllers = scene.metadata?.xrDisableControllers;
+        
+        // Disable controller models if requested
+        if (disableControllers && defaultXRExperience.input) {
+          defaultXRExperience.input.controllers.forEach((controller) => {
+            if (controller.motionController) {
+              controller.motionController.rootMesh?.setEnabled(false);
+            }
+          });
+          
+          // Also disable for any future controllers
+          defaultXRExperience.input.onControllerAddedObservable.add((controller) => {
+            if (controller.motionController) {
+              controller.motionController.rootMesh?.setEnabled(false);
+            }
+          });
+          console.log('XR controller models disabled via scene metadata');
+        }
+        
+     
       }
     }
   } catch {
