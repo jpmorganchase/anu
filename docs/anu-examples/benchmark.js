@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, PointerEventTypes } from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, PointerEventTypes, AbstractMesh } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Button, TextBlock, StackPanel, Control, ScrollViewer } from '@babylonjs/gui';
 import * as anu from '@jpmorganchase/anu'
 
@@ -10,6 +10,8 @@ export const benchmark = function(babylonEngine){
 
   //create a scene object using our engine
   const scene = new Scene(babylonEngine)
+
+  scene.clearColor = null;
 
   // Mark this scene to not use default environment and set custom XR camera position
   scene.metadata = { 
@@ -29,6 +31,7 @@ export const benchmark = function(babylonEngine){
   let currentSelection = null;
   let benchmarkData = null;
   let stopRequested = false;
+  let optimizedMode = false; // Track if optimizations are enabled
 
   // Benchmark configurations
   const INITIAL_CUBE_COUNT = 100; // Starting cube count
@@ -76,6 +79,38 @@ export const benchmark = function(babylonEngine){
     title.height = "80px";
     title.paddingBottom = "20px";
     mainPanel.addControl(title);
+    
+    // Mode toggle
+    const modePanel = new StackPanel();
+    modePanel.isVertical = false;
+    modePanel.height = "60px";
+    modePanel.paddingBottom = "10px";
+    mainPanel.addControl(modePanel);
+    
+    const modeLabel = new TextBlock();
+    modeLabel.text = "Mode: Standard";
+    modeLabel.color = "white";
+    modeLabel.fontSize = 32;
+    modeLabel.width = "300px";
+    modeLabel.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    modeLabel.paddingLeft = "20px";
+    modePanel.addControl(modeLabel);
+    
+    const toggleModeButton = Button.CreateSimpleButton("toggleMode", "Toggle Optimized");
+    toggleModeButton.width = "300px";
+    toggleModeButton.height = "50px";
+    toggleModeButton.color = "white";
+    toggleModeButton.background = "#6A1B9A";
+    toggleModeButton.thickness = 2;
+    toggleModeButton.cornerRadius = 10;
+    toggleModeButton.paddingLeft = "20px";
+    toggleModeButton.onPointerClickObservable.add(() => {
+      optimizedMode = !optimizedMode;
+      modeLabel.text = `Mode: ${optimizedMode ? 'Optimized' : 'Standard'}`;
+      modeLabel.color = optimizedMode ? "lime" : "white";
+      updateStatus(`Switched to ${optimizedMode ? 'Optimized' : 'Standard'} mode`);
+    });
+    modePanel.addControl(toggleModeButton);
     
     // Buttons container
     const buttonsPanel = new StackPanel();
@@ -301,6 +336,46 @@ export const benchmark = function(babylonEngine){
     return selection;
   }
 
+  // Apply optimizations to meshes and scene
+  function applyOptimizations(selection) {
+    if (!selection) return;
+    
+    // Apply scene-level optimizations
+    scene.autoClear = false; // Color buffer
+    scene.autoClearDepthAndStencil = false; // Depth and stencil
+    scene.blockMaterialDirtyMechanism = true;
+    scene.skipPointerMovePicking = true;
+    scene.freezeActiveMeshes();
+    
+    // Apply mesh-level optimizations
+    const meshes = selection._nodes || [];
+    meshes.forEach(mesh => {
+      if (mesh) {
+        mesh.freezeWorldMatrix();
+        mesh.doNotSyncBoundingInfo = true;
+        mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
+        
+        // Convert to unindexed mesh if possible (not for instances)
+        if (typeof mesh.convertToUnIndexedMesh === 'function') {
+          try {
+            mesh.convertToUnIndexedMesh();
+          } catch (e) {
+            // Some mesh types can't be converted, ignore errors
+          }
+        }
+      }
+    });
+  }
+
+  // Reset scene optimizations
+  function resetOptimizations() {
+    scene.autoClear = true;
+    scene.autoClearDepthAndStencil = true;
+    scene.blockMaterialDirtyMechanism = false;
+    scene.skipPointerMovePicking = false;
+    scene.unfreezeActiveMeshes();
+  }
+
   // Measure FPS for current scene
   function measureFPS() {
     return new Promise((resolve) => {
@@ -352,6 +427,9 @@ export const benchmark = function(babylonEngine){
       currentSelection = null;
     }
     
+    // Reset optimizations from previous test
+    resetOptimizations();
+    
     // Wait longer to ensure cleanup is complete (especially important for Quest)
     await new Promise(resolve => setTimeout(resolve, 500));
     
@@ -362,6 +440,11 @@ export const benchmark = function(babylonEngine){
     const startTime = performance.now();
     createCubes(method, benchmarkData);
     const creationTime = performance.now() - startTime;
+    
+    // Apply optimizations if in optimized mode
+    if (optimizedMode) {
+      applyOptimizations(currentSelection);
+    }
     
     // Wait for scene to stabilize after creating cubes (Quest needs more time to process)
     updateStatus(`Stabilizing ${method} with ${count} cubes...`);
@@ -517,7 +600,8 @@ export const benchmark = function(babylonEngine){
   function displayResults() {
     if (!resultsText) return;
     
-    let text = 'BENCHMARK RESULTS\n\n';
+    let text = 'BENCHMARK RESULTS\n';
+    text += `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n\n`;
     
     for (const method of BENCHMARK_METHODS) {
       if (!benchmarkResults[method] || benchmarkResults[method].length === 0) continue;
@@ -550,7 +634,8 @@ export const benchmark = function(babylonEngine){
     
     // Parse the results text to extract data
     const lines = resultsText.text.split('\n');
-    let csvContent = 'Method,Cubes,Create(ms),FPS\n';
+    let csvContent = `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n`;
+    csvContent += 'Method,Cubes,Create(ms),FPS\n';
     let currentMethod = '';
     
     // Parse each line
@@ -565,7 +650,7 @@ export const benchmark = function(babylonEngine){
       
       // Skip separator lines, headers, and notes
       if (line.startsWith('─') || line.startsWith('Cubes') || 
-          line.startsWith('Press G') ||
+          line.startsWith('Press G') || line.startsWith('Mode:') ||
           line === 'BENCHMARK RESULTS' || line === '') {
         continue;
       }
@@ -587,10 +672,11 @@ export const benchmark = function(babylonEngine){
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     
-    // Generate filename with timestamp
+    // Generate filename with timestamp and mode
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+    const mode = optimizedMode ? 'optimized' : 'standard';
     link.setAttribute('href', url);
-    link.setAttribute('download', `anu-benchmark-${timestamp}.csv`);
+    link.setAttribute('download', `anu-benchmark-${mode}-${timestamp}.csv`);
     link.style.visibility = 'hidden';
     
     document.body.appendChild(link);
