@@ -193,10 +193,7 @@ onMounted(async () => {
       },
       // Conditionally disable controller meshes based on scene metadata
       inputOptions: disableControllers ? {
-        doNotLoadControllerMeshes: true,
-        jointMeshes: {
-          disableDefaultHandMesh: true,
-        }
+        doNotLoadControllerMeshes: true
       } : undefined
     });
     xrSupported.value = true;
@@ -248,7 +245,19 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-        // Feature manager available for future use
+        // Enable hand tracking with disabled hand meshes if controllers are disabled
+        const disableControllers = scene.metadata?.xrDisableControllers;
+          try {
+            featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+              xrInput: defaultXRExperience.input,
+              jointMeshes: {
+                disableDefaultHandMesh: disableControllers,
+              },
+            });
+            console.log('Hand tracking enabled with disabled hand meshes');
+          } catch (error) {
+            console.warn('Hand tracking not available:', error);
+          }
       }
     }
   } catch {

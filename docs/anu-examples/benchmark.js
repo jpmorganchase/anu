@@ -352,8 +352,8 @@ export const benchmark = function(babylonEngine){
       currentSelection = null;
     }
     
-    // Wait a moment to ensure cleanup is complete
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Wait longer to ensure cleanup is complete (especially important for Quest)
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     // Create data outside of timing
     benchmarkData = createCubeData(count);
@@ -362,6 +362,10 @@ export const benchmark = function(babylonEngine){
     const startTime = performance.now();
     createCubes(method, benchmarkData);
     const creationTime = performance.now() - startTime;
+    
+    // Wait for scene to stabilize after creating cubes (Quest needs more time to process)
+    updateStatus(`Stabilizing ${method} with ${count} cubes...`);
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Measure FPS
     const fpsData = await measureFPS();
@@ -440,8 +444,8 @@ export const benchmark = function(babylonEngine){
           updateStatus('Waiting for FPS to stabilize...');
           await waitForFPSStabilization();
           
-          // Additional delay between tests to ensure cleanup
-          await new Promise(resolve => setTimeout(resolve, 500));
+          // Additional delay between tests to ensure cleanup (increased for Quest)
+          await new Promise(resolve => setTimeout(resolve, 1000));
           
           // Check if stop was requested during stabilization
           if (stopRequested) {
