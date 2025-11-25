@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3 } from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, PointerEventTypes } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Button, TextBlock, StackPanel, Control, ScrollViewer } from '@babylonjs/gui';
 import * as anu from '@jpmorganchase/anu'
 
@@ -31,7 +31,7 @@ export const benchmark = function(babylonEngine){
   let stopRequested = false;
 
   // Benchmark configurations
-  const INITIAL_CUBE_COUNT = 1000; // Starting cube count
+  const INITIAL_CUBE_COUNT = 500; // Starting cube count
   const MAX_CUBE_COUNT = 10000000; // Maximum cube count (10 million)
   const EXPONENTIAL_BASE = 1.25; // Base for exponential growth: y = base^x
   const FPS_SAMPLE_FRAMES = 60; // Number of frames to measure FPS
@@ -289,15 +289,9 @@ export const benchmark = function(babylonEngine){
     return new Promise((resolve) => {
       let frameCount = 0;
       const fpsReadings = [];
-      let lastTime = performance.now();
+      let observer = null;
       
       const measureFrame = () => {
-        // Don't render - let the main render loop handle it
-        // Just collect FPS data on each animation frame
-        const currentTime = performance.now();
-        const deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
-        
         // Collect FPS data
         const fps = babylonEngine.getFps();
         fpsReadings.push(fps);
@@ -314,19 +308,19 @@ export const benchmark = function(babylonEngine){
           }
         }
         
-        if (frameCount < FPS_SAMPLE_FRAMES) {
-          requestAnimationFrame(measureFrame);
-        } else {
-          // Calculate average FPS
+        if (frameCount >= FPS_SAMPLE_FRAMES) {
+          // Remove observer and calculate average FPS
+          if (observer) {
+            scene.onAfterRenderObservable.remove(observer);
+          }
           const avgFPS = fpsReadings.reduce((a, b) => a + b, 0) / fpsReadings.length;
           resolve({ fps: avgFPS });
         }
       };
       
-      // Wait a bit for scene to stabilize
+      // Wait a bit for scene to stabilize, then start observing frames
       setTimeout(() => {
-        lastTime = performance.now();
-        requestAnimationFrame(measureFrame);
+        observer = scene.onAfterRenderObservable.add(measureFrame);
       }, 500);
     });
   }
@@ -454,10 +448,10 @@ export const benchmark = function(babylonEngine){
       const fpsThreshold = 2; // FPS variance threshold
       let stableFrames = 0;
       let lastFPS = 0;
+      let observer = null;
       
       const checkStability = () => {
-        // Don't render - let the main render loop handle it
-        // Just check FPS on each animation frame
+        // Check FPS on each frame via observable
         const currentFPS = babylonEngine.getFps();
         
         // Check if FPS is stable (within threshold of last reading)
@@ -470,15 +464,17 @@ export const benchmark = function(babylonEngine){
         lastFPS = currentFPS;
         
         if (stableFrames >= targetStableFrames) {
+          // Remove observer and resolve
+          if (observer) {
+            scene.onAfterRenderObservable.remove(observer);
+          }
           resolve();
-        } else {
-          requestAnimationFrame(checkStability);
         }
       };
       
       // Start checking after a short delay
       setTimeout(() => {
-        requestAnimationFrame(checkStability);
+        observer = scene.onAfterRenderObservable.add(checkStability);
       }, 200);
     });
   }
@@ -577,6 +573,15 @@ export const benchmark = function(babylonEngine){
   window.addEventListener("keydown", (ev) => {
     // G key - Toggle GUI
     if (ev.key === 'g' || ev.key === 'G') {
+      if (guiPlane) {
+        guiPlane.setEnabled(!guiPlane.isEnabled());
+      }
+    }
+  });
+
+  // Double-click to toggle GUI
+  scene.onPointerObservable.add((pointerInfo) => {
+    if (pointerInfo.type === PointerEventTypes.POINTERDOUBLETAP) {
       if (guiPlane) {
         guiPlane.setEnabled(!guiPlane.isEnabled());
       }
