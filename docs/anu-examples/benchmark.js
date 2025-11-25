@@ -289,10 +289,14 @@ export const benchmark = function(babylonEngine){
     return new Promise((resolve) => {
       let frameCount = 0;
       const fpsReadings = [];
+      let lastTime = performance.now();
       
       const measureFrame = () => {
-        // Render the scene
-        scene.render();
+        // Don't render - let the main render loop handle it
+        // Just collect FPS data on each animation frame
+        const currentTime = performance.now();
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
         
         // Collect FPS data
         const fps = babylonEngine.getFps();
@@ -321,6 +325,7 @@ export const benchmark = function(babylonEngine){
       
       // Wait a bit for scene to stabilize
       setTimeout(() => {
+        lastTime = performance.now();
         requestAnimationFrame(measureFrame);
       }, 500);
     });
@@ -451,9 +456,8 @@ export const benchmark = function(babylonEngine){
       let lastFPS = 0;
       
       const checkStability = () => {
-        // Render a frame to get accurate FPS
-        scene.render();
-        
+        // Don't render - let the main render loop handle it
+        // Just check FPS on each animation frame
         const currentFPS = babylonEngine.getFps();
         
         // Check if FPS is stable (within threshold of last reading)
