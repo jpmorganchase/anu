@@ -213,15 +213,25 @@ onMounted(async () => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
           
-          // Position XR camera back 3 units on Z-axis after XR session is ready
+          // Position XR camera after XR session is ready
           defaultXRExperience.baseExperience.sessionManager.onXRFrameObservable.addOnce(() => {
             const xrCamera = defaultXRExperience.baseExperience.camera;
             if (xrCamera) {
               // Check if scene has custom XR camera position
               const customXRPosition = scene.metadata?.xrCameraPosition;
               if (customXRPosition) {
-                xrCamera.position = customXRPosition;
-                console.log('XR Camera positioned at custom position:', xrCamera.position);
+                // For AR, we need to set the position differently since it uses real-world tracking
+                const sessionMode = defaultXRExperience.baseExperience.sessionManager.session?.mode;
+                if (sessionMode === 'immersive-ar') {
+                  // In AR, adjust the camera's initial position
+                  // AR cameras are typically locked to real-world tracking, so we set initial position
+                  xrCamera.position.copyFrom(customXRPosition);
+                  console.log('AR Camera positioned at custom position:', xrCamera.position);
+                } else {
+                  // VR mode - standard positioning works
+                  xrCamera.position = customXRPosition;
+                  console.log('VR Camera positioned at custom position:', xrCamera.position);
+                }
               } else {
                 // Default position
                 xrCamera.position = new Vector3(0, 0.5, -2.5);
