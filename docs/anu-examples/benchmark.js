@@ -11,8 +11,11 @@ export const benchmark = function(babylonEngine){
   //create a scene object using our engine
   const scene = new Scene(babylonEngine)
 
-  // Mark this scene to not use default environment
-  scene.metadata = { noDefaultEnvironment: true };
+  // Mark this scene to not use default environment and set custom XR camera position
+  scene.metadata = { 
+    noDefaultEnvironment: true,
+    xrCameraPosition: new Vector3(0, 60, 110) 
+  };
 
   //Add lights and a camera
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
