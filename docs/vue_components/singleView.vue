@@ -180,6 +180,9 @@ onMounted(async () => {
   }
 
   try {
+    // Check scene metadata for disabling controllers
+    const disableControllers = scene.metadata?.xrDisableControllers;
+    
     //{ floorMeshes: [env.ground] }
     defaultXRExperience = await scene.createDefaultXRExperienceAsync({
       // Enable multiview for better VR performance and hand tracking
@@ -187,7 +190,14 @@ onMounted(async () => {
       // Ensure AR compatibility
       uiOptions: {
         sessionMode: 'immersive-vr'  // Default to VR, we'll handle AR manually
-      }
+      },
+      // Conditionally disable controller meshes based on scene metadata
+      inputOptions: disableControllers ? {
+        doNotLoadControllerMeshes: true,
+        jointMeshes: {
+          disableDefaultHandMesh: true,
+        }
+      } : undefined
     });
     xrSupported.value = true;
 
@@ -238,28 +248,7 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-        // Check scene metadata for disabling hand tracking and controllers
-       
-        const disableControllers = scene.metadata?.xrDisableControllers;
-        
-        // Disable controller models if requested
-        if (disableControllers && defaultXRExperience.input) {
-          defaultXRExperience.input.controllers.forEach((controller) => {
-            if (controller.motionController) {
-              controller.motionController.rootMesh?.setEnabled(false);
-            }
-          });
-          
-          // Also disable for any future controllers
-          defaultXRExperience.input.onControllerAddedObservable.add((controller) => {
-            if (controller.motionController) {
-              controller.motionController.rootMesh?.setEnabled(false);
-            }
-          });
-          console.log('XR controller models disabled via scene metadata');
-        }
-        
-     
+        // Feature manager available for future use
       }
     }
   } catch {

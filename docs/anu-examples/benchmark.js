@@ -31,7 +31,7 @@ export const benchmark = function(babylonEngine){
   let stopRequested = false;
 
   // Benchmark configurations
-  const INITIAL_CUBE_COUNT = 500; // Starting cube count
+  const INITIAL_CUBE_COUNT = 100; // Starting cube count
   const MAX_CUBE_COUNT = 10000000; // Maximum cube count (10 million)
   const EXPONENTIAL_BASE = 1.25; // Base for exponential growth: y = base^x
   const FPS_SAMPLE_FRAMES = 60; // Number of frames to measure FPS
@@ -85,28 +85,44 @@ export const benchmark = function(babylonEngine){
     mainPanel.addControl(buttonsPanel);
     
     // Start button
-    const startButton = Button.CreateSimpleButton("startBtn", "Start Benchmark");
-    startButton.width = "400px";
+    const startButton = Button.CreateSimpleButton("startBtn", "Start");
+    startButton.width = "180px";
     startButton.height = "60px";
     startButton.color = "white";
     startButton.background = "green";
     startButton.thickness = 2;
     startButton.cornerRadius = 10;
-    startButton.paddingRight = "10px";
+    startButton.paddingRight = "5px";
     startButton.onPointerClickObservable.add(() => {
-      runBenchmarks();
+      runBenchmarks(false);
     });
     buttonsPanel.addControl(startButton);
     
+    // Start with Hidden GUI button
+    const startHiddenButton = Button.CreateSimpleButton("startHiddenBtn", "Start Hidden");
+    startHiddenButton.width = "180px";
+    startHiddenButton.height = "60px";
+    startHiddenButton.color = "white";
+    startHiddenButton.background = "#2E7D32";
+    startHiddenButton.thickness = 2;
+    startHiddenButton.cornerRadius = 10;
+    startHiddenButton.paddingLeft = "5px";
+    startHiddenButton.paddingRight = "5px";
+    startHiddenButton.onPointerClickObservable.add(() => {
+      runBenchmarks(true);
+    });
+    buttonsPanel.addControl(startHiddenButton);
+    
     // Stop button
     const stopButton = Button.CreateSimpleButton("stopBtn", "Stop");
-    stopButton.width = "200px";
+    stopButton.width = "140px";
     stopButton.height = "60px";
     stopButton.color = "white";
     stopButton.background = "orange";
     stopButton.thickness = 2;
     stopButton.cornerRadius = 10;
-    stopButton.paddingLeft = "10px";
+    stopButton.paddingLeft = "5px";
+    stopButton.paddingRight = "5px";
     stopButton.isEnabled = false;
     stopButton.onPointerClickObservable.add(() => {
       stopRequested = true;
@@ -116,28 +132,29 @@ export const benchmark = function(babylonEngine){
     buttonsPanel.addControl(stopButton);
     
     // Clear button
-    const clearButton = Button.CreateSimpleButton("clearBtn", "Clear Scene");
-    clearButton.width = "300px";
+    const clearButton = Button.CreateSimpleButton("clearBtn", "Clear");
+    clearButton.width = "140px";
     clearButton.height = "60px";
     clearButton.color = "white";
     clearButton.background = "red";
     clearButton.thickness = 2;
     clearButton.cornerRadius = 10;
-    clearButton.paddingLeft = "10px";
+    clearButton.paddingLeft = "5px";
+    clearButton.paddingRight = "5px";
     clearButton.onPointerClickObservable.add(() => {
       clearScene();
     });
     buttonsPanel.addControl(clearButton);
     
     // Download CSV button
-    const downloadButton = Button.CreateSimpleButton("downloadBtn", "Download CSV");
-    downloadButton.width = "250px";
+    const downloadButton = Button.CreateSimpleButton("downloadBtn", "CSV");
+    downloadButton.width = "140px";
     downloadButton.height = "60px";
     downloadButton.color = "white";
     downloadButton.background = "#2196F3";
     downloadButton.thickness = 2;
     downloadButton.cornerRadius = 10;
-    downloadButton.paddingLeft = "10px";
+    downloadButton.paddingLeft = "5px";
     downloadButton.onPointerClickObservable.add(() => {
       downloadCSV();
     });
@@ -191,7 +208,7 @@ export const benchmark = function(babylonEngine){
     resultsText.resizeToFit = true;
     scrollViewer.addControl(resultsText);
     
-    return { startButton, stopButton, clearButton };
+    return { startButton, startHiddenButton, stopButton, clearButton };
   }
 
   // Create UI
@@ -359,11 +376,17 @@ export const benchmark = function(babylonEngine){
 
 
   // Run all benchmarks
-  async function runBenchmarks() {
+  async function runBenchmarks(hideGUI = false) {
     stopRequested = false;
     updateStatus('Starting benchmarks...');
     if (guiButtons.startButton) guiButtons.startButton.isEnabled = false;
+    if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = false;
     if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = true;
+    
+    // Hide GUI if requested
+    if (hideGUI && guiPlane) {
+      guiPlane.setEnabled(false);
+    }
     
     for (const method of BENCHMARK_METHODS) {
       if (stopRequested) break;
@@ -437,7 +460,14 @@ export const benchmark = function(babylonEngine){
       updateStatus('Benchmarks complete!');
     }
     if (guiButtons.startButton) guiButtons.startButton.isEnabled = true;
+    if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = true;
     if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = false;
+    
+    // Show GUI again if it was hidden
+    if (hideGUI && guiPlane) {
+      guiPlane.setEnabled(true);
+    }
+    
     clearScene();
   }
 
