@@ -18,7 +18,8 @@
     "compile": "vite build",
     "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "typedoc": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts"
   },
   "repository": {
@@ -46,7 +47,7 @@
   },
   "devDependencies": {
     "@babylonjs/core": "^8.1.1",
-    "@playwright/test": "^1.56.1",
+    "@eslint/js": "^9.39.1",
     "@types/chroma-js": "^2.4.3",
     "@types/d3": "^7.4.0",
     "@types/earcut": "^2.1.4",
@@ -55,12 +56,15 @@
     "@types/topojson-client": "^3.1.4",
     "@types/topojson-server": "^3.0.4",
     "@types/topojson-simplify": "^3.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "^2.7.1",
-    "tslint": "^6.0.0",
-    "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.4.3",
+    "typescript-eslint": "^8.47.0",
     "vite": "^6.2.2",
     "vite-plugin-dts": "^2.3.0",
     "vite-plugin-externalize-deps": "^0.9.0"

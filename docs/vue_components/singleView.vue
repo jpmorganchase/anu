@@ -1,6 +1,6 @@
 <template>
   <div class="singleView-container">
-    <canvas ref="canvas" class="singleView-canvas" id="singleView-canvas"></canvas>
+    <canvas ref="canvas" :class="['singleView-canvas', { fullscreen: fullscreen }]" id="singleView-canvas"></canvas>
     <div class="xr-controls">
       <button 
         @click="startVRSession" 
@@ -36,6 +36,10 @@ import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState} from '@babylon
 
 const props = defineProps({
   scene: Function,
+  fullscreen: {
+    type: Boolean,
+    default: false
+  }
 });
 
 let canvas = ref();
@@ -168,11 +172,17 @@ onMounted(async () => {
   let scene = await props.scene(babylonEngine);
   currentScene = scene;
 
-  sceneEnvironment = scene.createDefaultEnvironment();
-  sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
-  sceneEnvironment.ground.position = new Vector3(0, -2, 0);
+  // Only create default environment if scene doesn't opt out
+  if (!scene.metadata?.noDefaultEnvironment) {
+    sceneEnvironment = scene.createDefaultEnvironment();
+    sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
+    sceneEnvironment.ground.position = new Vector3(0, -2, 0);
+  }
 
   try {
+    // Check scene metadata for disabling controllers
+    const disableControllers = scene.metadata?.xrDisableControllers;
+    
     //{ floorMeshes: [env.ground] }
     defaultXRExperience = await scene.createDefaultXRExperienceAsync({
       // Enable multiview for better VR performance and hand tracking
@@ -180,7 +190,11 @@ onMounted(async () => {
       // Ensure AR compatibility
       uiOptions: {
         sessionMode: 'immersive-vr'  // Default to VR, we'll handle AR manually
-      }
+      },
+      // Conditionally disable controller meshes based on scene metadata
+      inputOptions: disableControllers ? {
+        doNotLoadControllerMeshes: true
+      } : undefined
     });
     xrSupported.value = true;
 
@@ -199,13 +213,30 @@ onMounted(async () => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
           
-          // Position XR camera back 3 units on Z-axis after XR session is ready
+          // Position XR camera after XR session is ready
           defaultXRExperience.baseExperience.sessionManager.onXRFrameObservable.addOnce(() => {
             const xrCamera = defaultXRExperience.baseExperience.camera;
             if (xrCamera) {
-              // Simply move camera back 3 units on Z-axis
-              xrCamera.position = new Vector3(0, 0.5, -2.5);
-              console.log('XR Camera positioned at:', xrCamera.position);
+              // Check if scene has custom XR camera position
+              const customXRPosition = scene.metadata?.xrCameraPosition;
+              if (customXRPosition) {
+                // For AR, we need to set the position differently since it uses real-world tracking
+                const sessionMode = defaultXRExperience.baseExperience.sessionManager.session?.mode;
+                if (sessionMode === 'immersive-ar') {
+                  // In AR, adjust the camera's initial position
+                  // AR cameras are typically locked to real-world tracking, so we set initial position
+                  xrCamera.position.copyFrom(customXRPosition);
+                  console.log('AR Camera positioned at custom position:', xrCamera.position);
+                } else {
+                  // VR mode - standard positioning works
+                  xrCamera.position = customXRPosition;
+                  console.log('VR Camera positioned at custom position:', xrCamera.position);
+                }
+              } else {
+                // Default position
+                xrCamera.position = new Vector3(0, 0.5, -2.5);
+                console.log('XR Camera positioned at default position:', xrCamera.position);
+              }
             }
           });
           
@@ -224,53 +255,19 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-//         // Enable multiview for better VR performance
-//         try {
-//           const multiview = featureManager.enableFeature(WebXRFeatureName.LAYERS, "latest", { preferMultiviewOnInit: true }, true, false);
-
-// });
-//           if (multiview) {
-//             console.log('Multiview enabled successfully');
-//           } else {
-//             console.log('Multiview not supported or failed to enable');
-//           }
-//         } catch (error) {
-//           console.warn('Multiview not supported:', error);
-//         }
-
-        // // Enable hand tracking with proper error handling
-        // try {
-        //   const handTracking = featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, 'latest', {
-        //     xrInput: defaultXRExperience.input,
-        //     jointMeshes: {
-        //       enablePhysics: false,
-        //       sourceMeshes: null, // Use default hand mesh
-        //       handMeshes: {
-        //         left: null,
-        //         right: null
-        //       }
-        //     }
-        //   });
-
-        //   if (handTracking) {
-        //     console.log('Hand tracking enabled successfully');
-            
-        //     // Optional: Add hand tracking event listeners
-        //     handTracking.onHandAddedObservable.add((hand) => {
-        //       console.log(`${hand.handedness} hand added`);
-        //     });
-            
-        //     handTracking.onHandRemovedObservable.add((hand) => {
-        //       console.log(`${hand.handedness} hand removed`);
-        //     });
-        //   } else {
-        //     console.warn('Hand tracking failed to enable');
-        //   }
-        // } catch (error) {
-        //   console.warn('Hand tracking not supported or failed to enable:', error);
-        // }
-
-
+        // Enable hand tracking with disabled hand meshes if controllers are disabled
+        const disableControllers = scene.metadata?.xrDisableControllers;
+          try {
+            featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+              xrInput: defaultXRExperience.input,
+              jointMeshes: {
+                disableDefaultHandMesh: disableControllers,
+              },
+            });
+            console.log('Hand tracking enabled with disabled hand meshes');
+          } catch (error) {
+            console.warn('Hand tracking not available:', error);
+          }
       }
     }
   } catch {
@@ -367,5 +364,9 @@ onBeforeUnmount(() => {
 .singleView-canvas {
   width: 100%;
   height: 50vh;
+}
+
+.singleView-canvas.fullscreen {
+  height: calc(100vh - 62px); /* Subtract navbar height (typically 64px in VitePress) */
 }
 </style>
