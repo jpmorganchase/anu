@@ -22,14 +22,14 @@ export const transitionTest = (engine) => {
     .name('test1-box')
     .position(new Vector3(-2, 0, 0))
     .transition({ duration: 1000 })
-    .position(new Vector3(5, 5, 5));
+    .position(new Vector3(5, 5, 5))
 
   // Test 2: Nested property transition with new proxy method - position.x
   anu.bind('sphere', { diameter: 1 }, [{}, {}, {}])
     .name('test2-sphere')
     .position(new Vector3(0, 0, 0))
     .transition({ duration: 1000 })
-    .positionX(10);
+    .position.x(10);
 
   // Test 3: Old method - props with position object
   anu.bind('box', {}, [{}, {}, {}])

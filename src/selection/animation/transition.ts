@@ -73,10 +73,10 @@ export function transition(
  * @param value - The target value for the property. This can be a static value or a function that returns a value for each node. If a function is provided, it receives the data bound to the node, the node itself, and the index of the node as arguments.
  */
 export function createTransition(selection: Selection, accessor: string, value: any) {
-  let sequence = selection.transitions.length - 1;
+  let sequence = selection.getTransitions().length - 1;
   selection.selected.forEach(async (node, i) => {
     if (hasIn(node, accessor)) {
-      let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
+      let transitionOptions: TransitionOptions = selection.getTransitions()[sequence].transitionOptions[i];
       let duration = (transitionOptions.duration || 250) / 1000;
       let fps: number = transitionOptions.framePerSecond || 30;
       let delay: number = transitionOptions.delay || 0;
@@ -86,15 +86,15 @@ export function createTransition(selection: Selection, accessor: string, value: 
       let wait: boolean = (transitionOptions.sequence ?? true);
       let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
       
-      const transition = selection.transitions[sequence];
+      const transition = selection.getTransitions()[sequence];
       const animationsCount = transition.animatables.length;
 
       let animatable: Animatable = new Animatable(node.getScene(), node);
       animatable.pause();
       let promise: Promise<Animatable> = animatable.waitAsync();
-      selection.transitions[sequence].animatables.push({ waitingPromise: promise});
+      selection.getTransitions()[sequence].animatables.push({ waitingPromise: promise});
 
-      const lastAnimatables = selection.transitions[Math.max(0, sequence - 1)].animatables;
+      const lastAnimatables = selection.getTransitions()[Math.max(0, sequence - 1)].animatables;
       let index = (lastAnimatables.length > animationsCount)? animationsCount : (animationsCount - lastAnimatables.length)
       let lastAnimation = lastAnimatables[index];
       if (sequence !== 0 && wait) await lastAnimation.waitingPromise
@@ -133,12 +133,12 @@ export function createTransition(selection: Selection, accessor: string, value: 
  * @param properties Object of key value pairs for the properties to be set or changed, e.g., \{\"renderingGroupId": 2, "material.alpha": 0.2\}.
  */
 export function createTransitions(selection: Selection,  properties: {}) {
-  let sequence = selection.transitions.length - 1;
+  let sequence = selection.getTransitions().length - 1;
   selection.selected.forEach(async (node, i) => {
     for (let accessor in properties) {
       if (hasIn(node, accessor)) {
         let value = properties[accessor]
-        let transitionOptions: TransitionOptions = selection.transitions[sequence].transitionOptions[i];
+        let transitionOptions: TransitionOptions = selection.getTransitions()[sequence].transitionOptions[i];
         let duration = (transitionOptions.duration || 250) / 1000;
         let fps: number = transitionOptions.framePerSecond || 30;
         let delay: number = transitionOptions.delay || 0;
@@ -148,14 +148,14 @@ export function createTransitions(selection: Selection,  properties: {}) {
         let wait: boolean = (transitionOptions.sequence ?? true);
         let onEnd: () => void = transitionOptions.onAnimationEnd || undefined;
 
-        const transition = selection.transitions[sequence];
+        const transition = selection.getTransitions()[sequence];
         const animationsCount = transition.animatables.length;
 
         let animatable: Animatable = new Animatable(node.getScene(), node);
         animatable.pause();
         let promise: Promise<Animatable> = animatable.waitAsync();
-        selection.transitions[sequence].animatables.push({ waitingPromise: promise});
-        const lastAnimatables = selection.transitions[Math.max(0, sequence - 1)].animatables;
+        selection.getTransitions()[sequence].animatables.push({ waitingPromise: promise});
+        const lastAnimatables = selection.getTransitions()[Math.max(0, sequence - 1)].animatables;
         let index = (lastAnimatables.length > animationsCount)? animationsCount : (animationsCount - lastAnimatables.length)
         let lastAnimation = lastAnimatables[index];
         if (sequence !== 0 && wait) await lastAnimation.waitingPromise

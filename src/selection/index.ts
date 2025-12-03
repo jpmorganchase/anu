@@ -64,10 +64,10 @@ import type { DynamicProperties } from './base-types';
 export class Selection {
   selected: Node[];
   scene?: Scene;
-  transitions: Transition[];
+  protected transitions: Transition[];
   
   // Temp store for property path string for chaining
-  propertyPath: string = '';
+  private propertyPath: string = '';
 
   // Index signature to allow dynamic properties
   [K: string]: any;
@@ -79,152 +79,187 @@ export class Selection {
 
     // Create the proxy reference that will be returned  
     let proxyRef: Selection;
+    let proxy: any; // Forward declaration for use in helper functions
+    const target = this; // Reference to the actual Selection instance
+    
+    // Helper function to evaluate property path on a node
+    const evaluatePropertyPath = (node: any, path: string) => {
+      const parts = path.split('.');
+      let current = node;
+      for (const part of parts) {
+        if (current && typeof current === 'object' && part in current) {
+          current = current[part];
+        } else {
+          return undefined;
+        }
+      }
+      return current;
+    };
+
+    // Helper function to check if property path exists on nodes
+    const hasPropertyPath = (path: string) => {
+      return this.selected.some(node => {
+        const parts = path.split('.');
+        let current = node;
+        for (let i = 0; i < parts.length; i++) {
+          if (current && typeof current === 'object' && parts[i] in current) {
+            current = current[parts[i]];
+          } else {
+            // Property doesn't exist in the chain
+            return false;
+          }
+        }
+        // If we made it through all parts, the path is valid (even if final value is null)
+        return true;
+      });
+    };
+
+    // Helper function to check if we should use transitions
+    const shouldUseTransition = () => {
+      return this.transitions.length > 0;
+    };
+
+    // Factory function to dynamically create proxy methods for both direct properties, accessors, methods, and nested paths. 
+    const createProxyMethod = (accessor: string, isNestedPath: boolean) => {
+      return new Proxy(function(...args: any[]) {
+        if (args.length > 0) {
+          // Check if we should use transitions
+          if (shouldUseTransition()) {
+            console.log(`Creating transition for property path '${accessor}' with arguments:`, args);
+            createTransition(proxyRef, accessor, args[0]);
+            target.propertyPath = '';
+            return proxyRef;
+          }
+          
+          // Function call - evaluate and set/call
+          target.selected.forEach((node, i) => {
+            let parent: any;
+            let lastProp: string;
+            
+            if (isNestedPath) {
+              // Handle nested path like "material.diffuseColor"
+              const pathParts = accessor.split('.');
+              lastProp = pathParts.pop()!;
+              const parentPath = pathParts.join('.');
+              parent = parentPath ? evaluatePropertyPath(node, parentPath) : node;
+            } else {
+              // Handle direct property like "position"
+              parent = node;
+              lastProp = accessor;
+            }
+            
+            if (parent && typeof parent === 'object' && lastProp in parent) {
+              const targetProperty = parent[lastProp];
+              
+              if (typeof targetProperty === 'function') {
+                // Process arguments and call method
+                const processedArgs = args.map(arg => {
+                  return arg instanceof Function ? 
+                    arg((node.metadata?.data ?? {}), node, i) : arg;
+                });
+                targetProperty.apply(parent, processedArgs);
+              } else {
+                // Set property value
+                const value = args[0];
+                const actualValue = value instanceof Function ? 
+                  value((node.metadata?.data ?? {}), node, i) : value;
+                
+                // Type validation (only for direct properties)
+                if (!isNestedPath) {
+                  const currentValue = parent[lastProp];
+                  const expectedType = typeof currentValue;
+                  
+                  if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
+                    const actualType = typeof actualValue;
+                    
+                    if (expectedType !== actualType && expectedType !== 'object') {
+                      console.warn(`Type mismatch for property '${lastProp}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
+                      return;
+                    }
+                  }
+                }
+                
+                parent[lastProp] = actualValue;
+              }
+            }
+          });
+          
+          // Clear property path and return proxy for chaining
+          target.propertyPath = '';
+          return proxyRef;
+        } else {
+          // Property access - return current values
+          const propertyValues = target.selected.map(node => {
+            const value = isNestedPath ? 
+              evaluatePropertyPath(node, accessor) : 
+              ((node && typeof node === 'object' && accessor in node) ? (node as any)[accessor] : undefined);
+            return typeof value === 'function' ? value.bind(node) : value;
+          });
+          
+          // Clear property path
+          target.propertyPath = '';
+          return propertyValues;
+        }
+      }, {
+        get(methodTarget: any, nestedProp: string | symbol) {
+          if (typeof nestedProp === 'symbol') {
+            return methodTarget[nestedProp];
+          }
+          
+          if (isNestedPath) {
+            // For nested paths, build extended path and validate
+            const extendedPath = `${accessor}.${nestedProp}`;
+            
+            if (hasPropertyPath(extendedPath)) {
+              target.propertyPath = accessor;
+              return proxy[nestedProp];
+            } else {
+              target.propertyPath = '';
+              return undefined;
+            }
+          } else {
+            // For direct properties, store path for next access
+            target.propertyPath = accessor;
+            return proxy[nestedProp];
+          }
+        }
+      });
+    };
     
     // Return a Proxy that intercepts property access, cast to include dynamic properties  
-    const proxy = new Proxy(this, {
+    proxy = new Proxy(this, {
       get(target: Selection, prop: string | symbol, receiver: any) {
         // Handle symbols first
         if (typeof prop === 'symbol') {
           return Reflect.get(target, prop, receiver);
         }
 
-        // Helper function to evaluate property path on a node
-        const evaluatePropertyPath = (node: any, path: string) => {
-          const parts = path.split('.');
-          let current = node;
-          for (const part of parts) {
-            if (current && typeof current === 'object' && part in current) {
-              current = current[part];
-            } else {
-              return undefined;
-            }
-          }
-          return current;
-        };
-
-        // Helper function to check if property path exists on nodes
-        const hasPropertyPath = (path: string) => {
-          return target.selected.some(node => {
-            const value = evaluatePropertyPath(node, path);
-            // Consider the path valid if we can evaluate it, even if the value is null/undefined
-            // This allows accessing nested properties on nullable types
-            const parts = path.split('.');
-            let current = node;
-            for (let i = 0; i < parts.length; i++) {
-              if (current && typeof current === 'object' && parts[i] in current) {
-                current = current[parts[i]];
-              } else {
-                // Property doesn't exist in the chain
-                return false;
-              }
-            }
-            // If we made it through all parts, the path is valid (even if final value is null)
-            return true;
-          });
-        };
-
-        // Helper function to check if we should use transitions
-        const shouldUseTransition = () => {
-          return target.transitions.length > 0;
-        };
-
-        // IMPORTANT: Check for stored property path BEFORE checking Selection class properties
-        // This allows nested paths like .material.diffuseColor to work even when diffuseColor
-        // is also a method on the Selection class
+        // Check for stored property path to build nested paths like .material.diffuseColor
+        // This must come BEFORE checking Selection class properties to handle cases where
+        // a nested property name conflicts with a Selection method (e.g., material.diffuseColor)
         if (target.propertyPath && typeof prop === 'string') {
           const newPath = `${target.propertyPath}.${prop}`;
           
           // Check if the new path exists on any selected nodes
           if (hasPropertyPath(newPath)) {
-            // Create a proxy function for the extended path
-            const pathMethod = new Proxy(function(...args: any[]) {
-              if (args.length > 0) {
-                // Check if we should use transitions
-                if (shouldUseTransition()) {
-                  // Use createTransition for animated property changes
-                  createTransition(target as Selection, newPath, args[0]);
-                  target.propertyPath = '';
-                  return proxyRef;
-                }
-                
-                // Function call - evaluate the path and set/call
-                target.selected.forEach((node, i) => {
-                  const pathParts = newPath.split('.');
-                  const lastProp = pathParts.pop()!;
-                  const parentPath = pathParts.join('.');
-                  
-                  const parent = parentPath ? evaluatePropertyPath(node, parentPath) : node;
-                  
-                  if (parent && typeof parent === 'object' && lastProp in parent) {
-                    const targetProperty = parent[lastProp];
-                    
-                    if (typeof targetProperty === 'function') {
-                      // Process arguments and call method
-                      const processedArgs = args.map(arg => {
-                        return arg instanceof Function ? 
-                          arg((node.metadata?.data ?? {}), node, i) : arg;
-                      });
-                      targetProperty.apply(parent, processedArgs);
-                    } else {
-                      // Set property value
-                      const value = args[0];
-                      const actualValue = value instanceof Function ? 
-                        value((node.metadata?.data ?? {}), node, i) : value;
-                      parent[lastProp] = actualValue;
-                    }
-                  }
-                });
-                
-                // Clear property path and return proxy for chaining
-                target.propertyPath = '';
-                return proxyRef;
-              } else {
-                // Property access - evaluate and return values
-                const propertyValues = target.selected.map(node => {
-                  // Evaluate the nested property path
-                  const value = evaluatePropertyPath(node, newPath);
-                  // Return the value even if it's null/undefined (important for nullable properties like material)
-                  return value;
-                });
-                
-                // Clear property path
-                target.propertyPath = '';
-                return propertyValues;
-              }
-            }, {
-              get(methodTarget: any, nestedProp: string | symbol) {
-                if (typeof nestedProp === 'symbol') {
-                  return methodTarget[nestedProp];
-                }
-                
-                // Build the extended path
-                const extendedPath = `${newPath}.${nestedProp}`;
-                
-                // Check if this extended path exists
-                if (hasPropertyPath(extendedPath)) {
-                  // Set the property path and recursively create another proxy method
-                  target.propertyPath = newPath;
-                  // Return the proxy, which will trigger the main get handler with the extended path
-                  return proxy[nestedProp];
-                } else {
-                  // Path doesn't exist, return undefined
-                  target.propertyPath = '';
-                  return undefined;
-                }
-              }
-            });
-
-            return pathMethod;
+            // Create a proxy function for the extended path using the factory
+            return createProxyMethod(newPath, true);
           } else {
-            // Path doesn't exist, clear it and return undefined
+            // Path doesn't exist, clear it and check if it's a Selection class property instead
             target.propertyPath = '';
+            
+            // Check if this is actually a Selection class property
+            if (prop in target) {
+              return Reflect.get(target, prop);
+            }
+            
             throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
           }
         }
 
-        // IMPORTANT: Check if the property exists on the Selection class FIRST
-        // This ensures Selection methods like tween, transition, etc. are not intercepted
-        // even if they coincidentally exist on Babylon nodes
+        // Check if the property exists on the Selection class
+        // This ensures Selection methods like tween, transition, etc. are accessible
+        // when there's no stored property path
         if (typeof prop === 'string' && prop in target) {
           return Reflect.get(target, prop);
         }
@@ -236,82 +271,8 @@ export class Selection {
           );
 
           if (hasProperty) {
-            // Create a proxy function that handles method calls and property access
-            const dynamicMethod = new Proxy(function(...args: any[]) {
-              if (args.length > 0) {
-                // Check if we should use transitions for node property changes
-                if (shouldUseTransition()) {
-                  // Use createTransition for animated property changes on node properties only
-                  createTransition(target as Selection, prop, args[0]);
-                  target.propertyPath = '';
-                  return proxyRef;
-                }
-                
-                // Function call - operate directly on the property
-                target.selected.forEach((node, i) => {
-                  if (node && typeof node === 'object' && prop in node) {
-                    const nodeProperty = (node as any)[prop];
-                    
-                    if (typeof nodeProperty === 'function') {
-                      // Process arguments and call method
-                      const processedArgs = args.map(arg => {
-                        return arg instanceof Function ? 
-                          arg((node.metadata?.data ?? {}), node, i) : arg;
-                      });
-                      nodeProperty.apply(node, processedArgs);
-                    } else {
-                      // Set property value
-                      const value = args[0];
-                      const actualValue = value instanceof Function ? 
-                        value((node.metadata?.data ?? {}), node, i) : value;
-                      
-                      // Type validation
-                      const currentValue = (node as any)[prop];
-                      const expectedType = typeof currentValue;
-                      
-                      if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
-                        const actualType = typeof actualValue;
-                        
-                        if (expectedType !== actualType && expectedType !== 'object') {
-                          console.warn(`Type mismatch for property '${prop}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
-                          return proxyRef;
-                        }
-                      }
-                      
-                      (node as any)[prop] = actualValue;
-                    }
-                  }
-                });
-                
-                // Clear property path and return proxy for chaining
-                target.propertyPath = '';
-                return proxyRef;
-              } else {
-                // Property access without function call - return values
-                const propertyValues = target.selected
-                  .filter(node => node && typeof node === 'object' && prop in node)
-                  .map(node => {
-                    const value = (node as any)[prop];
-                    return typeof value === 'function' ? value.bind(node) : value;
-                  });
-                
-                // Clear property path
-                target.propertyPath = '';
-                return propertyValues;
-              }
-            }, {
-              get(methodTarget: any, nestedProp: string | symbol) {
-                if (typeof nestedProp === 'symbol') {
-                  return methodTarget[nestedProp];
-                }
-                
-                // Store the property path for chaining
-                target.propertyPath = prop;
-                return proxy[nestedProp];
-              }
-            });
-
-            return dynamicMethod;
+            // Create a proxy function that handles method calls and property access using the factory
+            return createProxyMethod(prop, false);
           }
         }
 
@@ -340,6 +301,13 @@ export class Selection {
    */
   public updateTransitions(transition: Transition) {
     this.transitions.push(transition);
+  }
+
+  /**
+   * Gets the transitions array (read-only access)
+   */
+  public getTransitions(): Transition[] {
+    return this.transitions;
   }
 
   public select = select;
