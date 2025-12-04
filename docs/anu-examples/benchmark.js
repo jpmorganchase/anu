@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, PointerEventTypes, AbstractMesh } from '@babylonjs/core';
+import { HemisphericLight, ArcRotateCamera, Vector3, Scene, MeshBuilder, StandardMaterial, Color3, PointerEventTypes, AbstractMesh, ScenePerformancePriority } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Button, TextBlock, StackPanel, Control, ScrollViewer } from '@babylonjs/gui';
 import * as anu from '@jpmorganchase/anu'
 
@@ -38,8 +38,8 @@ export const benchmark = function(babylonEngine){
   // Benchmark configurations
   const INITIAL_CUBE_COUNT = 100; // Starting cube count
   const MAX_CUBE_COUNT = 10000000; // Maximum cube count (10 million)
-  const EXPONENTIAL_BASE = 1.25; // Base for exponential growth: y = base^x
-  const FPS_SAMPLE_FRAMES = 60; // Number of frames to measure FPS
+  const EXPONENTIAL_BASE = 1.33; // Base for exponential growth: y = base^x
+  const FPS_SAMPLE_DURATION = 5000; // Duration to measure FPS in milliseconds (5 seconds)
   const FPS_THRESHOLD = 30; // Stop when FPS drops below this for 2 consecutive tests
   const BENCHMARK_METHODS = ['bind', 'bindClone', 'bindInstance', 'bindThinInstance'];
 
@@ -118,8 +118,10 @@ export const benchmark = function(babylonEngine){
       optimizedMode = !optimizedMode;
       modeLabel.text = `Mode: ${optimizedMode ? 'Optimized' : 'Standard'}`;
       modeLabel.color = optimizedMode ? "lime" : "white";
-      // Reset optimizations when switching to standard mode
-      if (!optimizedMode) {
+      // Set scene performance priority based on mode
+      if (optimizedMode) {
+        scene.performancePriority = ScenePerformancePriority.Aggressive;
+      } else {
         resetOptimizations();
       }
       updateStatus(`Switched to ${optimizedMode ? 'Optimized' : 'Standard'} mode`);
@@ -507,48 +509,12 @@ export const benchmark = function(babylonEngine){
     return selection;
   }
 
-  // Apply optimizations to meshes and scene
-  async function applyOptimizations(selection, method) {
-    if (!selection) return;
-    
-    // Apply scene-level optimizations (these are fast)
-    scene.autoClear = false; // Color buffer
-    scene.autoClearDepthAndStencil = false; // Depth and stencil
-    scene.blockMaterialDirtyMechanism = true;
-    scene.skipPointerMovePicking = true;
-    scene.freezeActiveMeshes();
-    
-    // Apply mesh-level optimizations in batches to prevent page freezing
-    const meshes = selection._nodes || [];
-    const BATCH_SIZE = 100; // Process 100 meshes at a time
-    
-    // Process meshes in batches with yielding to keep UI responsive
-    for (let i = 0; i < meshes.length; i += BATCH_SIZE) {
-      const batch = meshes.slice(i, i + BATCH_SIZE);
-      
-      batch.forEach(mesh => {
-        if (mesh) {
-          mesh.freezeWorldMatrix();
-          mesh.doNotSyncBoundingInfo = true;
-          mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
-          // Removed convertToUnIndexedMesh to prevent crashes
-        }
-      });
-      
-      // Yield control back to browser between batches
-      if (i + BATCH_SIZE < meshes.length) {
-        await new Promise(resolve => setTimeout(resolve, 0));
-      }
-    }
-  }
+
 
   // Reset scene optimizations
   function resetOptimizations() {
     try {
-      scene.autoClear = true;
-      scene.autoClearDepthAndStencil = true;
-      scene.blockMaterialDirtyMechanism = false;
-      scene.skipPointerMovePicking = false;
+      scene.performancePriority = ScenePerformancePriority.BackwardCompatible;
       scene.unfreezeActiveMeshes();
     } catch (error) {
       console.warn('Error resetting optimizations:', error);
@@ -581,8 +547,14 @@ export const benchmark = function(babylonEngine){
       let frameCount = 0;
       const fpsReadings = [];
       let observer = null;
+      let startTime = null;
       
       const measureFrame = () => {
+        // Initialize start time on first frame
+        if (startTime === null) {
+          startTime = performance.now();
+        }
+        
         // Collect FPS data
         const fps = babylonEngine.getFps();
         fpsReadings.push(fps);
@@ -592,19 +564,23 @@ export const benchmark = function(babylonEngine){
         // Update current stats display every few frames
         if (frameCount % 5 === 0 && currentStatsText) {
           const currentFps = babylonEngine.getFps().toFixed(0);
+          const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
           // Extract method and count from status text as a workaround
           const statusMatch = statusText?.text.match(/Testing (\w+) with (\d+) cubes/);
           if (statusMatch) {
-            currentStatsText.text = `Current: ${statusMatch[1]} - ${statusMatch[2]} cubes - ${currentFps} FPS`;
+            currentStatsText.text = `Current: ${statusMatch[1]} - ${statusMatch[2]} cubes - ${currentFps} FPS (${elapsed}s)`;
           }
         }
         
-        if (frameCount >= FPS_SAMPLE_FRAMES) {
+        // Check if sample duration has elapsed
+        const elapsed = performance.now() - startTime;
+        if (elapsed >= FPS_SAMPLE_DURATION) {
           // Remove observer and calculate average FPS
           if (observer) {
             scene.onAfterRenderObservable.remove(observer);
           }
           const avgFPS = fpsReadings.reduce((a, b) => a + b, 0) / fpsReadings.length;
+          console.log(`FPS measurement complete: ${frameCount} frames over ${(elapsed/1000).toFixed(2)}s, avg: ${avgFPS.toFixed(2)} FPS`);
           resolve({ fps: avgFPS });
         }
       };
@@ -630,7 +606,7 @@ export const benchmark = function(babylonEngine){
     }
     
     // Wait longer to ensure cleanup is complete (especially important for Quest)
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Create data outside of timing
     benchmarkData = createCubeData(count);
@@ -639,9 +615,6 @@ export const benchmark = function(babylonEngine){
     const startTime = performance.now();
     createCubes(method, benchmarkData);
      // Apply other optimizations if in optimized mode (scene-level + mesh-level)
-    if (optimizedMode) {
-      await applyOptimizations(currentSelection, method);
-    }
     refreezeForTest();
     const creationTime = performance.now() - startTime;
 
@@ -681,10 +654,6 @@ export const benchmark = function(babylonEngine){
     if (guiButtons.startButton) guiButtons.startButton.isEnabled = false;
     if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = false;
     if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = true;
-    
-    // Reset optimizations at the start of benchmark run
-    // Scene-level optimizations will be applied per-test if optimizedMode is enabled
-    resetOptimizations();
     
     // Hide GUI if requested
     if (hideGUI && guiPlane) {
@@ -779,8 +748,6 @@ export const benchmark = function(babylonEngine){
     // Clear scene and reset optimizations to prevent crashes
     clearScene();
     
-    // Force reset all optimizations after benchmark completes
-    resetOptimizations();
     
     // Give the engine time to process cleanup
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -1003,8 +970,6 @@ export const benchmark = function(babylonEngine){
         // Reset benchmark state
         benchmarkData = null;
         
-        // Reset optimizations
-        resetOptimizations();
         
         // Update UI
         updateStatus('XR session ended - benchmark stopped');
