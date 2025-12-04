@@ -762,7 +762,8 @@ export const benchmark = function(babylonEngine){
     return new Promise((resolve) => {
       const targetStableFrames = 30; // Number of frames to check for stability
       const fpsThreshold = 2; // FPS variance threshold
-      const maxWaitTime = 3000; // Maximum time to wait (3 seconds)
+      const minFPS = 60; // Minimum FPS required before starting next trial
+      const maxWaitTime = 10000; // Maximum time to wait (10 seconds)
       let stableFrames = 0;
       let lastFPS = 0;
       let observer = null;
@@ -783,17 +784,18 @@ export const benchmark = function(babylonEngine){
         // Check FPS on each frame via observable
         const currentFPS = babylonEngine.getFps();
         
-        // Check if FPS is stable (within threshold of last reading)
-        if (Math.abs(currentFPS - lastFPS) < fpsThreshold) {
+        // Only count stable frames if FPS is above minimum threshold
+        if (currentFPS >= minFPS && Math.abs(currentFPS - lastFPS) < fpsThreshold) {
           stableFrames++;
         } else {
-          stableFrames = 0; // Reset if FPS varies too much
+          stableFrames = 0; // Reset if FPS too low or varies too much
         }
         
         lastFPS = currentFPS;
         
         if (stableFrames >= targetStableFrames) {
           // Remove observer and resolve
+          console.log(`FPS stabilized at ${currentFPS.toFixed(1)} FPS`);
           cleanup();
           resolve();
         }
@@ -801,7 +803,7 @@ export const benchmark = function(babylonEngine){
       
       // Set timeout to force continue if stabilization takes too long
       timeout = setTimeout(() => {
-        console.log('FPS stabilization timeout - moving on');
+        console.log(`FPS stabilization timeout - moving on (current FPS: ${lastFPS.toFixed(1)})`);
         cleanup();
         resolve();
       }, maxWaitTime);
