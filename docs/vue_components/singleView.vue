@@ -211,6 +211,7 @@ onMounted(async () => {
       defaultXRExperience.baseExperience.onStateChangedObservable.add((state) => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
+          console.log('Entered XR Session');
           
           // Enable/disable multiview based on current scene metadata when entering XR
           const enableMultiviewNow = scene.metadata?.xrEnableMultiview === true;
@@ -221,7 +222,7 @@ onMounted(async () => {
               if (enableMultiviewNow) {
                 featuresManager.enableFeature(WebXRFeatureName.LAYERS, "latest", {
                   preferMultiviewOnInit: true,
-                });
+                }, true, false);
                 console.log('WebXR multiview enabled via LAYERS feature');
               } else {
                 // Disable multiview if it was previously enabled
@@ -233,6 +234,38 @@ onMounted(async () => {
               }
             } catch (error) {
               console.warn('Failed to toggle multiview:', error);
+            }
+          }
+          
+          // Check and set the highest available framerate
+          const sessionManager = defaultXRExperience.baseExperience.sessionManager;
+          if (sessionManager) {
+            try {
+              const supportedFrameRates = sessionManager.supportedFrameRates;
+              if (supportedFrameRates && supportedFrameRates.length > 0) {
+                // Get the highest framerate
+                const maxFrameRate = Math.max(...supportedFrameRates);
+                console.log('Supported XR frame rates:', supportedFrameRates);
+                console.log('Setting XR frame rate to:', maxFrameRate);
+                
+                // Update the framerate
+                sessionManager.updateTargetFrameRate(maxFrameRate).then(() => {
+                  console.log('XR frame rate successfully set to:', maxFrameRate, 'Hz');
+                  // Store framerate in scene metadata for GUI display
+                  if (scene.metadata) {
+                    scene.metadata.xrFrameRate = maxFrameRate;
+                  }
+                }).catch((error) => {
+                  scene.metadata.xrFrameRate = 'Failed to set frame rate'
+                  console.warn('Failed to update XR frame rate:', error);
+                });
+              } else {
+                scene.metadata.xrFrameRate = 'No supported frame rates available or not exposed by the device'
+                console.log('No supported frame rates available or not exposed by the device');
+              }
+            } catch (error) {
+              scene.metadata.xrFrameRate = 'Error accessing frame rates'
+              console.warn('Error accessing XR frame rates:', error);
             }
           }
           

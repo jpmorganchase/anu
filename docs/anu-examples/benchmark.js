@@ -256,13 +256,31 @@ export const benchmark = function(babylonEngine){
     currentStatsText.height = "50px";
     currentStatsText.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
     currentStatsText.paddingLeft = "20px";
-    currentStatsText.paddingBottom = "20px";
+    currentStatsText.paddingBottom = "10px";
     mainPanel.addControl(currentStatsText);
+    
+    // XR framerate display
+    const xrFrameRateText = new TextBlock();
+    xrFrameRateText.text = "XR Frame Rate: N/A";
+    xrFrameRateText.color = "orange";
+    xrFrameRateText.fontSize = 28;
+    xrFrameRateText.height = "50px";
+    xrFrameRateText.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    xrFrameRateText.paddingLeft = "20px";
+    xrFrameRateText.paddingBottom = "20px";
+    mainPanel.addControl(xrFrameRateText);
+    
+    // Monitor XR framerate changes
+    scene.onBeforeRenderObservable.add(() => {
+      if (scene.metadata?.xrFrameRate && xrFrameRateText) {
+        xrFrameRateText.text = `XR Frame Rate: ${scene.metadata.xrFrameRate} Hz`;
+      }
+    });
     
     // Results container with scroll viewer
     const scrollViewer = new ScrollViewer();
     scrollViewer.width = "100%";
-    scrollViewer.height = "900px";
+    scrollViewer.height = "850px";
     scrollViewer.thickness = 2;
     scrollViewer.color = "white";
     scrollViewer.background = "rgba(0,0,0,0.5)";
@@ -663,7 +681,12 @@ export const benchmark = function(babylonEngine){
     
     let text = 'BENCHMARK RESULTS\n';
     text += `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n`;
-    text += `Multiview: ${multiviewEnabled ? 'ON' : 'OFF'}\n\n`;
+    text += `Multiview: ${multiviewEnabled ? 'ON' : 'OFF'}\n`;
+    const xrFrameRate = scene.metadata?.xrFrameRate;
+    if (xrFrameRate) {
+      text += `XR Frame Rate: ${xrFrameRate} Hz\n`;
+    }
+    text += '\n';
     
     for (const method of BENCHMARK_METHODS) {
       if (!benchmarkResults[method] || benchmarkResults[method].length === 0) continue;
@@ -698,6 +721,10 @@ export const benchmark = function(babylonEngine){
     const lines = resultsText.text.split('\n');
     let csvContent = `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n`;
     csvContent += `Multiview: ${multiviewEnabled ? 'ON' : 'OFF'}\n`;
+    const xrFrameRate = scene.metadata?.xrFrameRate;
+    if (xrFrameRate) {
+      csvContent += `XR Frame Rate: ${xrFrameRate} Hz\n`;
+    }
     csvContent += 'Method,Cubes,Create(ms),FPS\n';
     let currentMethod = '';
     
@@ -714,7 +741,7 @@ export const benchmark = function(babylonEngine){
       // Skip separator lines, headers, and notes
       if (line.startsWith('─') || line.startsWith('Cubes') || 
           line.startsWith('Press G') || line.startsWith('Mode:') || 
-          line.startsWith('Multiview:') ||
+          line.startsWith('Multiview:') || line.startsWith('XR Frame Rate:') ||
           line === 'BENCHMARK RESULTS' || line === '') {
         continue;
       }
