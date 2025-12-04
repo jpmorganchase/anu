@@ -126,7 +126,8 @@ export const benchmark = function(babylonEngine){
     });
     modePanel.addControl(toggleModeButton);
     
-    // Multiview toggle
+    // Multiview toggle - HIDDEN FOR NOW
+    /*
     const multiviewPanel = new StackPanel();
     multiviewPanel.isVertical = false;
     multiviewPanel.height = "60px";
@@ -161,6 +162,7 @@ export const benchmark = function(babylonEngine){
       updateStatus(`WebXR Multiview ${multiviewEnabled ? 'enabled' : 'disabled'} (enter/restart XR to apply)`);
     });
     multiviewPanel.addControl(toggleMultiviewButton);
+    */
     
     // Method selection section
     const methodSectionTitle = new TextBlock();
@@ -366,7 +368,8 @@ export const benchmark = function(babylonEngine){
     currentStatsText.paddingBottom = "10px";
     mainPanel.addControl(currentStatsText);
     
-    // XR framerate display
+    // XR framerate display - HIDDEN FOR NOW
+    /*
     const xrFrameRateText = new TextBlock();
     xrFrameRateText.text = "XR Frame Rate: N/A";
     xrFrameRateText.color = "orange";
@@ -383,11 +386,12 @@ export const benchmark = function(babylonEngine){
         xrFrameRateText.text = `XR Frame Rate: ${scene.metadata.xrFrameRate} Hz`;
       }
     });
+    */
     
     // Results container with scroll viewer
     const scrollViewer = new ScrollViewer();
     scrollViewer.width = "100%";
-    scrollViewer.height = "650px";
+    scrollViewer.height = "700px";
     scrollViewer.thickness = 2;
     scrollViewer.color = "white";
     scrollViewer.background = "rgba(0,0,0,0.5)";

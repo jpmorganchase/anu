@@ -237,7 +237,8 @@ onMounted(async () => {
             }
           }
           
-          // Check and set the highest available framerate
+          // Check and set the highest available framerate - DISABLED FOR NOW
+          /*
           const sessionManager = defaultXRExperience.baseExperience.sessionManager;
           if (sessionManager) {
             try {
@@ -268,6 +269,7 @@ onMounted(async () => {
               console.warn('Error accessing XR frame rates:', error);
             }
           }
+          */
           
           // Position XR camera after XR session is ready
           defaultXRExperience.baseExperience.sessionManager.onXRFrameObservable.addOnce(() => {
