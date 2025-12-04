@@ -43,6 +43,14 @@ export const benchmark = function(babylonEngine){
   const FPS_THRESHOLD = 30; // Stop when FPS drops below this for 2 consecutive tests
   const BENCHMARK_METHODS = ['bind', 'bindClone', 'bindInstance', 'bindThinInstance'];
 
+  // Track which methods are enabled
+  const enabledMethods = {
+    bind: true,
+    bindClone: true,
+    bindInstance: true,
+    bindThinInstance: true
+  };
+
   // Results storage
   const benchmarkResults = {};
 
@@ -153,6 +161,105 @@ export const benchmark = function(babylonEngine){
       updateStatus(`WebXR Multiview ${multiviewEnabled ? 'enabled' : 'disabled'} (enter/restart XR to apply)`);
     });
     multiviewPanel.addControl(toggleMultiviewButton);
+    
+    // Method selection section
+    const methodSectionTitle = new TextBlock();
+    methodSectionTitle.text = "Select Methods to Benchmark:";
+    methodSectionTitle.color = "white";
+    methodSectionTitle.fontSize = 28;
+    methodSectionTitle.height = "50px";
+    methodSectionTitle.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    methodSectionTitle.paddingLeft = "20px";
+    methodSectionTitle.paddingTop = "10px";
+    methodSectionTitle.paddingBottom = "5px";
+    mainPanel.addControl(methodSectionTitle);
+    
+    // Create toggles for each method in a 2x2 grid
+    const methodsGrid = new StackPanel();
+    methodsGrid.isVertical = true;
+    methodsGrid.height = "130px";
+    methodsGrid.paddingBottom = "10px";
+    mainPanel.addControl(methodsGrid);
+    
+    // Row 1: bind and bindClone
+    const methodRow1 = new StackPanel();
+    methodRow1.isVertical = false;
+    methodRow1.height = "60px";
+    methodRow1.paddingBottom = "5px";
+    methodsGrid.addControl(methodRow1);
+    
+    // bind toggle
+    const bindButton = Button.CreateSimpleButton("bindBtn", "✓ bind");
+    bindButton.width = "300px";
+    bindButton.height = "50px";
+    bindButton.color = "white";
+    bindButton.background = "green";
+    bindButton.thickness = 2;
+    bindButton.cornerRadius = 10;
+    bindButton.paddingLeft = "10px";
+    bindButton.paddingRight = "5px";
+    bindButton.onPointerClickObservable.add(() => {
+      enabledMethods.bind = !enabledMethods.bind;
+      bindButton.textBlock.text = enabledMethods.bind ? "✓ bind" : "✗ bind";
+      bindButton.background = enabledMethods.bind ? "green" : "#555";
+    });
+    methodRow1.addControl(bindButton);
+    
+    // bindClone toggle
+    const bindCloneButton = Button.CreateSimpleButton("bindCloneBtn", "✓ bindClone");
+    bindCloneButton.width = "300px";
+    bindCloneButton.height = "50px";
+    bindCloneButton.color = "white";
+    bindCloneButton.background = "green";
+    bindCloneButton.thickness = 2;
+    bindCloneButton.cornerRadius = 10;
+    bindCloneButton.paddingLeft = "5px";
+    bindCloneButton.onPointerClickObservable.add(() => {
+      enabledMethods.bindClone = !enabledMethods.bindClone;
+      bindCloneButton.textBlock.text = enabledMethods.bindClone ? "✓ bindClone" : "✗ bindClone";
+      bindCloneButton.background = enabledMethods.bindClone ? "green" : "#555";
+    });
+    methodRow1.addControl(bindCloneButton);
+    
+    // Row 2: bindInstance and bindThinInstance
+    const methodRow2 = new StackPanel();
+    methodRow2.isVertical = false;
+    methodRow2.height = "60px";
+    methodRow2.paddingBottom = "5px";
+    methodsGrid.addControl(methodRow2);
+    
+    // bindInstance toggle
+    const bindInstanceButton = Button.CreateSimpleButton("bindInstanceBtn", "✓ bindInstance");
+    bindInstanceButton.width = "300px";
+    bindInstanceButton.height = "50px";
+    bindInstanceButton.color = "white";
+    bindInstanceButton.background = "green";
+    bindInstanceButton.thickness = 2;
+    bindInstanceButton.cornerRadius = 10;
+    bindInstanceButton.paddingLeft = "10px";
+    bindInstanceButton.paddingRight = "5px";
+    bindInstanceButton.onPointerClickObservable.add(() => {
+      enabledMethods.bindInstance = !enabledMethods.bindInstance;
+      bindInstanceButton.textBlock.text = enabledMethods.bindInstance ? "✓ bindInstance" : "✗ bindInstance";
+      bindInstanceButton.background = enabledMethods.bindInstance ? "green" : "#555";
+    });
+    methodRow2.addControl(bindInstanceButton);
+    
+    // bindThinInstance toggle
+    const bindThinInstanceButton = Button.CreateSimpleButton("bindThinInstanceBtn", "✓ bindThinInstance");
+    bindThinInstanceButton.width = "300px";
+    bindThinInstanceButton.height = "50px";
+    bindThinInstanceButton.color = "white";
+    bindThinInstanceButton.background = "green";
+    bindThinInstanceButton.thickness = 2;
+    bindThinInstanceButton.cornerRadius = 10;
+    bindThinInstanceButton.paddingLeft = "5px";
+    bindThinInstanceButton.onPointerClickObservable.add(() => {
+      enabledMethods.bindThinInstance = !enabledMethods.bindThinInstance;
+      bindThinInstanceButton.textBlock.text = enabledMethods.bindThinInstance ? "✓ bindThinInstance" : "✗ bindThinInstance";
+      bindThinInstanceButton.background = enabledMethods.bindThinInstance ? "green" : "#555";
+    });
+    methodRow2.addControl(bindThinInstanceButton);
     
     // Buttons container
     const buttonsPanel = new StackPanel();
@@ -280,7 +387,7 @@ export const benchmark = function(babylonEngine){
     // Results container with scroll viewer
     const scrollViewer = new ScrollViewer();
     scrollViewer.width = "100%";
-    scrollViewer.height = "850px";
+    scrollViewer.height = "650px";
     scrollViewer.thickness = 2;
     scrollViewer.color = "white";
     scrollViewer.background = "rgba(0,0,0,0.5)";
@@ -540,6 +647,14 @@ export const benchmark = function(babylonEngine){
   // Run all benchmarks
   async function runBenchmarks(hideGUI = false) {
     stopRequested = false;
+    
+    // Check if at least one method is enabled
+    const hasEnabledMethods = Object.values(enabledMethods).some(enabled => enabled);
+    if (!hasEnabledMethods) {
+      updateStatus('Error: Please select at least one method to benchmark');
+      return;
+    }
+    
     updateStatus('Starting benchmarks...');
     if (guiButtons.startButton) guiButtons.startButton.isEnabled = false;
     if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = false;
@@ -554,7 +669,10 @@ export const benchmark = function(babylonEngine){
       guiPlane.setEnabled(false);
     }
     
-    for (const method of BENCHMARK_METHODS) {
+    // Only run enabled methods
+    const methodsToRun = BENCHMARK_METHODS.filter(method => enabledMethods[method]);
+    
+    for (const method of methodsToRun) {
       if (stopRequested) break;
       
       benchmarkResults[method] = [];
@@ -642,9 +760,22 @@ export const benchmark = function(babylonEngine){
     return new Promise((resolve) => {
       const targetStableFrames = 30; // Number of frames to check for stability
       const fpsThreshold = 2; // FPS variance threshold
+      const maxWaitTime = 3000; // Maximum time to wait (3 seconds)
       let stableFrames = 0;
       let lastFPS = 0;
       let observer = null;
+      let timeout = null;
+      
+      const cleanup = () => {
+        if (observer) {
+          scene.onAfterRenderObservable.remove(observer);
+          observer = null;
+        }
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = null;
+        }
+      };
       
       const checkStability = () => {
         // Check FPS on each frame via observable
@@ -661,12 +792,17 @@ export const benchmark = function(babylonEngine){
         
         if (stableFrames >= targetStableFrames) {
           // Remove observer and resolve
-          if (observer) {
-            scene.onAfterRenderObservable.remove(observer);
-          }
+          cleanup();
           resolve();
         }
       };
+      
+      // Set timeout to force continue if stabilization takes too long
+      timeout = setTimeout(() => {
+        console.log('FPS stabilization timeout - moving on');
+        cleanup();
+        resolve();
+      }, maxWaitTime);
       
       // Start checking after a short delay
       setTimeout(() => {
@@ -686,6 +822,10 @@ export const benchmark = function(babylonEngine){
     if (xrFrameRate) {
       text += `XR Frame Rate: ${xrFrameRate} Hz\n`;
     }
+    
+    // Show which methods are enabled
+    const enabledMethodsList = BENCHMARK_METHODS.filter(m => enabledMethods[m]).join(', ');
+    text += `Methods: ${enabledMethodsList}\n`;
     text += '\n';
     
     for (const method of BENCHMARK_METHODS) {
@@ -725,6 +865,8 @@ export const benchmark = function(babylonEngine){
     if (xrFrameRate) {
       csvContent += `XR Frame Rate: ${xrFrameRate} Hz\n`;
     }
+    const enabledMethodsList = BENCHMARK_METHODS.filter(m => enabledMethods[m]).join(', ');
+    csvContent += `Methods: ${enabledMethodsList}\n`;
     csvContent += 'Method,Cubes,Create(ms),FPS\n';
     let currentMethod = '';
     
@@ -742,6 +884,7 @@ export const benchmark = function(babylonEngine){
       if (line.startsWith('─') || line.startsWith('Cubes') || 
           line.startsWith('Press G') || line.startsWith('Mode:') || 
           line.startsWith('Multiview:') || line.startsWith('XR Frame Rate:') ||
+          line.startsWith('Methods:') ||
           line === 'BENCHMARK RESULTS' || line === '') {
         continue;
       }
