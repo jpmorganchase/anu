@@ -182,13 +182,9 @@ onMounted(async () => {
   try {
     // Check scene metadata for disabling controllers
     const disableControllers = scene.metadata?.xrDisableControllers;
-    // Check if multiview should be enabled (better VR performance)
-    const enableMultiview = scene.metadata?.xrEnableMultiview !== false; // Default to true unless explicitly disabled
     
     //{ floorMeshes: [env.ground] }
     defaultXRExperience = await scene.createDefaultXRExperienceAsync({
-      // Enable multiview for better VR performance
-      useMultiview: enableMultiview,
       optionalFeatures: true,
       // Ensure AR compatibility
       uiOptions: {
@@ -200,8 +196,6 @@ onMounted(async () => {
       } : undefined
     });
     xrSupported.value = true;
-    
-    console.log('WebXR initialized with multiview:', enableMultiview);
 
     // Hide the default XR UI since we're using custom buttons
     if (defaultXRExperience.enterExitUI) {
@@ -217,6 +211,30 @@ onMounted(async () => {
       defaultXRExperience.baseExperience.onStateChangedObservable.add((state) => {
         if (state === WebXRState.ENTERING_XR) {
           xrSessionActive.value = true;
+          
+          // Enable/disable multiview based on current scene metadata when entering XR
+          const enableMultiviewNow = scene.metadata?.xrEnableMultiview === true;
+          const featuresManager = defaultXRExperience.baseExperience.featuresManager;
+          
+          if (featuresManager) {
+            try {
+              if (enableMultiviewNow) {
+                featuresManager.enableFeature(WebXRFeatureName.LAYERS, "latest", {
+                  preferMultiviewOnInit: true,
+                });
+                console.log('WebXR multiview enabled via LAYERS feature');
+              } else {
+                // Disable multiview if it was previously enabled
+                const layersFeature = featuresManager.getEnabledFeature(WebXRFeatureName.LAYERS);
+                if (layersFeature) {
+                  featuresManager.disableFeature(WebXRFeatureName.LAYERS);
+                  console.log('WebXR multiview disabled');
+                }
+              }
+            } catch (error) {
+              console.warn('Failed to toggle multiview:', error);
+            }
+          }
           
           // Position XR camera after XR session is ready
           defaultXRExperience.baseExperience.sessionManager.onXRFrameObservable.addOnce(() => {

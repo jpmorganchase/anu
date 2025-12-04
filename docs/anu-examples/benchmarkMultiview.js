@@ -6,7 +6,7 @@ import { AdvancedDynamicTexture, Button, TextBlock, StackPanel, Control, ScrollV
 import * as anu from '@jpmorganchase/anu'
 
 //create and export a function that takes a babylon engine and returns a scene
-export const benchmark = function(babylonEngine){
+export const benchmarkMultiview = function(babylonEngine){
 
   //create a scene object using our engine
   const scene = new Scene(babylonEngine)
@@ -18,7 +18,7 @@ export const benchmark = function(babylonEngine){
     noDefaultEnvironment: true,
     xrCameraPosition: new Vector3(0, 60, 110),
     xrDisableControllers: true,
-    xrEnableMultiview: false // Will be toggled via GUI
+    xrEnableMultiview: true // Multiview enabled for better VR performance
   };
 
   //Add lights and a camera
@@ -33,7 +33,6 @@ export const benchmark = function(babylonEngine){
   let benchmarkData = null;
   let stopRequested = false;
   let optimizedMode = false; // Track if optimizations are enabled
-  let multiviewEnabled = false; // Track if WebXR multiview is enabled
 
   // Benchmark configurations
   const INITIAL_CUBE_COUNT = 100; // Starting cube count
@@ -75,7 +74,7 @@ export const benchmark = function(babylonEngine){
     
     // Title
     const title = new TextBlock();
-    title.text = "Anu Cube Benchmark";
+    title.text = "Anu Cube Benchmark (Multiview)";
     title.color = "white";
     title.fontSize = 48;
     title.height = "80px";
@@ -117,42 +116,6 @@ export const benchmark = function(babylonEngine){
       updateStatus(`Switched to ${optimizedMode ? 'Optimized' : 'Standard'} mode`);
     });
     modePanel.addControl(toggleModeButton);
-    
-    // Multiview toggle
-    const multiviewPanel = new StackPanel();
-    multiviewPanel.isVertical = false;
-    multiviewPanel.height = "60px";
-    multiviewPanel.paddingBottom = "10px";
-    mainPanel.addControl(multiviewPanel);
-    
-    const multiviewLabel = new TextBlock();
-    multiviewLabel.text = "Multiview: Off";
-    multiviewLabel.color = "white";
-    multiviewLabel.fontSize = 32;
-    multiviewLabel.width = "300px";
-    multiviewLabel.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
-    multiviewLabel.paddingLeft = "20px";
-    multiviewPanel.addControl(multiviewLabel);
-    
-    const toggleMultiviewButton = Button.CreateSimpleButton("toggleMultiview", "Toggle Multiview");
-    toggleMultiviewButton.width = "300px";
-    toggleMultiviewButton.height = "50px";
-    toggleMultiviewButton.color = "white";
-    toggleMultiviewButton.background = "#FF6F00";
-    toggleMultiviewButton.thickness = 2;
-    toggleMultiviewButton.cornerRadius = 10;
-    toggleMultiviewButton.paddingLeft = "20px";
-    toggleMultiviewButton.onPointerClickObservable.add(() => {
-      multiviewEnabled = !multiviewEnabled;
-      multiviewLabel.text = `Multiview: ${multiviewEnabled ? 'On' : 'Off'}`;
-      multiviewLabel.color = multiviewEnabled ? "lime" : "white";
-      // Update scene metadata for multiview (will be applied via LAYERS feature on next XR session)
-      if (scene.metadata) {
-        scene.metadata.xrEnableMultiview = multiviewEnabled;
-      }
-      updateStatus(`WebXR Multiview ${multiviewEnabled ? 'enabled' : 'disabled'} (enter/restart XR to apply)`);
-    });
-    multiviewPanel.addControl(toggleMultiviewButton);
     
     // Buttons container
     const buttonsPanel = new StackPanel();
@@ -239,7 +202,7 @@ export const benchmark = function(babylonEngine){
     
     // Status text
     statusText = new TextBlock();
-    statusText.text = "Status: Ready to benchmark";
+    statusText.text = "Status: Ready to benchmark (Multiview Enabled)";
     statusText.color = "yellow";
     statusText.fontSize = 32;
     statusText.height = "60px";
@@ -663,7 +626,7 @@ export const benchmark = function(babylonEngine){
     
     let text = 'BENCHMARK RESULTS\n';
     text += `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n`;
-    text += `Multiview: ${multiviewEnabled ? 'ON' : 'OFF'}\n\n`;
+    text += `Multiview: ON\n\n`;
     
     for (const method of BENCHMARK_METHODS) {
       if (!benchmarkResults[method] || benchmarkResults[method].length === 0) continue;
@@ -697,7 +660,7 @@ export const benchmark = function(babylonEngine){
     // Parse the results text to extract data
     const lines = resultsText.text.split('\n');
     let csvContent = `Mode: ${optimizedMode ? 'OPTIMIZED' : 'STANDARD'}\n`;
-    csvContent += `Multiview: ${multiviewEnabled ? 'ON' : 'OFF'}\n`;
+    csvContent += `Multiview: ON\n`;
     csvContent += 'Method,Cubes,Create(ms),FPS\n';
     let currentMethod = '';
     
@@ -739,9 +702,8 @@ export const benchmark = function(babylonEngine){
     // Generate filename with timestamp and mode
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
     const mode = optimizedMode ? 'optimized' : 'standard';
-    const multiview = multiviewEnabled ? '-multiview' : '';
     link.setAttribute('href', url);
-    link.setAttribute('download', `anu-benchmark-${mode}${multiview}-${timestamp}.csv`);
+    link.setAttribute('download', `anu-benchmark-${mode}-multiview-${timestamp}.csv`);
     link.style.visibility = 'hidden';
     
     document.body.appendChild(link);
@@ -752,7 +714,7 @@ export const benchmark = function(babylonEngine){
   }
 
   // Initialize
-  updateStatus('Ready to benchmark');
+  updateStatus('Ready to benchmark (Multiview Enabled)');
 
   // Keyboard shortcuts
   window.addEventListener("keydown", (ev) => {
