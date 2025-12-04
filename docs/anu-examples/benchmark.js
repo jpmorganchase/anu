@@ -531,10 +531,14 @@ export const benchmark = function(babylonEngine){
   }
 
   // Refreeze active meshes for testing (if in optimized mode)
-  function refreezeForTest() {
+  async function refreezeForTest() {
     if (optimizedMode) {
       try {
+        // Yield to event loop before freezing to keep page responsive
+        await new Promise(resolve => setTimeout(resolve, 100));
         scene.freezeActiveMeshes();
+        // Yield again after freezing
+        await new Promise(resolve => setTimeout(resolve, 100));
       } catch (error) {
         console.warn('Error refreezing meshes:', error);
       }
@@ -614,18 +618,18 @@ export const benchmark = function(babylonEngine){
     // Measure cube creation time
     const startTime = performance.now();
     createCubes(method, benchmarkData);
-     // Apply other optimizations if in optimized mode (scene-level + mesh-level)
-    refreezeForTest();
     const creationTime = performance.now() - startTime;
 
-    
-    
-    
-   
-    
     // Wait for scene to stabilize after creating cubes (Quest needs more time to process)
     updateStatus(`Stabilizing ${method} with ${count} cubes...`);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Freeze meshes after stabilization to avoid blocking the main thread
+    await refreezeForTest();
+    
+    // Additional wait after freezing
+    updateStatus(`Preparing ${method} with ${count} cubes for measurement...`);
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     // Measure FPS
     const fpsData = await measureFPS();
