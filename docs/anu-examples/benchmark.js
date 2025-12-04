@@ -17,7 +17,8 @@ export const benchmark = function(babylonEngine){
   scene.metadata = { 
     noDefaultEnvironment: true,
     xrCameraPosition: new Vector3(0, 60, 110),
-    xrDisableControllers: true
+    xrDisableControllers: true,
+    xrEnableMultiview: false // Will be toggled via GUI
   };
 
   //Add lights and a camera
@@ -145,16 +146,11 @@ export const benchmark = function(babylonEngine){
       multiviewEnabled = !multiviewEnabled;
       multiviewLabel.text = `Multiview: ${multiviewEnabled ? 'On' : 'Off'}`;
       multiviewLabel.color = multiviewEnabled ? "lime" : "white";
-      // Apply multiview setting to the engine
-      if (babylonEngine.multiview !== undefined) {
-        babylonEngine.multiview = multiviewEnabled;
-        updateStatus(`WebXR Multiview ${multiviewEnabled ? 'enabled' : 'disabled'}`);
-      } else {
-        updateStatus('Multiview not supported by this engine');
-        multiviewEnabled = false;
-        multiviewLabel.text = "Multiview: Off";
-        multiviewLabel.color = "white";
+      // Update scene metadata for multiview
+      if (scene.metadata) {
+        scene.metadata.xrEnableMultiview = multiviewEnabled;
       }
+      updateStatus(`WebXR Multiview ${multiviewEnabled ? 'enabled' : 'disabled'} (restart XR session to apply)`);
     });
     multiviewPanel.addControl(toggleMultiviewButton);
     

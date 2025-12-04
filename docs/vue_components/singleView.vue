@@ -182,10 +182,13 @@ onMounted(async () => {
   try {
     // Check scene metadata for disabling controllers
     const disableControllers = scene.metadata?.xrDisableControllers;
+    // Check if multiview should be enabled (better VR performance)
+    const enableMultiview = scene.metadata?.xrEnableMultiview !== false; // Default to true unless explicitly disabled
     
     //{ floorMeshes: [env.ground] }
     defaultXRExperience = await scene.createDefaultXRExperienceAsync({
-      // Enable multiview for better VR performance and hand tracking
+      // Enable multiview for better VR performance
+      useMultiview: enableMultiview,
       optionalFeatures: true,
       // Ensure AR compatibility
       uiOptions: {
@@ -197,6 +200,8 @@ onMounted(async () => {
       } : undefined
     });
     xrSupported.value = true;
+    
+    console.log('WebXR initialized with multiview:', enableMultiview);
 
     // Hide the default XR UI since we're using custom buttons
     if (defaultXRExperience.enterExitUI) {
