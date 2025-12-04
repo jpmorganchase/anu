@@ -975,44 +975,51 @@ export const benchmark = function(babylonEngine){
   });
 
   // Monitor XR session state to stop benchmarks when exiting XR
-  scene.onXRSessionInit.add((xrSession) => {
-    console.log('XR session started');
-    
-    // Listen for session end
-    xrSession.onend = () => {
-      console.log('XR session ended - stopping benchmark and cleaning up');
+  // This will be set up by the XR initialization in singleView.vue
+  scene.onReadyObservable.addOnce(() => {
+    // Check periodically for XR session changes
+    let wasInXR = false;
+    scene.onBeforeRenderObservable.add(() => {
+      const inXR = scene.activeCamera?.getClassName() === 'WebXRCamera';
       
-      // Stop any running benchmark
-      stopRequested = true;
-      
-      // Clean up scene
-      if (currentSelection) {
-        try {
-          unfreezeForNextTest();
-          currentSelection.dispose();
-          currentSelection = null;
-        } catch (error) {
-          console.warn('Error disposing selection on XR exit:', error);
+      // Detect transition from XR to non-XR (exiting XR)
+      if (wasInXR && !inXR) {
+        console.log('XR session ended - stopping benchmark and cleaning up');
+        
+        // Stop any running benchmark
+        stopRequested = true;
+        
+        // Clean up scene
+        if (currentSelection) {
+          try {
+            unfreezeForNextTest();
+            currentSelection.dispose();
+            currentSelection = null;
+          } catch (error) {
+            console.warn('Error disposing selection on XR exit:', error);
+          }
+        }
+        
+        // Reset benchmark state
+        benchmarkData = null;
+        
+        // Reset optimizations
+        resetOptimizations();
+        
+        // Update UI
+        updateStatus('XR session ended - benchmark stopped');
+        if (guiButtons.startButton) guiButtons.startButton.isEnabled = true;
+        if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = true;
+        if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = false;
+        
+        // Show GUI if it was hidden
+        if (guiPlane && !guiPlane.isEnabled()) {
+          guiPlane.setEnabled(true);
         }
       }
       
-      // Reset benchmark state
-      benchmarkData = null;
-      
-      // Reset optimizations
-      resetOptimizations();
-      
-      // Update UI
-      updateStatus('XR session ended - benchmark stopped');
-      if (guiButtons.startButton) guiButtons.startButton.isEnabled = true;
-      if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = true;
-      if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = false;
-      
-      // Show GUI if it was hidden
-      if (guiPlane && !guiPlane.isEnabled()) {
-        guiPlane.setEnabled(true);
-      }
-    };
+      wasInXR = inXR;
+    });
   });
 
   return scene;
