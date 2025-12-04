@@ -540,22 +540,34 @@ export const benchmark = function(babylonEngine){
 
   // Reset scene optimizations
   function resetOptimizations() {
-    scene.autoClear = true;
-    scene.autoClearDepthAndStencil = true;
-    scene.blockMaterialDirtyMechanism = false;
-    scene.skipPointerMovePicking = false;
-    scene.unfreezeActiveMeshes();
+    try {
+      scene.autoClear = true;
+      scene.autoClearDepthAndStencil = true;
+      scene.blockMaterialDirtyMechanism = false;
+      scene.skipPointerMovePicking = false;
+      scene.unfreezeActiveMeshes();
+    } catch (error) {
+      console.warn('Error resetting optimizations:', error);
+    }
   }
 
   // Unfreeze active meshes between tests (but keep other optimizations)
   function unfreezeForNextTest() {
-    scene.unfreezeActiveMeshes();
+    try {
+      scene.unfreezeActiveMeshes();
+    } catch (error) {
+      console.warn('Error unfreezing meshes:', error);
+    }
   }
 
   // Refreeze active meshes for testing (if in optimized mode)
   function refreezeForTest() {
     if (optimizedMode) {
-      scene.freezeActiveMeshes();
+      try {
+        scene.freezeActiveMeshes();
+      } catch (error) {
+        console.warn('Error refreezing meshes:', error);
+      }
     }
   }
 
@@ -719,6 +731,8 @@ export const benchmark = function(babylonEngine){
         // Clear data and scene between tests
         benchmarkData = null;
         if (currentSelection) {
+          // Unfreeze before disposing to ensure proper cleanup
+          unfreezeForNextTest();
           currentSelection.dispose();
           currentSelection = null;
         }
@@ -728,7 +742,7 @@ export const benchmark = function(babylonEngine){
           updateStatus('Waiting for FPS to stabilize...');
           await waitForFPSStabilization();
           
-          // Additional delay between tests to ensure cleanup (increased for Quest)
+          // Additional delay between tests to ensure cleanup (increased for Quest/Vision Pro)
           await new Promise(resolve => setTimeout(resolve, 1000));
           
           // Check if stop was requested during stabilization
@@ -756,7 +770,14 @@ export const benchmark = function(babylonEngine){
       guiPlane.setEnabled(true);
     }
     
+    // Clear scene and reset optimizations to prevent crashes
     clearScene();
+    
+    // Force reset all optimizations after benchmark completes
+    resetOptimizations();
+    
+    // Give the engine time to process cleanup
+    await new Promise(resolve => setTimeout(resolve, 500));
   }
 
   // Wait for FPS to stabilize after clearing scene
