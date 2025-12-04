@@ -638,15 +638,17 @@ export const benchmark = function(babylonEngine){
     // Measure cube creation time
     const startTime = performance.now();
     createCubes(method, benchmarkData);
-    const creationTime = performance.now() - startTime;
-    
-    // Freeze active meshes after creating new test
-    refreezeForTest();
-    
-    // Apply other optimizations if in optimized mode (scene-level + mesh-level)
+     // Apply other optimizations if in optimized mode (scene-level + mesh-level)
     if (optimizedMode) {
       await applyOptimizations(currentSelection, method);
     }
+    refreezeForTest();
+    const creationTime = performance.now() - startTime;
+
+    
+    
+    
+   
     
     // Wait for scene to stabilize after creating cubes (Quest needs more time to process)
     updateStatus(`Stabilizing ${method} with ${count} cubes...`);
@@ -970,6 +972,47 @@ export const benchmark = function(babylonEngine){
         guiPlane.setEnabled(!guiPlane.isEnabled());
       }
     }
+  });
+
+  // Monitor XR session state to stop benchmarks when exiting XR
+  scene.onXRSessionInit.add((xrSession) => {
+    console.log('XR session started');
+    
+    // Listen for session end
+    xrSession.onend = () => {
+      console.log('XR session ended - stopping benchmark and cleaning up');
+      
+      // Stop any running benchmark
+      stopRequested = true;
+      
+      // Clean up scene
+      if (currentSelection) {
+        try {
+          unfreezeForNextTest();
+          currentSelection.dispose();
+          currentSelection = null;
+        } catch (error) {
+          console.warn('Error disposing selection on XR exit:', error);
+        }
+      }
+      
+      // Reset benchmark state
+      benchmarkData = null;
+      
+      // Reset optimizations
+      resetOptimizations();
+      
+      // Update UI
+      updateStatus('XR session ended - benchmark stopped');
+      if (guiButtons.startButton) guiButtons.startButton.isEnabled = true;
+      if (guiButtons.startHiddenButton) guiButtons.startHiddenButton.isEnabled = true;
+      if (guiButtons.stopButton) guiButtons.stopButton.isEnabled = false;
+      
+      // Show GUI if it was hidden
+      if (guiPlane && !guiPlane.isEnabled()) {
+        guiPlane.setEnabled(true);
+      }
+    };
   });
 
   return scene;
