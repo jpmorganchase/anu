@@ -508,7 +508,7 @@ export const benchmark = function(babylonEngine){
   }
 
   // Apply optimizations to meshes and scene
-  function applyOptimizations(selection) {
+  function applyOptimizations(selection, method) {
     if (!selection) return;
     
     // Apply scene-level optimizations
@@ -520,22 +520,47 @@ export const benchmark = function(babylonEngine){
     
     // Apply mesh-level optimizations
     const meshes = selection._nodes || [];
-    meshes.forEach(mesh => {
-      if (mesh) {
-        mesh.freezeWorldMatrix();
-        mesh.doNotSyncBoundingInfo = true;
-        mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
-        
-        // Convert to unindexed mesh if possible (not for instances)
-        if (typeof mesh.convertToUnIndexedMesh === 'function') {
-          try {
-            mesh.convertToUnIndexedMesh();
-          } catch (e) {
-            // Some mesh types can't be converted, ignore errors
-          }
+    
+    // For bindClone, bindInstance, and bindThinInstance, only convert the root mesh once
+    // For bind, we need to convert each mesh
+    if (method === 'bindClone' || method === 'bindInstance' || method === 'bindThinInstance') {
+      // Only optimize the first mesh (root/source mesh)
+      const rootMesh = meshes[0];
+      if (rootMesh && typeof rootMesh.convertToUnIndexedMesh === 'function') {
+        try {
+          rootMesh.convertToUnIndexedMesh();
+        } catch (e) {
+          // Some mesh types can't be converted, ignore errors
         }
       }
-    });
+      
+      // Apply other optimizations to all meshes
+      meshes.forEach(mesh => {
+        if (mesh) {
+          mesh.freezeWorldMatrix();
+          mesh.doNotSyncBoundingInfo = true;
+          mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
+        }
+      });
+    } else {
+      // For bind method, apply all optimizations to each mesh
+      meshes.forEach(mesh => {
+        if (mesh) {
+          mesh.freezeWorldMatrix();
+          mesh.doNotSyncBoundingInfo = true;
+          mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION_THEN_BSPHERE_ONLY;
+          
+          // Convert to unindexed mesh if possible
+          if (typeof mesh.convertToUnIndexedMesh === 'function') {
+            try {
+              mesh.convertToUnIndexedMesh();
+            } catch (e) {
+              // Some mesh types can't be converted, ignore errors
+            }
+          }
+        }
+      });
+    }
   }
 
   // Reset scene optimizations
@@ -641,7 +666,7 @@ export const benchmark = function(babylonEngine){
     
     // Apply other optimizations if in optimized mode (scene-level + mesh-level)
     if (optimizedMode) {
-      applyOptimizations(currentSelection);
+      applyOptimizations(currentSelection, method);
     }
     
     // Wait for scene to stabilize after creating cubes (Quest needs more time to process)
