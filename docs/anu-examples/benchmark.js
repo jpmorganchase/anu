@@ -767,60 +767,9 @@ export const benchmark = function(babylonEngine){
 
   // Wait for FPS to stabilize after clearing scene
   async function waitForFPSStabilization() {
-    return new Promise((resolve) => {
-      const targetStableFrames = 30; // Number of frames to check for stability
-      const fpsThreshold = 2; // FPS variance threshold
-      const minFPS = 60; // Minimum FPS required before starting next trial
-      const maxWaitTime = 10000; // Maximum time to wait (10 seconds)
-      let stableFrames = 0;
-      let lastFPS = 0;
-      let observer = null;
-      let timeout = null;
-      
-      const cleanup = () => {
-        if (observer) {
-          scene.onAfterRenderObservable.remove(observer);
-          observer = null;
-        }
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-      };
-      
-      const checkStability = () => {
-        // Check FPS on each frame via observable
-        const currentFPS = babylonEngine.getFps();
-        
-        // Only count stable frames if FPS is above minimum threshold
-        if (currentFPS >= minFPS && Math.abs(currentFPS - lastFPS) < fpsThreshold) {
-          stableFrames++;
-        } else {
-          stableFrames = 0; // Reset if FPS too low or varies too much
-        }
-        
-        lastFPS = currentFPS;
-        
-        if (stableFrames >= targetStableFrames) {
-          // Remove observer and resolve
-          console.log(`FPS stabilized at ${currentFPS.toFixed(1)} FPS`);
-          cleanup();
-          resolve();
-        }
-      };
-      
-      // Set timeout to force continue if stabilization takes too long
-      timeout = setTimeout(() => {
-        console.log(`FPS stabilization timeout - moving on (current FPS: ${lastFPS.toFixed(1)})`);
-        cleanup();
-        resolve();
-      }, maxWaitTime);
-      
-      // Start checking after a short delay
-      setTimeout(() => {
-        observer = scene.onAfterRenderObservable.add(checkStability);
-      }, 200);
-    });
+    // Simply wait 5 seconds for system to stabilize
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    console.log('Stabilization wait complete');
   }
 
   // Display benchmark results
