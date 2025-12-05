@@ -973,11 +973,12 @@ export const benchmark = function(babylonEngine){
         // Clean up scene
         if (currentSelection) {
           try {
-            unfreezeForNextTest();
+            
             scene.blockfreeActiveMeshesAndRenderingGroups = true;
             currentSelection.dispose();
             currentSelection = null;
             scene.blockfreeActiveMeshesAndRenderingGroups = false;
+            unfreezeForNextTest();
           } catch (error) {
             console.warn('Error disposing selection on XR exit:', error);
           }
