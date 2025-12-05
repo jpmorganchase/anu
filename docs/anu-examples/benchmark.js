@@ -425,8 +425,10 @@ export const benchmark = function(babylonEngine){
   // Clear the scene
   function clearScene() {
     if (currentSelection) {
+      scene.blockfreeActiveMeshesAndRenderingGroups = true;
       currentSelection.dispose();
       currentSelection = null;
+      scene.blockfreeActiveMeshesAndRenderingGroups = false;
     }
     benchmarkData = null;
     updateStatus('Scene cleared');
@@ -470,8 +472,10 @@ export const benchmark = function(babylonEngine){
   function createCubes(method, data) {
     // Clear previous selection but don't call clearScene to avoid clearing benchmarkData
     if (currentSelection) {
+      scene.blockfreeActiveMeshesAndRenderingGroups = true;
       currentSelection.dispose();
       currentSelection = null;
+      scene.blockfreeActiveMeshesAndRenderingGroups = false;
     }
 
     let selection;
@@ -605,8 +609,10 @@ export const benchmark = function(babylonEngine){
     
     // Clear any previous scene first
     if (currentSelection) {
+      scene.blockfreeActiveMeshesAndRenderingGroups = true;
       currentSelection.dispose();
       currentSelection = null;
+      scene.blockfreeActiveMeshesAndRenderingGroups = false;
     }
     
     // Wait longer to ensure cleanup is complete (especially important for Quest)
@@ -712,8 +718,10 @@ export const benchmark = function(babylonEngine){
         if (currentSelection) {
           // Unfreeze before disposing to ensure proper cleanup
           unfreezeForNextTest();
+          scene.blockfreeActiveMeshesAndRenderingGroups = true;
           currentSelection.dispose();
           currentSelection = null;
+          scene.blockfreeActiveMeshesAndRenderingGroups = false;
         }
         
         if (continueTest) {
@@ -966,8 +974,10 @@ export const benchmark = function(babylonEngine){
         if (currentSelection) {
           try {
             unfreezeForNextTest();
+            scene.blockfreeActiveMeshesAndRenderingGroups = true;
             currentSelection.dispose();
             currentSelection = null;
+            scene.blockfreeActiveMeshesAndRenderingGroups = false;
           } catch (error) {
             console.warn('Error disposing selection on XR exit:', error);
           }
