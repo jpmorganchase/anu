@@ -13,6 +13,14 @@ export type DynamicPropertyFunction<T> = (data: any, node: any, index: number) =
 // Helper type for creating type-safe dynamic property accessors
 export type PropertyAccessor<T> = T | DynamicPropertyFunction<T>;
 
+// Helper type for property accessor methods that match proxy signature
+// This can be used for explicit method definitions like positionX, rotationX, etc.
+export type PropertyAccessorMethod<T, TSelection = any> = {
+  (): T[];
+  (value: T): TSelection;
+  (value: (data: any, node: any, index: number) => T): TSelection;
+};
+
 // Type guard to check if a value is a function
 export function isDynamicFunction<T>(value: PropertyAccessor<T>): value is DynamicPropertyFunction<T> {
   return typeof value === 'function';

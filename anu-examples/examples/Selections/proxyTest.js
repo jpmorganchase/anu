@@ -92,6 +92,120 @@ camera.position = new Vector3(20, 3, -15);
     .setEnabled((d,n,i) => (i % 2) === 0)
     .rotation.setAll(2)
 
+  //Map iris data to boxes6 to test prop method with value
+  let boxes6 = chart.bind('box', {size: 1}, iris)
+    .id("box6")
+    .prop('position', new Vector3(3, 4, 5))
+    .prop('scaling', new Vector3(0.5, 1.5, 2.5))
+    .prop('rotation', new Vector3(1, 3, 4))
+    .prop('material', testMaterial);
+
+  //Map iris data to boxes7 to test prop method with function
+  let boxes7 = chart.bind('box', {size: 1}, iris)
+    .id("box7")
+    .prop('position', (d,n,i) => new Vector3(d.petalLength + 10, d.petalWidth + 10, d.sepalLength + 10))
+    .prop('scaling', (d, n, i) => new Vector3(n.position.x * 0.01, n.position.y * 0.01, n.position.z * 0.01))
+    .prop('rotation', (d, n, i) => new Vector3(i * 2, i * 2, i * 2))
+    .prop('material', (d,n,i) => { let mat = new StandardMaterial("mat7_" + i); mat.diffuseColor = Color3.Magenta(); return mat; });
+
+  //Map iris data to boxes8 to test prop method with nested properties by value
+  let boxes8 = chart.bind('box', {size: 1}, iris)
+    .id("box8")
+    .prop('position.x', 5)
+    .prop('position.y', 6)
+    .prop('position.z', 7)
+    .prop('scaling.x', 0.8)
+    .prop('scaling.y', 1.8)
+    .prop('scaling.z', 2.8)
+    .prop('rotation.x', 1)
+    .prop('rotation.y', 4)
+    .prop('rotation.z', 5)
+    .prop('material', new StandardMaterial()).prop('material.diffuseColor', Color3.Teal());
+
+  //Map iris data to boxes9 to test prop method with nested properties by function
+  let boxes9 = chart.bind('box', {size: 1}, iris)
+    .id("box9")
+    .prop('position.x', (d,n,i) => d.petalLength + 20)
+    .prop('position.y', (d,n,i) => d.petalWidth + 20)
+    .prop('position.z', (d,n,i) => d.sepalLength + 20)
+    .prop('scaling.x', (d, n, i) => n.position.x * 0.02)
+    .prop('scaling.y', (d, n, i) => n.position.y * 0.02)
+    .prop('scaling.z', (d, n, i) => n.position.z * 0.02)
+    .prop('rotation.x', (d, n, i) => i * 3)
+    .prop('rotation.y', (d, n, i) => i * 3)
+    .prop('rotation.z', (d, n, i) => i * 3)
+    .prop('material', (d,n,i) => { let mat = new StandardMaterial("mat9_" + i); mat.diffuseColor = Color3.Purple(); return mat; });
+
+  //Map iris data to boxes10 to test prop method with method calls (static values)
+  let boxes10 = chart.bind('box', {size: 1}, iris)
+    .id("box10")
+    .prop('translate', [new Vector3(0,1,0), 5])
+    .prop('setEnabled', [true])
+    .prop('rotation.setAll', [3]);
+
+  //Map iris data to boxes10b to test prop method with method calls (functions)
+  let boxes10b = chart.bind('box', {size: 1}, iris)
+    .id("box10b")
+    .prop('translate', (d,n,i) => [new Vector3(1,0,0), d.petalLength])
+    .prop('setEnabled', (d,n,i) => [(i % 3) === 0])
+    .prop('rotation.setAll', (d,n,i) => [i * 0.1]);
+
+  //Map iris data to boxes10c to test props method with multiple method calls (static values)
+  let boxes10c = chart.bind('box', {size: 1}, iris)
+    .id("box10c")
+    .props({
+      'translate': [new Vector3(0,0,1), 8],
+      'setEnabled': [true],
+      'rotation.setAll': [4]
+    });
+
+  //Map iris data to boxes10d to test props method with multiple method calls (functions)
+  let boxes10d = chart.bind('box', {size: 1}, iris)
+    .id("box10d")
+    .props({
+      'translate': (d,n,i) => [new Vector3(0,1,1), d.sepalLength],
+      'setEnabled': (d,n,i) => [(i % 4) === 0],
+      'rotation.setAll': (d,n,i) => [i * 0.2]
+    });
+
+  //Map iris data to boxes11 to test props method with multiple properties by value
+  let boxes11 = chart.bind('box', {size: 1}, iris)
+    .id("box11")
+    .props({
+      'position': new Vector3(8, 9, 10),
+      'scaling': new Vector3(0.3, 1.3, 2.3),
+      'rotation': new Vector3(2, 5, 6),
+      'material': testMaterial2
+    });
+
+  //Map iris data to boxes12 to test props method with multiple properties by function
+  let boxes12 = chart.bind('box', {size: 1}, iris)
+    .id("box12")
+    .props({
+      'position': (d,n,i) => new Vector3(d.petalLength + 30, d.petalWidth + 30, d.sepalLength + 30),
+      'scaling': (d, n, i) => new Vector3(n.position.x * 0.03, n.position.y * 0.03, n.position.z * 0.03),
+      'rotation': (d, n, i) => new Vector3(i * 4, i * 4, i * 4),
+      'material': (d,n,i) => { let mat = new StandardMaterial("mat12_" + i); mat.diffuseColor = Color3.Gray(); return mat; }
+    });
+
+  //Map iris data to boxes13 to test props method with nested properties
+  let boxes13 = chart.bind('box', {size: 1}, iris)
+    .id("box13")
+    .props({
+      'position.x': 10,
+      'position.y': 11,
+      'position.z': 12,
+      'scaling.x': 0.6,
+      'scaling.y': 1.6,
+      'scaling.z': 2.6,
+      'rotation.x': 3,
+      'rotation.y': 6,
+      'rotation.z': 7
+    })
+    .prop('material', new StandardMaterial()).props({
+      'material.diffuseColor': Color3.White()
+    });
+
     // Make global variables available for testing
     window.data = iris;
     window.scene = scene;

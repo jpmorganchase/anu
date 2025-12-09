@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node, Mesh, TransformNode, AbstractMesh } from '@babylonjs/core';
+import { Node } from '@babylonjs/core';
 import { Scene } from '@babylonjs/core/scene';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance, bindClone} from './bind/bind';
@@ -52,7 +52,7 @@ import {
   thinInstanceColorFor,
 } from './property/thin';
 import { transition, Transition, tween, stopTransitions, resetTransitions, restartTransitions, endTransitions, resetStopTransitions, pauseTransitions, stopTweens, createTransition } from './animation/transition';
-import type { DynamicProperties } from './base-types';
+import type { DynamicProperties, PropertyAccessorMethod } from './base-types';
 
 /**
  * The core Selection class of Anu that provides proxy functionality and all the specific
@@ -114,77 +114,14 @@ export class Selection {
       });
     };
 
-    // Helper function to check if we should use transitions
-    const shouldUseTransition = () => {
-      return this.transitions.length > 0;
-    };
-
     // Factory function to dynamically create proxy methods for both direct properties, accessors, methods, and nested paths. 
     const createProxyMethod = (accessor: string, isNestedPath: boolean) => {
       return new Proxy(function(...args: any[]) {
         if (args.length > 0) {
-          // Check if we should use transitions
-          if (shouldUseTransition()) {
-            console.log(`Creating transition for property path '${accessor}' with arguments:`, args);
-            createTransition(proxyRef, accessor, args[0]);
-            target.propertyPath = '';
-            return proxyRef;
-          }
-          
-          // Function call - evaluate and set/call
-          target.selected.forEach((node, i) => {
-            let parent: any;
-            let lastProp: string;
-            
-            if (isNestedPath) {
-              // Handle nested path like "material.diffuseColor"
-              const pathParts = accessor.split('.');
-              lastProp = pathParts.pop()!;
-              const parentPath = pathParts.join('.');
-              parent = parentPath ? evaluatePropertyPath(node, parentPath) : node;
-            } else {
-              // Handle direct property like "position"
-              parent = node;
-              lastProp = accessor;
-            }
-            
-            if (parent && typeof parent === 'object' && lastProp in parent) {
-              const targetProperty = parent[lastProp];
-              
-              if (typeof targetProperty === 'function') {
-                // Process arguments and call method
-                const processedArgs = args.map(arg => {
-                  return arg instanceof Function ? 
-                    arg((node.metadata?.data ?? {}), node, i) : arg;
-                });
-                targetProperty.apply(parent, processedArgs);
-              } else {
-                // Set property value
-                const value = args[0];
-                const actualValue = value instanceof Function ? 
-                  value((node.metadata?.data ?? {}), node, i) : value;
-                
-                // Type validation (only for direct properties)
-                if (!isNestedPath) {
-                  const currentValue = parent[lastProp];
-                  const expectedType = typeof currentValue;
-                  
-                  if (currentValue !== undefined && typeof currentValue !== 'function' && actualValue !== undefined) {
-                    const actualType = typeof actualValue;
-                    
-                    if (expectedType !== actualType && expectedType !== 'object') {
-                      console.warn(`Type mismatch for property '${lastProp}' on node ${('name: ' + node.name || ' id: ' + node.id || 'unnamed') + ' unique ID: ' + node.uniqueId}. Expected ${expectedType}, got ${actualType}. Skipping assignment.`);
-                      return;
-                    }
-                  }
-                }
-                
-                parent[lastProp] = actualValue;
-              }
-            }
-          });
-          
-          // Clear property path and return proxy for chaining
+          // Use prop() to handle setting properties, calling methods, and transitions
+          // Pass the first argument for single-arg calls, or the entire args array for methods
+          const value = args.length === 1 ? args[0] : args;
+          proxyRef.prop(accessor, value);
           target.propertyPath = '';
           return proxyRef;
         } else {
@@ -318,6 +255,8 @@ export class Selection {
   public bind = bind;
   public run = run;
   public bindInstance = bindInstance;
+
+  // Position, rotation, and scaling methods from dedicated files
   public positionX = positionX;
   public positionY = positionY;
   public positionZ = positionZ;
@@ -329,6 +268,7 @@ export class Selection {
   public scalingX = scalingX;
   public scalingY = scalingY;
   public scalingZ = scalingZ;
+
   public get = get;
   public attr = attr;
   public addTags = addTags;
