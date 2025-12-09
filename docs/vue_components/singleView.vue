@@ -39,6 +39,10 @@ const props = defineProps({
   fullscreen: {
     type: Boolean,
     default: false
+  },
+  noDefaultEnvironment: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -172,8 +176,8 @@ onMounted(async () => {
   let scene = await props.scene(babylonEngine);
   currentScene = scene;
 
-  // Only create default environment if scene doesn't opt out
-  if (!scene.metadata?.noDefaultEnvironment) {
+  // Only create default environment if not disabled by prop or scene metadata
+  if (!props.noDefaultEnvironment && !scene.metadata?.noDefaultEnvironment) {
     sceneEnvironment = scene.createDefaultEnvironment();
     sceneEnvironment.setMainColor(Color3.FromHexString('#0e0e17'));
     sceneEnvironment.ground.position = new Vector3(0, -2, 0);
@@ -274,6 +278,10 @@ onMounted(async () => {
     console.warn('XR Not Supported');
     xrSupported.value = false;
   }
+
+  scene.executeWhenReady(() => {
+    canvas.value.setAttribute('scene-ready', '1');
+  });
 
   babylonEngine.runRenderLoop(() => {
     scene.render();

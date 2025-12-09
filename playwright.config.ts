@@ -1,8 +1,48 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
     testDir: "./tests", // directory where the tests are located
     retries: process.env.CI ? 2 : 0, // retry failed tests on CI
+    
+    // Configure projects for different test suites
+    projects: [
+        {
+            name: 'anu-examples',
+            testMatch: /.*\.spec\.ts/,
+            testIgnore: /docs-examples\.spec\.ts/,
+            use: {
+                baseURL: "http://localhost:3443",
+                browserName: "chromium",
+                headless: true,
+                launchOptions: {
+                    args: [
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--use-gl=swiftshader"
+                    ]
+                },
+                viewport: { width: 1280, height: 720 }
+            },
+        },
+        {
+            name: 'docs-examples',
+            testMatch: /docs-examples\.spec\.ts/,
+            use: {
+                baseURL: "http://localhost:5173/anu/",
+                browserName: "chromium",
+                headless: true,
+                launchOptions: {
+                    args: [
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--use-gl=swiftshader"
+                    ]
+                },
+                viewport: { width: 1280, height: 720 }
+            },
+        },
+    ],
+    
     use: {
         baseURL: "http://localhost:3443", // base URL where the game is served
         browserName: "chromium", // We are testing on chromium
@@ -25,10 +65,18 @@ export default defineConfig({
         }
     },
 
-    webServer: {
-        command: "cd anu-examples && npm run dev", // Change this to the command that serves your built game
-        url: "http://localhost:3443", // URL where the game is served
-        timeout: 120 * 1000, // 2 minutes timeout for server startup
-        reuseExistingServer: !process.env.CI // Don't start a new server if one is already running in CI
-    }
+    webServer: [
+        {
+            command: "cd anu-examples && npm run dev",
+            url: "http://localhost:3443",
+            timeout: 120 * 1000,
+            reuseExistingServer: !process.env.CI
+        },
+        {
+            command: "cd docs && npm run docs:dev",
+            url: "http://localhost:5173/anu/",
+            timeout: 120 * 1000,
+            reuseExistingServer: !process.env.CI
+        }
+    ]
 });
