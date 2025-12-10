@@ -67,8 +67,8 @@ export function callOrSetPropertyPath(
     }
   }
   
-  // Check if the target exists
-  if (parent && typeof parent === 'object' && lastProp in parent) {
+  // Check if the target property exists
+  if (lastProp in parent) {
     const targetProperty = parent[lastProp];
     
     // If it's a method, call it with arguments

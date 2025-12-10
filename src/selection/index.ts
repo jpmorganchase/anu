@@ -24,6 +24,7 @@ import {
 } from './property/material';
 import { registerInstancedBuffer, setInstancedBuffer } from './property/instancedBuffer';
 import { attr, props, prop } from './property/prop';
+import { evaluatePropertyPath, hasPropertyPath } from '../utils/objects';
 import { run } from './utility/run';
 import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
@@ -82,36 +83,9 @@ export class Selection {
     let proxy: any; // Forward declaration for use in helper functions
     const target = this; // Reference to the actual Selection instance
     
-    // Helper function to evaluate property path on a node
-    const evaluatePropertyPath = (node: any, path: string) => {
-      const parts = path.split('.');
-      let current = node;
-      for (const part of parts) {
-        if (current && typeof current === 'object' && part in current) {
-          current = current[part];
-        } else {
-          return undefined;
-        }
-      }
-      return current;
-    };
-
-    // Helper function to check if property path exists on nodes
-    const hasPropertyPath = (path: string) => {
-      return this.selected.some(node => {
-        const parts = path.split('.');
-        let current = node;
-        for (let i = 0; i < parts.length; i++) {
-          if (current && typeof current === 'object' && parts[i] in current) {
-            current = current[parts[i]];
-          } else {
-            // Property doesn't exist in the chain
-            return false;
-          }
-        }
-        // If we made it through all parts, the path is valid (even if final value is null)
-        return true;
-      });
+    // Helper function to check if property path exists on any selected nodes
+    const nodeHasPropertyPath = (path: string) => {
+      return this.selected.some(node => hasPropertyPath(node, path));
     };
 
     // Factory function to dynamically create proxy methods for both direct properties, accessors, methods, and nested paths. 
@@ -127,9 +101,7 @@ export class Selection {
         } else {
           // Property access - return current values
           const propertyValues = target.selected.map(node => {
-            const value = isNestedPath ? 
-              evaluatePropertyPath(node, accessor) : 
-              ((node && typeof node === 'object' && accessor in node) ? (node as any)[accessor] : undefined);
+            const value = evaluatePropertyPath(node, accessor);
             return typeof value === 'function' ? value.bind(node) : value;
           });
           
@@ -147,7 +119,7 @@ export class Selection {
             // For nested paths, build extended path and validate
             const extendedPath = `${accessor}.${nestedProp}`;
             
-            if (hasPropertyPath(extendedPath)) {
+            if (nodeHasPropertyPath(extendedPath)) {
               target.propertyPath = accessor;
               return proxy[nestedProp];
             } else {
@@ -178,7 +150,7 @@ export class Selection {
           const newPath = `${target.propertyPath}.${prop}`;
           
           // Check if the new path exists on any selected nodes
-          if (hasPropertyPath(newPath)) {
+          if (nodeHasPropertyPath(newPath)) {
             // Create a proxy function for the extended path using the factory
             return createProxyMethod(newPath, true);
           } else {

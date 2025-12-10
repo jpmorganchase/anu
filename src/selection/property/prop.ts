@@ -4,7 +4,7 @@
 import { TransformNode } from '@babylonjs/core';
 import { Selection } from '../index';
 import { createTransition, createTransitions } from '../animation/transition';
-import { evaluatePropertyPath, hasPropertyPath, callOrSetPropertyPath } from '../../utils/objects';
+import { evaluatePropertyPath, callOrSetPropertyPath } from '../../utils/objects';
 
 /**
  * Called from a selection this method allows you to set any property or subproperty of nodes in the selection given that property exists.
@@ -56,11 +56,7 @@ export function prop(this: Selection, accessor: string, value: PropValue) {
     createTransition(this, accessor, value);
   } else {
     this.selected.forEach((node, i) => {
-      if (hasPropertyPath(node, accessor)) {
-        if (!callOrSetPropertyPath(node, accessor, value, i)) {
-          console.error(accessor + ' not a property of ' + node);
-        }
-      } else {
+      if (!callOrSetPropertyPath(node, accessor, value, i)) {
         console.error(accessor + ' not a property of ' + node);
       }
     });
@@ -89,11 +85,7 @@ export function props(this: Selection, properties: PropsObject) {
   } else {
     this.selected.forEach((node, i) => {
       for (let accessor in properties) {
-        if (hasPropertyPath(node, accessor)) {
-          if (!callOrSetPropertyPath(node, accessor, (properties as any)[accessor], i)) {
-            console.warn(accessor + ' not property of ' + node);
-          }
-        } else {
+        if (!callOrSetPropertyPath(node, accessor, (properties as any)[accessor], i)) {
           console.warn(accessor + ' not property of ' + node);
         }
       }
