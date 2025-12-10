@@ -99,6 +99,11 @@ export const nodelink3d = function (engine) {
 
     camera.setTarget(cot.selected[0])
 
+    // Stop the simulation when the scene is disposed to prevent errors when navigating away
+    scene.onDisposeObservable.add(() => {
+        simulation.stop();
+    });
+
     return scene
 }
 
