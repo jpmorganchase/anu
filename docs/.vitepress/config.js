@@ -17,8 +17,8 @@ export default defineConfig({
     search: {
       provider: 'local',
      options: {
-        async _render(src, env, md) {
-          const html = await md.renderAsync(src, env)
+        _render(src, env, md) {
+          const html = md.render(src, env)
           if (env.frontmatter?.search === false) return ''
           if (env.relativePath.startsWith('anu-tutorial')) return ''
           return html
