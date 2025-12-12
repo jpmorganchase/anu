@@ -14,6 +14,17 @@ export default defineConfig({
     editLink: {
       pattern: 'https://github.com/jpmorganchase/anu/tree/main/docs/:path'
     },
+    search: {
+      provider: 'local',
+     options: {
+        async _render(src, env, md) {
+          const html = await md.renderAsync(src, env)
+          if (env.frontmatter?.search === false) return ''
+          if (env.relativePath.startsWith('anu-tutorial')) return ''
+          return html
+        }
+      }
+    },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/guide/' },
