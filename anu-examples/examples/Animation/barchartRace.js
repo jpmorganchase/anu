@@ -79,9 +79,9 @@ export const barchartRace = function(engine) {
                   .prop('material.alpha', (d,n,i) => (d.rank) < topN ? 1 : 0)   //Companies not in the top N are transparent
                   .diffuseColor((d,n,i) => Color3.FromHexString(scaleC(d)));
 
-  let labels = chart.bind('planeText', { text: "0", size: 0.1, align: "right"}, keyframes[0][1])
+  let labels = chart.bind('planeText', { text: "0", size: 0.15/2, align: "right", vAlign: "middle", lineHeight: 0.8}, keyframes[0][1])
                     .positionX((d,n,i) => scaleX(d.value) - 0.04)   //Offsets to neatly place bar label
-                    .positionY((d,n,i) => scaleY(d.rank) - 0.0285)
+                    .positionY((d,n,i) => scaleY(d.rank) + 0.045)
                     .positionZ(-0.011); //Move slightly in-front of the box
 
   //Customize and create our the axes
@@ -94,6 +94,7 @@ export const barchartRace = function(engine) {
   axesOptions.labelFormat.x = (v) => Number(v.toFixed(0)).toLocaleString();
   axesOptions.labelMargin.x = -0.125;
   axesOptions.label.y = false;
+  axesOptions.labelOptions = { size: 0.05 };
   let axes = anu.createAxes('axes', scene, axesOptions);
 
   //Label for the current year at the bottom right
@@ -145,7 +146,7 @@ export const barchartRace = function(engine) {
       .tween((d,n,i) => {
         let textTween = d3.interpolateNumber(Number(n.text.split('\n').pop().replace(',', '')), d.value);
         let posXTween = d3.interpolateNumber(n.position.x, scaleX(d.value) - 0.04);   //Offsets to neatly place bar label
-        let posYTween = d3.interpolateNumber(n.position.y, scaleY(d.rank) - 0.0285);
+        let posYTween = d3.interpolateNumber(n.position.y, scaleY(d.rank) + 0.045);
         let alphaTween = d3.interpolateNumber(n.opacity, (d.rank) < topN ? 1 : 0);
 
         return (t) => {
@@ -154,11 +155,11 @@ export const barchartRace = function(engine) {
           //Updating text is rather expensive since text vertices need to be calculated and redrawn each update, especially if we are doing
           //this every frame, therefore we only do it for those in the top N
           if (d.rank < topN) {
-            n.isVisible = true;
+            n.setEnabled(true);
             n.updatePlaneText({ text: d.name + "\n" + Number(textTween(t).toFixed(0)).toLocaleString(), opacity: alphaTween(t) });
           }
           else {
-            n.isVisible = false;
+            n.setEnabled(false);
           }
         }
       });

@@ -18,6 +18,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
         /@babylonjs\/core/,
+        /@babylonjs\/addons/,
         "ol"
       ],
       output: {
