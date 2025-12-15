@@ -7,6 +7,8 @@
 /docs/anu-tutorial/node_modules
 /docs/.vitepress/cache
 /docs/.vitepress/dist
+/docs/package-lock.json
+/docs/anu-tutorial/package-lock.json
 /anu-examples/node_modules
 /anu-examples/anu-examples.code-workspace
 /docs/docs.code-workspace
