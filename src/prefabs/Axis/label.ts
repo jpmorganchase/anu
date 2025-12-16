@@ -137,7 +137,7 @@ function buildTicks(scales, ticks?){
 }
 
 export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
-
+ 
   let previous_selection = axes.label;
 
   let selections: { x?: Selection; y?: Selection; z?: Selection } = {};
@@ -164,78 +164,177 @@ export function updateLabel(axes: Axes, transitionOptions: TransitionOptions){
     if (!createLabel) return undefined;
   
     if (createLabel.x && axes.options.scale?.x != undefined){
-    previous_selection.x.run((d,n) => n.setEnabled(false));
-    axes._scene.onAfterRenderObservable.addOnce(() => {
-      previous_selection.x.dispose();
-    })
+      // Only dispose and recreate if the number of ticks changed or we have a transition
+      const tickCountChanged = !previous_selection.x || previous_selection.x.selected.length !== ticks.x.length;
       
-      if (transitionOptions) {
-        const startConfig = labelXDefaults(axes.tempAxes, textHeightPrev)
-        const endConfig = labelXDefaults(axes, textHeight)
-        selections.x = labelBuilder(startConfig, ticks.x);
-        selections.x.transition(transitionOptions).tween((d,n,i) => {
-          let interpolate = interpolateObject(n.position, endConfig.position(d));
-          let options = clone(endConfig.options);
-          options['text'] = endConfig.options['text'](d);
-          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
-          return (t) => {
-            n.position = interpolate(t);
+      if (tickCountChanged) {
+        if (transitionOptions) {
+          const startConfig = labelXDefaults(axes.tempAxes, textHeightPrev)
+          const endConfig = labelXDefaults(axes, textHeight)
+          
+          // Create new labels immediately
+          selections.x = labelBuilder(startConfig, ticks.x);
+          selections.x.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            return (t) => {
+               n.position = interpolate(t);
+            }
+          })
+          
+          // Wait for all new labels to be ready before disposing old ones
+          if (previous_selection.x) {
+            const readyPromises = selections.x.selected.map((n: PlaneText) => n.ready);
+            Promise.all(readyPromises).then(() => {
+              previous_selection.x.dispose();
+            });
           }
-        })
+        } else {
+          selections.x = labelBuilder(labelXDefaults(axes, textHeight), ticks.x)
+          
+          // Wait for all new labels to be ready before disposing old ones
+          if (previous_selection.x) {
+            const readyPromises = selections.x.selected.map((n: PlaneText) => n.ready);
+            Promise.all(readyPromises).then(() => {
+              previous_selection.x.dispose();
+            });
+          }
+        }
       } else {
-        selections.x = labelBuilder(labelXDefaults(axes, textHeight), ticks.x)
+        // Reuse existing labels, just update them
+        selections.x = previous_selection.x;
+        const endConfig = labelXDefaults(axes, textHeight);
+        
+        if (transitionOptions) {
+          selections.x.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            return (t) => {
+              n.position = interpolate(t);
+              (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+            }
+          })
+        } else {
+          // No transition, just update properties
+          selections.x.each((d, n, i) => {
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            (n as PlaneText).updatePlaneText(options as PlaneTextOptions);
+            n.position = endConfig.position(d);
+          });
+        }
       }
     }
     if (createLabel.y && axes.options.scale?.y != undefined){
-
-      previous_selection.y.run((d,n) => n.setEnabled(false));
-      axes._scene.onAfterRenderObservable.addOnce(() => {
-        previous_selection.y.dispose();
-      })
-
-      if (transitionOptions) {
-        const startConfig = labelYDefaults(axes.tempAxes, textHeightPrev)
-        const endConfig = labelYDefaults(axes, textHeight)
-        selections.y = labelBuilder(startConfig, ticks.y);
-        selections.y.transition(transitionOptions).tween((d,n,i) => {
-          let interpolate = interpolateObject(n.position, endConfig.position(d));
-          let options = clone(endConfig.options);
-          options['text'] = endConfig.options['text'](d);
-          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
-          return (t) => {
-            n.position = interpolate(t);
-          }
-        })
+      // Only dispose and recreate if the number of ticks changed or we have a transition
+      const tickCountChanged = !previous_selection.y || previous_selection.y.selected.length !== ticks.y.length;
+      
+      if (tickCountChanged) {
+        if (transitionOptions) {
+          const startConfig = labelYDefaults(axes.tempAxes, textHeightPrev)
+          const endConfig = labelYDefaults(axes, textHeight)
+          selections.y = labelBuilder(startConfig, ticks.y);
+          selections.y.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            return (t) => {
+               n.position = interpolate(t);
+              (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+            }
+          })
+        } else {
+          selections.y = labelBuilder(labelYDefaults(axes, textHeight), ticks.y)
+        }
+        
+        // Wait for all new labels to be ready before disposing old ones
+        if (previous_selection.y) {
+          const readyPromises = selections.y.selected.map((n: PlaneText) => n.ready);
+          Promise.all(readyPromises).then(() => {
+            previous_selection.y.dispose();
+          });
+        }
       } else {
-        selections.y = labelBuilder(labelYDefaults(axes, textHeight), ticks.y)
+        // Reuse existing labels, just update them
+        selections.y = previous_selection.y;
+        const endConfig = labelYDefaults(axes, textHeight);
+        
+        if (transitionOptions) {
+          selections.y.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            return (t) => {
+              n.position = interpolate(t);
+              (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+            }
+          })
+        } else {
+          // No transition, just update properties
+          selections.y.each((d, n, i) => {
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            (n as PlaneText).updatePlaneText(options as PlaneTextOptions);
+            n.position = endConfig.position(d);
+          });
+        }
       }
     }
     if (createLabel.z && axes.options.scale?.z != undefined){
-
-      previous_selection.z.run((d,n) => n.setEnabled(false));
-      axes._scene.onAfterRenderObservable.addOnce(() => {
-        previous_selection.z.dispose();
-      })
-
-      if (transitionOptions) {
-        const startConfig = labelZDefaults(axes.tempAxes, textHeightPrev)
-        const endConfig = labelZDefaults(axes, textHeight)
-        selections.z = labelBuilder(startConfig, ticks.z);
-        selections.z.transition(transitionOptions).tween((d,n,i) => {
-          let interpolate = interpolateObject(n.position, endConfig.position(d));
-          let options = clone(endConfig.options);
-          options['text'] = endConfig.options['text'](d);
-          (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
-          return (t) => {
-            n.position = interpolate(t);
-          }
-        })
+      // Only dispose and recreate if the number of ticks changed or we have a transition
+      const tickCountChanged = !previous_selection.z || previous_selection.z.selected.length !== ticks.z.length;
+      
+      if (tickCountChanged) {
+        if (transitionOptions) {
+          const startConfig = labelZDefaults(axes.tempAxes, textHeightPrev)
+          const endConfig = labelZDefaults(axes, textHeight)
+          selections.z = labelBuilder(startConfig, ticks.z);
+          selections.z.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            return (t) => {
+              n.position = interpolate(t);
+              (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+            }
+          })
+        } else {
+          selections.z = labelBuilder(labelZDefaults(axes, textHeight), ticks.z)
+        }
+        
+        // Wait for all new labels to be ready before disposing old ones
+        if (previous_selection.z) {
+          const readyPromises = selections.z.selected.map((n: PlaneText) => n.ready);
+          Promise.all(readyPromises).then(() => {
+            previous_selection.z.dispose();
+          });
+        }
       } else {
-        selections.z = labelBuilder(labelZDefaults(axes, textHeight), ticks.z)
-      }
+        // Reuse existing labels, just update them
+        selections.z = previous_selection.z;
+        const endConfig = labelZDefaults(axes, textHeight);
+        
+        if (transitionOptions) {
+          selections.z.transition(transitionOptions).tween((d,n,i) => {
+            let interpolate = interpolateObject(n.position, endConfig.position(d));
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            return (t) => {
+              n.position = interpolate(t);
+              (n as PlaneText).updatePlaneText(options as PlaneTextOptions)
+            }
+          })
+        } else {
+          // No transition, just update properties
+          selections.z.each((d, n, i) => {
+            let options = clone(endConfig.options);
+            options['text'] = endConfig.options['text'](d);
+            (n as PlaneText).updatePlaneText(options as PlaneTextOptions);
+            n.position = endConfig.position(d);
+          });
+        }
+      }   
     }
+      return selections
 
-
-
-  return selections
 }

@@ -28,7 +28,7 @@ export default defineConfig({
         },
     },
   },
-  plugins: [dts({rollupTypes: true, outputDir: 'dist', insertTypesEntry: true, tsConfigFilePath: "./tsconfig.json"}), 
+  plugins: [dts({rollupTypes: true, outDir: 'dist', insertTypesEntry: true, tsconfigPath: "./tsconfig.json"}), 
             externalizeDeps(),
           ],
 });

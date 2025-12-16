@@ -1,12 +1,25 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Node, Matrix, TransformNode } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Node, Matrix, TransformNode, Engine, AbstractEngine } from '@babylonjs/core';
 import { FontAsset, TextRenderer } from '@babylonjs/addons';
 import type { ParagraphOptions } from '@babylonjs/addons';
 import fnt from '../../assets/roboto-regular.json';
 import png from '../../assets/roboto-regular.png';
 import assign from 'lodash-es/assign';
+
+// Global registry to manage all TextRenderer instances per scene
+// Shared across all PlaneText instances
+const rendererRegistry = new Map<Scene, Set<TextRenderer>>();
+const sceneObservers = new Map<Scene, any>();
+const sceneDisposeObservers = new Map<Scene, any>();
+
+// Global cache for font assets to avoid recreating them
+// Key format: "sceneId_fontCacheKey"
+const fontAssetCache = new Map<string, FontAsset>();
+
+// Track which font assets belong to which scene for cleanup
+const sceneFontAssets = new Map<Scene, Set<string>>();
 
 export interface PlaneTextOptions {
   text: string;
@@ -34,61 +47,43 @@ export class PlaneText extends TransformNode {
   private options: PlaneTextOptions;
   private textRenderer: TextRenderer | null = null;
   private fontAsset: FontAsset | null = null;
-  private isInitialized: boolean = false;
   private hasAddedText: boolean = false;
-  private _isDisposing: boolean = false;
   private _isRecreating: boolean = false;
-  private _pendingTextUpdate: string | null = null;
   private _isEnabled: boolean = true;
-
-  // Static registry to manage all TextRenderer instances per scene
-  private static rendererRegistry = new Map<Scene, Set<TextRenderer>>();
-  private static sceneObservers = new Map<Scene, any>();
   
-  // Static cache for font assets to avoid recreating them
-  private static fontAssetCache = new Map<string, FontAsset>();
+  /** Promise that resolves when the PlaneText is fully initialized and rendered */
+  public ready: Promise<void>;
+  private _resolveReady!: () => void;
 
   constructor(name: string, options: PlaneTextOptions, scene: Scene) {
     super(name, scene);
-
     this.name = name;
     this.options = options;
-    this.initialize();
+    
+    // Create a promise that will resolve when initialization and first render is complete
+    this.ready = new Promise<void>((resolve) => {
+      this._resolveReady = resolve;
+    });
+    
+    this.initializeAsync(this.getScene());
   }
 
-  private initialize() {
-    // Check if already disposed before starting initialization
-    if (this._isDisposing) {
-      return;
-    }
-
-    // Get scene from TransformNode's getScene() method
-    const scene = this.getScene();
-    
-    // Start async initialization but don't wait for it
-    this.initializeAsync(scene);
-  }
-
-  private initializeAsync(scene: Scene) {
-    // Create or get cached font asset
-    let fontDataPromise: Promise<string>;
-    
-    // Handle font data - can be URL, object, or string JSON
-    if (typeof this.options.font === 'string') {
-      // If it's a URL, fetch it
-      if (this.options.font.startsWith('http')) {
-        fontDataPromise = fetch(this.options.font).then(r => r.text());
+  private async initializeAsync(scene: Scene) {
+    try {
+      // Create or get cached font asset
+      let fontData: string;
+      
+      // Handle font data - can be URL, object, or string JSON
+      if (URL.canParse(this.options.font)) {
+        // If it's a URL, fetch it
+        if (this.options.font.startsWith('http')) {
+          const response = await fetch(this.options.font);
+          fontData = await response.text();
+        } else {
+          fontData = this.options.font;
+        }
       } else {
-        fontDataPromise = Promise.resolve(this.options.font);
-      }
-    } else {
-      fontDataPromise = Promise.resolve(JSON.stringify(this.options.font));
-    }
-    
-    fontDataPromise.then(fontData => {
-      // Check if disposed during async operation
-      if (this._isDisposing) {
-        return;
+        fontData = JSON.stringify(this.options.font);
       }
 
       // Handle atlas URL
@@ -101,48 +96,70 @@ export class PlaneText extends TransformNode {
         atlasUrl = this.options.atlas.url || png;
       }
 
-      // Create a cache key based on font data and atlas URL
-      const cacheKey = `${fontData.substring(0, 100)}_${atlasUrl}`;
+      // Create a cache key based on scene ID, font data and atlas URL
+      const sceneId = scene.uid;
+      const fontCacheKey = `${fontData.substring(0, 100)}_${atlasUrl}`;
+      const cacheKey = `${sceneId}_${fontCacheKey}`;
       
-      // Check if we have a cached font asset
-      if (PlaneText.fontAssetCache.has(cacheKey)) {
-        this.fontAsset = PlaneText.fontAssetCache.get(cacheKey)!;
+      // Check if we have a cached font asset for this scene
+      if (fontAssetCache.has(cacheKey)) {
+        this.fontAsset = fontAssetCache.get(cacheKey)!;
       } else {
         // Create new font asset and cache it
         this.fontAsset = new FontAsset(fontData, atlasUrl, scene);
-        PlaneText.fontAssetCache.set(cacheKey, this.fontAsset);
+        fontAssetCache.set(cacheKey, this.fontAsset);
+        
+        // Track this font asset for this scene
+        if (!sceneFontAssets.has(scene)) {
+          sceneFontAssets.set(scene, new Set());
+          
+          // Set up scene disposal observer to clean up font assets when scene is disposed
+          // Only do this once per scene
+          if (!sceneDisposeObservers.has(scene)) {
+            const disposeObserver = scene.onDisposeObservable.add(() => {
+              PlaneText.cleanupSceneFontAssets(scene);
+              sceneDisposeObservers.delete(scene);
+            });
+            sceneDisposeObservers.set(scene, disposeObserver);
+          }
+        }
+        sceneFontAssets.get(scene)!.add(cacheKey);
       }
 
-      // Create text renderer
-      return TextRenderer.CreateTextRendererAsync(
+      // Create text renderer - this is async
+      this.textRenderer = await TextRenderer.CreateTextRendererAsync(
         this.fontAsset,
         scene.getEngine()
       );
-    }).then(renderer => {
-      if (!renderer) return;
-
-      // Check again if disposed during async operation
-      if (this._isDisposing) {
-        renderer.dispose();
-        return;
-      }
-
-      this.textRenderer = renderer;
 
       // Configure renderer properties
       this.textRenderer.parent = this;
-      this.isInitialized = true;
-
-      // Register this text renderer with the scene (only if enabled)
-      if (this._isEnabled) {
-        this.registerRenderer(scene, this.textRenderer);
-      }
-
-      // Initial render
-      this.updateText();
-      this.updateRendererProperties();
-      this.updateTransform();
-    });
+      
+      // Register and render on the next frame to avoid flashing
+      scene.onBeforeRenderObservable.addOnce(() => {
+        if (this._isEnabled && this.textRenderer) {
+          this.registerRenderer(scene, this.textRenderer);
+          
+          // Initial render
+          this.updateText();
+          this.updateRendererProperties();
+          this.updateTransform();
+          
+          // Resolve ready promise after the text has been rendered
+          scene.onAfterRenderObservable.addOnce(() => {
+            this._resolveReady();
+          });
+        } else {
+          // If disabled or no renderer, resolve immediately
+          this._resolveReady();
+        }
+      });
+ 
+    } catch (error) {
+      console.error('PlaneText initialization error:', error);
+      // Resolve ready even on error so awaiting code doesn't hang
+      this._resolveReady();
+    }
   }
 
   /**
@@ -150,15 +167,15 @@ export class PlaneText extends TransformNode {
    */
   private registerRenderer(scene: Scene, renderer: TextRenderer) {
     // Get or create the set of renderers for this scene
-    if (!PlaneText.rendererRegistry.has(scene)) {
-      PlaneText.rendererRegistry.set(scene, new Set());
+    if (!rendererRegistry.has(scene)) {
+      rendererRegistry.set(scene, new Set());
     }
     
-    const renderers = PlaneText.rendererRegistry.get(scene)!;
+    const renderers = rendererRegistry.get(scene)!;
     renderers.add(renderer);
 
     // If this is the first renderer for this scene, set up the render observer
-    if (!PlaneText.sceneObservers.has(scene)) {
+    if (!sceneObservers.has(scene)) {
       const observer = scene.onAfterRenderObservable.add(() => {
         const activeCamera = scene.activeCamera;
         if (!activeCamera) return;
@@ -167,7 +184,7 @@ export class PlaneText extends TransformNode {
         const projectionMatrix = activeCamera.getProjectionMatrix();
         
         // Render all registered text renderers for this scene
-        const sceneRenderers = PlaneText.rendererRegistry.get(scene);
+        const sceneRenderers = rendererRegistry.get(scene);
         if (sceneRenderers) {
           sceneRenderers.forEach(textRenderer => {
             textRenderer.render(viewMatrix, projectionMatrix);
@@ -175,7 +192,7 @@ export class PlaneText extends TransformNode {
         }
       });
       
-      PlaneText.sceneObservers.set(scene, observer);
+      sceneObservers.set(scene, observer);
     }
   }
 
@@ -183,19 +200,39 @@ export class PlaneText extends TransformNode {
    * Unregister a TextRenderer from the scene
    */
   private unregisterRenderer(scene: Scene, renderer: TextRenderer) {
-    const renderers = PlaneText.rendererRegistry.get(scene);
+    const renderers = rendererRegistry.get(scene);
     if (renderers) {
       renderers.delete(renderer);
       
       // If no more renderers for this scene, clean up the observer
+      // Note: We do NOT dispose font assets here because they should persist
+      // across PlaneText instances. Font assets will be disposed when the scene is disposed.
       if (renderers.size === 0) {
-        const observer = PlaneText.sceneObservers.get(scene);
+        const observer = sceneObservers.get(scene);
         if (observer) {
           scene.onAfterRenderObservable.remove(observer);
-          PlaneText.sceneObservers.delete(scene);
+          sceneObservers.delete(scene);
         }
-        PlaneText.rendererRegistry.delete(scene);
+        rendererRegistry.delete(scene);
       }
+    }
+  }
+  
+  /**
+   * Clean up all font assets for a scene when the scene is being disposed
+   * This should be called by the scene's onDisposeObservable
+   */
+  private static cleanupSceneFontAssets(scene: Scene) {
+    const fontKeys = sceneFontAssets.get(scene);
+    if (fontKeys) {
+      fontKeys.forEach(key => {
+        const fontAsset = fontAssetCache.get(key);
+        if (fontAsset) {
+          fontAsset.dispose();
+          fontAssetCache.delete(key);
+        }
+      });
+      sceneFontAssets.delete(scene);
     }
   }
 
@@ -356,20 +393,25 @@ export class PlaneText extends TransformNode {
     
     this._isEnabled = enabled;
     
-    if (!this.isInitialized || !this.textRenderer) return;
+    if (!this.textRenderer) return;
     
     const scene = this.getScene();
     
     if (enabled) {
       // Re-register the renderer to enable rendering
       this.registerRenderer(scene, this.textRenderer);
+      
+      // If text hasn't been added yet (was disabled during init), add it now
+      if (!this.hasAddedText) {
+        this.updateText();
+        this.updateRendererProperties();
+        this.updateTransform();
+      }
     } else {
       // Unregister the renderer to disable rendering (but don't dispose it)
-      const renderers = PlaneText.rendererRegistry.get(scene);
+      const renderers = rendererRegistry.get(scene);
       if (renderers) {
         renderers.delete(this.textRenderer);
-        // Note: Don't clean up the observer even if no renderers remain,
-        // as we might re-enable this or other text later
       }
     }
   }
@@ -382,7 +424,6 @@ export class PlaneText extends TransformNode {
     return this._isEnabled;
   }
 
-
   /**
    * Updates the PlaneText with new options.
    *
@@ -391,7 +432,9 @@ export class PlaneText extends TransformNode {
   public updatePlaneText(options: Partial<PlaneTextOptions>) {
     const needsReinit = options.font !== undefined || options.atlas !== undefined;
     const textChanged = options.text !== undefined && options.text !== this.options.text;
-    const paragraphOptionChanged = options.align !== undefined || options.vAlign !== undefined || options.lineHeight !== undefined;
+    const paragraphOptionChanged = (options.align !== undefined && options.align !== this.options.align) || 
+                                    (options.vAlign !== undefined && options.vAlign !== this.options.vAlign) || 
+                                    (options.lineHeight !== undefined && options.lineHeight !== this.options.lineHeight);
     
     //Override the existing options object with any new options
     this.options = assign({}, this.options, options);
@@ -409,16 +452,13 @@ export class PlaneText extends TransformNode {
   }
 
   private updateText() {
-    if (!this.isInitialized || !this.textRenderer) {
+    if (!this.textRenderer) {
       return;
     }
 
     // If text has already been added, we need to recreate the renderer
     // since TextRenderer doesn't have a clear() method
     if (this.hasAddedText) {
-      // Store the pending text update
-      this._pendingTextUpdate = this.options.text;
-      
       // Don't start a new recreation if one is already in progress
       if (!this._isRecreating) {
         this.recreateRenderer();
@@ -440,46 +480,21 @@ export class PlaneText extends TransformNode {
    * Recreate the text renderer to update text content
    * This is necessary because TextRenderer doesn't have a clear() method
    */
-  private recreateRenderer() {
-    if (!this.textRenderer || this._isRecreating || this._isDisposing) return;
+  private async recreateRenderer() {
+    if (!this.textRenderer || this._isRecreating) return;
     
     this._isRecreating = true;
     const scene = this.getScene();
-    
-    // Store the current text to apply after recreation
-    const textToApply = this._pendingTextUpdate || this.options.text;
-    this._pendingTextUpdate = null;
-    
-    // Keep reference to old renderer - we'll dispose it AFTER the new one is ready
     const oldRenderer = this.textRenderer;
     
-    // Create new renderer with same font asset (async)
-    TextRenderer.CreateTextRendererAsync(
-      this.fontAsset!,
-      scene.getEngine()
-    ).then(newRenderer => {
-      // Check if disposed during async operation
-      if (this._isDisposing) {
-        newRenderer.dispose();
-        this._isRecreating = false;
-        return;
-      }
-      
-      // Check if text changed again during recreation
-      if (this._pendingTextUpdate && this._pendingTextUpdate !== textToApply) {
-        // Text changed again, dispose this renderer and recreate again
-        newRenderer.dispose();
-        this._isRecreating = false;
-        this.recreateRenderer();
-        return;
-      }
-      
-      // Configure the new renderer
+    try {
+      // Create new renderer with same font asset
+      const newRenderer = await TextRenderer.CreateTextRendererAsync(
+        this.fontAsset!,
+        scene.getEngine()
+      );
+
       newRenderer.parent = this;
-      
-      // Temporarily set the text to what we want to display
-      const originalText = this.options.text;
-      this.options.text = textToApply;
       
       // Add text to new renderer
       const paragraphOptions: Partial<ParagraphOptions> = {
@@ -512,31 +527,28 @@ export class PlaneText extends TransformNode {
       const scaleMatrix = Matrix.Scaling(this.options.size, this.options.size, this.options.size);
       newRenderer.transformMatrix = scaleMatrix;
       
-      // Schedule the swap to happen just before the next render
-      scene.onBeforeRenderObservable.addOnce(() => {
-        // Swap renderers - register new one first (only if enabled), then unregister old one
-        if (this._isEnabled) {
-          this.registerRenderer(scene, newRenderer);
-        }
-        this.textRenderer = newRenderer;
-        this.hasAddedText = true;
-        
-        // Now dispose the old renderer
-        this.unregisterRenderer(scene, oldRenderer);
-        oldRenderer.dispose();
-        
-        // Restore original text if different
-        if (originalText !== textToApply) {
-          this.options.text = originalText;
-        }
-        
-        this._isRecreating = false;
-      });
-    });
+      // Register new renderer BEFORE unregistering old one to minimize gap
+      if (this._isEnabled) {
+        this.registerRenderer(scene, newRenderer);
+      }
+      
+      // Update reference to new renderer
+      this.textRenderer = newRenderer;
+      this.hasAddedText = true;
+      
+      // Unregister and dispose old renderer after new one is ready
+      this.unregisterRenderer(scene, oldRenderer);
+      oldRenderer.dispose();
+      
+      this._isRecreating = false;
+    } catch (error) {
+      console.error('PlaneText recreation error:', error);
+      this._isRecreating = false;
+    }
   }
 
   private updateRendererProperties() {
-    if (!this.isInitialized || !this.textRenderer) {
+    if (!this.textRenderer) {
       return;
     }
 
@@ -566,7 +578,7 @@ export class PlaneText extends TransformNode {
   }
 
   private updateTransform() {
-    if (!this.isInitialized || !this.textRenderer) {
+    if (!this.textRenderer) {
       return;
     }
 
@@ -607,7 +619,7 @@ export class PlaneText extends TransformNode {
     return { x: xOffset, y: yOffset };
   }
 
-  private reinitialize() {
+  private async reinitialize() {
     const scene = this.getScene();
     
     // Clean up existing resources
@@ -618,28 +630,21 @@ export class PlaneText extends TransformNode {
     }
     // Note: Don't dispose fontAsset as it may be cached and shared
     this.fontAsset = null;
-
-    this.isInitialized = false;
     this.hasAddedText = false;
-    this.initialize();
+    
+    await this.initializeAsync(scene);
   }
 
-  override dispose(doNotRecurse?: boolean, disposeMaterialAndTextures?: boolean): void {
-    // Mark as disposing to prevent initialization from completing
-    this._isDisposing = true;
-    
+  override dispose(doNotRecurse: boolean = false, disposeMaterialAndTextures: boolean = false): void {
     const scene = this.getScene();
-    
     // Clean up text renderer resources
     if (this.textRenderer) {
       this.unregisterRenderer(scene, this.textRenderer);
-      this.textRenderer.dispose();
       this.textRenderer = null;
     }
     
     // Note: Don't dispose fontAsset as it may be cached and shared
     this.fontAsset = null;
-    this.isInitialized = false;
     
     super.dispose(doNotRecurse, disposeMaterialAndTextures);
   }
@@ -689,7 +694,6 @@ export function createPlaneText(name: string, options: Partial<PlaneTextOptions>
     isBillboardScreenProjected: options.isBillboardScreenProjected ?? false,
     ignoreDepthBuffer: options.ignoreDepthBuffer ?? false,
   };
-
   let plane = new PlaneText(name, ops, scene);
   return plane;
 }

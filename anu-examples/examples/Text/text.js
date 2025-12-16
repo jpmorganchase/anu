@@ -37,6 +37,12 @@ export const text = function(engine){
     text1.setEnabled(true);
   }, 1000);
 
+    setTimeout(() => {
+    text1.dispose();
+  }, 2000);
+
+
+
 
 
   //------------
