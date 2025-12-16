@@ -49,6 +49,7 @@
   "devDependencies": {
     "@babylonjs/core": "^8.40.1",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.56.1",
     "@types/chroma-js": "^3.1.2",
     "@types/d3": "^7.4.3",
     "@types/earcut": "^3.0.0",
