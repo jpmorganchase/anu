@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Node, Matrix, TransformNode, Engine, AbstractEngine } from '@babylonjs/core';
+import { Scene, Color3, Matrix, TransformNode } from '@babylonjs/core';
 import { FontAsset, TextRenderer } from '@babylonjs/addons';
 import type { ParagraphOptions } from '@babylonjs/addons';
 import fnt from '../../assets/roboto-regular.json';
 import png from '../../assets/roboto-regular.png';
-import assign from 'lodash-es/assign';
 
 // Global registry to manage all TextRenderer instances per scene
 // Shared across all PlaneText instances
@@ -437,7 +436,7 @@ export class PlaneText extends TransformNode {
                                     (options.lineHeight !== undefined && options.lineHeight !== this.options.lineHeight);
     
     //Override the existing options object with any new options
-    this.options = assign({}, this.options, options);
+    Object.assign(this.options, options);
     
     if (needsReinit) {
       this.reinitialize();
