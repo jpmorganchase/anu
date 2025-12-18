@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref,  onMounted, onBeforeUnmount } from 'vue';
-import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState} from '@babylonjs/core'
+import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState, Scene} from '@babylonjs/core'
 
 const props = defineProps({
   scene: Function,
@@ -51,6 +51,7 @@ let xrSupported = ref(false);
 let xrSessionActive = ref(false);
 
 let babylonEngine;
+let scene;
 let currentScene;
 let defaultXRExperience;
 let sceneEnvironment;
@@ -173,7 +174,7 @@ onMounted(async () => {
   canvas.value.addEventListener('wheel', evt => evt.preventDefault());
   babylonEngine = new Engine(canvas.value, true);
 
-  let scene = await props.scene(babylonEngine);
+  scene = await props.scene(babylonEngine);
   currentScene = scene;
 
   // Only create default environment if not disabled by prop or scene metadata
@@ -292,7 +293,11 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', resize);
+  scene?.dispose();
   babylonEngine?.dispose();
+
+  // window.location.reload();
+
 });
 </script>
 

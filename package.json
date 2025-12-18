@@ -32,7 +32,8 @@
   "peerDependencies": {
     "@babylonjs/core": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
- "dependencies": {
+  "dependencies": {
+    "@babylonjs/addons": "^8.33.1",
     "babylon-msdf-text": "^1.0.0",
     "chroma-js": "^3.2.0",
     "d3-geo": "^3.1.1",
@@ -48,6 +49,7 @@
   "devDependencies": {
     "@babylonjs/core": "^8.40.1",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.56.1",
     "@types/chroma-js": "^3.1.2",
     "@types/d3": "^7.4.3",
     "@types/earcut": "^3.0.0",

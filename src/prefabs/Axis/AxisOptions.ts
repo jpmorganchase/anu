@@ -35,7 +35,7 @@ type PropertyKeys<T> = {
 
 export type MeshProperties = Partial<Pick<Mesh, PropertyKeys<Mesh>>>;
 export type GreasedLineProperties = Partial<Pick<GreasedLineMesh, PropertyKeys<GreasedLineMesh>>>;
-export type PlaneTextProperties = Partial<Pick<PlaneText, PropertyKeys<Mesh>>>;
+export type PlaneTextProperties = Partial<Pick<PlaneText, PropertyKeys<PlaneText>>>;
 export type GreasedLineParams = Parameters<typeof CreateGreasedLine>[1];
 export type GreasedLineMaterial = Parameters<typeof CreateGreasedLine>[2];
 export type LineProperties = Partial<Pick<LinesMesh, PropertyKeys<LinesMesh>>>;

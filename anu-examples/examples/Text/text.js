@@ -26,9 +26,24 @@ export const text = function(engine){
   //Basic function
   let options1 = {
     text: 'USA',
-    color: Color3.Red()
+    color: Color3.Red(),
+    opacity: 1,
   }
   let text1 = anu.createPlaneText('myText1', options1, scene);
+
+  text1.setEnabled(false);
+
+  setTimeout(() => {
+    text1.setEnabled(true);
+  }, 1000);
+
+    setTimeout(() => {
+    text1.dispose();
+  }, 2000);
+
+
+
+
 
   //------------
 
@@ -75,7 +90,7 @@ export const text = function(engine){
       })
     
   //Align
-  let leftText = anu.createPlaneText("leftAlign", { text: "Left Align", align: "left" }, scene);
+  let leftText = anu.createPlaneText("leftAlign", { text: "Left Align", align: "left"}, scene);
   let centerText = anu.createPlaneText("centerAlign", { text: "Center Align", align: "center" }, scene);
   let rightText = anu.createPlaneText("rightAlign", { text: "Right Align", align: "right" }, scene);
 
