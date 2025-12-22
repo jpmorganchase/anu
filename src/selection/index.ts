@@ -24,7 +24,7 @@ import {
 } from './property/material';
 import { registerInstancedBuffer, setInstancedBuffer } from './property/instancedBuffer';
 import { attr, props, prop } from './property/prop';
-import { evaluatePropertyPath, hasPropertyPath } from '../utils/objects';
+import { evaluatePropertyPath } from '../utils/objects';
 import { run } from './utility/run';
 import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
@@ -85,7 +85,7 @@ export class Selection {
     
     // Helper function to check if property path exists on any selected nodes
     const nodeHasPropertyPath = (path: string) => {
-      return this.selected.some(node => hasPropertyPath(node, path));
+      return this.selected.some(node => evaluatePropertyPath(node, path) != undefined);
     };
 
     // Factory function to dynamically create proxy methods for both direct properties, accessors, methods, and nested paths. 
