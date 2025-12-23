@@ -69,6 +69,9 @@ export class Selection {
   
   // Temp store for property path string for chaining
   private propertyPath: string = '';
+  
+  // Store proxy reference for use in methods
+  private proxyRef!: Selection;
 
   // Index signature to allow dynamic properties
   [K: string]: any;
@@ -78,131 +81,143 @@ export class Selection {
     this.scene = scene;
     this.transitions = [];
 
-    // Create the proxy reference that will be returned  
-    let proxyRef: Selection;
-    let proxy: any; // Forward declaration for use in helper functions
-    const target = this; // Reference to the actual Selection instance
-    
-    // Helper function to check if property path exists on any selected nodes
-    const nodeHasPropertyPath = (path: string) => {
-      return this.selected.some(node => hasPropertyPath(node, path));
-    };
+    // Create and return the proxy
+    const proxy = this.createSelectionProxy();
+    this.proxyRef = proxy as Selection;
+    return this.proxyRef;
+  }
 
-    // Factory function to dynamically create proxy methods for both direct properties, accessors, methods, and nested paths. 
-    const createProxyMethod = (accessor: string, isNestedPath: boolean) => {
-      return new Proxy(function(...args: any[]) {
-        if (args.length > 0) {
-          // Use prop() to handle setting properties, calling methods, and transitions
-          // Pass the first argument for single-arg calls, or the entire args array for methods
-          const value = args.length === 1 ? args[0] : args;
-          proxyRef.prop(accessor, value);
-          target.propertyPath = '';
-          return proxyRef;
-        } else {
-          // Property access - return current values
-          const propertyValues = target.selected.map(node => {
-            const value = evaluatePropertyPath(node, accessor);
-            return typeof value === 'function' ? value.bind(node) : value;
-          });
-          
-          // Clear property path
-          target.propertyPath = '';
-          return propertyValues;
-        }
-      }, {
-        get(methodTarget: any, nestedProp: string | symbol) {
-          if (typeof nestedProp === 'symbol') {
-            return methodTarget[nestedProp];
-          }
-          
-          if (isNestedPath) {
-            // For nested paths, build extended path and validate
-            const extendedPath = `${accessor}.${nestedProp}`;
-            
-            if (nodeHasPropertyPath(extendedPath)) {
-              target.propertyPath = accessor;
-              return proxy[nestedProp];
-            } else {
-              target.propertyPath = '';
-              return undefined;
-            }
-          } else {
-            // For direct properties, store path for next access
-            target.propertyPath = accessor;
-            return proxy[nestedProp];
-          }
-        }
-      });
-    };
-    
-    // Return a Proxy that intercepts property access, cast to include dynamic properties  
-    proxy = new Proxy(this, {
-      get(target: Selection, prop: string | symbol, receiver: any) {
-        // Handle symbols first
-        if (typeof prop === 'symbol') {
-          return Reflect.get(target, prop, receiver);
-        }
+  /**
+   * Check if property path exists on any selected nodes
+   */
+  private nodeHasPropertyPath(path: string): boolean {
+    return this.selected.some(node => hasPropertyPath(node, path));
+  }
 
-        // Check for stored property path to build nested paths like .material.diffuseColor
-        // This must come BEFORE checking Selection class properties to handle cases where
-        // a nested property name conflicts with a Selection method (e.g., material.diffuseColor)
-        if (target.propertyPath && typeof prop === 'string') {
-          const newPath = `${target.propertyPath}.${prop}`;
-          
-          // Check if the new path exists on any selected nodes
-          if (nodeHasPropertyPath(newPath)) {
-            // Create a proxy function for the extended path using the factory
-            return createProxyMethod(newPath, true);
-          } else {
-            // Path doesn't exist, clear it and check if it's a Selection class property instead
-            target.propertyPath = '';
-            
-            // Check if this is actually a Selection class property
-            if (prop in target) {
-              return Reflect.get(target, prop);
-            }
-            
-            throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
-          }
-        }
-
-        // Check if the property exists on the Selection class
-        // This ensures Selection methods like tween, transition, etc. are accessible
-        // when there's no stored property path
-        if (typeof prop === 'string' && prop in target) {
-          return Reflect.get(target, prop);
-        }
-
-        // Check if the property exists on any of the selected nodes (start of new path)
-        if (typeof prop === 'string') {
-          const hasProperty = target.selected.some(node => 
-            node && typeof node === 'object' && prop in node
-          );
-
-          if (hasProperty) {
-            // Create a proxy function that handles method calls and property access using the factory
-            return createProxyMethod(prop, false);
-          }
-        }
-
-        // Return undefined for properties that don't exist
-        return undefined;
-      },
-
-      set(target: Selection, prop: string | symbol, value: any, receiver: any) {
-        // Only allow setting properties that exist on the Selection class
-        if (prop in target || typeof prop === 'symbol') {
-          return Reflect.set(target, prop, value, receiver);
-        }
-
-        // Explicitly disallow setting dynamic properties
-        throw new Error(`Cannot assign to property '${String(prop)}'. Use method calls like .${String(prop)}(value) instead.`);
-      }
+  /**
+   * Get property values from all selected nodes for a given accessor
+   */
+  private getPropertyValues(accessor: string): any[] {
+    return this.selected.map(node => {
+      const value = evaluatePropertyPath(node, accessor);
+      return typeof value === 'function' ? value.bind(node) : value;
     });
+  }
 
-    // Store reference and return the proxy with proper typing
-    proxyRef = proxy as Selection;
-    return proxyRef;
+  /**
+   * Factory function to create proxy methods for dynamic property access
+   */
+  private createProxyMethod(accessor: string, isNestedPath: boolean): any {
+    const self = this;
+    
+    const methodHandler = function(...args: any[]) {
+      if (args.length > 0) {
+        const value = args.length === 1 ? args[0] : args;
+        self.proxyRef.prop(accessor, value);
+        self.propertyPath = '';
+        return self.proxyRef;
+      }
+      const propertyValues = self.getPropertyValues(accessor);
+      self.propertyPath = '';
+      return propertyValues;
+    };
+
+    return new Proxy(methodHandler, {
+      get: (methodTarget: any, nestedProp: string | symbol) => 
+        this.handleNestedPropertyAccess(methodTarget, nestedProp, accessor, isNestedPath)
+    });
+  }
+
+  /**
+   * Handle nested property access in proxy methods
+   */
+  private handleNestedPropertyAccess(
+    methodTarget: any, 
+    nestedProp: string | symbol, 
+    accessor: string, 
+    isNestedPath: boolean
+  ): any {
+    if (typeof nestedProp === 'symbol') {
+      return methodTarget[nestedProp];
+    }
+    
+    if (isNestedPath) {
+      const extendedPath = `${accessor}.${nestedProp}`;
+      if (this.nodeHasPropertyPath(extendedPath)) {
+        this.propertyPath = accessor;
+        return this.proxyRef[nestedProp];
+      }
+      this.propertyPath = '';
+      return undefined;
+    }
+    
+    this.propertyPath = accessor;
+    return this.proxyRef[nestedProp];
+  }
+
+  /**
+   * Create the main selection proxy
+   */
+  private createSelectionProxy(): any {
+    return new Proxy(this, {
+      get: (target, prop, receiver) => this.proxyGet(target, prop, receiver),
+      set: (target, prop, value, receiver) => this.proxySet(target, prop, value, receiver)
+    });
+  }
+
+  /**
+   * Proxy get handler
+   */
+  private proxyGet(target: Selection, prop: string | symbol, receiver: any): any {
+    if (typeof prop === 'symbol') {
+      return Reflect.get(target, prop, receiver);
+    }
+
+    // Check for stored property path to build nested paths
+    if (target.propertyPath) {
+      return this.handleNestedPath(target, prop);
+    }
+
+    // Check if the property exists on the Selection class
+    if (prop in target) {
+      return Reflect.get(target, prop);
+    }
+
+    // Check if the property exists on any of the selected nodes
+    if (this.nodeHasPropertyPath(prop)) {
+      return this.createProxyMethod(prop, false);
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Handle nested path resolution in proxy get
+   */
+  private handleNestedPath(target: Selection, prop: string): any {
+    const newPath = `${target.propertyPath}.${prop}`;
+    
+    if (this.nodeHasPropertyPath(newPath)) {
+      return this.createProxyMethod(newPath, true);
+    }
+    
+    target.propertyPath = '';
+    
+    if (prop in target) {
+      return Reflect.get(target, prop);
+    }
+    
+    throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
+  }
+
+  /**
+   * Proxy set handler
+   */
+  private proxySet(target: Selection, prop: string | symbol, value: any, receiver: any): boolean {
+    if (prop in target || typeof prop === 'symbol') {
+      return Reflect.set(target, prop, value, receiver);
+    }
+    throw new Error(`Cannot assign to property '${String(prop)}'. Use method calls like .${String(prop)}(value) instead.`);
   }
 
   /**
