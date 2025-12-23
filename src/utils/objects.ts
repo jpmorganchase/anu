@@ -8,36 +8,12 @@
  * @returns The value at the path, or undefined if the path doesn't exist
  */
 export function evaluatePropertyPath(obj: any, path: string) {
-  const parts = path.split('.');
-  let current = obj;
-  for (const part of parts) {
-    if (current && typeof current === 'object' && part in current) {
-      current = current[part];
-    } else {
-      return undefined;
-    }
-  }
-  return current;
+  return path.split('.').reduce(
+    (current, part) => current?.[part],
+    obj
+  );
 }
 
-/**
- * Helper function to check if a property path exists on an object
- * @param obj The object to check the path on
- * @param path The property path as a dot-separated string
- * @returns True if the path exists, false otherwise
- */
-export function hasPropertyPath(obj: any, path: string): boolean {
-  const parts = path.split('.');
-  let current = obj;
-  for (const part of parts) {
-    if (current && typeof current === 'object' && part in current) {
-      current = current[part];
-    } else {
-      return false;
-    }
-  }
-  return true;
-}
 
 /**
  * Helper function to call a method or set a property using a path
@@ -55,47 +31,37 @@ export function callOrSetPropertyPath(
   nodeIndex: number
 ): boolean {
   const parts = path.split('.');
-  const lastProp = parts.pop()!;
+  const lastProp = parts.pop();
   
-  // Navigate to parent object
-  let parent = node;
-  for (const part of parts) {
-    if (parent && typeof parent === 'object' && part in parent) {
-      parent = parent[part];
-    } else {
-      return false; // Path doesn't exist
-    }
-  }
+  if (!lastProp) return false;
   
-  // Check if the target property exists
-  if (lastProp in parent) {
-    const targetProperty = parent[lastProp];
+  // Navigate to parent object using reduce
+  const parent = parts.reduce(
+    (current, part) => current?.[part],
+    node
+  );
+  
+  // Check if parent exists and has the target property
+  if (parent == null || !(lastProp in parent)) return false;
+  
+  const targetProperty = parent[lastProp];
+  const data = node.metadata?.data ?? {};
+  
+  // Helper to evaluate function values
+  const evaluate = (val: any) => 
+    val instanceof Function ? val(data, node, nodeIndex) : val;
+  
+  // If it's a method, call it with arguments
+  if (typeof targetProperty === 'function') {
+    const evaluatedValue = evaluate(value);
+    const args = Array.isArray(evaluatedValue) ? evaluatedValue : [evaluatedValue];
+    const processedArgs = args.map(evaluate);
     
-    // If it's a method, call it with arguments
-    if (typeof targetProperty === 'function') {
-      // First, evaluate the value if it's a function (for data-driven arguments)
-      let evaluatedValue = value instanceof Function ? 
-        value((node.metadata?.data ?? {}), node, nodeIndex) : value;
-      
-      // Then handle both single values and arrays of arguments
-      const args = Array.isArray(evaluatedValue) ? evaluatedValue : [evaluatedValue];
-      
-      // Process each argument - if any are functions, call them with metadata
-      const processedArgs = args.map(arg => {
-        return arg instanceof Function ? 
-          arg((node.metadata?.data ?? {}), node, nodeIndex) : arg;
-      });
-      
-      targetProperty.apply(parent, processedArgs);
-      return true;
-    } else {
-      // It's a property, set it
-      const actualValue = value instanceof Function ? 
-        value((node.metadata?.data ?? {}), node, nodeIndex) : value;
-      parent[lastProp] = actualValue;
-      return true;
-    }
+    targetProperty.apply(parent, processedArgs);
+    return true;
   }
   
-  return false;
+  // It's a property, set it
+  parent[lastProp] = evaluate(value);
+  return true;
 }

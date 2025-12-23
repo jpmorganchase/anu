@@ -24,7 +24,7 @@ import {
 } from './property/material';
 import { registerInstancedBuffer, setInstancedBuffer } from './property/instancedBuffer';
 import { attr, props, prop } from './property/prop';
-import { evaluatePropertyPath, hasPropertyPath } from '../utils/objects';
+import { evaluatePropertyPath } from '../utils/objects';
 import { run } from './utility/run';
 import { dispose } from './bind/dispose';
 import { drawTextDT, scaleDT } from './property/dynamicTexture';
@@ -82,26 +82,67 @@ export class Selection {
     this.transitions = [];
 
     // Create and return the proxy
-    const proxy = this.createSelectionProxy();
+    const proxy = new Proxy(this, {
+      get: (target, prop, receiver) => this.proxyGet(target, prop, receiver),
+      set: (target, prop, value, receiver) => this.proxySet(target, prop, value, receiver)
+    });
     this.proxyRef = proxy as Selection;
     return this.proxyRef;
   }
 
   /**
-   * Check if property path exists on any selected nodes
+   * Proxy get handler - main entry point for property access
    */
-  private nodeHasPropertyPath(path: string): boolean {
-    return this.selected.some(node => hasPropertyPath(node, path));
+  private proxyGet(target: Selection, prop: string | symbol, receiver: any): any {
+    if (typeof prop === 'symbol') {
+      return Reflect.get(target, prop, receiver);
+    }
+
+    // Check for stored property path to build nested paths
+    if (target.propertyPath) {
+      return this.handleNestedPath(target, prop);
+    }
+
+    // Check if the property exists on the Selection class
+    if (prop in target) {
+      return Reflect.get(target, prop);
+    }
+
+    // Check if the property exists on any of the selected nodes
+    if (this.nodeHasPropertyPath(prop)) {
+      return this.createProxyMethod(prop, false);
+    }
+
+    return undefined;
   }
 
   /**
-   * Get property values from all selected nodes for a given accessor
+   * Proxy set handler
    */
-  private getPropertyValues(accessor: string): any[] {
-    return this.selected.map(node => {
-      const value = evaluatePropertyPath(node, accessor);
-      return typeof value === 'function' ? value.bind(node) : value;
-    });
+  private proxySet(target: Selection, prop: string | symbol, value: any, receiver: any): boolean {
+    if (prop in target || typeof prop === 'symbol') {
+      return Reflect.set(target, prop, value, receiver);
+    }
+    throw new Error(`Cannot assign to property '${String(prop)}'. Use method calls like .${String(prop)}(value) instead.`);
+  }
+
+  /**
+   * Handle nested path resolution in proxy get
+   */
+  private handleNestedPath(target: Selection, prop: string): any {
+    const newPath = `${target.propertyPath}.${prop}`;
+    
+    if (this.nodeHasPropertyPath(newPath)) {
+      return this.createProxyMethod(newPath, true);
+    }
+    
+    target.propertyPath = '';
+    
+    if (prop in target) {
+      return Reflect.get(target, prop);
+    }
+    
+    throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
   }
 
   /**
@@ -156,68 +197,20 @@ export class Selection {
   }
 
   /**
-   * Create the main selection proxy
+   * Check if property path exists on any selected nodes
    */
-  private createSelectionProxy(): any {
-    return new Proxy(this, {
-      get: (target, prop, receiver) => this.proxyGet(target, prop, receiver),
-      set: (target, prop, value, receiver) => this.proxySet(target, prop, value, receiver)
+  private nodeHasPropertyPath(path: string): boolean {
+    return this.selected.some(node => evaluatePropertyPath(node, path) !== undefined);
+  }
+
+  /**
+   * Get property values from all selected nodes for a given accessor
+   */
+  private getPropertyValues(accessor: string): any[] {
+    return this.selected.map(node => {
+      const value = evaluatePropertyPath(node, accessor);
+      return typeof value === 'function' ? value.bind(node) : value;
     });
-  }
-
-  /**
-   * Proxy get handler
-   */
-  private proxyGet(target: Selection, prop: string | symbol, receiver: any): any {
-    if (typeof prop === 'symbol') {
-      return Reflect.get(target, prop, receiver);
-    }
-
-    // Check for stored property path to build nested paths
-    if (target.propertyPath) {
-      return this.handleNestedPath(target, prop);
-    }
-
-    // Check if the property exists on the Selection class
-    if (prop in target) {
-      return Reflect.get(target, prop);
-    }
-
-    // Check if the property exists on any of the selected nodes
-    if (this.nodeHasPropertyPath(prop)) {
-      return this.createProxyMethod(prop, false);
-    }
-
-    return undefined;
-  }
-
-  /**
-   * Handle nested path resolution in proxy get
-   */
-  private handleNestedPath(target: Selection, prop: string): any {
-    const newPath = `${target.propertyPath}.${prop}`;
-    
-    if (this.nodeHasPropertyPath(newPath)) {
-      return this.createProxyMethod(newPath, true);
-    }
-    
-    target.propertyPath = '';
-    
-    if (prop in target) {
-      return Reflect.get(target, prop);
-    }
-    
-    throw new Error(`Property path '${newPath}' does not exist on the selected nodes.`);
-  }
-
-  /**
-   * Proxy set handler
-   */
-  private proxySet(target: Selection, prop: string | symbol, value: any, receiver: any): boolean {
-    if (prop in target || typeof prop === 'symbol') {
-      return Reflect.set(target, prop, value, receiver);
-    }
-    throw new Error(`Cannot assign to property '${String(prop)}'. Use method calls like .${String(prop)}(value) instead.`);
   }
 
   /**
