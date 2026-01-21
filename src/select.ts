@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Engine } from '@babylonjs/core/Engines';
-import { Node } from '@babylonjs/core/node';
-import { Scene } from '@babylonjs/core/scene';
-import { Tags } from '@babylonjs/core/Misc/tags';
+import { Engine, Node, Scene, Tags  } from '@babylonjs/core';
 import { Selection } from './selection/index';
 
 /**

@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Node } from '@babylonjs/core';
-import { Scene } from '@babylonjs/core/scene';
+import { Node, Scene } from '@babylonjs/core';
 import { select, selectName, selectId, selectTag, selectData } from './utility/select';
 import { bind, bindInstance, bindThinInstance, bindClone} from './bind/bind';
 import { positionX, positionY, positionZ } from './property/position';
