@@ -1,0 +1,62 @@
+Method,Cubes,Create,FPS
+Mesh,100,36.90,71.77
+Mesh,133,41.20,72.00
+Mesh,177,52.00,71.74
+Mesh,235,62.70,55.75
+Mesh,313,89.20,36.77
+Mesh,416,122.50,35.99
+Mesh,553,160.10,34.54
+Mesh,736,219.90,23.95
+Mesh,979,313.80,17.70
+Clone,100,100.20,71.57
+Clone,133,100.00,71.77
+Clone,177,134.10,71.81
+Clone,235,169.20,69.03
+Clone,313,231.10,38.62
+Clone,416,336.30,36.00
+Clone,553,439.80,35.97
+Clone,736,595.00,23.61
+Clone,979,867.20,21.69
+Instance,100,4.40,71.66
+Instance,133,7.00,71.90
+Instance,177,18.20,69.82
+Instance,235,7.20,71.19
+Instance,313,18.50,71.76
+Instance,416,26.20,71.85
+Instance,553,16.10,71.92
+Instance,736,34.20,66.16
+Instance,979,59.20,40.41
+Instance,1302,89.90,35.96
+Instance,1732,119.70,35.98
+Instance,2303,148.40,34.34
+Instance,3064,203.20,24.00
+Instance,4074,273.70,19.42
+Thin Instance,100,9.40,71.82
+Thin Instance,133,14.90,71.97
+Thin Instance,177,9.60,71.99
+Thin Instance,235,3.00,71.92
+Thin Instance,313,4.00,71.94
+Thin Instance,416,12.70,71.97
+Thin Instance,553,4.50,71.67
+Thin Instance,736,10.60,71.88
+Thin Instance,979,9.10,71.88
+Thin Instance,1302,14.10,72.05
+Thin Instance,1732,18.20,71.97
+Thin Instance,2303,20.50,71.92
+Thin Instance,3064,38.20,71.87
+Thin Instance,4074,44.00,71.88
+Thin Instance,5419,60.00,71.88
+Thin Instance,7207,83.10,71.87
+Thin Instance,9586,108.00,71.90
+Thin Instance,12749,168.20,72.00
+Thin Instance,16956,179.90,72.00
+Thin Instance,22552,334.50,71.95
+Thin Instance,29994,470.30,71.95
+Thin Instance,39892,446.90,71.92
+Thin Instance,53056,514.90,71.92
+Thin Instance,70565,833.70,61.81
+Thin Instance,93851,1014.50,51.35
+Thin Instance,124822,1152.70,40.46
+Thin Instance,166013,1658.80,32.37
+Thin Instance,220798,2004.60,5.23
+Thin Instance,293661,2817.40,4.22
