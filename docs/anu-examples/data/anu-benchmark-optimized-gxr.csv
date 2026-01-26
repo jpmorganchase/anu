@@ -1,0 +1,73 @@
+Method,Cubes,Create,FPS
+Mesh,100,37.20,71.84
+Mesh,133,36.90,71.81
+Mesh,177,50.00,71.92
+Mesh,235,62.10,71.88
+Mesh,313,101.70,71.69
+Mesh,416,164.90,54.47
+Mesh,553,166.50,38.42
+Mesh,736,230.40,35.98
+Mesh,979,331.30,35.98
+Mesh,1302,501.00,23.95
+Mesh,1732,617.00,18.50
+Clone,100,94.10,71.71
+Clone,133,102.00,71.83
+Clone,177,135.30,71.96
+Clone,235,180.00,71.87
+Clone,313,233.50,71.96
+Clone,416,363.60,71.62
+Clone,553,484.10,49.32
+Clone,736,641.80,36.02
+Clone,979,803.90,36.30
+Clone,1302,1226.30,33.42
+Clone,1732,1532.10,23.88
+Clone,2303,2143.30,17.42
+Instance,100,5.50,71.89
+Instance,133,8.80,71.94
+Instance,177,12.50,71.92
+Instance,235,14.40,71.93
+Instance,313,18.80,71.95
+Instance,416,32.80,71.89
+Instance,553,45.70,71.90
+Instance,736,34.10,71.91
+Instance,979,69.30,71.92
+Instance,1302,76.20,71.69
+Instance,1732,117.50,71.90
+Instance,2303,142.70,71.87
+Instance,3064,237.10,71.65
+Instance,4074,283.20,69.74
+Instance,5419,350.50,51.18
+Instance,7207,582.00,37.21
+Instance,9586,749.10,35.91
+Instance,12749,983.80,35.68
+Instance,16956,1300.60,26.07
+Instance,22552,1686.70,19.14
+Thin Instance,100,5.00,71.60
+Thin Instance,133,1.40,71.98
+Thin Instance,177,3.20,71.94
+Thin Instance,235,1.70,71.88
+Thin Instance,313,2.80,71.91
+Thin Instance,416,5.30,71.46
+Thin Instance,553,2.50,71.55
+Thin Instance,736,4.20,71.74
+Thin Instance,979,6.70,71.37
+Thin Instance,1302,6.00,71.90
+Thin Instance,1732,6.70,71.56
+Thin Instance,2303,8.20,71.91
+Thin Instance,3064,17.20,71.88
+Thin Instance,4074,14.20,71.97
+Thin Instance,5419,8.80,71.89
+Thin Instance,7207,39.30,71.99
+Thin Instance,9586,46.40,71.98
+Thin Instance,12749,56.50,71.73
+Thin Instance,16956,85.00,71.94
+Thin Instance,22552,90.90,71.95
+Thin Instance,29994,115.90,71.95
+Thin Instance,39892,147.10,71.99
+Thin Instance,53056,395.00,71.86
+Thin Instance,70565,236.40,63.48
+Thin Instance,93851,488.50,51.76
+Thin Instance,124822,792.50,41.14
+Thin Instance,166013,890.90,32.64
+Thin Instance,220798,1146.00,25.74
+Thin Instance,293661,1353.50,6.36

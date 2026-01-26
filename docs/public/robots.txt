@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jpmorganchase.github.io/anu/sitemap.xml

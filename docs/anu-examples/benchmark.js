@@ -483,7 +483,7 @@ export const benchmark = function(babylonEngine){
     switch(method) {
       case 'bind':
         // Creates separate mesh for each cube
-        selection = anu.bind('box', { size: 0.5 }, data);
+        selection = anu.bind('planeText', { text: "text" }, data);
         selection.position(d => new Vector3(d.x, d.y, d.z));
         break;
         

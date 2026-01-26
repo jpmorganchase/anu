@@ -5,7 +5,8 @@
 <multiView>
 
 # Manipulating Selections
-Manipulating [Nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) and [Meshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Mesh) with Anu revolves around selecting Nodes from the scene graph and modifying their properties. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of Nodes, the current [Scene](https://doc.babylonjs.com/typedoc/classes/BABYLON.Scene), and the methods of Selection. When we invoke one of these methods, the method will be repeated for each Node in the Selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the Nodes of a Selection object to create dynamic and data-driven scenes.
+
+Manipulating [Nodes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node) and [Meshes](https://doc.babylonjs.com/typedoc/classes/BABYLON.Mesh) with Anu revolves around selecting Nodes from the scene graph and modifying their properties or calling their methods. We can do this by invoking and chaining the methods of the [Selection](../api/classes/Selection.html) class. Remember, a Selection object is a list of Nodes, the current [Scene](https://doc.babylonjs.com/typedoc/classes/BABYLON.Scene), and the methods of Selection. When we invoke one of these methods, the method will be repeated for each Node in the Selection and then return the original or modified Selection object. This section will detail the many ways we can manipulate the Nodes of a Selection object to create dynamic and data-driven scenes.
 
 ## Value or Functions
 Every method of Selection that modifies the properties of a Node can either be given a raw value of the same type of the property, or a function that returns a value of the same type of the property. Let's start with the simple case of passing the value directly. We will bind the iris data set to sphere Meshes and modify the following properties: position, scalingX, and name. Each of these methods will set the value of all spheres in our Selection to the same input value.
@@ -45,63 +46,135 @@ spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidt
 <inlineView scene="mod_function" />
 
 
-## Wrapper Methods
+## Dynamic Operators
 
-Anu provides wrapper methods for quickly modifying commonly used properties of Nodes. These methods are intended to reduce the amount of boilerplate code needed for frequently used patterns. The wrapper methods currently implemented were chosen to coincide with typical data visualization encoding channels and important Babylon.js functions. Here is a list of some of the wrapper functions you will likely be using frequently. Refer to the API documentation of the [Selection](../api/classes/Selection.html) class for a full list of wrapper methods.
+Anu provides dynamic operator methods that work with any property or method of the selected Babylon.js Nodes. Instead of pre-defined wrapper methods, you can directly invoke any property or method name on the Selection object, and Anu's proxy system automatically creates the appropriate accessor function for you. This approach is much more flexible and allows you to work with any Node property or method without needing specific wrapper functions.
 
-| Wrapper Method | Babylon.js Property | Type
-| ----------- | ----------- | ----------- |
-| [name()](../api/classes/Selection.html#name)     | [node.name](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#name) | string
-| [id()](../api/classes/Selection.html#id)   | [node.id](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#id) | string
-| [position()](../api/classes/Selection.html#position)   | [TransformNode.position](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | [Vector3](https://doc.babylonjs.com/typedoc/classes/BABYLON.Vector3)
-| [positionX()](../api/classes/Selection.html#positionx)   | [TransformNode.position.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | Number
-| [positionY()](../api/classes/Selection.html#positiony)   | [TransformNode.position.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | Number
-| [positionZ()](../api/classes/Selection.html#positionz)   | [TransformNode.position.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | Number
-| [scaling()](../api/classes/Selection.html#scaling)   | [TransformNode.scaling](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | Vector3
-| [scalingX()](../api/classes/Selection.html#scalingx)   | [TransformNode.scaling.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | Number
-| [scalingY()](../api/classes/Selection.html#scalingy)   | [TransformNode.scaling.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | Number
-| [scalingZ()](../api/classes/Selection.html#scalingz)   | [TransformNode.scaling.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | Number
-| [rotation()](../api/classes/Selection.html#rotation)   | [TransformNode.rotation](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | Vector3
-| [rotationX()](../api/classes/Selection.html#rotationx)   | [TransformNode.rotation.x](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | Number
-| [rotationY()](../api/classes/Selection.html#rotationy)   | [TransformNode.rotation.y](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | Number
-| [rotationZ()](../api/classes/Selection.html#rotationz)   | [TransformNode.rotation.z](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | Number
-| [material()](../api/classes/Selection.html#material)   | [Mesh.material](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial) | [Material](https://doc.babylonjs.com/typedoc/classes/BABYLON.Material)
-| [diffuseColor()](../api/classes/Selection.html#diffusecolor)   | [Mesh.StandardMaterial.diffuseColor](https://doc.babylonjs.com/typedoc/classes/BABYLON.StandardMaterial#diffuseColor) | [Color3](https://doc.babylonjs.com/typedoc/classes/BABYLON.Color3)
-
-## Modifying Any Property
-
-We are not limited to only modifying properties with wrapper methods. We can use the [prop()](../api/classes/Selection.html#prop) method to modify any property of Nodes in a Selection, even those that are deeply nested. Following the example above, we can further modify the properties of our spheres.
+You can call any property as a method with parentheses:
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', { diameter: 1 }, iris);
 
-spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth)) // Vector3
-       .prop("scaling.x", 0.1) // Number
-       .prop("name", (d,n,i) => "iris_sphere:" + i) // String
-       .prop("renderOutline", true); //Boolean
+// Use dynamic operators for any property
+spheres.position((d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth))
+       .name((d,n,i) => "iris_sphere:" + i)
+       .scaling(new Vector3(0.5, 0.5, 0.5))
+       .material.alpha(0.8)
+       .renderOutline(true);
+       .translate(new Vector3(1,0,0), 0.1)
+```
+:::
+
+### Common Properties
+
+Here are some commonly used properties you might work with:
+
+| Property | Babylon.js Property | Type | Example
+| ----------- | ----------- | ----------- | ----------- |
+| `name()` | [node.name](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#name) | string | `spheres.name("my-sphere")`
+| `id()` | [node.id](https://doc.babylonjs.com/typedoc/classes/BABYLON.Node#id) | string | `spheres.id("sphere-1")`
+| `position()` | [TransformNode.position](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#position) | Vector3 | `spheres.position(new Vector3(1, 2, 3))`
+| `scaling()` | [TransformNode.scaling](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#scaling) | Vector3 | `spheres.scaling(new Vector3(0.5, 0.5, 0.5))`
+| `rotation()` | [TransformNode.rotation](https://doc.babylonjs.com/typedoc/classes/BABYLON.TransformNode#rotation) | Vector3 | `spheres.rotation(new Vector3(0, Math.PI/4, 0))`
+| `material()` | [Mesh.material](https://doc.babylonjs.com/typedoc/classes/BABYLON.Mesh#material) | Material | `spheres.material(myMaterial)`
+
+### Nested Properties
+
+You can access nested properties by chaining them together:
+
+::: code-group
+```js [js]
+let spheres = cot.bind('sphere', { diameter: 1 }, iris);
+
+// Access nested properties using dynamic chaining
+spheres.material.diffuseColor((d,n,i) => new Color3(d.value, 0.5, 0.2))
+       .material.alpha(0.8)
+       .scaling.x((d,n,i) => d.petalWidth * 0.1);
+```
+:::
+
+### Reading Values
+
+You can also call an operator with no arguments to retrieve the current values from all selected Nodes. This returns an array of values, one for each Node in the Selection:
+
+::: code-group
+```js [js]
+let spheres = cot.bind('sphere', { diameter: 1 }, iris);
+
+// Get all position values
+let positions = spheres.position(); // Returns array of Vector3 values
+console.log(positions); // [Vector3, Vector3, Vector3, ...]
+
+// Get all names
+let names = spheres.name(); // Returns array of strings
+console.log(names); // ["sphere_0", "sphere_1", "sphere_2", ...]
+
+// Get nested property values
+let alphas = spheres.material.alpha(); // Returns array of alpha values
+console.log(alphas); // [0.8, 0.8, 0.8, ...]
+```
+:::
+
+### Convenience Wrapper Methods
+
+While dynamic operators work with any property, Anu also provides some convenience wrapper methods for commonly used patterns:
+
+| Wrapper Method | Property | Type
+| ----------- | ----------- | ----------- |
+| [positionX()](../api/classes/Selection.html#positionx) | `position.x` | Number
+| [positionY()](../api/classes/Selection.html#positiony) | `position.y` | Number
+| [positionZ()](../api/classes/Selection.html#positionz) | `position.z` | Number
+| [scalingX()](../api/classes/Selection.html#scalingx) | `scaling.x` | Number
+| [scalingY()](../api/classes/Selection.html#scalingy) | `scaling.y` | Number
+| [scalingZ()](../api/classes/Selection.html#scalingz) | `scaling.z` | Number
+| [rotationX()](../api/classes/Selection.html#rotationx) | `rotation.x` | Number
+| [rotationY()](../api/classes/Selection.html#rotationy) | `rotation.y` | Number
+| [rotationZ()](../api/classes/Selection.html#rotationz) | `rotation.z` | Number
+| [diffuseColor()](../api/classes/Selection.html#diffusecolor) | `material.diffuseColor` | Color3
+
+## Using prop() and props() Methods
+
+While dynamic operators allow you to access any property directly, sometimes you may want to use the `prop()` and `props()` methods explicitly. These methods work with any property or method name as a string, which can be useful when you prefer the explicit string-based approach and want to save a small amount of time short-cutting the Selection proxy. 
+
+::: code-group
+```js [js]
+let cot = anu.bind('cot');
+let spheres = cot.bind('sphere', { diameter: 1 }, iris);
+
+// Using prop() for individual properties
+spheres.prop("position", (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth))
+       .prop("scaling.x", 0.1)
+       .prop("name", (d,n,i) => "iris_sphere:" + i)
+       .prop("renderOutline", true);
+
+// Calling methods with multiple arguments
+spheres.prop("rotate", [(0, 1, 0), Math.PI / 4]); // axis and angle
 ```
 :::
 
 <inlineView scene="prop" />
 
 
-## Modifying Many Properties
+## Setting Multiple Properties at Once
 
-We may want to modify many properties of Nodes in a Selection at once. When we chain methods together, we loop through the list of Nodes in the Selection and execute the method for each Node. Chaining several methods together will repeat this loop multiple times, potentially leading to performance impact. Instead of chaining methods, we can also use the [props()](../api/classes/Selection.html#props) method to set multiple properties with one loop. For example, here's how we would use props() to set the same methods as above.
+For better performance, you can use the [props()](../api/classes/Selection.html#props) method to set multiple properties with a single loop through the selected Nodes. When chaining methods together, Anu loops through the entire Selection for each method call. Using `props()` reduces this to a single loop, which is especially beneficial when modifying many properties.
 
 ::: code-group
 ```js [js]
 let cot = anu.bind('cot');
 let spheres = cot.bind('sphere', { diameter: 1 }, iris);
 
+// Efficient: sets all properties in one loop
 spheres.props({
-                "position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth),
-                "scaling.x": 0.1,
-                "name": (d,n,i) => "iris_sphere:" + i,
-                "renderOutline": true
-             });
+  "position": (d,n,i) => new Vector3(d.sepalLength, d.sepalWidth, d.petalWidth),
+  "scaling.x": 0.1,
+  "name": (d,n,i) => "iris_sphere:" + i,
+  "renderOutline": true,
+  "setEnabled": true, // Method call with single argument
+  "translate": [new Vector3(1, 0, 0), 0.5] // Method call with multiple arguments
+});
 ```
 :::
 

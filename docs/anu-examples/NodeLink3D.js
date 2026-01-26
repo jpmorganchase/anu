@@ -79,10 +79,5 @@ export function nodelink3d(engine) {
   //The network can get quite big in size (spatial size), so here we run a function to scale the entire network down to a 1x1x1 box
   network.run((d,n,i) => n.normalizeToUnitCube());
 
-  // Store the simulation on the scene metadata so it can be stopped when the scene is disposed
-  scene.onDisposeObservable.add(() => {
-    simulation.stop();
-  });
-
   return scene;
 }

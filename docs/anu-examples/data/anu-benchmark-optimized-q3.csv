@@ -1,0 +1,75 @@
+Method,Cubes,Create,FPS
+Mesh,100,30.80,89.83
+Mesh,133,36.70,89.86
+Mesh,177,55.30,89.88
+Mesh,235,60.50,89.93
+Mesh,313,78.90,86.56
+Mesh,416,92.10,75.75
+Mesh,553,138.60,69.56
+Mesh,736,201.80,45.00
+Mesh,979,298.40,42.52
+Mesh,1302,394.40,31.29
+Mesh,1732,488.00,26.33
+Mesh,2303,530.70,18.76
+Clone,100,75.20,89.92
+Clone,133,150.10,89.86
+Clone,177,142.20,89.87
+Clone,235,185.50,89.92
+Clone,313,229.80,89.96
+Clone,416,337.10,82.94
+Clone,553,427.60,76.66
+Clone,736,554.50,44.99
+Clone,979,792.90,44.78
+Clone,1302,1020.30,35.24
+Clone,1732,1321.90,32.64
+Clone,2303,1764.30,26.83
+Clone,3064,2334.30,22.24
+Instance,100,3.70,88.91
+Instance,133,5.50,89.95
+Instance,177,6.70,89.96
+Instance,235,7.00,89.97
+Instance,313,15.50,89.66
+Instance,416,12.80,89.96
+Instance,553,19.40,89.94
+Instance,736,19.00,89.95
+Instance,979,16.70,89.94
+Instance,1302,32.20,89.83
+Instance,1732,47.10,89.86
+Instance,2303,85.60,89.86
+Instance,3064,132.40,86.99
+Instance,4074,189.80,81.45
+Instance,5419,197.30,71.63
+Instance,7207,248.00,55.70
+Instance,9586,291.20,45.16
+Instance,12749,375.00,43.93
+Instance,16956,428.70,32.13
+Instance,22552,549.60,28.25
+Instance,29994,717.30,22.25
+Thin Instance,100,4.70,89.81
+Thin Instance,133,2.00,89.94
+Thin Instance,177,1.30,89.95
+Thin Instance,235,1.80,89.94
+Thin Instance,313,2.30,89.56
+Thin Instance,416,2.30,89.95
+Thin Instance,553,2.50,89.94
+Thin Instance,736,2.10,89.94
+Thin Instance,979,1.90,89.94
+Thin Instance,1302,3.80,89.94
+Thin Instance,1732,3.20,89.94
+Thin Instance,2303,4.10,89.94
+Thin Instance,3064,4.70,89.93
+Thin Instance,4074,9.00,89.93
+Thin Instance,5419,9.80,89.93
+Thin Instance,7207,12.80,89.92
+Thin Instance,9586,12.90,89.94
+Thin Instance,12749,30.70,89.96
+Thin Instance,16956,40.60,89.97
+Thin Instance,22552,56.90,89.91
+Thin Instance,29994,69.00,89.91
+Thin Instance,39892,115.90,89.93
+Thin Instance,53056,134.00,89.59
+Thin Instance,70565,150.50,47.42
+Thin Instance,93851,319.10,45.25
+Thin Instance,124822,286.60,31.39
+Thin Instance,166013,523.20,29.83
+Thin Instance,220798,606.00,22.74

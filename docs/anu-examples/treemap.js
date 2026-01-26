@@ -47,7 +47,7 @@ export function treemap(engine){
   rootBox.setEnabled(false) //Disable our root box so it is invisible and skipped for rendering
 
   let depth = d3.scaleLinear().domain(d3.extent(root.leaves().map(d => d.value))).range([0,1.5]) //Create a depth scale to encode value of each leaf
-  let color = d3.scaleOrdinal(anu.ordinalChromatic('pastel1').toColor4()) //Create a color scale to color parent catagories
+  let color = d3.scaleOrdinal(anu.ordinalChromatic('Pastel1').toColor4()) //Create a color scale to color parent catagories
 
   let boxes = leaves.bindInstance(rootBox) // using our root mesh bind instances from our leafs selection, our data will be inherited by each instanced box
                 .scalingX(d => (d.x1 - d.x0) ) // scale width from our treemap() generator
