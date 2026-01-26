@@ -56,7 +56,6 @@
 <script setup>
 import { ref,  onMounted, onBeforeUnmount } from 'vue';
 import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState, Scene} from '@babylonjs/core'
-import { Inspector } from '@babylonjs/inspector'
 import { createStudioLighting } from './studioLighting.js'
 
 const props = defineProps({
@@ -92,15 +91,24 @@ let sceneEnvironment;
 let studioLights;
 let originalSceneLights = []; // Store references to original scene lights
 
-function toggleInspector() {
+// Inspector loaded dynamically to avoid SSR issues
+async function toggleInspector() {
   if (!scene) return;
   
-  if (inspectorVisible.value) {
-    Inspector.Hide();
-  } else {
-    Inspector.Show(scene, {});
+  try {
+    // Dynamically import inspector only when needed (client-side only)
+    await import('@babylonjs/inspector');
+    
+    if (inspectorVisible.value) {
+      scene.debugLayer.hide();
+      inspectorVisible.value = false;
+    } else {
+      await scene.debugLayer.show({ embedMode: true });
+      inspectorVisible.value = true;
+    }
+  } catch (error) {
+    console.error('Failed to load inspector:', error);
   }
-  inspectorVisible.value = !inspectorVisible.value;
 }
 
 function toggleLighting() {
@@ -275,24 +283,6 @@ onMounted(async () => {
     sceneEnvironment.ground.position = new Vector3(0, -2, 0);
   }
 
-  // Setup studio lighting if enabled via prop or scene metadata
-  const lightingConfig = props.studioLighting || scene.metadata?.studioLighting;
-  if (lightingConfig) {
-    // Store and disable all existing lights in the scene before adding studio lights
-    originalSceneLights.length = 0;
-    const existingLights = [...scene.lights];
-    existingLights.forEach(light => {
-      originalSceneLights.push(light);
-      light.setEnabled(false);
-      console.log('Disabled existing light:', light.name);
-    });
-    
-    const lightingOptions = typeof lightingConfig === 'object' ? lightingConfig : {};
-    studioLights = createStudioLighting(scene, lightingOptions);
-    studioLightingActive.value = true;
-    console.log('Studio lighting enabled with preset:', lightingOptions.preset || 'soft');
-  }
-
   try {
     // Check scene metadata for disabling controllers
     const disableControllers = scene.metadata?.xrDisableControllers;
@@ -393,6 +383,24 @@ onMounted(async () => {
   }
 
   scene.executeWhenReady(() => {
+    // Setup studio lighting if enabled via prop or scene metadata
+    const lightingConfig = props.studioLighting || scene.metadata?.studioLighting;
+    if (lightingConfig) {
+      // Store and disable all existing lights in the scene before adding studio lights
+      originalSceneLights.length = 0;
+      const existingLights = [...scene.lights];
+      existingLights.forEach(light => {
+        originalSceneLights.push(light);
+        light.setEnabled(false);
+        console.log('Disabled existing light:', light.name);
+      });
+      
+      const lightingOptions = typeof lightingConfig === 'object' ? lightingConfig : {};
+      studioLights = createStudioLighting(scene, lightingOptions);
+      studioLightingActive.value = true;
+      console.log('Studio lighting enabled with preset:', lightingOptions.preset || 'soft');
+    }
+    
     canvas.value.setAttribute('scene-ready', '1');
     isLoading.value = false;
   });
@@ -408,11 +416,6 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', resize);
   window.removeEventListener('keydown', handleKeyDown);
-  
-  // Hide inspector if visible before unmounting
-  if (inspectorVisible.value) {
-    Inspector.Hide();
-  }
   
   // Dispose studio lighting if created
   if (studioLights) {

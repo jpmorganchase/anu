@@ -180,8 +180,39 @@ export default defineConfig({
     // worker: {
     //   format: "es"
     // },
+    resolve: {
+      // Ensure only one copy of Babylon.js is used across all modules
+      dedupe: [
+        '@babylonjs/core',
+        '@babylonjs/gui',
+        '@babylonjs/loaders',
+        '@babylonjs/materials'
+      ]
+    },
+    build: {
+      // Ensure consistent module resolution
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true
+      }
+    },
     rollupOptions: {
-      external: ["@babylonjs/core", "@babylonjs/gui", "@babylonjs/loaders", "@babylonjs/inspector" ],
+      external: ["@babylonjs/inspector"],
+      output: {
+        manualChunks(id) {
+          // Force all Babylon.js and Anu into a single chunk to share global state
+          if (id.includes('@babylonjs/core') || 
+              id.includes('@babylonjs/gui') || 
+              id.includes('@babylonjs/loaders') ||
+              id.includes('@babylonjs/materials') ||
+              id.includes('node_modules/@babylonjs') ||
+              id.includes('@jpmorganchase/anu') ||
+              id.includes('/anu/src/') ||
+              id.includes('/anu/lib/')) {
+            return 'babylonjs';
+          }
+        }
+      }
     },
     optimizeDeps: { // 👈 optimizedeps
       esbuildOptions: {

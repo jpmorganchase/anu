@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import '@babylonjs/inspector';
+// import '@babylonjs/inspector';  // Disabled - causes SSR build issues
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
 import * as anu from '@jpmorganchase/anu';

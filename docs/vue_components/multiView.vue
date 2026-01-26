@@ -7,7 +7,6 @@
 <script setup>
 import { ref, watch, onBeforeUnmount, onBeforeMount, onMounted} from 'vue';
 import { Engine, Scene, Color3, Vector3, WebXRDefaultExperience, WebXRFeatureName, WebXRHandTracking} from '@babylonjs/core'
-// import { Inspector } from "@babylonjs/inspector";
 
 let canvas = document.createElement('canvas');
 let engine = new Engine(canvas, true)
@@ -32,19 +31,12 @@ async function createScene(e){
   canvas.addEventListener('mouseover', (i) => {
     engine.inputElement = canvas
     scene.attachControl();
-
-  //   if (e.detail.inspector) {
-  //     Inspector.hide()
-  //     Inspector.show(scene, {
-  //        globalRoot: canvas.parentElement,
-  //        embedMode: true,
-  //        showInspector: false,
-  //      });
-  //   }
   });
 
   engine.activeView = view;
 
+  // Dispatch event so inlineView can access the scene for inspector
+  window.dispatchEvent(new CustomEvent('inlineSceneReady', { detail: { canvas: canvas, scene: scene }}));
 
   engine.runRenderLoop(() => {
     if (engine.activeView === view) {
