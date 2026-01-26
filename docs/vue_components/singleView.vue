@@ -1,7 +1,30 @@
 <template>
   <div class="singleView-container">
+    <!-- Loading overlay -->
+    <div v-if="isLoading" :class="['loading-overlay', { fullscreen: fullscreen }]">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <span class="loading-text">Loading Scene...</span>
+      </div>
+    </div>
     <canvas ref="canvas" :class="['singleView-canvas', { fullscreen: fullscreen }]" id="singleView-canvas"></canvas>
-    <div class="xr-controls">
+    <div class="xr-controls" v-show="!isLoading">
+      <button 
+        @click="toggleInspector" 
+        :class="['xr-button', 'inspector-button', { active: inspectorVisible }]"
+        title="Toggle Inspector (Shift+I)"
+      >
+        🔍
+      </button>
+      <!-- Lighting toggle hidden for now
+      <button 
+        @click="toggleLighting" 
+        :class="['xr-button', 'lighting-button', { active: studioLightingActive }]"
+        title="Toggle Studio Lighting (Shift+L)"
+      >
+        💡
+      </button>
+      -->
       <button 
         @click="startVRSession" 
         :disabled="!xrSupported || xrSessionActive"
@@ -33,6 +56,8 @@
 <script setup>
 import { ref,  onMounted, onBeforeUnmount } from 'vue';
 import { Engine,  Color3, Vector3, WebXRFeatureName,  WebXRState, Scene} from '@babylonjs/core'
+import { Inspector } from '@babylonjs/inspector'
+import { createStudioLighting } from './studioLighting.js'
 
 const props = defineProps({
   scene: Function,
@@ -43,18 +68,84 @@ const props = defineProps({
   noDefaultEnvironment: {
     type: Boolean,
     default: false
+  },
+  studioLighting: {
+    type: [Boolean, Object],
+    default: false
+    // Can be true for defaults, or object with options:
+    // { preset: 'soft'|'dramatic'|'neutral', intensity: 1.0, enableShadows: false }
   }
 });
 
 let canvas = ref();
 let xrSupported = ref(false);
 let xrSessionActive = ref(false);
+let isLoading = ref(true);
+let inspectorVisible = ref(false);
+let studioLightingActive = ref(false);
 
 let babylonEngine;
 let scene;
 let currentScene;
 let defaultXRExperience;
 let sceneEnvironment;
+let studioLights;
+let originalSceneLights = []; // Store references to original scene lights
+
+function toggleInspector() {
+  if (!scene) return;
+  
+  if (inspectorVisible.value) {
+    Inspector.Hide();
+  } else {
+    Inspector.Show(scene, {});
+  }
+  inspectorVisible.value = !inspectorVisible.value;
+}
+
+function toggleLighting() {
+  if (!scene) return;
+  
+  if (studioLightingActive.value) {
+    // Switch back to original scene lights
+    if (studioLights) {
+      studioLights.dispose();
+      studioLights = null;
+    }
+    // Re-enable original scene lights
+    originalSceneLights.forEach(light => {
+      light.setEnabled(true);
+    });
+    studioLightingActive.value = false;
+    console.log('Switched to default scene lighting');
+  } else {
+    // Switch to studio lighting
+    // Store and disable original lights
+    originalSceneLights = [...scene.lights];
+    originalSceneLights.forEach(light => {
+      light.setEnabled(false);
+    });
+    // Create studio lights
+    const lightingConfig = props.studioLighting || {};
+    const lightingOptions = typeof lightingConfig === 'object' ? lightingConfig : {};
+    studioLights = createStudioLighting(scene, lightingOptions);
+    studioLightingActive.value = true;
+    console.log('Switched to studio lighting');
+  }
+}
+
+function handleKeyDown(event) {
+  // Toggle inspector with Shift + I
+  if (event.shiftKey && event.key.toLowerCase() === 'i') {
+    event.preventDefault();
+    toggleInspector();
+  }
+  // Toggle lighting with Shift + L
+  if (event.shiftKey && event.key.toLowerCase() === 'l') {
+    event.preventDefault();
+    toggleLighting();
+  }
+}
 
  function resize() {
     babylonEngine?.resize();
@@ -184,6 +275,24 @@ onMounted(async () => {
     sceneEnvironment.ground.position = new Vector3(0, -2, 0);
   }
 
+  // Setup studio lighting if enabled via prop or scene metadata
+  const lightingConfig = props.studioLighting || scene.metadata?.studioLighting;
+  if (lightingConfig) {
+    // Store and disable all existing lights in the scene before adding studio lights
+    originalSceneLights.length = 0;
+    const existingLights = [...scene.lights];
+    existingLights.forEach(light => {
+      originalSceneLights.push(light);
+      light.setEnabled(false);
+      console.log('Disabled existing light:', light.name);
+    });
+    
+    const lightingOptions = typeof lightingConfig === 'object' ? lightingConfig : {};
+    studioLights = createStudioLighting(scene, lightingOptions);
+    studioLightingActive.value = true;
+    console.log('Studio lighting enabled with preset:', lightingOptions.preset || 'soft');
+  }
+
   try {
     // Check scene metadata for disabling controllers
     const disableControllers = scene.metadata?.xrDisableControllers;
@@ -260,19 +369,22 @@ onMounted(async () => {
       if (!featureManager) {
         console.log('No Feature Manager');
       } else {
-        // Enable hand tracking with disabled hand meshes if controllers are disabled
-        const disableControllers = scene.metadata?.xrDisableControllers;
-          try {
-            featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
-              xrInput: defaultXRExperience.input,
-              jointMeshes: {
-                disableDefaultHandMesh: disableControllers,
-              },
-            });
-            console.log('Hand tracking enabled with disabled hand meshes');
-          } catch (error) {
-            console.warn('Hand tracking not available:', error);
-          }
+        // Enable hand tracking
+        try {
+          featureManager.enableFeature(WebXRFeatureName.HAND_TRACKING, "latest", {
+            xrInput: defaultXRExperience.input,
+            // Use the newer handMeshes API instead of deprecated jointMeshes options
+            handMeshes: {
+              disableDefaultMeshes: false,  // Enable default hand meshes
+            },
+            jointMeshes: {
+              invisible: true,  // Hide the joint spheres, show only the hand mesh
+            }
+          });
+          console.log('Hand tracking enabled with hand meshes');
+        } catch (error) {
+          console.warn('Hand tracking not available:', error);
+        }
       }
     }
   } catch {
@@ -282,6 +394,7 @@ onMounted(async () => {
 
   scene.executeWhenReady(() => {
     canvas.value.setAttribute('scene-ready', '1');
+    isLoading.value = false;
   });
 
   babylonEngine.runRenderLoop(() => {
@@ -289,10 +402,23 @@ onMounted(async () => {
   });
 
   window.addEventListener('resize', resize);
+  window.addEventListener('keydown', handleKeyDown);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', resize);
+  window.removeEventListener('keydown', handleKeyDown);
+  
+  // Hide inspector if visible before unmounting
+  if (inspectorVisible.value) {
+    Inspector.Hide();
+  }
+  
+  // Dispose studio lighting if created
+  if (studioLights) {
+    studioLights.dispose();
+  }
+  
   scene?.dispose();
   babylonEngine?.dispose();
 
@@ -372,6 +498,40 @@ onBeforeUnmount(() => {
   background: linear-gradient(135deg, #ff5252 0%, #dc4a40 100%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+}
+
+.inspector-button {
+  background: rgba(100, 108, 255, 0.6);
+  color: white;
+  font-size: 16px;
+}
+
+.inspector-button:hover {
+  background: rgba(100, 108, 255, 0.8);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(100, 108, 255, 0.4);
+}
+
+.inspector-button.active {
+  background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  box-shadow: 0 0 20px rgba(100, 108, 255, 0.6);
+}
+
+.lighting-button {
+  background: rgba(255, 193, 7, 0.6);
+  color: white;
+  font-size: 16px;
+}
+
+.lighting-button:hover {
+  background: rgba(255, 193, 7, 0.8);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+}
+
+.lighting-button.active {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
 }
 
 .singleView-canvas {
