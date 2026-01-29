@@ -16,7 +16,7 @@ export async function imaxes(babylonEngine) {
   const scene = new BABYLON.Scene(babylonEngine);
   scene.enablePhysics(new BABYLON.Vector3(0, 0, 0), havokPlugin);
 
-  const light = const fillLight = new BABYLON.HemisphericLight('fillLight', new BABYLON.Vector3(0, 1, 0), scene);
+  const fillLight = new BABYLON.HemisphericLight('fillLight', new BABYLON.Vector3(0, 1, 0), scene);
   fillLight.intensity = 1.25;
   fillLight.groundColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   const camera = new BABYLON.ArcRotateCamera("Camera", -(Math.PI / 2), Math.PI / 3, 4, new BABYLON.Vector3(0, 0.5, 0), scene);
