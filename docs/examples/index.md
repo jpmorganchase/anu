@@ -52,6 +52,7 @@ layout: page
             <cardImg title="Pie Chart"  img="/anu/assets/example-images/pieChart.webp" link="/anu/examples/pie_chart"></cardImg>
             <cardImg title="Donut Chart"  img="/anu/assets/example-images/donutChart.webp" link="/anu/examples/donut_chart"></cardImg>
             <cardImg title="Surface Chart"  img="/anu/assets/example-images/surfaceChart.webp" link="/anu/examples/surface_chart"></cardImg>
+            <cardImg title="Violin Chart"  img="/anu/assets/example-images/violinChart.webp" link="/anu/examples/violin_chart"></cardImg>
         </div>
     </div>
     <div class='section'>

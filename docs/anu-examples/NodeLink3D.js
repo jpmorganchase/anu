@@ -13,7 +13,9 @@ export function nodelink3d(engine) {
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
   //Add some lighting
-  let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
+  let light = const fillLight = new BABYLON.HemisphericLight('fillLight', new BABYLON.Vector3(0, 1, 0), scene);
+  fillLight.intensity = 1.25;
+  fillLight.groundColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   light.diffuse = new BABYLON.Color3(1, 1, 1);
   light.specular = new BABYLON.Color3(1, 1, 1);
   light.groundColor = new BABYLON.Color3(1, 1, 1);

@@ -12,7 +12,9 @@ export function dimensionalityReductionPlot(engine){
 
   //Babylon boilerplate
   const scene = new BABYLON.Scene(engine);
-  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
+  const fillLight = new BABYLON.HemisphericLight('fillLight', new BABYLON.Vector3(0, 1, 0), scene);
+  fillLight.intensity = 1.25;
+  fillLight.groundColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
   camera.attachControl(true);
   camera.position = new BABYLON.Vector3(0, 0, -23);
