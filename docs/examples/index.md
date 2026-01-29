@@ -17,9 +17,9 @@ layout: page
         <div class="cards">
             <cardImg title="2D Scatter Plot" img="/anu/assets/example-images/scatterplot2D.webp" link="/anu/examples/scatter_plot_2D"></cardImg>
             <cardImg title="3D Scatter Plot"  img="/anu/assets/example-images/scatterplot3D.webp" link="/anu/examples/scatter_plot_3D"></cardImg>
-            <cardImg title="Embellished Chart"  img="/anu/assets/example-images/embellishedChart.webp" link="/anu/examples/embellished_chart"></cardImg>
-            <cardImg title="Dimensionality Reduction Plot" img="/anu/assets/example-images/dimensionalityReductionPlot.webp" link="/anu/examples/dimensionality_reduction_plot"></cardImg>
             <cardImg title="Vector Field"  img="/anu/assets/example-images/vectorField.webp" link="/anu/examples/vector_field"></cardImg>
+            <cardImg title="Dimensionality Reduction Plot" img="/anu/assets/example-images/dimensionalityReductionPlot.webp" link="/anu/examples/dimensionality_reduction_plot"></cardImg>
+            <cardImg title="Embellished Chart"  img="/anu/assets/example-images/embellishedChart.webp" link="/anu/examples/embellished_chart"></cardImg>
         </div>
     </div>
     <div class='section'>
@@ -49,10 +49,10 @@ layout: page
         <div class="cards">
             <cardImg title="2D Area Chart" img="/anu/assets/example-images/areachart2D.webp" link="/anu/examples/area_chart_2D"></cardImg>
             <cardImg title="2D Stacked Area Chart" img="/anu/assets/example-images/areachartStacked.webp" link="/anu/examples/area_chart_stacked"></cardImg>
+            <cardImg title="Violin Plot"  img="/anu/assets/example-images/violinPlot.webp" link="/anu/examples/violin_plot"></cardImg>
+            <cardImg title="Surface Chart"  img="/anu/assets/example-images/surfaceChart.webp" link="/anu/examples/surface_chart"></cardImg>
             <cardImg title="Pie Chart"  img="/anu/assets/example-images/pieChart.webp" link="/anu/examples/pie_chart"></cardImg>
             <cardImg title="Donut Chart"  img="/anu/assets/example-images/donutChart.webp" link="/anu/examples/donut_chart"></cardImg>
-            <cardImg title="Surface Chart"  img="/anu/assets/example-images/surfaceChart.webp" link="/anu/examples/surface_chart"></cardImg>
-            <cardImg title="Violin Chart"  img="/anu/assets/example-images/violinChart.webp" link="/anu/examples/violin_chart"></cardImg>
         </div>
     </div>
     <div class='section'>

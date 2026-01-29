@@ -87,9 +87,9 @@ export default defineConfig({
         items: [
           { text: '2D Scatter Plot', link: './scatter_plot_2D' },
           { text: '3D Scatter Plot', link: './scatter_plot_3D' },
-          { text: 'Embellished Chart', link: './embellished_chart' },
+          { text: 'Vector Field', link: './vector_field' },
           { text: 'Dimensionality Reduction Plot', link: './dimensionality_reduction_plot' },
-          { text: 'Vector Field', link: './vector_field' }
+          { text: 'Embellished Chart', link: './embellished_chart' },
         ]
       },
       {
@@ -119,9 +119,10 @@ export default defineConfig({
         items: [
           { text: '2D Area Chart', link: './area_chart_2D' },
           { text: '2D Stacked Area Chart', link: './area_chart_stacked' },
+          { text: 'Violin Plot', link: './violin_plot' },
+          { text: 'Surface Chart', link: './surface_chart' },
           { text: 'Pie Chart', link: './pie_chart' },
           { text: 'Donut Chart', link: './donut_chart' },
-          { text: 'Surface Chart', link: './surface_chart' }
         ]
       },
       {
@@ -155,6 +156,7 @@ export default defineConfig({
           { text: 'Multiple Interactions', link: './multiple_interactions' },
           { text: 'Single Selection', link: './brushing_linking_single' },
           { text: 'Multiple Selection', link: './brushing_linking_multiple' },
+          { text: 'Filtering Selection', link: './brushing_linking_filter' },
           { text: 'Layouts', link: './layout' },
           { text: 'ImAxes Simplified', link: './imaxes_simplified'}
         ]
