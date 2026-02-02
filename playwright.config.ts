@@ -7,7 +7,7 @@ export default defineConfig({
     // Configure projects for different test suites
     projects: [
         {
-            name: 'anu-examples',
+            name: 'anu-tests',
             testMatch: /.*\.spec\.ts/,
             testIgnore: /docs-examples\.spec\.ts/,
             use: {
@@ -67,7 +67,7 @@ export default defineConfig({
 
     webServer: [
         {
-            command: "cd anu-examples && npm run dev",
+            command: "cd anu-tests && npm run dev",
             url: "http://localhost:3443",
             timeout: 120 * 1000,
             reuseExistingServer: !process.env.CI
