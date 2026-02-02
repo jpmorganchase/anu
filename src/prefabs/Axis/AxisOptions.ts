@@ -12,6 +12,7 @@ export type AxesOptionsInterface = {
     domainOptions?: GreasedLineParams | {};
     domainMaterialOptions?: GreasedLineMaterial;
     domainProperties?: GreasedLineProperties;
+    domainOffset?: number;
     background?: boolean | { x?: boolean; y?: boolean; z?: boolean };
     backgroundOptions?: PlaneParams | { x?: PlaneParams; y?: PlaneParams; z?: PlaneParams} | {}; 
     backgroundProperties?: MeshProperties |  { x?: MeshProperties; y?: MeshProperties; z?: MeshProperties} | {};
@@ -81,6 +82,12 @@ export class AxesConfig {
      * @default {}
      */
     domainProperties?: GreasedLineProperties = {};
+
+    /**
+     * Z-offset for domain lines to prevent z-fighting with grid. Negative values move backward, positive forward.
+     * @default -0.01
+     */
+    domainOffset?: number = -0.01;
 
     /**
      * Render the background or not. Can be a boolean or an object specifying each axis.

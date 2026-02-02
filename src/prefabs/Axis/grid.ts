@@ -200,11 +200,14 @@ function buildLinesArray(scales, ticks){
     linesArray.x = {axis: 'x', vectors: []}
  
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
+    
+    // Add Z-offset when only 2 scales are set to prevent z-fighting
+    const zOffset = scaleZ == undefined ? 0.001 : 0;
 
     tickPosition = (d) => [
-      new Vector3(scaleX(d), rangeY[0], rangeZ[0]),
-      new Vector3(scaleX(d), rangeY[0], rangeZ[1]),
-      new Vector3(scaleX(d), rangeY[1], rangeZ[1]),
+      new Vector3(scaleX(d), rangeY[0], rangeZ[0] + zOffset),
+      new Vector3(scaleX(d), rangeY[0], rangeZ[1] + zOffset),
+      new Vector3(scaleX(d), rangeY[1], rangeZ[1] + zOffset),
     ];
 
     for (var tick of ticks.x) {
@@ -217,11 +220,14 @@ function buildLinesArray(scales, ticks){
     linesArray.y = {axis: 'y', vectors: []}
 
     let tickPosition: Vector3[] | ((d: any) => Vector3[]) = [new Vector3(0, 0, 0)];
+    
+    // Add Z-offset when only 2 scales are set to prevent z-fighting
+    const zOffset = scaleZ == undefined ? 0.001 : 0;
 
     tickPosition = (d) => [
-      new Vector3(rangeX[0], scaleY(d), rangeZ[0]),
-      new Vector3(rangeX[0], scaleY(d), rangeZ[1]),
-      new Vector3(rangeX[1], scaleY(d), rangeZ[1]),
+      new Vector3(rangeX[0], scaleY(d), rangeZ[0] + zOffset),
+      new Vector3(rangeX[0], scaleY(d), rangeZ[1] + zOffset),
+      new Vector3(rangeX[1], scaleY(d), rangeZ[1] + zOffset),
     ];
 
     for (var tick of ticks.y) {

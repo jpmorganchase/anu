@@ -4,10 +4,12 @@
 import * as BABYLON from '@babylonjs/core';
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from 'd3';
-import data from './data/cars.json' assert {type: 'json'};
+import vega from 'vega-datasets';
 import HavokPhysics from "@babylonjs/havok";
 
 export async function imaxes(babylonEngine) {
+
+  const data = await vega['cars.json']();
 
   //Initiate the havok physics plugin 
   const havokInstance = await HavokPhysics();

@@ -4,11 +4,13 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import data from './data/airports.csv';
+import vega from 'vega-datasets';
 import geoJ from './data/gz_2010_us_040_00_5m.json';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function choroplethMap(engine) {
+export async function choroplethMap(engine) {
+
+  const data = await vega['airports.csv']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);

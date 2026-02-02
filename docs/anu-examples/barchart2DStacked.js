@@ -4,10 +4,12 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import data from './data/us-employment.csv';
+import vega from 'vega-datasets';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function barchart2DStacked(engine){
+export async function barchart2DStacked(engine){
+
+  const data = await vega['us-employment.csv']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -22,9 +24,6 @@ export function barchart2DStacked(engine){
   
   //Get the names of all the employment categories
   let categories = Object.keys(data[0]).splice(1, data.length);
-  
-  //Create D3 functions to help parse time
-  let parseTime = d3.timeParse('%Y-%m-%d');
 
   //Aggregate our data by year
   let yearsRollup = d3.rollup(
@@ -36,7 +35,7 @@ export function barchart2DStacked(engine){
       })
       return result;
     },
-    d => parseTime(d.month).getFullYear()
+    d => d.month.getFullYear()
   );
   let aggregated = Array.from(yearsRollup, ([year, values]) => ({
     year: +year,
@@ -61,7 +60,7 @@ export function barchart2DStacked(engine){
 
 
   //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
-  let scaleX = d3.scaleBand().domain(Array.from(d3.group(data, (d) => parseTime(d.month).getFullYear()).keys())).range([-1, 1]).paddingInner(1).paddingOuter(0.5);
+  let scaleX = d3.scaleBand().domain(Array.from(d3.group(data, (d) => d.month.getFullYear()).keys())).range([-1, 1]).paddingInner(1).paddingOuter(0.5);
   let scaleY = d3.scaleLinear().domain([0, d3.max(series[series.length - 1].map(d => d[1]))]).range([0, 2]).nice();  //Take the largest value from the top-most stack
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial(categories.length)).domain(categories);
 
@@ -79,8 +78,9 @@ export function barchart2DStacked(engine){
     .positionX((d) => scaleX(d.data.year))
     .positionY((d) => scaleY((d[1] + d[0]) / 2))
     .scalingY((d) => scaleY(d[1] - d[0]))
-    .positionZ(-0.002) //Adjust the z position slightly to prevent Z-fighting
-    .material((d, n, i) => scaleC(d.key))
+    .positionZ(-0.002); //Adjust the z position slightly to prevent Z-fighting
+  
+  bars.material((d, n, i) => scaleC(d.key));
 
   //Use the Axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', {

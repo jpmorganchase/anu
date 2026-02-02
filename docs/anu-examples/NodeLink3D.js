@@ -5,18 +5,19 @@ import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
 import * as d3force from 'd3-force-3d'; //External required dependency for force layouts
-import leMis from './data/miserables.json' assert {type: 'json'};
+import vega from 'vega-datasets';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function nodelink3d(engine) {
+export async function nodelink3d(engine) {
+
+  const leMis = await vega['miserables.json']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
   //Add some lighting
-  let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 10, 0), scene);
-  light.diffuse = new BABYLON.Color3(1, 1, 1);
-  light.specular = new BABYLON.Color3(1, 1, 1);
-  light.groundColor = new BABYLON.Color3(1, 1, 1);
+  const fillLight = new BABYLON.HemisphericLight('fillLight', new BABYLON.Vector3(0, 1, 0), scene);
+  fillLight.intensity = 1.25;
+  fillLight.groundColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   //Add a camera that rotates around the origin and adjust its properties
   const camera = new BABYLON.ArcRotateCamera('Camera', 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
   camera.position = new BABYLON.Vector3(1, 1.5, -3);

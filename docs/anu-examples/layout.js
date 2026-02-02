@@ -5,9 +5,11 @@ import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as GUI from '@babylonjs/gui';
 import * as d3 from 'd3';
-import data from './data/cars.json' assert {type: 'json'};
+import vega from 'vega-datasets';
 
-export function layout(engine) {
+export async function layout(engine) {
+
+  const data = await vega['cars.json']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -23,7 +25,7 @@ export function layout(engine) {
   //To use layouts we need charts to begin with, generate 15 charts
   let allCharts = [];
   for (let i = 0; i < 15; i++) {
-    let chart = (Math.random() > 0.5) ? make2Dchart(Math.random() * 100, scene) : make3Dchart(Math.random() * 100, scene);
+    let chart = (Math.random() > 0.5) ? make2Dchart(Math.random() * 100, scene, data) : make3Dchart(Math.random() * 100, scene, data);
     allCharts.push(chart);
   }
 
@@ -75,7 +77,7 @@ export function layout(engine) {
 
   //Define functions to add and remove charts from the layout which will be called from UI events
   function addChart(scene) {
-    let chart = (Math.random() > 0.5) ? make2Dchart(Math.random() * 100, scene) : make3Dchart(Math.random() * 100, scene);
+    let chart = (Math.random() > 0.5) ? make2Dchart(Math.random() * 100, scene, data) : make3Dchart(Math.random() * 100, scene, data);
     allCharts.push(chart);
     layout.options.selection = anu.selectTag('chart', scene);
     layout.update();
@@ -156,7 +158,7 @@ export function layout(engine) {
 }
 
 //Code from 2D bar chart example
-function make2Dchart(id, scene) {
+function make2Dchart(id, scene, data) {
 
   //Get the unique values for our ordinal dimension
   const cylinders = [...new Set(data.map(item => item.Cylinders))].sort();
@@ -199,7 +201,7 @@ function make2Dchart(id, scene) {
 }
 
 //Code from 3D bar chart example
-function make3Dchart(id, scene) {
+function make3Dchart(id, scene, data) {
 
   //Get the unique values for our categorical and ordinal dimensions
   const origin = [...new Set(data.map(item => item.Origin))];

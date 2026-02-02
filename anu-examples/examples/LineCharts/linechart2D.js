@@ -47,12 +47,10 @@ export function linechart2D(engine){
 
   //Create a lineSystem mesh as a child of our CoT that will render the paths we had defined
   let lines = chart.bind('lineSystem', { lines: paths, colors: colors })
-                   .positionZ(-0.01); //Move forward to prevent z-fighting
 
   //Use the axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },
                              parent: CoT,                         
-                             domainMaterialOptions: { width: 0.025 },
                              labelTicks: { x: scaleX.ticks(d3.timeYear) },
                              labelFormat: { x: dateFormat, y: (text) => '$' + text }
   });
