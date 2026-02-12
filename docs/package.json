@@ -20,7 +20,7 @@
     "@babylonjs/inspector": "^8.47.0",
     "@babylonjs/loaders": "^8.47.0",
     "@babylonjs/materials": "^8.47.0",
-    "@jpmorganchase/anu": "file:..",
+    "@jpmorganchase/anu": "1.0.0",
     "d3": "^7.9.0",
     "d3-force-3d": "^3.0.5",
     "earcut": "^3.0.1",
