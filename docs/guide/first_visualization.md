@@ -25,7 +25,7 @@ let cot = anu.bind('cot', scene);
 let spheres = cot.bind('sphere', { diameter: 0.5 }, iris); // [!code focus]
 ```
 
-<<< @/../anu-examples/data/iris.json
+<<< @/anu-examples/data/iris.json
 :::
 
 

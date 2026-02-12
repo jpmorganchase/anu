@@ -4,10 +4,12 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import data from './data/penguins.json';
+import vega from 'vega-datasets';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function violinPlot(engine) {
+export async function violinPlot(engine) {
+
+  const data = await vega['penguins.json']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);

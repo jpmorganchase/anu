@@ -93,13 +93,20 @@ babylonEngine.runRenderLoop(() => {
   scene.render()
 })
 
-
-scene.onReadyObservable.add(() => {
-  // Add data-ready attribute to canvas when scene is ready
+// Signal readiness to Playwright tests
+function markReady() {
   if (canvas) {
     canvas.setAttribute('data-ready', '1');
   }
-});
+}
+
+if (scene.isReady()) {
+  markReady();
+} else {
+  scene.onReadyObservable.addOnce(() => {
+    markReady();
+  });
+}
 
 //Listen for window size changes and resize the scene accordingly 
 window.addEventListener("resize", function () {
