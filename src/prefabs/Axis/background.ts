@@ -20,17 +20,21 @@ const planePropertiesDefaults = { 'material.diffuseColor': Color3.White(), 'mate
 
 const planeOptionsDefaults = (h,w) => ({ height: Math.abs(h[0] - h[1]), width: Math.abs(w[0] - w[1]), sideOrientation: Mesh.DOUBLESIDE })
 
-const backgroundXDefaults = (axes: Axes): backgroundConfig => ({ 
+const backgroundXDefaults = (axes: Axes): backgroundConfig => {
+  // Add Z-offset when only 2 scales are set to prevent z-fighting
+  const zOffset = axes.scales.z.scale == undefined ? 0.001 : 0;
+  return { 
     name: axes.name + "_background_plane_x",
     cot: axes.CoT,
     rotation: new Vector3(0, 0, 0),
     position: {
-      0: new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, axes.scales.range.z[1]),
-      1: new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, axes.scales.range.z[0])
+      0: new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, axes.scales.range.z[1] + zOffset),
+      1: new Vector3((axes.scales.range.x[0] + axes.scales.range.x[1]) / 2, (axes.scales.range.y[0] + axes.scales.range.y[1]) / 2, axes.scales.range.z[0] + zOffset)
     }[axes.options.backgroundPosition.x ?? 0],
     options: assign({}, planeOptionsDefaults(axes.scales.range.y, axes.scales.range.x), axes.options.backgroundOptions['x'] ?? axes.options.backgroundOptions),
     properties: assign({}, planePropertiesDefaults, axes.options.backgroundProperties['x'] ?? axes.options.backgroundOptions)
-  })
+  }
+}
 
   const backgroundYDefaults = (axes: Axes): backgroundConfig => ({ 
     name: axes.name + "_background_plane_y",

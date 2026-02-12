@@ -5,9 +5,11 @@ import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as GUI from '@babylonjs/gui';
 import * as d3 from 'd3';
-import data from './data/cars.json';
+import vega from 'vega-datasets';
 
-export function linkedScatterPlots(engine){
+export async function linkedScatterPlots(engine){
+
+  const data = await vega['cars.json']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);

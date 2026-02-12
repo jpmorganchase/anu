@@ -1,9 +1,6 @@
-import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
+import { TransformNode, Scene, Node, Mesh } from '@babylonjs/core';
 import { Selection } from '../selection/index';
-import { Scene } from '@babylonjs/core/scene';
-import { Node } from '@babylonjs/core/node';
-import { assign } from 'lodash-es';
-import { AbstractMesh, Mesh } from '@babylonjs/core';
+
 
 export class Prefab extends Mesh {
   public name: string;

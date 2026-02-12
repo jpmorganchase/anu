@@ -7,7 +7,7 @@ import iris from './data/iris.json' assert {type: 'json'};
 
 //create and export a function that takes a babylon engine and returns a scene
 export const selectBoxes = function(engine){
-    
+
   const scene = new Scene(engine)
 
   new HemisphericLight('light1', new Vector3(0, 10, 0), scene)
