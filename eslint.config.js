@@ -24,7 +24,7 @@ export default tseslint.config(
       'lib/**',
       'node_modules/**',
       'docs/**',
-      'anu-examples/**',
+      'anu-tests/**',
       '**/*.js',
       '**/*.cjs',
       '**/*.mjs',

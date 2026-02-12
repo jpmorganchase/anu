@@ -21,8 +21,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@jpmorganchase'
       - run: |
-          npm ci
+          npm i
           npm run build
-          npm publish --access public
+          npm publish --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}

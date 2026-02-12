@@ -4,10 +4,12 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import airports from './data/airports.csv';
-import flights from './data/flights-airport.csv';
+import vega from 'vega-datasets';
 
-export function originDestinationGlobe(engine){
+export async function originDestinationGlobe(engine){
+
+  const airports = await vega['airports.csv']();
+  const flights = await vega['flights-airport.csv']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);

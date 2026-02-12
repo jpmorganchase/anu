@@ -3,10 +3,12 @@
 
 import * as anu from '@jpmorganchase/anu';
 import * as d3 from "d3";
-import cars from './data/cars.json' assert {type: 'json'}; //Our data
+import vega from 'vega-datasets';
 import { HemisphericLight, Vector3, Scene, ArcRotateCamera } from '@babylonjs/core';
 
-export const brush = function (engine) {
+export const brush = async function (engine) {
+
+  const cars = await vega['cars.json'](); //Our data
 
   const scene = new Scene(engine);
 

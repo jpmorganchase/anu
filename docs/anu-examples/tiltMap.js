@@ -6,13 +6,15 @@ import * as BABYLON from '@babylonjs/core';
 import * as GUI from '@babylonjs/gui';
 import * as MATERIALS from '@babylonjs/materials';
 import * as d3 from 'd3';
-import data from './data/population_engineers_hurricanes.csv';
+import vega from 'vega-datasets';
 import centroids from './data/centroids.json';
 import geoJ from './data/gz_2010_us_040_00_5m.json';
 import { fill } from 'lodash-es';
 
-export function tiltMap(engine){
+export async function tiltMap(engine){
 
+  const data = await vega['population_engineers_hurricanes.csv']();
+  
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
   //Add some lighting
@@ -29,11 +31,11 @@ export function tiltMap(engine){
 
   //Merge our population data and our centroid data (of each US state) together into a single dataset
   function mergeBy(key, dataL, dataR) {
-    const rMap = dataR.reduce((m, o) => m.set(o[key], { ...m.get(o[key]), ...o }), new Map);
-    return dataL.filter(x => rMap.get(x[key])).map(x => ({...x, ...rMap.get(x[key]) }));
+    // Convert both IDs to strings to ensure matching (vega data has numbers, centroids has strings)
+    const rMap = dataR.reduce((m, o) => m.set(String(o[key]), { ...m.get(String(o[key])), ...o }), new Map);
+    return dataL.filter(x => rMap.get(String(x[key]))).map(x => ({...x, ...rMap.get(String(x[key])) }));
   }
   let population = mergeBy('id', data, centroids);
-
   //Only show the contiguous US states
   population = population.filter((d) => d.state != 'AK' && d.state != 'HI');
 

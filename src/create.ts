@@ -14,6 +14,7 @@ import {
 } from '@babylonjs/core';
 import { createPlaneText } from './prefabs/Text/planeText';
 import { createContainer } from './prefabs/Misc/container';
+import { createPlaneTextLegacy, PlaneTextLegacy } from './prefabs/Text/planeTextLegacy';
 
 
 interface StringByFunc {
@@ -63,6 +64,7 @@ const meshList: StringByFunc = {
   planeText: createPlaneText,
   greasedLine: createGL,
   container: createContainer,
+  planeTextLegacy: createPlaneTextLegacy
 };
 
 export interface MeshTypes {
@@ -96,6 +98,7 @@ export interface MeshTypes {
   planeText: Parameters<typeof createPlaneText>[1];
   greasedLine: Parameters<typeof createGL>[1];
   container: Parameters<typeof createContainer>[1];
+  planeTextLegacy: Parameters<typeof createPlaneTextLegacy>[1];
 }
 
 type Property<T, MeshType extends keyof T> = T[MeshType];

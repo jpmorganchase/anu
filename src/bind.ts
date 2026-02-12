@@ -2,7 +2,7 @@
 // Copyright : J.P. Morgan Chase & Co.
 
 import { Node, ActionManager, Tags, Mesh, Scene, InstancedMesh, Matrix } from '@babylonjs/core';
-import { Selection } from './index';
+import { Selection } from './selection/index';
 import { create, MeshTypes } from './create';
 type Property<T, MeshType extends keyof T> = T[MeshType];
 

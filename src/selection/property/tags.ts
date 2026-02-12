@@ -4,7 +4,7 @@
 /**
  * TODO
  */
-import { Tags } from '@babylonjs/core/Misc';
+import { Tags } from '@babylonjs/core';
 import { Selection } from '../index';
 
 export function addTags(this: Selection, tags: string | ((d: any, i: number) => string)) {

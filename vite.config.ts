@@ -6,6 +6,8 @@ import { externalizeDeps } from "vite-plugin-externalize-deps";
 
 export default defineConfig({
   build: {
+    sourcemap: true, // Enable source maps
+    minify: false, // Use esbuild for minification
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
@@ -16,6 +18,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
         /@babylonjs\/core/,
+        /@babylonjs\/addons/,
         "ol"
       ],
       output: {
@@ -25,7 +28,7 @@ export default defineConfig({
         },
     },
   },
-  plugins: [dts({rollupTypes: true, outputDir: 'dist', insertTypesEntry: true, tsConfigFilePath: "./tsconfig.json"}), 
+  plugins: [dts({rollupTypes: true, outDir: 'dist', insertTypesEntry: true, tsconfigPath: "./tsconfig.json"}), 
             externalizeDeps(),
           ],
 });

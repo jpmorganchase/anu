@@ -4,10 +4,12 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import data from './data/us-employment.csv';
+import vega from 'vega-datasets';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function areaChartStacked(engine){
+export async function areaChartStacked(engine){
+
+  const data = await vega['us-employment.csv']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -25,8 +27,7 @@ export function areaChartStacked(engine){
   //Get the names of all the employment categories
   let categories = Object.keys(data[0]).splice(1, data.length);
   
-  //Create D3 functions to help parse and format time
-  let parseTime = d3.timeParse('%Y-%m-%d');
+  //Create D3 function to format time (month is already a Date object from vega-datasets)
   let dateFormat = d3.timeFormat('%Y');
 
   //Create a D3 stack generator
@@ -40,15 +41,15 @@ export function areaChartStacked(engine){
 
 
   //Create the D3 functions that we will use to scale our data dimensions to desired output ranges for our visualization
-  let scaleX = d3.scaleTime().domain(d3.extent(data.map((d) => parseTime(d.month)))).range([-1.25, 1.25]);
+  let scaleX = d3.scaleTime().domain(d3.extent(data.map((d) => d.month))).range([-1.25, 1.25]);
   let scaleY = d3.scaleLinear().domain([0, d3.max(series[series.length - 1].map(d => d[1]))]).range([-1, 1]).nice();  //Take the largest value from the top-most stack
   let scaleC = d3.scaleOrdinal(anu.ordinalChromatic('d310').toStandardMaterial(categories.length)).domain(categories);
 
   //Create a function that will map each series to Vector3 coordinates
   let seriesToPath = (series) => {
     return [
-      series.map(d => new BABYLON.Vector3(scaleX(parseTime(d.data.month)), scaleY(d[0]), 0)),
-      series.map(d => new BABYLON.Vector3(scaleX(parseTime(d.data.month)), scaleY(d[1]), 0))
+      series.map(d => new BABYLON.Vector3(scaleX(d.data.month), scaleY(d[0]), 0)),
+      series.map(d => new BABYLON.Vector3(scaleX(d.data.month), scaleY(d[1]), 0))
     ]
   };
 

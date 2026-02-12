@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Engine } from '@babylonjs/core/Engines';
-import { Node } from '@babylonjs/core/node';
-import { Scene } from '@babylonjs/core/scene';
-import { Tags } from '@babylonjs/core/Misc/tags';
+import { Engine, Node, Scene, Tags  } from '@babylonjs/core';
 import { Selection } from './selection/index';
 
 /**
@@ -43,7 +40,7 @@ export function select(name: string, scene: Scene): Selection {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectName(name: string | string[], scene: Scene) {
+export function selectName(name: string | string[], scene: Scene): Selection {
   let selected: Node[] = [];
   
   if (Array.isArray(name)) {
@@ -69,7 +66,7 @@ export function selectName(name: string | string[], scene: Scene) {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectId(id: string | string[], scene: Scene) {
+export function selectId(id: string | string[], scene: Scene): Selection {
   let selected: Node[] = [];
   
   if (Array.isArray(id)) {
@@ -94,7 +91,7 @@ export function selectId(id: string | string[], scene: Scene) {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectTag(tag: string | string[], scene: Scene) {
+export function selectTag(tag: string | string[], scene: Scene): Selection {
   let selected: Node[] = [];
   
   if (Array.isArray(tag)) {
@@ -123,7 +120,7 @@ export function selectTag(tag: string | string[], scene: Scene) {
  * @returns an instance of Selection, a class contating a array of selected nodes, the scene, and the functions of the class Selection,
  * or undefined if a selection could not be made.
  */
-export function selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean) {
+export function selectData(key: string | string[], value: string | number | string[] | number[], scene?: Scene, useAndLogic?: boolean): Selection {
   scene ??= Engine.LastCreatedScene;
   useAndLogic ??= false; 
 

@@ -4,10 +4,12 @@
 import * as anu from '@jpmorganchase/anu';
 import * as BABYLON from '@babylonjs/core';
 import * as d3 from 'd3';
-import data from './data/stocks.csv';
+import vega from 'vega-datasets';
 
 //Create and export a function that takes a Babylon engine and returns a Babylon Scene
-export function linechart2D(engine){
+export async function linechart2D(engine){
+
+  const data = await vega['stocks.csv']();
 
   //Create an empty Scene
   const scene = new BABYLON.Scene(engine);
@@ -50,12 +52,10 @@ export function linechart2D(engine){
 
   //Create a lineSystem mesh as a child of our CoT that will render the paths we had defined
   let lines = chart.bind('lineSystem', { lines: paths, colors: colors })
-                   .positionZ(-0.01); //Move forward to prevent z-fighting
 
   //Use the axes prefab with our two D3 scales with additional customizations
   anu.createAxes('myAxes', { scale: { x: scaleX, y: scaleY },
                              parent: CoT,                         
-                             domainMaterialOptions: { width: 0.01 },
                              labelTicks: { x: scaleX.ticks(d3.timeYear) },
                              labelFormat: { x: dateFormat, y: (text) => '$' + text }
   });
